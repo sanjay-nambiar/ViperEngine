@@ -1,0 +1,8 @@
+#ifndef AUDIO_MANAGER_HEADER
+#define AUDIO_MANAGER_HEADER
+
+
+
+
+
+#endif	// AUDIO_MANAGER_HEADER
