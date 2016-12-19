@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\Types.h" />
     <ClInclude Include="include\Vector3.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
