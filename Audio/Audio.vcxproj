@@ -115,6 +115,10 @@
     <Lib>
       <AdditionalLibraryDirectories>$(SolutionDir)\ThirdParty\fmod\studio\lib;$(SolutionDir)\ThirdParty\fmod\lowlevel\lib;$(SolutionDir)\ThirdParty\fmod\fsbank\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
+    <PostBuildEvent>
+      <Command>xcopy /y /d "$(SolutionDir)\ThirdParty\fmod\dlls\All\$(Platform)\*.dll" "$(OutDir)"
+xcopy /y /d "$(SolutionDir)\ThirdParty\fmod\dlls\$(Configuration)\$(Platform)\*.dll" "$(OutDir)"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -134,6 +138,10 @@
       <AdditionalLibraryDirectories>$(SolutionDir)\ThirdParty\fmod\studio\lib;$(SolutionDir)\ThirdParty\fmod\lowlevel\lib;$(SolutionDir)\ThirdParty\fmod\fsbank\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>fmodL64_vc.lib;fsbank64_vc.lib;fmodstudioL64_vc.lib</AdditionalDependencies>
     </Lib>
+    <PostBuildEvent>
+      <Command>xcopy /y /d "$(SolutionDir)\ThirdParty\fmod\dlls\All\$(Platform)\*.dll" "$(OutDir)"
+xcopy /y /d "$(SolutionDir)\ThirdParty\fmod\dlls\$(Configuration)\$(Platform)\*.dll" "$(OutDir)"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -157,6 +165,10 @@
       <AdditionalLibraryDirectories>$(SolutionDir)\ThirdParty\fmod\studio\lib;$(SolutionDir)\ThirdParty\fmod\lowlevel\lib;$(SolutionDir)\ThirdParty\fmod\fsbank\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>fmod_vc.lib;fsbank_vc.lib;fmodstudio_vc.lib</AdditionalDependencies>
     </Lib>
+    <PostBuildEvent>
+      <Command>xcopy /y /d "$(SolutionDir)\ThirdParty\fmod\dlls\All\$(Platform)\*.dll" "$(OutDir)"
+xcopy /y /d "$(SolutionDir)\ThirdParty\fmod\dlls\$(Configuration)\$(Platform)\*.dll" "$(OutDir)"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -180,6 +192,10 @@
       <AdditionalLibraryDirectories>$(SolutionDir)\ThirdParty\fmod\studio\lib;$(SolutionDir)\ThirdParty\fmod\lowlevel\lib;$(SolutionDir)\ThirdParty\fmod\fsbank\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>fmod64_vc.lib;fsbank64_vc.lib;fmodstudio64_vc.lib</AdditionalDependencies>
     </Lib>
+    <PostBuildEvent>
+      <Command>xcopy /y /d "$(SolutionDir)\ThirdParty\fmod\dlls\All\$(Platform)\*.dll" "$(OutDir)"
+xcopy /y /d "$(SolutionDir)\ThirdParty\fmod\dlls\$(Configuration)\$(Platform)\*.dll" "$(OutDir)"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
