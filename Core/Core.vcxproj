@@ -18,6 +18,9 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\Vector3.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{E3BDACE8-0534-4CFE-9935-A85CD45F7C56}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
