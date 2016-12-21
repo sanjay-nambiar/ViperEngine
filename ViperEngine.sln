@@ -33,8 +33,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Core", "Core\Core.vcxproj",
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Samples", "Samples\Samples.vcxproj", "{9E2F9AD5-C07B-4EE6-868B-0F27CD5DAB15}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Memory", "Memory\Memory.vcxproj", "{3086C5A6-6D9D-4837-AA49-12E96CC9076E}"
-EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		ThirdParty\ThirdParty.vcxitems*{45d41acc-2c3c-43d2-bc10-02aa73ffc7c7}*SharedItemsImports = 9
@@ -160,14 +158,6 @@ Global
 		{9E2F9AD5-C07B-4EE6-868B-0F27CD5DAB15}.Release|x64.Build.0 = Release|x64
 		{9E2F9AD5-C07B-4EE6-868B-0F27CD5DAB15}.Release|x86.ActiveCfg = Release|Win32
 		{9E2F9AD5-C07B-4EE6-868B-0F27CD5DAB15}.Release|x86.Build.0 = Release|Win32
-		{3086C5A6-6D9D-4837-AA49-12E96CC9076E}.Debug|x64.ActiveCfg = Debug|x64
-		{3086C5A6-6D9D-4837-AA49-12E96CC9076E}.Debug|x64.Build.0 = Debug|x64
-		{3086C5A6-6D9D-4837-AA49-12E96CC9076E}.Debug|x86.ActiveCfg = Debug|Win32
-		{3086C5A6-6D9D-4837-AA49-12E96CC9076E}.Debug|x86.Build.0 = Debug|Win32
-		{3086C5A6-6D9D-4837-AA49-12E96CC9076E}.Release|x64.ActiveCfg = Release|x64
-		{3086C5A6-6D9D-4837-AA49-12E96CC9076E}.Release|x64.Build.0 = Release|x64
-		{3086C5A6-6D9D-4837-AA49-12E96CC9076E}.Release|x86.ActiveCfg = Release|Win32
-		{3086C5A6-6D9D-4837-AA49-12E96CC9076E}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

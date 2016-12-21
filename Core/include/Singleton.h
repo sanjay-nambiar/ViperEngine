@@ -2,7 +2,7 @@
 #define SINGLETON_HEADER
 
 #include <cassert>
-#include <memory>
+#include "MemoryManager.h"
 
 namespace Viper
 {
@@ -17,15 +17,15 @@ namespace Viper
 
 		~Singleton() = default;
 
-		static std::shared_ptr<T> sInstance;
+		static T* sInstance;
 	public:
-		static void CreateInstance()
+		static void CreateInstance(MemoryManager& allocator)
 		{
 			assert(sInstance == nullptr);
-			sInstance = std::shared_ptr<T>(new T());
+			sInstance = static_cast<T*>(allocator.Allocate(sizeof(T), 1));
 		}
 
-		static std::shared_ptr<T> GetInstance()
+		static T* GetInstance()
 		{
 			assert(sInstance != nullptr);
 			return sInstance;
@@ -34,12 +34,12 @@ namespace Viper
 		static void Destroy()
 		{
 			assert(sInstance != nullptr);
-			sInstance.reset();
+			delete sInstance;
 			sInstance = nullptr;
 		}
 	};
 
-	template <typename T> std::shared_ptr<T> Singleton<T>::sInstance(nullptr);
+	template <typename T> T* Singleton<T>::sInstance(nullptr);
 }
 
 #endif // SINGLETON_HEADER
