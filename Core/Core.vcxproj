@@ -19,7 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\Allocator.h" />
     <ClInclude Include="include\DataArray.h" />
     <ClInclude Include="include\MemoryManager.h" />
     <ClInclude Include="include\Singleton.h" />
@@ -27,7 +26,6 @@
     <ClInclude Include="include\Vector3.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Allocator.cpp" />
     <ClCompile Include="src\MemoryManager.cpp" />
     <ClCompile Include="src\Vector3.cpp" />
   </ItemGroup>
