@@ -6,6 +6,7 @@
 namespace Viper
 {
 	class Logger;
+	class MemoryAllocator;
 	class AudioManager;
 
 	/** This is a singleton class which keeps a handle to all the services
@@ -17,6 +18,7 @@ namespace Viper
 		friend Singleton<ServiceLocator>;
 
 		Logger* logger;
+		MemoryAllocator* memoryAllocator;
 		AudioManager* audioManager;
 
 		ServiceLocator();
@@ -27,6 +29,11 @@ namespace Viper
 		*/
 		void Provide(Logger* logger);
 
+		/** Provide a memory allocator implementation to the service locator
+		*  @param memoryAllocator A Logger interface implementation
+		*/
+		void Provide(MemoryAllocator* memoryAllocator);
+
 		/** Provide an audio manager implementation to the service locator
 		*  @param audioManager An AudioManager interface implementation
 		*/
@@ -36,6 +43,11 @@ namespace Viper
 		*  @return A referece to the default logger
 		*/
 		static Logger& GetLogger();
+
+		/** Gets a reference to the default memory allocator
+		*  @return A referece to the default memory allocator
+		*/
+		static MemoryAllocator& GetMemoryAllocator();
 
 		/** Gets a reference to the default AudioManager
 		*  @return A referece to the default AudioManager
