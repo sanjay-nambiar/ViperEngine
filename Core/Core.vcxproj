@@ -21,12 +21,16 @@
   <ItemGroup>
     <ClInclude Include="include\DataArray.h" />
     <ClInclude Include="include\MemoryManager.h" />
+    <ClInclude Include="include\ServiceLocator.h" />
+    <ClInclude Include="include\service\AudioManager.h" />
+    <ClInclude Include="include\service\Logger.h" />
     <ClInclude Include="include\Singleton.h" />
     <ClInclude Include="include\Types.h" />
     <ClInclude Include="include\Vector3.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\MemoryManager.cpp" />
+    <ClCompile Include="src\ServiceLocator.cpp" />
     <ClCompile Include="src\Vector3.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
