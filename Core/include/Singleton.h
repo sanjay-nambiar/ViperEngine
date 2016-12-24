@@ -13,6 +13,7 @@ namespace Viper
 	template<typename T>
 	class Singleton
 	{
+	protected:
 		friend T;
 		Singleton()
 		{
