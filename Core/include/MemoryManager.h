@@ -10,7 +10,7 @@ namespace  Viper
 	*  This class is a place holder for implementing a memory manager and it currently uses 
 	*  regular new and delete to allocate heap memory on demand
 	*/
-	class MemoryManager : MemoryAllocator
+	class MemoryManager : public MemoryAllocator
 	{
 	public:
 		MemoryManager() = default;

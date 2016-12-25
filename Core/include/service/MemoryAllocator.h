@@ -10,7 +10,8 @@ namespace  Viper
 	class MemoryAllocator
 	{
 	public:
-		virtual ~MemoryAllocator() = 0;
+		virtual ~MemoryAllocator()
+		{};
 
 		/** Allocate memory
 		* A total of (elementSize * count) bytes of memory is allocated
