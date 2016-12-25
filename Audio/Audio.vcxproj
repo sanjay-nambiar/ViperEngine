@@ -19,11 +19,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\AudioManager.h" />
+    <ClInclude Include="include\FmodAudioManager.h" />
     <ClInclude Include="include\FmodImplementation.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\AudioManager.cpp" />
+    <ClCompile Include="src\FmodAudioManager.cpp" />
     <ClCompile Include="src\FmodImplementation.cpp" />
   </ItemGroup>
   <ItemGroup>
