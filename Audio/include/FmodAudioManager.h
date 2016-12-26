@@ -3,7 +3,6 @@
 
 
 #include <string>
-#include <vector>
 #include "service/AudioManager.h"
 #include "service/MemoryAllocator.h"
 #include "Types.h"

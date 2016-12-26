@@ -1,7 +1,6 @@
 
 #include "FmodAudioManager.h"
 #include <cassert>
-#include <cmath>
 #include "FmodImplementation.h"
 
 

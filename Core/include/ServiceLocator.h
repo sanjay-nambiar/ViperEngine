@@ -30,7 +30,7 @@ namespace Viper
 		void Provide(Logger* logger);
 
 		/** Provide a memory allocator implementation to the service locator
-		*  @param memoryAllocator A Logger interface implementation
+		*  @param memoryAllocator A MemoryAllocator interface implementation
 		*/
 		void Provide(MemoryAllocator* memoryAllocator);
 
