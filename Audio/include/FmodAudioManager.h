@@ -1,60 +1,57 @@
-#ifndef AUDIO_MANAGER_HEADER
-#define AUDIO_MANAGER_HEADER
+#ifndef FMOD_AUDIO_MANAGER_HEADER
+#define FMOD_AUDIO_MANAGER_HEADER
 
 
 #include <string>
 #include <vector>
+#include "service/AudioManager.h"
+#include "service/MemoryAllocator.h"
 #include "Types.h"
 #include "Vector3.h"
+
+
+namespace FMOD {namespace Studio {
+	class Bank;
+}
+}
 
 namespace  Viper
 {
 	namespace Audio
 	{
+		// Forward declarations
 		class FmodImplementation;
 
-		class FmodAudioManager
+		class FmodAudioManager : public Viper::AudioManager
 		{
-		private:
-			FmodAudioManager();
-		public:
-			~FmodAudioManager();
-			static void CreateInstance();
-			static FmodAudioManager* GetInstance();
-			static FmodAudioManager* sInstance;
-
 			FmodImplementation* implementation;
+			MemoryAllocator& allocator;
+		public:
+			FmodAudioManager(uint32_t maxChannels, MemoryAllocator& allocator);
+			~FmodAudioManager();
 
-			void Init(uint32_t maxChannels);
-			void Update();
-			void Shutdown();
+			void LoadSoundBank(const std::string& bankName, bool_t isAsync = false, bool_t shouldDecompress = false) override;
+			void LoadSoundBankEvents(const std::string& bankName) override;
+			void UnLoadSoundBank(const std::string& bankName) override;
 
-			void LoadBank(const std::string& bankName, uint32_t flags = 0);
-			void LoadEvent(const std::string& eventName);
-			void LoadSound(const std::string& soundName, bool_t is3d = true, bool_t isLooping = false, bool_t isStream = false);
-			void UnLoadSound(const std::string& soundName);
-			
-			float32_t GetEventParameter(const std::string& eventName, const std::string& parameterName);
-			void SetEventParameter(const std::string& eventName, const std::string& parameterName, float value);
-			void SetListener3dAttributes(const Vector3& position, const Vector3& forward, const Vector3& up, const Vector3& velocity = Vector3{0,0,0});
-			void SetEvent3dAttributes(const std::string& eventName, const Vector3& position, const Vector3& velocity = Vector3{0,0,0});
-			void SetChannel3dAttributes(uint32_t channelId, const Vector3& position, const Vector3& velocity);
-			void SetChannelVolume(uint32_t channelId, float volumedB);
+			void SetListener3dAttributes(const Vector3& position, const Vector3& forward, const Vector3& up,
+				const Vector3& velocity = Vector3{0,0,0}) override;
+			void SetEvent3dAttributes(const std::string& eventName, const Vector3& position, const Vector3& velocity = Vector3{0,0,0}) override;
+			void SetEventGroup(const std::string& eventName, const std::string& groupName) override;
+			void SetEventVolume(const std::string& eventName, float volumedB) override;
+			void SetGroupVolume(const std::string& groupName, float volumedB) override;
 
-			uint32_t PlaySound(const std::string& soundName, const Vector3& position = Vector3{0, 0, 0}, float volumedB = 0.0f);
-			void PlayEvent(const std::string& eventName);
-			void StopChannel(uint32_t channelId);
-			void StopAllChannels();
-			void StopEvent(const std::string& eventName, bool_t isImmediate = false);
-			
-			bool_t IsPlaying(uint32_t channelId) const;
-			bool_t IsEventPlaying(const std::string& eventName) const;
-			
-			float dbToVolume(float dB);
-			float VolumeTodB(float volume);
+			void PlayEvent(const std::string& eventName) override;
+			void StopEvent(const std::string& eventName, bool_t isImmediate = false) override;
+			void StopGroup(const std::string& groupName, bool_t isImmediate = false) override;
+			void StopAll(bool_t isImmediate = false) override;
+
+			void Update() override;
+
+			bool_t IsPlaying(const std::string& eventName) const override;
 		};
 	}
 }
 
 
-#endif	// AUDIO_MANAGER_HEADER
+#endif	// FMOD_AUDIO_MANAGER_HEADER

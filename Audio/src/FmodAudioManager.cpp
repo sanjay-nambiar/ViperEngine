@@ -2,44 +2,31 @@
 #include "FmodAudioManager.h"
 #include <cassert>
 #include <cmath>
-#include <exception>
 #include "FmodImplementation.h"
+
+
+#define MAX_EVENT_PATH_LENGTH 100
+#define MAX_EVENTS_PER_GROUP 50
 
 namespace Viper
 {
 	namespace Audio
 	{
-		FmodAudioManager* FmodAudioManager::sInstance = nullptr;
-
-		FmodAudioManager::FmodAudioManager() : implementation(nullptr)
+		FmodAudioManager::FmodAudioManager(uint32_t maxChannels, MemoryAllocator& allocator)
+			: implementation(nullptr), allocator(allocator)
 		{
-		}
-
-		FmodAudioManager::~FmodAudioManager()
-		{
-			assert(sInstance != nullptr);
-			delete sInstance;
-		}
-
-		void FmodAudioManager::CreateInstance()
-		{
-			assert(sInstance == nullptr);
-			sInstance = new FmodAudioManager();
-		}
-
-		FmodAudioManager* FmodAudioManager::GetInstance()
-		{
-			assert(sInstance != nullptr);
-			return sInstance;
-		}
-
-		void FmodAudioManager::Init(uint32_t maxChannels)
-		{
-			implementation = new FmodImplementation(maxChannels);
+			implementation = static_cast<FmodImplementation*>(allocator.Allocate(sizeof(FmodImplementation), 1));
+			new (implementation) FmodImplementation(maxChannels);
 			if (implementation == nullptr)
 			{
 				throw std::runtime_error("Out of memory while creating FMOD implementation");
 			}
+		}
+
+		FmodAudioManager::~FmodAudioManager()
+		{
+			implementation->~FmodImplementation();
+			allocator.Free(implementation);
 		}
 		
 		void FmodAudioManager::Update()
@@ -47,77 +34,74 @@ namespace Viper
 			implementation->Update();
 		}
 
-		void FmodAudioManager::Shutdown()
-		{
-			assert(implementation != nullptr);
-			delete implementation;
-		}
-
-		void FmodAudioManager::LoadSound(const std::string& soundName, bool_t is3d, bool_t isLooping, bool_t isStream)
-		{
-			auto foundIt = implementation->sounds.find(soundName);
-			assert(foundIt == implementation->sounds.end());
-
-			FMOD_MODE mode = FMOD_DEFAULT;
-			mode |= is3d ? FMOD_3D : FMOD_2D;
-			mode |= isLooping ? FMOD_LOOP_NORMAL : FMOD_LOOP_OFF;
-			mode |= isStream ? FMOD_CREATESTREAM : FMOD_CREATECOMPRESSEDSAMPLE;
-			FMOD::Sound* sound = nullptr;
-			FmodImplementation::ErrorCheck(implementation->fmodSystem->createSound(soundName.c_str(), mode, nullptr, &sound));
-			implementation->sounds[soundName] = sound;
-		}
-
-		void FmodAudioManager::LoadBank(const std::string& bankName, uint32_t flags)
+		void FmodAudioManager::LoadSoundBank(const std::string& bankName, bool_t isAsync, bool_t shouldDecompress)
 		{
 			auto foundIt = implementation->banks.find(bankName);
 			assert(foundIt == implementation->banks.end());
 
 			FMOD::Studio::Bank* bank;
+			FMOD_STUDIO_LOAD_BANK_FLAGS flags = FMOD_STUDIO_LOAD_BANK_NORMAL;
+			if (isAsync)
+			{
+				flags |= FMOD_STUDIO_LOAD_BANK_NONBLOCKING;
+			}
+			if (shouldDecompress)
+			{
+				flags |= FMOD_STUDIO_LOAD_BANK_DECOMPRESS_SAMPLES;
+			}
 			FmodImplementation::ErrorCheck(implementation->studioSystem->loadBankFile(bankName.c_str(), flags, &bank));
 			implementation->banks[bankName] = bank;
 		}
 
-		void FmodAudioManager::LoadEvent(const std::string& eventName)
+		void FmodAudioManager::LoadSoundBankEvents(const std::string& bankName)
 		{
-			auto foundIt = implementation->events.find(eventName);
-			assert(foundIt == implementation->events.end());
+			FMOD::Studio::Bank* bank = implementation->banks[bankName];
+			assert(bank != nullptr);
 
-			FMOD::Studio::EventDescription* eventDescription = nullptr;
-			FmodImplementation::ErrorCheck(implementation->studioSystem->getEvent(eventName.c_str(), &eventDescription));
+			// Load all events from the bank
+			int32_t eventCount;
+			FmodImplementation::ErrorCheck(bank->getEventCount(&eventCount));
+			assert(eventCount > 0);
+			FMOD::Studio::EventDescription** eventDescriptions =
+				static_cast<FMOD::Studio::EventDescription**>(allocator.Allocate(sizeof(FMOD::Studio::EventDescription*), eventCount));
+			FmodImplementation::ErrorCheck(bank->getEventList(eventDescriptions, eventCount, &eventCount));
+			for (int32_t i = 0; i < eventCount; i++)
+			{
+				char8_t eventPath[MAX_EVENT_PATH_LENGTH];
+				int32_t eventPathLength;
+				FmodImplementation::ErrorCheck(eventDescriptions[i]->getPath(eventPath, MAX_EVENT_PATH_LENGTH, &eventPathLength));
 
-			FMOD::Studio::EventInstance* eventInstance = nullptr;
-			FmodImplementation::ErrorCheck(eventDescription->createInstance(&eventInstance));
-			implementation->events[eventName] = eventInstance;
+				// create event instance
+				FMOD::Studio::EventInstance* eventInstance = nullptr;
+				FmodImplementation::ErrorCheck(eventDescriptions[i]->createInstance(&eventInstance));
+				implementation->events[std::string(eventPath)] = eventInstance;
+			}
+			allocator.Free(eventDescriptions);
 		}
 
-		void FmodAudioManager::UnLoadSound(const std::string& soundName)
+		void FmodAudioManager::UnLoadSoundBank(const std::string& soundName)
 		{
-			auto foundIt = implementation->sounds.find(soundName);
-			assert(foundIt != implementation->sounds.end());				
-			FmodImplementation::ErrorCheck(foundIt->second->release());
-			implementation->sounds.erase(foundIt);
-		}
+			auto foundIt = implementation->banks.find(soundName);
+			assert(foundIt != implementation->banks.end());
 
-		float32_t FmodAudioManager::GetEventParameter(const std::string& eventName, const std::string& parameterName)
-		{
-			auto foundIt = implementation->events.find(eventName);
-			assert(foundIt != implementation->events.end());
+			// Unoad all events from the bank
+			int32_t eventCount;
+			FmodImplementation::ErrorCheck(foundIt->second->getEventCount(&eventCount));
+			assert(eventCount > 0);
+			FMOD::Studio::EventDescription** eventDescriptions =
+				static_cast<FMOD::Studio::EventDescription**>(allocator.Allocate(sizeof(FMOD::Studio::EventDescription*), eventCount));
+			FmodImplementation::ErrorCheck(foundIt->second->getEventList(eventDescriptions, eventCount, &eventCount));
+			for (int32_t i = 0; i < eventCount; i++)
+			{
+				char8_t eventPath[MAX_EVENT_PATH_LENGTH];
+				int32_t eventPathLength;
+				FmodImplementation::ErrorCheck(eventDescriptions[i]->getPath(eventPath, MAX_EVENT_PATH_LENGTH, &eventPathLength));				
+				implementation->events[eventPath]->release();
+			}
+			allocator.Free(eventDescriptions);
 
-			FMOD::Studio::ParameterInstance* parameter = nullptr;
-			FmodImplementation::ErrorCheck(foundIt->second->getParameter(parameterName.c_str(), &parameter));
-			float32_t parameterValue;
-			FmodImplementation::ErrorCheck(parameter->getValue(&parameterValue));
-			return parameterValue;
-		}
-
-		void FmodAudioManager::SetEventParameter(const std::string& eventName, const std::string& parameterName, float value)
-		{
-			auto foundIt = implementation->events.find(eventName);
-			assert(foundIt != implementation->events.end());
-
-			FMOD::Studio::ParameterInstance* parameter = nullptr;
-			FmodImplementation::ErrorCheck(foundIt->second->getParameter(parameterName.c_str(), &parameter));
-			FmodImplementation::ErrorCheck(parameter->setValue(value));
+			FmodImplementation::ErrorCheck(foundIt->second->unload());
+			implementation->banks.erase(foundIt);
 		}
 
 		void FmodAudioManager::SetListener3dAttributes(const Vector3& position, const Vector3& forward, const Vector3& up, const Vector3& velocity)
@@ -140,43 +124,6 @@ namespace Viper
 			foundIt->second->set3DAttributes(&attributes);
 		}
 
-		void FmodAudioManager::SetChannel3dAttributes(uint32_t channelId, const Vector3& position, const Vector3& velocity)
-		{
-			auto foundIt = implementation->channels.find(channelId);
-			assert(foundIt != implementation->channels.end());
-			FMOD_VECTOR fmodPosition = FmodImplementation::VectorToFmod(position);
-			FMOD_VECTOR fmodVelocity = FmodImplementation::VectorToFmod(velocity);
-			FmodImplementation::ErrorCheck(foundIt->second->set3DAttributes(&fmodPosition, &fmodVelocity));
-		}
-
-		void FmodAudioManager::SetChannelVolume(uint32_t channelId, float volumedB)
-		{
-			auto foundIt = implementation->channels.find(channelId);
-			assert(foundIt != implementation->channels.end());
-			FmodImplementation::ErrorCheck(foundIt->second->setVolume(dbToVolume(volumedB)));
-		}
-
-		uint32_t FmodAudioManager::PlaySound(const std::string& soundName, const Vector3& position, float volumedB)
-		{
-			uint32_t channelId = implementation->nextChannelId++;
-			auto foundIt = implementation->sounds.find(soundName);
-			assert(foundIt != implementation->sounds.end());
-			
-			FMOD::Channel* channel = nullptr;
-			FmodImplementation::ErrorCheck(implementation->fmodSystem->playSound(foundIt->second, nullptr, true, &channel));
-			FMOD_MODE currentMode;
-			foundIt->second->getMode(&currentMode);
-			if (currentMode & FMOD_3D)
-			{
-				FMOD_VECTOR positionFmod = FmodImplementation::VectorToFmod(position);
-				FmodImplementation::ErrorCheck(channel->set3DAttributes(&positionFmod, nullptr));
-			}
-			FmodImplementation::ErrorCheck(channel->setVolume(dbToVolume(volumedB)));
-			FmodImplementation::ErrorCheck(channel->setPaused(false));
-			implementation->channels[channelId] = channel;
-			return channelId;
-		}
-
 		void FmodAudioManager::PlayEvent(const std::string& eventName)
 		{
 			auto foundit = implementation->events.find(eventName);
@@ -184,18 +131,32 @@ namespace Viper
 			foundit->second->start();
 		}
 
-		void FmodAudioManager::StopChannel(uint32_t channelId)
+		void FmodAudioManager::SetEventGroup(const std::string& eventName, const std::string& groupName)
 		{
-			auto foundIt = implementation->channels.find(channelId);
-			assert(foundIt != implementation->channels.end());
-			FmodImplementation::ErrorCheck(foundIt->second->stop());
-		}
-		
-		void FmodAudioManager::StopAllChannels()
-		{
-			for (auto it = implementation->channels.begin(), itEnd = implementation->channels.end(); it != itEnd; ++it)
+			if (implementation->eventGroups.find(groupName) == implementation->eventGroups.end())
 			{
-				FmodImplementation::ErrorCheck(it->second->stop());
+				implementation->eventGroups[groupName] = std::vector<std::string>(MAX_EVENTS_PER_GROUP);
+			}
+			implementation->eventGroups[groupName].emplace_back(eventName);
+		}
+
+		void FmodAudioManager::SetEventVolume(const std::string& eventName, float volumedB)
+		{
+			auto foundit = implementation->events.find(eventName);
+			assert(foundit != implementation->events.end());
+			FmodImplementation::ErrorCheck(foundit->second->setVolume(volumedB));
+		}
+
+		void FmodAudioManager::SetGroupVolume(const std::string& groupName, float volumedB)
+		{
+			if (implementation->eventGroups.find(groupName) == implementation->eventGroups.end())
+			{
+				return;
+			}
+			std::vector<std::string>& events = implementation->eventGroups[groupName];
+			for(uint32_t i = 0; i < events.size(); i++)
+			{
+				FmodImplementation::ErrorCheck(implementation->events[events[i]]->setVolume(volumedB));
 			}
 		}
 
@@ -209,20 +170,33 @@ namespace Viper
 			FmodImplementation::ErrorCheck(foundIt->second->stop(mode));
 		}
 
-		bool_t FmodAudioManager::IsPlaying(uint32_t channelId) const
+		void FmodAudioManager::StopGroup(const std::string& groupName, bool_t isImmediate)
 		{
-			auto foundIt = implementation->channels.find(channelId);
-			if(foundIt == implementation->channels.end())
+			if (implementation->eventGroups.find(groupName) == implementation->eventGroups.end())
 			{
-				return false;
+				return;
 			}
 
-			bool_t isPlaying = false;
-			foundIt->second->isPlaying(&isPlaying);
-			return isPlaying;
+			FMOD_STUDIO_STOP_MODE mode;
+			mode = isImmediate ? FMOD_STUDIO_STOP_IMMEDIATE : FMOD_STUDIO_STOP_ALLOWFADEOUT;
+			std::vector<std::string>& events = implementation->eventGroups[groupName];
+			for (uint32_t i = 0; i < events.size(); i++)
+			{
+				implementation->events[events[i]]->stop(mode);
+			}
 		}
 
-		bool_t FmodAudioManager::IsEventPlaying(const std::string& eventName) const
+		void FmodAudioManager::StopAll(bool_t isImmediate)
+		{
+			FMOD_STUDIO_STOP_MODE mode;
+			mode = isImmediate ? FMOD_STUDIO_STOP_IMMEDIATE : FMOD_STUDIO_STOP_ALLOWFADEOUT;
+			for (auto it = implementation->events.begin(); it != implementation->events.end(); ++it)
+			{
+				it->second->stop(mode);
+			}
+		}
+
+		bool_t FmodAudioManager::IsPlaying(const std::string& eventName) const
 		{
 			auto foundIt = implementation->events.find(eventName);
 			if (foundIt == implementation->events.end())
@@ -236,16 +210,6 @@ namespace Viper
 				return true;
 			}
 			return false;
-		}
-
-		float FmodAudioManager::dbToVolume(float dB)
-		{
-			return powf(10.0f, 0.05f * dB);
-		}
-
-		float FmodAudioManager::VolumeTodB(float volume)
-		{
-			return 20.0f * log10f(volume);
-		}		
+		}	
 	}
 }

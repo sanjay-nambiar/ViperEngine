@@ -5,6 +5,7 @@
 #include "Types.h"
 #include "Vector3.h"
 
+
 namespace Viper
 {
 	/** This is an interface for AudioManager implementations. 
@@ -14,12 +15,19 @@ namespace Viper
 	*/
 	class AudioManager
 	{
+	public:
 		/** Loads a sound bank into the system
 		 * @param bankName The sound bank file name to load into the system
 		 * @param isAsync If set to true, loads the sound bank asynchronously. False by default.
 		 * @param shouldDecompress If set to true, the sound data is decompressed and stored in memory. False by default.
 		*/
 		virtual void LoadSoundBank(const std::string& bankName, bool_t isAsync = false, bool_t shouldDecompress = false) = 0;
+
+		/** Loads all the events from a sound bank. Some systems require additional metadata to be loaded before loading events. 
+		 *  Hence load events is given as a separate API. The events will be unloaded with the bank.
+		*   @param bankName The sound bank file name from which the events are to be loaded.
+		*/
+		virtual void LoadSoundBankEvents(const std::string& bankName) = 0;
 
 		/** Unloads a sound bank into the system
 		 *  @param bankName The sound bank file name to unload from the system
@@ -79,14 +87,20 @@ namespace Viper
 
 		/** Stops all the playing sounds
 		*/
-		virtual void StopAll() = 0;
+		virtual void StopAll(bool_t isImmediate = false) = 0;
+
+		/** Updates any required state for the audio manager.
+		 *  This method is ideally called in the game loop's update section
+		 */
+		virtual void Update() = 0;
 
 		/** Checks if a given event is playing or not
 		 *  @param eventName The name of the event which should be checked
 		*/
 		virtual bool_t IsPlaying(const std::string& eventName) const = 0;
 
-		virtual ~AudioManager() = 0;
+		virtual ~AudioManager()
+		{};
 	};
 }
 
