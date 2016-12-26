@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClInclude Include="include\DataArray.h" />
     <ClInclude Include="include\MemoryManager.h" />
+    <ClInclude Include="include\Queue.h" />
     <ClInclude Include="include\ServiceLocator.h" />
     <ClInclude Include="include\service\AudioManager.h" />
     <ClInclude Include="include\service\Logger.h" />
