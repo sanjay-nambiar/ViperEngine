@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClInclude Include="include\DataArray.h" />
     <ClInclude Include="include\MemoryManager.h" />
+    <ClInclude Include="include\memory\StackAllocator.h" />
     <ClInclude Include="include\Queue.h" />
     <ClInclude Include="include\ServiceLocator.h" />
     <ClInclude Include="include\service\AudioManager.h" />
@@ -32,6 +33,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\MemoryManager.cpp" />
+    <ClCompile Include="src\memory\StackAllocator.cpp" />
     <ClCompile Include="src\ServiceLocator.cpp" />
     <ClCompile Include="src\Vector3.cpp" />
   </ItemGroup>
