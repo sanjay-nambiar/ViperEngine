@@ -3,7 +3,7 @@
 namespace Viper
 {
 
-	ServiceLocator::ServiceLocator() : logger(nullptr), audioManager(nullptr)
+	ServiceLocator::ServiceLocator() : logger(nullptr), memoryAllocator(nullptr), audioManager(nullptr)
 	{
 	};
 

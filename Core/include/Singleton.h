@@ -38,7 +38,7 @@ namespace Viper
 		/** Get pointer to the singleton instance of the child class
 		* @return The pointer to the singleton instance of the child class
 		*/
-		static T* GetInstance()
+		static T* GetInstancePtr()
 		{
 			assert(sInstance != nullptr);
 			return sInstance;
@@ -47,7 +47,7 @@ namespace Viper
 		/** Get a reference to the singleton instance of the child class
 		* @return A reference to the singleton instance of the child class
 		*/
-		static T& GetInstanceReference()
+		static T& GetInstance()
 		{
 			assert(sInstance != nullptr);
 			return (*sInstance);
