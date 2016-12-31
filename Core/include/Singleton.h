@@ -20,7 +20,8 @@ namespace Viper
 			assert(sInstance == nullptr);
 		};
 
-		~Singleton() = default;
+		Singleton(const Singleton<T>&) = delete;
+		Singleton& operator=(const Singleton<T>&) = delete;
 
 		static T* sInstance;
 		static MemoryManager* allocator;
@@ -34,13 +35,22 @@ namespace Viper
 			sInstance = static_cast<T*>(allocator->Allocate(sizeof(T), 1));
 		}
 
-		/** Get singleton instance of the child class
-		* @return The singleton instance of the child class
+		/** Get pointer to the singleton instance of the child class
+		* @return The pointer to the singleton instance of the child class
 		*/
 		static T* GetInstance()
 		{
 			assert(sInstance != nullptr);
 			return sInstance;
+		}
+
+		/** Get a reference to the singleton instance of the child class
+		* @return A reference to the singleton instance of the child class
+		*/
+		static T& GetInstanceReference()
+		{
+			assert(sInstance != nullptr);
+			return (*sInstance);
 		}
 
 		/** Destroys the singleton instance
@@ -54,6 +64,8 @@ namespace Viper
 			sInstance = nullptr;
 			allocator = nullptr;
 		}
+
+		~Singleton() = default;
 	};
 
 	template <typename T> T* Singleton<T>::sInstance(nullptr);
