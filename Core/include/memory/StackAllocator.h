@@ -19,13 +19,14 @@ namespace Viper
 			*/
 			explicit StackAllocator(uint32_t totalBytes);
 
-			/*** Allocate memory from the stack
-			*  A total of (elementSize * count) bytes of memory is allocated from the stack
+			/*** Allocate an aligned memory block from the stack
+			*  A given amount of bytes of memory is allocated from the stack
 			*  @param bytes The amount of memory required
 			*  @param isTemp Indicates if the memory is temporary in nature i.e. the memory can be released maybe at the end of the frame.
+			*  @param alignment The memory alignment size.
 			*  @return A pointer to the base of the allocated memory
 			*/
-			void* Allocate(size_t bytes, bool isTemp = false);
+			void* Allocate(uint32_t bytes, bool isTemp, uint32_t alignment = 1);
 
 			/*** Get the marker to the top of the stack
 			*  @param isTemp Indicates whether the marker is for the temporary memory or not

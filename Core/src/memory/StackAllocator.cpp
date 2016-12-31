@@ -18,16 +18,27 @@ namespace Viper
 			right = memoryTop;
 		}
 
-		void* StackAllocator::Allocate(size_t bytes, bool isTemp)
+		void* StackAllocator::Allocate(uint32_t bytes, bool isTemp, uint32_t alignment)
 		{
-			assert((left + bytes) < right);
+			// make sure the alignment is a power of two
+			assert((alignment & (alignment - 1)) == 0);
+
+			// calculate the misalignment in the memory address
+			uint32_t misAlignment = reinterpret_cast<uint32_t>(right) & (alignment - 1);
+
 			if (isTemp)
 			{
+				// get the bumber of bytes to subtract from the memory address to get the alignment 
+				uint32_t adjustment = misAlignment;
+				assert((left + bytes + adjustment) < right);
 				right -= bytes;
 				return static_cast<void*>(right);
 			}
 			else
 			{
+				// get the bumber of bytes to add to the memory address to get the alignment 
+				uint32_t adjustment = alignment - misAlignment;
+				assert((left + bytes + adjustment) < right);
 				left += bytes;
 				return static_cast<void*>(left);
 			}
