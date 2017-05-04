@@ -1,7 +1,9 @@
-#include "FmodSample.h"
+#include "Samples.h"
+
+using namespace Samples;
 
 int main()
 {
-	FmodSample();
+	GLRenderingSamples();
 	return 0;
 }

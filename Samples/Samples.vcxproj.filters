@@ -21,9 +21,12 @@
     <ClCompile Include="src\Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\GLRenderingSample.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\FmodSample.h">
+    <ClInclude Include="include\Samples.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
