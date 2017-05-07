@@ -1,14 +1,17 @@
 #pragma once
 
-#include "Core/MemoryManager.h"
 #include "Service/AudioManager.h"
 
 
 #define DllImport	__declspec(dllimport)
 
 
+namespace Viper {
+	class ServiceLocator;
+}
+
 // Import declarations
-extern "C" DllImport Viper::AudioManager* InitializeAudio(uint32_t maxChannels, Viper::MemoryManager& memoryManager);
+extern "C" DllImport void ProvideAudioManager(uint32_t maxChannels, Viper::ServiceLocator& serviceLocator);
 
 // Function pointers
-typedef Viper::AudioManager*(__stdcall *funcInitializeAudio) (uint32_t, Viper::MemoryManager&);
+typedef void(__stdcall *funcProvideAudioManager) (uint32_t, Viper::ServiceLocator&);

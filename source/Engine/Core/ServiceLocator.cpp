@@ -8,36 +8,37 @@ namespace Viper
 	{
 	};
 
-	void ServiceLocator::Provide(Logger* loggerPtr)
+	void ServiceLocator::Provide(Logger& loggerRef)
 	{
-		this->logger = loggerPtr;
+		logger = &loggerRef;
 	}
 
-	void ServiceLocator::Provide(MemoryAllocator* memoryAllocatorPtr)
+	void ServiceLocator::Provide(MemoryAllocator& memoryAllocatorRef)
 	{
-		this->memoryAllocator = memoryAllocatorPtr;
+		memoryAllocator = &memoryAllocatorRef;
+		assert(memoryAllocator != nullptr);
 	}
 
-	void ServiceLocator::Provide(AudioManager* audioManagerPtr)
+	void ServiceLocator::Provide(AudioManager& audioManagerRef)
 	{
-		this->audioManager = audioManagerPtr;
+		audioManager = &audioManagerRef;
 	}
 
-	Logger& ServiceLocator::GetLogger()
+	Logger& ServiceLocator::GetLogger() const
 	{
-		assert(sInstance->logger != nullptr);
-		return (*sInstance->logger);
+		assert(logger != nullptr);
+		return (*logger);
 	}
 
-	MemoryAllocator& ServiceLocator::GetMemoryAllocator()
+	MemoryAllocator& ServiceLocator::GetMemoryAllocator() const
 	{
-		assert(sInstance->memoryAllocator != nullptr);
-		return (*sInstance->memoryAllocator);
+		assert(memoryAllocator != nullptr);
+		return (*memoryAllocator);
 	}
 
-	AudioManager& ServiceLocator::GetAudioManager()
+	AudioManager& ServiceLocator::GetAudioManager() const
 	{
-		assert(sInstance->audioManager != nullptr);
-		return (*sInstance->audioManager);
+		assert(audioManager != nullptr);
+		return (*audioManager);
 	}
 }

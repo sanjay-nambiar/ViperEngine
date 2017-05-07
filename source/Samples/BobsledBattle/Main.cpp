@@ -3,65 +3,54 @@
 #include <strsafe.h>
 #include "Core/MemoryManager.h"
 #include "Core/ModuleImports.h"
+#include "Core/ServiceLocator.h"
 #include "Service/AudioManager.h"
-
 
 #ifndef UNICODE
 #define UNICODE
 #endif
 
 
+using namespace Viper;
+
+
 LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
-void ErrorExit(LPTSTR lpszFunction)
-{
-	// Retrieve the system error message for the last-error code
-
-	LPVOID lpMsgBuf;
-	LPVOID lpDisplayBuf;
-	DWORD dw = GetLastError();
-
-	FormatMessage(
-		FORMAT_MESSAGE_ALLOCATE_BUFFER |
-		FORMAT_MESSAGE_FROM_SYSTEM |
-		FORMAT_MESSAGE_IGNORE_INSERTS,
-		nullptr,
-		dw,
-		MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
-		(LPTSTR)&lpMsgBuf,
-		0, nullptr);
-
-	// Display the error message and exit the process
-
-	lpDisplayBuf = (LPVOID)LocalAlloc(LMEM_ZEROINIT,
-		(lstrlen((LPCTSTR)lpMsgBuf) + lstrlen((LPCTSTR)lpszFunction) + 40) * sizeof(TCHAR));
-	StringCchPrintf((LPTSTR)lpDisplayBuf, LocalSize(lpDisplayBuf) / sizeof(TCHAR), TEXT("%s failed with error %d: %s"), lpszFunction, dw, lpMsgBuf);
-	MessageBox(nullptr, (LPCTSTR)lpDisplayBuf, TEXT("Error"), MB_OK);
-
-	LocalFree(lpMsgBuf);
-	LocalFree(lpDisplayBuf);
-	ExitProcess(dw);
-}
-
-funcInitializeAudio LoadModule()
+funcProvideAudioManager LoadModule()
 {
 	HINSTANCE hDLL = LoadLibrary(L"FmodAudio.dll");
-
 	if (hDLL == nullptr)
 	{
-		ErrorExit(TEXT("FmodAudio"));
+		throw "Unable to load FmodAudio.dll";
 	}
 	else
 	{
-		funcInitializeAudio initModule = reinterpret_cast<funcInitializeAudio>(GetProcAddress(hDLL, "InitializeAudio"));
-		if (initModule != nullptr)
+		funcProvideAudioManager provideAudioManager = reinterpret_cast<funcProvideAudioManager>(GetProcAddress(hDLL, "ProvideAudioManager"));
+		assert(provideAudioManager != nullptr);
+		if (provideAudioManager != nullptr)
 		{
-			return initModule;
+			return provideAudioManager;
 		}
 		FreeLibrary(hDLL);
-		ErrorExit(TEXT("FmodAudio"));
+		throw "Unable to get proc address InitializeAudio";
 	}
-	return nullptr;
+}
+
+void Initialize()
+{
+	MemoryManager* allocator = new MemoryManager();
+	assert(allocator != nullptr);
+	ServiceLocator::CreateInstance(*allocator);
+	ServiceLocator::GetInstance().Provide(*allocator);
+}
+
+void ShutDown()
+{
+	AudioManager& audioManager = ServiceLocator::GetInstance().GetAudioManager();
+	MemoryAllocator& memoryAllocator = ServiceLocator::GetInstance().GetMemoryAllocator();
+	ServiceLocator::Destroy();
+	delete &audioManager;
+	delete &memoryAllocator;
 }
 
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow)
@@ -98,21 +87,22 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow
 	ShowWindow(hwnd, nCmdShow);
 	
 
+	Initialize();
 
-	// Test audio
+	// Load audio manager
+	funcProvideAudioManager audio = LoadModule();
+	assert(audio != nullptr);
+	audio(100, ServiceLocator::GetInstance());
 
-	funcInitializeAudio initializeAudio = LoadModule();
-	Viper::MemoryManager allocator;
-	Viper::AudioManager* manager = initializeAudio(100, allocator);
-
-	manager->SetListener3dAttributes(Viper::Vector3(0, 0, 0), Viper::Vector3(0, 0, 1), Viper::Vector3(0, 1, 0));
-	manager->LoadSoundBank("sounds/ZombieWars.bank");
-	manager->LoadSoundBank("sounds/ZombieWars.strings.bank");
-	manager->LoadSoundBankEvents("sounds/ZombieWars.bank");
+	AudioManager& manager = ServiceLocator::GetInstance().GetAudioManager();
+	manager.SetListener3dAttributes(Viper::Vector3(0, 0, 0), Viper::Vector3(0, 0, 1), Viper::Vector3(0, 1, 0));
+	manager.LoadSoundBank("sounds/ZombieWars.bank");
+	manager.LoadSoundBank("sounds/ZombieWars.strings.bank");
+	manager.LoadSoundBankEvents("sounds/ZombieWars.bank");
 
 	Viper::Vector3 position(0, 0, 0);
-	manager->SetEvent3dAttributes("event:/GattlingGun-Fire", position, Viper::Vector3(0, 0, 0));
-	manager->PlayEvent("event:/GattlingGun-Fire");
+	manager.SetEvent3dAttributes("event:/GattlingGun-Fire", position, Viper::Vector3(0, 0, 0));
+	manager.PlayEvent("event:/GattlingGun-Fire");
 
 
 
@@ -125,12 +115,12 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow
 		TranslateMessage(&msg);
 		DispatchMessage(&msg);
 
-		manager->Update();
+		manager.Update();
 		position.z += 0.5;
-		manager->SetEvent3dAttributes("event:/GattlingGun-Fire", position, Viper::Vector3(0, 0, 0));
+		manager.SetEvent3dAttributes("event:/GattlingGun-Fire", position, Viper::Vector3(0, 0, 0));
 		Sleep(500);
 	}
-
+	ShutDown();
 	return 0;
 }
 

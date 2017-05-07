@@ -1,8 +1,14 @@
 #include "Core/ModuleExports.h"
+#include "Core/ServiceLocator.h"
 #include "FmodAudioManager.h"
-#include "Core/MemoryManager.h"
 
-Viper::AudioManager* InitializeAudio(uint32_t maxChannels, Viper::MemoryManager& memoryManager)
+using namespace Viper;
+
+void ProvideAudioManager(uint32_t maxChannels, ServiceLocator& serviceLocator)
 {
-	return new Viper::Audio::FmodAudioManager(maxChannels, memoryManager);
+	MemoryAllocator& allocator = serviceLocator.GetMemoryAllocator();
+	void* memBlock = allocator.Allocate(sizeof(Audio::FmodAudioManager), 1);
+	assert(memBlock != nullptr);
+	AudioManager* audioManager = new(memBlock) Audio::FmodAudioManager(maxChannels, serviceLocator.GetMemoryAllocator());
+	serviceLocator.Provide(*audioManager);
 }
