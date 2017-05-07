@@ -9,9 +9,10 @@
 #include "Core/Vector3.h"
 
 
-namespace FMOD {namespace Studio {
-	class Bank;
-}
+namespace FMOD {
+	namespace Studio {
+		class Bank;
+	}
 }
 
 namespace  Viper

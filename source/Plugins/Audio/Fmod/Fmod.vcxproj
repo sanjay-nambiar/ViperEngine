@@ -71,23 +71,27 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(SolutionDir)\bin\$(ProjectName)\$(PlatformName)\$(Configuration)\</OutDir>
-    <IntDir>$(SolutionDir)\bin\$(ProjectName)\$(PlatformName)\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)bin\$(ProjectName)\$(PlatformName)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)bin\$(ProjectName)\$(PlatformName)\$(Configuration)\</IntDir>
+    <TargetName>$(ProjectName)Audio</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(SolutionDir)\bin\$(ProjectName)\$(PlatformName)\$(Configuration)\</OutDir>
-    <IntDir>$(SolutionDir)\bin\$(ProjectName)\$(PlatformName)\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)bin\$(ProjectName)\$(PlatformName)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)bin\$(ProjectName)\$(PlatformName)\$(Configuration)\</IntDir>
+    <TargetName>$(ProjectName)Audio</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)\bin\$(ProjectName)\$(PlatformName)\$(Configuration)\</OutDir>
-    <IntDir>$(SolutionDir)\bin\$(ProjectName)\$(PlatformName)\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)bin\$(ProjectName)\$(PlatformName)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)bin\$(ProjectName)\$(PlatformName)\$(Configuration)\</IntDir>
+    <TargetName>$(ProjectName)Audio</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)\bin\$(ProjectName)\$(PlatformName)\$(Configuration)\</OutDir>
-    <IntDir>$(SolutionDir)\bin\$(ProjectName)\$(PlatformName)\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)bin\$(ProjectName)\$(PlatformName)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)bin\$(ProjectName)\$(PlatformName)\$(Configuration)\</IntDir>
+    <TargetName>$(ProjectName)Audio</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -103,12 +107,17 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <TreatLinkerWarningAsErrors>true</TreatLinkerWarningAsErrors>
-      <AdditionalLibraryDirectories>$(SolutionDir)..\external\fmod\lib\$(PlatformName);$(SolutionDir)..\external\fmod\lib\$(PlatformName)\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>fmod_vc.lib;fmodstudio_vc.lib;fsbank_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\external\fmod\lib\$(PlatformName)\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>fmodL_vc.lib;fmodstudioL_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <BuildLog>
-      <Path>$(SolutionDir)\bin\$(ProjectName)\$(MSBuildProjectName).log</Path>
+      <Path>$(SolutionDir)bin\$(ProjectName)\$(MSBuildProjectName).log</Path>
     </BuildLog>
+    <PostBuildEvent>
+      <Command>xcopy "$(OutDir)$(TargetName).dll" "$(SolutionDir)bin\Plugins\$(PlatformName)\$(Configuration)\" /I /R /Y
+xcopy "$(OutDir)$(TargetName).pdb" "$(SolutionDir)bin\Plugins\$(PlatformName)\$(Configuration)\" /I /R /Y
+xcopy "$(SolutionDir)..\external\fmod\lib\$(PlatformName)\$(Configuration)\*.dll" "$(SolutionDir)bin\Plugins\$(PlatformName)\$(Configuration)\" /I /R /Y</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -124,12 +133,17 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <TreatLinkerWarningAsErrors>true</TreatLinkerWarningAsErrors>
-      <AdditionalLibraryDirectories>$(SolutionDir)..\external\fmod\lib\$(PlatformName);$(SolutionDir)..\external\fmod\lib\$(PlatformName)\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>fmod_vc.lib;fmodstudio_vc.lib;fsbank_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\external\fmod\lib\$(PlatformName)\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>fmodL64_vc.lib;fmodstudioL64_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <BuildLog>
-      <Path>$(SolutionDir)\bin\$(ProjectName)\$(MSBuildProjectName).log</Path>
+      <Path>$(SolutionDir)bin\$(ProjectName)\$(MSBuildProjectName).log</Path>
     </BuildLog>
+    <PostBuildEvent>
+      <Command>xcopy "$(OutDir)$(TargetName).dll" "$(SolutionDir)bin\Plugins\$(PlatformName)\$(Configuration)\" /I /R /Y
+xcopy "$(OutDir)$(TargetName).pdb" "$(SolutionDir)bin\Plugins\$(PlatformName)\$(Configuration)\" /I /R /Y
+xcopy "$(SolutionDir)..\external\fmod\lib\$(PlatformName)\$(Configuration)\*.dll" "$(SolutionDir)bin\Plugins\$(PlatformName)\$(Configuration)\" /I /R /Y</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -149,12 +163,17 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <TreatLinkerWarningAsErrors>true</TreatLinkerWarningAsErrors>
-      <AdditionalLibraryDirectories>$(SolutionDir)..\external\fmod\lib\$(PlatformName);$(SolutionDir)..\external\fmod\lib\$(PlatformName)\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>fmod_vc.lib;fmodstudio_vc.lib;fsbank_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\external\fmod\lib\$(PlatformName)\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>fmod_vc.lib;fmodstudio_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <BuildLog>
-      <Path>$(SolutionDir)\bin\$(ProjectName)\$(MSBuildProjectName).log</Path>
+      <Path>$(SolutionDir)bin\$(ProjectName)\$(MSBuildProjectName).log</Path>
     </BuildLog>
+    <PostBuildEvent>
+      <Command>xcopy "$(OutDir)$(TargetName).dll" "$(SolutionDir)bin\Plugins\$(PlatformName)\$(Configuration)\" /I /R /Y
+xcopy "$(OutDir)$(TargetName).pdb" "$(SolutionDir)bin\Plugins\$(PlatformName)\$(Configuration)\" /I /R /Y
+xcopy "$(SolutionDir)..\external\fmod\lib\$(PlatformName)\$(Configuration)\*.dll" "$(SolutionDir)bin\Plugins\$(PlatformName)\$(Configuration)\" /I /R /Y</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -174,16 +193,22 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <TreatLinkerWarningAsErrors>true</TreatLinkerWarningAsErrors>
-      <AdditionalLibraryDirectories>$(SolutionDir)..\external\fmod\lib\$(PlatformName);$(SolutionDir)..\external\fmod\lib\$(PlatformName)\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>fmod_vc.lib;fmodstudio_vc.lib;fsbank_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\external\fmod\lib\$(PlatformName)\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>fmod64_vc.lib;fmodstudio64_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <BuildLog>
-      <Path>$(SolutionDir)\bin\$(ProjectName)\$(MSBuildProjectName).log</Path>
+      <Path>$(SolutionDir)bin\$(ProjectName)\$(MSBuildProjectName).log</Path>
     </BuildLog>
+    <PostBuildEvent>
+      <Command>xcopy "$(OutDir)$(TargetName).dll" "$(SolutionDir)bin\Plugins\$(PlatformName)\$(Configuration)\" /I /R /Y
+xcopy "$(OutDir)$(TargetName).pdb" "$(SolutionDir)bin\Plugins\$(PlatformName)\$(Configuration)\" /I /R /Y
+xcopy "$(SolutionDir)..\external\fmod\lib\$(PlatformName)\$(Configuration)\*.dll" "$(SolutionDir)bin\Plugins\$(PlatformName)\$(Configuration)\" /I /R /Y</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="FmodAudioManager.cpp" />
     <ClCompile Include="FmodImplementation.cpp" />
+    <ClCompile Include="PluginExport.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FmodAudioManager.h" />

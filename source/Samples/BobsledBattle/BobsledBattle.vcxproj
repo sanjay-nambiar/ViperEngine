@@ -99,6 +99,7 @@
       <TreatWarningAsError>true</TreatWarningAsError>
       <PrecompiledHeaderFile>Pch.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>$(SolutionDir)\bin\$(ProjectName)\$(TargetName).pch</PrecompiledHeaderOutputFile>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\source\Audio\Fmod;$(SolutionDir)..\source\Engine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -108,6 +109,9 @@
     <BuildLog>
       <Path>$(SolutionDir)\bin\$(ProjectName)\$(MSBuildProjectName).log</Path>
     </BuildLog>
+    <PostBuildEvent>
+      <Command>xcopy "$(SolutionDir)\bin\Plugins\$(PlatformName)\$(Configuration)\*.*" "$(OutDir)" /I /R /Y</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -119,6 +123,7 @@
       <TreatWarningAsError>true</TreatWarningAsError>
       <PrecompiledHeaderFile>Pch.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>$(SolutionDir)\bin\$(ProjectName)\$(TargetName).pch</PrecompiledHeaderOutputFile>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\source\Audio\Fmod;$(SolutionDir)..\source\Engine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -128,6 +133,9 @@
     <BuildLog>
       <Path>$(SolutionDir)\bin\$(ProjectName)\$(MSBuildProjectName).log</Path>
     </BuildLog>
+    <PostBuildEvent>
+      <Command>xcopy "$(SolutionDir)\bin\Plugins\$(PlatformName)\$(Configuration)\*.*" "$(OutDir)" /I /R /Y</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -141,6 +149,7 @@
       <TreatWarningAsError>true</TreatWarningAsError>
       <PrecompiledHeaderFile>Pch.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>$(SolutionDir)\bin\$(ProjectName)\$(TargetName).pch</PrecompiledHeaderOutputFile>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\source\Audio\Fmod;$(SolutionDir)..\source\Engine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -152,6 +161,9 @@
     <BuildLog>
       <Path>$(SolutionDir)\bin\$(ProjectName)\$(MSBuildProjectName).log</Path>
     </BuildLog>
+    <PostBuildEvent>
+      <Command>xcopy "$(SolutionDir)\bin\Plugins\$(PlatformName)\$(Configuration)\*.*" "$(OutDir)" /I /R /Y</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -165,6 +177,7 @@
       <TreatWarningAsError>true</TreatWarningAsError>
       <PrecompiledHeaderFile>Pch.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>$(SolutionDir)\bin\$(ProjectName)\$(TargetName).pch</PrecompiledHeaderOutputFile>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\source\Audio\Fmod;$(SolutionDir)..\source\Engine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -176,6 +189,9 @@
     <BuildLog>
       <Path>$(SolutionDir)\bin\$(ProjectName)\$(MSBuildProjectName).log</Path>
     </BuildLog>
+    <PostBuildEvent>
+      <Command>xcopy "$(SolutionDir)\bin\Plugins\$(PlatformName)\$(Configuration)\*.*" "$(OutDir)" /I /R /Y</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
@@ -188,6 +204,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Pch.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Engine\Engine.vcxproj">
+      <Project>{fb32e549-5006-4bde-85c3-425d3360af51}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

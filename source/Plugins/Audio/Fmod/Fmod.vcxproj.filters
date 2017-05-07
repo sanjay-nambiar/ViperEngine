@@ -3,6 +3,7 @@
   <ItemGroup>
     <ClCompile Include="FmodAudioManager.cpp" />
     <ClCompile Include="FmodImplementation.cpp" />
+    <ClCompile Include="PluginExport.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FmodAudioManager.h" />
