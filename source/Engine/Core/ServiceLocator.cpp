@@ -1,5 +1,6 @@
 #include "Pch.h"
 #include "ServiceLocator.h"
+#include <stdexcept>
 
 namespace Viper
 {
@@ -40,5 +41,13 @@ namespace Viper
 	{
 		assert(audioManager != nullptr);
 		return (*audioManager);
+	}
+
+	void ServiceLocator::ValidateServices() const
+	{
+		if (!(/*logger != nullptr &&  */memoryAllocator != nullptr && audioManager != nullptr))
+		{
+			throw std::runtime_error("One or more services not configured.");
+		}
 	}
 }

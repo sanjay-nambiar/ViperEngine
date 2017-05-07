@@ -13,4 +13,9 @@
   <ItemGroup>
     <ClInclude Include="Pch.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Config.ini">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
 </Project>

@@ -4,7 +4,7 @@
 
 using namespace Viper;
 
-void ProvideAudioManager(uint32_t maxChannels, ServiceLocator& serviceLocator)
+void ProvideAudio(uint32_t maxChannels, ServiceLocator& serviceLocator)
 {
 	MemoryAllocator& allocator = serviceLocator.GetMemoryAllocator();
 	void* memBlock = allocator.Allocate(sizeof(Audio::FmodAudioManager), 1);

@@ -1,7 +1,7 @@
 #pragma once
 
 #include <cassert>
-#include "MemoryManager.h"
+#include "Memory/MemoryManager.h"
 
 namespace Viper
 {

@@ -1,10 +1,11 @@
 #include "Pch.h"
 #include <windows.h>
 #include <strsafe.h>
-#include "Core/MemoryManager.h"
 #include "Core/ModuleImports.h"
 #include "Core/ServiceLocator.h"
+#include "Memory/MemoryManager.h"
 #include "Service/AudioManager.h"
+#include "Core/ModuleLoader.h"
 
 #ifndef UNICODE
 #define UNICODE
@@ -16,41 +17,21 @@ using namespace Viper;
 
 LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
-funcProvideAudioManager LoadModule()
-{
-	HINSTANCE hDLL = LoadLibrary(L"FmodAudio.dll");
-	if (hDLL == nullptr)
-	{
-		throw "Unable to load FmodAudio.dll";
-	}
-	else
-	{
-		funcProvideAudioManager provideAudioManager = reinterpret_cast<funcProvideAudioManager>(GetProcAddress(hDLL, "ProvideAudioManager"));
-		assert(provideAudioManager != nullptr);
-		if (provideAudioManager != nullptr)
-		{
-			return provideAudioManager;
-		}
-		FreeLibrary(hDLL);
-		throw "Unable to get proc address InitializeAudio";
-	}
-}
 
 void Initialize()
 {
 	MemoryManager* allocator = new MemoryManager();
 	assert(allocator != nullptr);
-	ServiceLocator::CreateInstance(*allocator);
-	ServiceLocator::GetInstance().Provide(*allocator);
+	Core::ModuleLoader::CreateInstance(*allocator);
+	Core::ModuleLoader::GetInstance().LoadModules("Config.ini");
 }
 
 void ShutDown()
 {
-	AudioManager& audioManager = ServiceLocator::GetInstance().GetAudioManager();
-	MemoryAllocator& memoryAllocator = ServiceLocator::GetInstance().GetMemoryAllocator();
-	ServiceLocator::Destroy();
-	delete &audioManager;
-	delete &memoryAllocator;
+	MemoryAllocator& allocator = ServiceLocator::GetInstance().GetMemoryAllocator();
+	Core::ModuleLoader::GetInstance().UnloadModules();
+	Core::ModuleLoader::Destroy();
+	delete &allocator;
 }
 
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow)
@@ -85,15 +66,11 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow
 	}
 
 	ShowWindow(hwnd, nCmdShow);
-	
-
 	Initialize();
 
-	// Load audio manager
-	funcProvideAudioManager audio = LoadModule();
-	assert(audio != nullptr);
-	audio(100, ServiceLocator::GetInstance());
 
+
+	// Test Audio
 	AudioManager& manager = ServiceLocator::GetInstance().GetAudioManager();
 	manager.SetListener3dAttributes(Viper::Vector3(0, 0, 0), Viper::Vector3(0, 0, 1), Viper::Vector3(0, 1, 0));
 	manager.LoadSoundBank("sounds/ZombieWars.bank");
@@ -103,7 +80,6 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow
 	Viper::Vector3 position(0, 0, 0);
 	manager.SetEvent3dAttributes("event:/GattlingGun-Fire", position, Viper::Vector3(0, 0, 0));
 	manager.PlayEvent("event:/GattlingGun-Fire");
-
 
 
 

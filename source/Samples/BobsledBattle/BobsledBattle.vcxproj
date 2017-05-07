@@ -71,23 +71,23 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(SolutionDir)\bin\$(ProjectName)\$(PlatformName)\$(Configuration)\</OutDir>
-    <IntDir>$(SolutionDir)\bin\$(ProjectName)\$(PlatformName)\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)bin\$(ProjectName)\$(PlatformName)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)bin\$(ProjectName)\$(PlatformName)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(SolutionDir)\bin\$(ProjectName)\$(PlatformName)\$(Configuration)\</OutDir>
-    <IntDir>$(SolutionDir)\bin\$(ProjectName)\$(PlatformName)\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)bin\$(ProjectName)\$(PlatformName)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)bin\$(ProjectName)\$(PlatformName)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)\bin\$(ProjectName)\$(PlatformName)\$(Configuration)\</OutDir>
-    <IntDir>$(SolutionDir)\bin\$(ProjectName)\$(PlatformName)\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)bin\$(ProjectName)\$(PlatformName)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)bin\$(ProjectName)\$(PlatformName)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)\bin\$(ProjectName)\$(PlatformName)\$(Configuration)\</OutDir>
-    <IntDir>$(SolutionDir)\bin\$(ProjectName)\$(PlatformName)\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)bin\$(ProjectName)\$(PlatformName)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)bin\$(ProjectName)\$(PlatformName)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -107,10 +107,11 @@
       <TreatLinkerWarningAsErrors>true</TreatLinkerWarningAsErrors>
     </Link>
     <BuildLog>
-      <Path>$(SolutionDir)\bin\$(ProjectName)\$(MSBuildProjectName).log</Path>
+      <Path>$(SolutionDir)bin\$(ProjectName)\$(MSBuildProjectName).log</Path>
     </BuildLog>
     <PostBuildEvent>
-      <Command>xcopy "$(SolutionDir)\bin\Plugins\$(PlatformName)\$(Configuration)\*.*" "$(OutDir)" /I /R /Y</Command>
+      <Command>xcopy "$(SolutionDir)bin\Plugins\$(PlatformName)\$(Configuration)\*.*" "$(OutDir)" /I /R /Y
+xcopy "$(ProjectDir)Config.ini" "$(OutDir)" /I /R /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -131,10 +132,11 @@
       <TreatLinkerWarningAsErrors>true</TreatLinkerWarningAsErrors>
     </Link>
     <BuildLog>
-      <Path>$(SolutionDir)\bin\$(ProjectName)\$(MSBuildProjectName).log</Path>
+      <Path>$(SolutionDir)bin\$(ProjectName)\$(MSBuildProjectName).log</Path>
     </BuildLog>
     <PostBuildEvent>
-      <Command>xcopy "$(SolutionDir)\bin\Plugins\$(PlatformName)\$(Configuration)\*.*" "$(OutDir)" /I /R /Y</Command>
+      <Command>xcopy "$(SolutionDir)bin\Plugins\$(PlatformName)\$(Configuration)\*.*" "$(OutDir)" /I /R /Y
+xcopy "$(ProjectDir)Config.ini" "$(OutDir)" /I /R /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -159,10 +161,11 @@
       <TreatLinkerWarningAsErrors>true</TreatLinkerWarningAsErrors>
     </Link>
     <BuildLog>
-      <Path>$(SolutionDir)\bin\$(ProjectName)\$(MSBuildProjectName).log</Path>
+      <Path>$(SolutionDir)bin\$(ProjectName)\$(MSBuildProjectName).log</Path>
     </BuildLog>
     <PostBuildEvent>
-      <Command>xcopy "$(SolutionDir)\bin\Plugins\$(PlatformName)\$(Configuration)\*.*" "$(OutDir)" /I /R /Y</Command>
+      <Command>xcopy "$(SolutionDir)bin\Plugins\$(PlatformName)\$(Configuration)\*.*" "$(OutDir)" /I /R /Y
+xcopy "$(ProjectDir)Config.ini" "$(OutDir)" /I /R /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -187,10 +190,11 @@
       <TreatLinkerWarningAsErrors>true</TreatLinkerWarningAsErrors>
     </Link>
     <BuildLog>
-      <Path>$(SolutionDir)\bin\$(ProjectName)\$(MSBuildProjectName).log</Path>
+      <Path>$(SolutionDir)bin\$(ProjectName)\$(MSBuildProjectName).log</Path>
     </BuildLog>
     <PostBuildEvent>
-      <Command>xcopy "$(SolutionDir)\bin\Plugins\$(PlatformName)\$(Configuration)\*.*" "$(OutDir)" /I /R /Y</Command>
+      <Command>xcopy "$(SolutionDir)bin\Plugins\$(PlatformName)\$(Configuration)\*.*" "$(OutDir)" /I /R /Y
+xcopy "$(ProjectDir)Config.ini" "$(OutDir)" /I /R /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -209,6 +213,9 @@
     <ProjectReference Include="..\..\Engine\Engine.vcxproj">
       <Project>{fb32e549-5006-4bde-85c3-425d3360af51}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Config.ini" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

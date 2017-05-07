@@ -12,7 +12,7 @@ namespace Viper
 	 *  Services should be provided to this class throught the provide method
 	 *  There are accessor methods for getting individual services
 	 */
-	class ServiceLocator : public Singleton<ServiceLocator>
+	class ServiceLocator final: public Singleton<ServiceLocator>
 	{
 		friend Singleton<ServiceLocator>;
 
@@ -21,6 +21,7 @@ namespace Viper
 		AudioManager* audioManager;
 
 		ServiceLocator();
+		~ServiceLocator() = default;
 		
 		ServiceLocator(const ServiceLocator&) = delete;
 		ServiceLocator(ServiceLocator&&) = delete;
@@ -56,5 +57,9 @@ namespace Viper
 		 *  @return A referece to the default AudioManager
 		 */
 		AudioManager& GetAudioManager() const;
+
+		/** Checks if all services are loaded. Throws exception if any service is not configured
+		 */
+		void ValidateServices() const;
 	};
 }

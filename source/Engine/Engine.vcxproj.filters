@@ -25,9 +25,6 @@
     <ClInclude Include="Core\ModuleExports.h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="Core\MemoryManager.h">
-      <Filter>Core</Filter>
-    </ClInclude>
     <ClInclude Include="Core\ServiceLocator.h">
       <Filter>Core</Filter>
     </ClInclude>
@@ -58,12 +55,15 @@
     <ClInclude Include="Service\MemoryAllocator.h">
       <Filter>Service</Filter>
     </ClInclude>
+    <ClInclude Include="Memory\MemoryManager.h">
+      <Filter>Memory</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\ModuleLoader.h">
+      <Filter>Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Pch.cpp" />
-    <ClCompile Include="Core\MemoryManager.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
     <ClCompile Include="Core\ServiceLocator.cpp">
       <Filter>Core</Filter>
     </ClCompile>
@@ -72,6 +72,12 @@
     </ClCompile>
     <ClCompile Include="Memory\StackAllocator.cpp">
       <Filter>Memory</Filter>
+    </ClCompile>
+    <ClCompile Include="Memory\MemoryManager.cpp">
+      <Filter>Memory</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\ModuleLoader.cpp">
+      <Filter>Core</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

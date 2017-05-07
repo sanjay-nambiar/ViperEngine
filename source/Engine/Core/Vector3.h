@@ -29,8 +29,13 @@ namespace Viper
 		 * @param z Z component of the vector
 		*/
 		inline Vector3(float32_t x, float32_t y, float32_t z) : x(x), y(y), z(z)
-		{			
+		{
 		}
+
+		/** Get a zero vector
+		 *  @return Zero vector
+		 */
+		static Vector3 Zero();
 	};
 }
 
