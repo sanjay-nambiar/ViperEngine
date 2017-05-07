@@ -111,7 +111,8 @@
     </BuildLog>
     <PostBuildEvent>
       <Command>xcopy "$(SolutionDir)bin\Plugins\$(PlatformName)\$(Configuration)\*.*" "$(OutDir)" /I /R /Y
-xcopy "$(ProjectDir)Config.ini" "$(OutDir)" /I /R /Y</Command>
+xcopy "$(ProjectDir)Config.ini" "$(OutDir)" /I /R /Y
+xcopy "$(ProjectDir)Content" "$(OutDir)Content" /I /R /Y /E</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -136,7 +137,8 @@ xcopy "$(ProjectDir)Config.ini" "$(OutDir)" /I /R /Y</Command>
     </BuildLog>
     <PostBuildEvent>
       <Command>xcopy "$(SolutionDir)bin\Plugins\$(PlatformName)\$(Configuration)\*.*" "$(OutDir)" /I /R /Y
-xcopy "$(ProjectDir)Config.ini" "$(OutDir)" /I /R /Y</Command>
+xcopy "$(ProjectDir)Config.ini" "$(OutDir)" /I /R /Y
+xcopy "$(ProjectDir)Content" "$(OutDir)Content" /I /R /Y /E</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -165,7 +167,8 @@ xcopy "$(ProjectDir)Config.ini" "$(OutDir)" /I /R /Y</Command>
     </BuildLog>
     <PostBuildEvent>
       <Command>xcopy "$(SolutionDir)bin\Plugins\$(PlatformName)\$(Configuration)\*.*" "$(OutDir)" /I /R /Y
-xcopy "$(ProjectDir)Config.ini" "$(OutDir)" /I /R /Y</Command>
+xcopy "$(ProjectDir)Config.ini" "$(OutDir)" /I /R /Y
+xcopy "$(ProjectDir)Content" "$(OutDir)Content" /I /R /Y /E</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -194,7 +197,8 @@ xcopy "$(ProjectDir)Config.ini" "$(OutDir)" /I /R /Y</Command>
     </BuildLog>
     <PostBuildEvent>
       <Command>xcopy "$(SolutionDir)bin\Plugins\$(PlatformName)\$(Configuration)\*.*" "$(OutDir)" /I /R /Y
-xcopy "$(ProjectDir)Config.ini" "$(OutDir)" /I /R /Y</Command>
+xcopy "$(ProjectDir)Config.ini" "$(OutDir)" /I /R /Y
+xcopy "$(ProjectDir)Content" "$(OutDir)Content" /I /R /Y /E</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
