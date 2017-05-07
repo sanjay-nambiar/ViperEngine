@@ -31,7 +31,8 @@ namespace Viper
 			{
 				// get the bumber of bytes to subtract from the memory address to get the alignment 
 				uint32_t adjustment = misAlignment;
-				assert((left + bytes + adjustment) < right);
+				adjustment;
+				assert((left + bytes + misAlignment) < right);
 				right -= bytes;
 				return static_cast<void*>(right);
 			}
@@ -39,6 +40,7 @@ namespace Viper
 			{
 				// get the bumber of bytes to add to the memory address to get the alignment 
 				uint32_t adjustment = alignment - misAlignment;
+				adjustment;
 				assert((left + bytes + adjustment) < right);
 				left += bytes;
 				return static_cast<void*>(left);
