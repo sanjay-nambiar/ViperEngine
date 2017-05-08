@@ -1,12 +1,25 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="FmodAudioManager.cpp" />
-    <ClCompile Include="FmodImplementation.cpp" />
     <ClCompile Include="PluginExport.cpp" />
+    <ClCompile Include="FmodAudioManager.cpp">
+      <Filter>Plugin</Filter>
+    </ClCompile>
+    <ClCompile Include="FmodImplementation.cpp">
+      <Filter>Plugin</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="FmodAudioManager.h" />
-    <ClInclude Include="FmodImplementation.h" />
+    <ClInclude Include="FmodAudioManager.h">
+      <Filter>Plugin</Filter>
+    </ClInclude>
+    <ClInclude Include="FmodImplementation.h">
+      <Filter>Plugin</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Plugin">
+      <UniqueIdentifier>{931b2b5c-87a8-4d5f-86d2-738046e79b6c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>
