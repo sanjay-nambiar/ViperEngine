@@ -215,10 +215,12 @@ xcopy "$(OutDir)$(TargetName).pdb" "$(SolutionDir)bin\Plugins\$(PlatformName)\$(
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="GlfwInputManager.cpp" />
     <ClCompile Include="GlwfwWindowManager.cpp" />
     <ClCompile Include="PluginExport.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="GlfwInputManager.h" />
     <ClInclude Include="GlfwWindowManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

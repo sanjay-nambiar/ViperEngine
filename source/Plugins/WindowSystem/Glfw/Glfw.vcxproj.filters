@@ -5,6 +5,9 @@
     <ClCompile Include="GlwfwWindowManager.cpp">
       <Filter>Plugin</Filter>
     </ClCompile>
+    <ClCompile Include="GlfwInputManager.cpp">
+      <Filter>Plugin</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Plugin">
@@ -13,6 +16,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GlfwWindowManager.h">
+      <Filter>Plugin</Filter>
+    </ClInclude>
+    <ClInclude Include="GlfwInputManager.h">
       <Filter>Plugin</Filter>
     </ClInclude>
   </ItemGroup>

@@ -73,6 +73,12 @@
     <ClInclude Include="Service\RendererSystem.h">
       <Filter>Service</Filter>
     </ClInclude>
+    <ClInclude Include="Service\InputManager.h">
+      <Filter>Service</Filter>
+    </ClInclude>
+    <ClInclude Include="Service\InputEnums.h">
+      <Filter>Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Pch.cpp" />
