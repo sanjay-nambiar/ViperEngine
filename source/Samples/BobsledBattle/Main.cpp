@@ -1,6 +1,5 @@
 #include "Pch.h"
 #include <windows.h>
-#include <strsafe.h>
 #include "Core/ServiceLocator.h"
 #include "Core/ModuleLoader.h"
 #include "Memory/MemoryManager.h"
