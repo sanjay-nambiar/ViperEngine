@@ -4,6 +4,7 @@
 #include "Core/ModuleLoader.h"
 #include "Memory/MemoryManager.h"
 #include "Service/AudioManager.h"
+#include "Service/RendererSystem.h"
 
 
 #ifndef UNICODE
@@ -38,6 +39,9 @@ int WINAPI wWinMain(HINSTANCE, HINSTANCE, PWSTR, int)
 	windowManager.Initialize();
 	windowManager.CreateGameWindow(1280, 720, "Bobsled Battle");
 
+	RendererSystem& rendererSystem = ServiceLocator::GetInstance().GetRendererSystem();
+	rendererSystem.Initialize();
+
 	// Test Audio
 	AudioManager& audioManager = ServiceLocator::GetInstance().GetAudioManager();
 	audioManager.SetListener3dAttributes(Viper::Vector3(0, 0, 0), Viper::Vector3(0, 0, 1), Viper::Vector3(0, 1, 0));
@@ -49,14 +53,19 @@ int WINAPI wWinMain(HINSTANCE, HINSTANCE, PWSTR, int)
 	audioManager.SetEvent3dAttributes("event:/GattlingGun-Fire", position, Viper::Vector3(0, 0, 0));
 	audioManager.PlayEvent("event:/GattlingGun-Fire");
 
-	while (windowManager.Update())
+	while (windowManager.BeginUpdate())
 	{
 		audioManager.Update();
 		position.z += 0.5;
 		audioManager.SetEvent3dAttributes("event:/GattlingGun-Fire", position, Viper::Vector3(0, 0, 0));
+		
+		rendererSystem.Update();
+		
+		windowManager.EndUpdate();
 		Sleep(500);
 	}
 
+	rendererSystem.Shutdown();
 	windowManager.Shutdown();
 	ShutDown();
 	return 0;

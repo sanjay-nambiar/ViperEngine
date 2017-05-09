@@ -16,7 +16,8 @@ namespace Viper
 
 			void Initialize() override;
 			std::uint64_t CreateGameWindow(std::uint32_t width, std::uint32_t height, const std::string& title) override;
-			bool Update() override;
+			bool BeginUpdate() override;
+			void EndUpdate() override;
 			void DestroyGameWindow(std::uint64_t windowHandle) override;
 			void Shutdown() override;
 		private:

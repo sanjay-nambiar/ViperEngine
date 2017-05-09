@@ -27,19 +27,24 @@ namespace Viper
 			return reinterpret_cast<std::uint64_t>(window);
 		}
 
-		bool GlfwWindowManager::Update()
+		bool GlfwWindowManager::BeginUpdate()
 		{
 			if (!glfwWindowShouldClose(window))
 			{
-				glfwSwapBuffers(window);
 				glfwPollEvents();
 				return true;
 			}
 			return false;
 		}
 
-		void GlfwWindowManager::DestroyGameWindow(std::uint64_t)
+		void GlfwWindowManager::EndUpdate()
 		{
+			glfwSwapBuffers(window);
+		}
+
+		void GlfwWindowManager::DestroyGameWindow(std::uint64_t windowId)
+		{
+			glfwDestroyWindow(reinterpret_cast<GLFWwindow*>(windowId));
 		}
 
 		void GlfwWindowManager::Shutdown()

@@ -30,6 +30,11 @@ namespace Viper
 		windowManager = &windowManagerRef;
 	}
 
+	void ServiceLocator::Provide(RendererSystem& rendererSystemRef)
+	{
+		rendererSystem = &rendererSystemRef;
+	}
+
 	Logger& ServiceLocator::GetLogger() const
 	{
 		assert(logger != nullptr);
@@ -52,6 +57,12 @@ namespace Viper
 	{
 		assert(windowManager != nullptr);
 		return (*windowManager);
+	}
+
+	RendererSystem& ServiceLocator::GetRendererSystem() const
+	{
+		assert(rendererSystem != nullptr);
+		return (*rendererSystem);
 	}
 
 	void ServiceLocator::ValidateServices() const

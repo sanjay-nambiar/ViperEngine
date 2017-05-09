@@ -69,6 +69,7 @@ namespace Viper
 
 		void ModuleLoader::InitializeWindowSystem()
 		{
+			assert(configData.find(WindowSystemModuleSection) != configData.end());
 			std::unordered_map<std::string, std::string>& attributes = configData[WindowSystemModuleSection];
 			auto window = LoadModuleFromDll<funcProvideWindowSystem>(attributes["Plugin"], "WindowSystem");
 			assert(window != nullptr);
@@ -77,6 +78,7 @@ namespace Viper
 
 		void ModuleLoader::InitializeAudio()
 		{
+			assert(configData.find(AudioModuleSection) != configData.end());
 			std::unordered_map<std::string, std::string>& attributes = configData[AudioModuleSection];
 			auto audio = LoadModuleFromDll<funcProvideAudio>(attributes["Plugin"], "Audio");
 			assert(audio != nullptr);
@@ -85,8 +87,11 @@ namespace Viper
 
 		void ModuleLoader::InitializeRenderer()
 		{
+			assert(configData.find(RendererModuleSection) != configData.end());
 			std::unordered_map<std::string, std::string>& attributes = configData[RendererModuleSection];
-			attributes;
+			auto renderer = LoadModuleFromDll<funcProvideRenderer>(attributes["Plugin"], "Renderer");
+			assert(renderer != nullptr);
+			renderer(ServiceLocator::GetInstance());
 		}
 
 		template <typename ProvideModuleMethodT>

@@ -70,6 +70,9 @@
     <ClInclude Include="Window\WindowEvent.h">
       <Filter>Window</Filter>
     </ClInclude>
+    <ClInclude Include="Service\RendererSystem.h">
+      <Filter>Service</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Pch.cpp" />

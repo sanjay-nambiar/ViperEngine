@@ -4,7 +4,9 @@
 #include "Service/AudioManager.h"
 #include "Service/MemoryAllocator.h"
 #include "Service/Logger.h"
+#include "Service/RendererSystem.h"
 #include "Service/WindowManager.h"
+
 
 namespace Viper
 {
@@ -20,6 +22,7 @@ namespace Viper
 		MemoryAllocator* memoryAllocator;
 		AudioManager* audioManager;
 		WindowManager* windowManager;
+		RendererSystem* rendererSystem;
 
 		ServiceLocator();
 		~ServiceLocator() = default;
@@ -45,9 +48,14 @@ namespace Viper
 		void Provide(AudioManager& audioManager);
 
 		/** Provide a window manager implementation to the service locator
-		 *  @param windowManager An WindowManager interface implementation
+		 *  @param windowManager A WindowManager interface implementation
 		 */
 		void Provide(WindowManager& windowManager);
+
+		/** Provide a renderer system implementation to the service locator
+		 *  @param rendererSystem A RendererSystem interface implementation
+		 */
+		void Provide(RendererSystem& rendererSystem);
 
 		/** Gets a reference to the default Logger
 		 *  @return A referece to the default logger
@@ -68,6 +76,11 @@ namespace Viper
 		 *  @return A referece to the default WindowManager
 		 */
 		WindowManager& GetWindowManager() const;
+
+		/** Gets a reference to the default RendererSystem
+		 *  @return A referece to the default RendererSystem
+		 */
+		RendererSystem& GetRendererSystem() const;
 
 		/** Checks if all services are loaded. Throws exception if any service is not configured
 		 */
