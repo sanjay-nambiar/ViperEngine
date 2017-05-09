@@ -5,7 +5,8 @@
 namespace Viper
 {
 
-	ServiceLocator::ServiceLocator() : logger(nullptr), memoryAllocator(nullptr), audioManager(nullptr)
+	ServiceLocator::ServiceLocator() :
+		logger(nullptr), memoryAllocator(nullptr), audioManager(nullptr), windowManager(nullptr)
 	{
 	};
 
@@ -17,12 +18,16 @@ namespace Viper
 	void ServiceLocator::Provide(MemoryAllocator& memoryAllocatorRef)
 	{
 		memoryAllocator = &memoryAllocatorRef;
-		assert(memoryAllocator != nullptr);
 	}
 
 	void ServiceLocator::Provide(AudioManager& audioManagerRef)
 	{
 		audioManager = &audioManagerRef;
+	}
+
+	void ServiceLocator::Provide(WindowManager& windowManagerRef)
+	{
+		windowManager = &windowManagerRef;
 	}
 
 	Logger& ServiceLocator::GetLogger() const
@@ -41,6 +46,12 @@ namespace Viper
 	{
 		assert(audioManager != nullptr);
 		return (*audioManager);
+	}
+
+	WindowManager& ServiceLocator::GetWindowManager() const
+	{
+		assert(windowManager != nullptr);
+		return (*windowManager);
 	}
 
 	void ServiceLocator::ValidateServices() const

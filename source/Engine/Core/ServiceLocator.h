@@ -1,13 +1,13 @@
 #pragma once
 
 #include "Singleton.h"
+#include "Service/AudioManager.h"
+#include "Service/MemoryAllocator.h"
+#include "Service/Logger.h"
+#include "Service/WindowManager.h"
 
 namespace Viper
 {
-	class Logger;
-	class MemoryAllocator;
-	class AudioManager;
-
 	/** This is a singleton class which keeps a handle to all the services
 	 *  Services should be provided to this class throught the provide method
 	 *  There are accessor methods for getting individual services
@@ -19,6 +19,7 @@ namespace Viper
 		Logger* logger;
 		MemoryAllocator* memoryAllocator;
 		AudioManager* audioManager;
+		WindowManager* windowManager;
 
 		ServiceLocator();
 		~ServiceLocator() = default;
@@ -43,6 +44,11 @@ namespace Viper
 		 */
 		void Provide(AudioManager& audioManager);
 
+		/** Provide a window manager implementation to the service locator
+		 *  @param windowManager An WindowManager interface implementation
+		 */
+		void Provide(WindowManager& windowManager);
+
 		/** Gets a reference to the default Logger
 		 *  @return A referece to the default logger
 		 */
@@ -57,6 +63,11 @@ namespace Viper
 		 *  @return A referece to the default AudioManager
 		 */
 		AudioManager& GetAudioManager() const;
+
+		/** Gets a reference to the default WindowManager
+		 *  @return A referece to the default WindowManager
+		 */
+		WindowManager& GetWindowManager() const;
 
 		/** Checks if all services are loaded. Throws exception if any service is not configured
 		 */

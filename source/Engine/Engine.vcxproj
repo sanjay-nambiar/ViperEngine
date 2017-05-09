@@ -197,6 +197,8 @@
     <ClInclude Include="Service\AudioManager.h" />
     <ClInclude Include="Service\Logger.h" />
     <ClInclude Include="Service\MemoryAllocator.h" />
+    <ClInclude Include="Service\WindowManager.h" />
+    <ClInclude Include="Window\WindowEvent.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core\ModuleLoader.cpp" />

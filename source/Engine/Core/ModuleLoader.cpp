@@ -1,6 +1,7 @@
 #include "Pch.h"
 #include "ModuleLoader.h"
 #include <windows.h>
+#include <fstream>
 #include "Core/ModuleImports.h"
 #include "Service/AudioManager.h"
 
@@ -11,17 +12,16 @@ namespace Viper
 	{
 		const std::string ModuleLoader::AudioModuleSection = "Audio";
 		const std::string ModuleLoader::RendererModuleSection = "Renderer";
+		const std::string ModuleLoader::WindowSystemModuleSection = "WindowSystem";
 
 		void ModuleLoader::LoadModules(const std::string& configFilePath)
 		{
-			configFile.open(configFilePath);
-			if (!configFile.is_open())
-			{
-				throw std::runtime_error("Unable to read module config file: " + configFilePath);
-			}
-
 			ServiceLocator::CreateInstance(*allocator);
 			ServiceLocator::GetInstance().Provide(*allocator);
+
+			configFile = configFilePath;
+			LoadConfigData();
+			InitializeWindowSystem();
 			InitializeAudio();
 			InitializeRenderer();
 			ServiceLocator::GetInstance().ValidateServices();
@@ -32,55 +32,52 @@ namespace Viper
 			AudioManager& audioManager = ServiceLocator::GetInstance().GetAudioManager();
 			ServiceLocator::Destroy();
 			delete &audioManager;
-			configFile.close();
-		}
-
-		void ModuleLoader::MoveToSection(const std::string& sectionName)
-		{
-			configFile.seekg(0, std::ios::beg);
-			std::string line;
-			bool sectionFound = false;
-			const std::string sectionHeader = "[" + sectionName + "]";
-			while (std::getline(configFile, line))
-			{
-				if (line == sectionHeader)
-				{
-					sectionFound = true;
-					break;
-				}
-			}
-			
-			if (!sectionFound)
-			{
-				throw std::runtime_error("Unable to find section " + sectionName + " in modules config");
-			}
+			configData.clear();
+			configFile.clear();
 		}
 
 		//TODO: Improve parsing. consider white spaces
-		void ModuleLoader::GetAttributes(const std::string& sectionName, std::unordered_map<std::string, std::string>& attributesMap)
+		void ModuleLoader::LoadConfigData()
 		{
-			MoveToSection(sectionName);
-			std::string line;
-			while (std::getline(configFile, line))
+			std::ifstream file;
+			file.open(configFile);
+			if (!file.is_open())
 			{
-				if (line[0] == '[')
-				{
-					break;
-				}
-
-				size_t pos = line.find('=');
-				assert(pos < line.length());
-				attributesMap.insert({
-					line.substr(0, pos),
-					line.substr(pos + 1)
-				});
+				throw std::runtime_error("Unable to read module config file: " + configFile);
 			}
+
+			std::string line;
+			std::string sectionName;
+			while (std::getline(file, line))
+			{
+				if (line.size() > 0 && line[0] == '[' && line[line.size() - 1] == ']')
+				{
+					sectionName = line.substr(1, line.length() - 2);
+				}
+				else
+				{
+					size_t pos = line.find('=');
+					assert(pos < line.length());
+					configData[sectionName].insert({
+						line.substr(0, pos),
+						line.substr(pos + 1)
+					});
+				}
+			}
+			file.close();
+		}
+
+		void ModuleLoader::InitializeWindowSystem()
+		{
+			std::unordered_map<std::string, std::string>& attributes = configData[WindowSystemModuleSection];
+			auto window = LoadModuleFromDll<funcProvideWindowSystem>(attributes["Plugin"], "WindowSystem");
+			assert(window != nullptr);
+			window(ServiceLocator::GetInstance());
 		}
 
 		void ModuleLoader::InitializeAudio()
 		{
-			std::unordered_map<std::string, std::string> attributes;
-			GetAttributes(AudioModuleSection, attributes);
+			std::unordered_map<std::string, std::string>& attributes = configData[AudioModuleSection];
 			auto audio = LoadModuleFromDll<funcProvideAudio>(attributes["Plugin"], "Audio");
 			assert(audio != nullptr);
 			audio(std::atoi(attributes["Channels"].c_str()), ServiceLocator::GetInstance());
@@ -88,8 +85,8 @@ namespace Viper
 
 		void ModuleLoader::InitializeRenderer()
 		{
-			std::unordered_map<std::string, std::string> attributes;
-			GetAttributes(RendererModuleSection, attributes);
+			std::unordered_map<std::string, std::string>& attributes = configData[RendererModuleSection];
+			attributes;
 		}
 
 		template <typename ProvideModuleMethodT>

@@ -1,6 +1,5 @@
 #pragma once
 
-#include <fstream>
 #include <unordered_map>
 
 namespace Viper
@@ -23,18 +22,21 @@ namespace Viper
 			ModuleLoader& operator=(const ModuleLoader&) = delete;
 			ModuleLoader& operator=(ModuleLoader&&) = delete;
 
-			void MoveToSection(const std::string& sectionName);
-			void GetAttributes(const std::string& sectionName, std::unordered_map<std::string, std::string>& attributesMap);
+			void LoadConfigData();
+
 			void InitializeAudio();
 			void InitializeRenderer();
+			void InitializeWindowSystem();
 
 			template <typename ProvideModuleMethodT>
 			static ProvideModuleMethodT LoadModuleFromDll(const std::string& moduleName, const std::string& sectionName);
 
-			std::ifstream configFile;
+			std::string configFile;
+			std::unordered_map<std::string, std::unordered_map<std::string, std::string>> configData;
 
 			static const std::string AudioModuleSection;
 			static const std::string RendererModuleSection;
+			static const std::string WindowSystemModuleSection;
 		};
 	}
 }

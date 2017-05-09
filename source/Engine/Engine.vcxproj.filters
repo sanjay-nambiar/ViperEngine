@@ -16,6 +16,9 @@
     <Filter Include="Audio">
       <UniqueIdentifier>{4173f721-197e-4d14-bfaf-7c41caa1b9e1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Window">
+      <UniqueIdentifier>{32fbae56-4830-4999-bf61-a4782ea34ff7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Pch.h" />
@@ -60,6 +63,12 @@
     </ClInclude>
     <ClInclude Include="Core\ModuleLoader.h">
       <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Service\WindowManager.h">
+      <Filter>Service</Filter>
+    </ClInclude>
+    <ClInclude Include="Window\WindowEvent.h">
+      <Filter>Window</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
