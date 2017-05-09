@@ -108,16 +108,16 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <TreatLinkerWarningAsErrors>true</TreatLinkerWarningAsErrors>
-      <AdditionalLibraryDirectories>$(SolutionDir)..\external\glfw\lib\$(PlatformName);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glfw3.lib;glfw3dll.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\external\glfw\lib\$(PlatformName)\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
     </Link>
     <BuildLog>
       <Path>$(SolutionDir)bin\$(ProjectName)\$(MSBuildProjectName).log</Path>
     </BuildLog>
     <PostBuildEvent>
       <Command>xcopy "$(OutDir)$(TargetName).dll" "$(SolutionDir)bin\Plugins\$(PlatformName)\$(Configuration)\" /I /R /Y
-xcopy "$(OutDir)$(TargetName).pdb" "$(SolutionDir)bin\Plugins\$(PlatformName)\$(Configuration)\" /I /R /Y
-xcopy "$(SolutionDir)..\external\glfw\lib\$(PlatformName)\*.dll" "$(SolutionDir)bin\Plugins\$(PlatformName)\$(Configuration)\" /I /R /Y</Command>
+xcopy "$(OutDir)$(TargetName).pdb" "$(SolutionDir)bin\Plugins\$(PlatformName)\$(Configuration)\" /I /R /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -135,16 +135,16 @@ xcopy "$(SolutionDir)..\external\glfw\lib\$(PlatformName)\*.dll" "$(SolutionDir)
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <TreatLinkerWarningAsErrors>true</TreatLinkerWarningAsErrors>
-      <AdditionalLibraryDirectories>$(SolutionDir)..\external\glfw\lib\$(PlatformName);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glfw3.lib;glfw3dll.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\external\glfw\lib\$(PlatformName)\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
     </Link>
     <BuildLog>
       <Path>$(SolutionDir)bin\$(ProjectName)\$(MSBuildProjectName).log</Path>
     </BuildLog>
     <PostBuildEvent>
       <Command>xcopy "$(OutDir)$(TargetName).dll" "$(SolutionDir)bin\Plugins\$(PlatformName)\$(Configuration)\" /I /R /Y
-xcopy "$(OutDir)$(TargetName).pdb" "$(SolutionDir)bin\Plugins\$(PlatformName)\$(Configuration)\" /I /R /Y
-xcopy "$(SolutionDir)..\external\glfw\lib\$(PlatformName)\*.dll" "$(SolutionDir)bin\Plugins\$(PlatformName)\$(Configuration)\" /I /R /Y</Command>
+xcopy "$(OutDir)$(TargetName).pdb" "$(SolutionDir)bin\Plugins\$(PlatformName)\$(Configuration)\" /I /R /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -166,16 +166,16 @@ xcopy "$(SolutionDir)..\external\glfw\lib\$(PlatformName)\*.dll" "$(SolutionDir)
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <TreatLinkerWarningAsErrors>true</TreatLinkerWarningAsErrors>
-      <AdditionalLibraryDirectories>$(SolutionDir)..\external\glfw\lib\$(PlatformName);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glfw3.lib;glfw3dll.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\external\glfw\lib\$(PlatformName)\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
     </Link>
     <BuildLog>
       <Path>$(SolutionDir)bin\$(ProjectName)\$(MSBuildProjectName).log</Path>
     </BuildLog>
     <PostBuildEvent>
       <Command>xcopy "$(OutDir)$(TargetName).dll" "$(SolutionDir)bin\Plugins\$(PlatformName)\$(Configuration)\" /I /R /Y
-xcopy "$(OutDir)$(TargetName).pdb" "$(SolutionDir)bin\Plugins\$(PlatformName)\$(Configuration)\" /I /R /Y
-xcopy "$(SolutionDir)..\external\glfw\lib\$(PlatformName)\*.dll" "$(SolutionDir)bin\Plugins\$(PlatformName)\$(Configuration)\" /I /R /Y</Command>
+xcopy "$(OutDir)$(TargetName).pdb" "$(SolutionDir)bin\Plugins\$(PlatformName)\$(Configuration)\" /I /R /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -197,16 +197,16 @@ xcopy "$(SolutionDir)..\external\glfw\lib\$(PlatformName)\*.dll" "$(SolutionDir)
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <TreatLinkerWarningAsErrors>true</TreatLinkerWarningAsErrors>
-      <AdditionalLibraryDirectories>$(SolutionDir)..\external\glfw\lib\$(PlatformName);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glfw3.lib;glfw3dll.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\external\glfw\lib\$(PlatformName)\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
     </Link>
     <BuildLog>
       <Path>$(SolutionDir)bin\$(ProjectName)\$(MSBuildProjectName).log</Path>
     </BuildLog>
     <PostBuildEvent>
       <Command>xcopy "$(OutDir)$(TargetName).dll" "$(SolutionDir)bin\Plugins\$(PlatformName)\$(Configuration)\" /I /R /Y
-xcopy "$(OutDir)$(TargetName).pdb" "$(SolutionDir)bin\Plugins\$(PlatformName)\$(Configuration)\" /I /R /Y
-xcopy "$(SolutionDir)..\external\glfw\lib\$(PlatformName)\*.dll" "$(SolutionDir)bin\Plugins\$(PlatformName)\$(Configuration)\" /I /R /Y</Command>
+xcopy "$(OutDir)$(TargetName).pdb" "$(SolutionDir)bin\Plugins\$(PlatformName)\$(Configuration)\" /I /R /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -215,7 +215,11 @@ xcopy "$(SolutionDir)..\external\glfw\lib\$(PlatformName)\*.dll" "$(SolutionDir)
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="GlwfwWindowManager.cpp" />
     <ClCompile Include="PluginExport.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GlfwWindowManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

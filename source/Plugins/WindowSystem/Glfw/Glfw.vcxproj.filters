@@ -2,10 +2,18 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="PluginExport.cpp" />
+    <ClCompile Include="GlwfwWindowManager.cpp">
+      <Filter>Plugin</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Plugin">
       <UniqueIdentifier>{5b20f87a-7d51-4e8c-8f1c-489b91ce12df}</UniqueIdentifier>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GlfwWindowManager.h">
+      <Filter>Plugin</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

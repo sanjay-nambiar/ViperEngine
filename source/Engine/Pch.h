@@ -1,8 +1,12 @@
 #pragma once
 
-#include <iostream>
+#include <cassert>
+#include <cstdint>
 #include <fstream>
+#include <iostream>
+#include <stdexcept>
 #include <sstream>
+#include <string>
 #include <unordered_map>
 
 #include "Core/Types.h"
