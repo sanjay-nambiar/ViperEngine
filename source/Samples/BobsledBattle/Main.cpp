@@ -72,12 +72,17 @@ int WINAPI wWinMain(HINSTANCE, HINSTANCE, PWSTR, int)
 
 		if (inputManager.GetButtonState(Button::Key_Up) == ButtonState::Pressed)
 		{
-			position.z += 0.1f;
+			position.z += 0.01f;
 			audioManager.SetEvent3dAttributes("event:/GattlingGun-Fire", position, Viper::Vector3(0, 0, 0));
 		}
 		if (inputManager.GetButtonState(Button::Key_Down) == ButtonState::Pressed)
 		{
-			position.z -= 0.1f;
+			position.z -= 0.01f;
+			audioManager.SetEvent3dAttributes("event:/GattlingGun-Fire", position, Viper::Vector3(0, 0, 0));
+		}
+		if (inputManager.GetButtonState(Button::Key_Space) == ButtonState::Pressed && inputManager.IsModifierActive(ModifierKey::Control))
+		{
+			position.z = 0.0f;
 			audioManager.SetEvent3dAttributes("event:/GattlingGun-Fire", position, Viper::Vector3(0, 0, 0));
 		}
 		audioManager.Update();
