@@ -1,6 +1,8 @@
 #pragma once
 
 #include "Service/InputManager.h"
+#include "GlfwWindowContext.h"
+#include <set>
 
 struct GLFWwindow;
 
@@ -11,12 +13,23 @@ namespace Viper
 		class GlfwInputManager final: public InputManager
 		{
 		public:
-			GlfwInputManager() = default;
+			GlfwInputManager();
 			~GlfwInputManager() = default;
 
-			void Initialize() override;
+			void Initialize(const WindowContext& windowContext) override;
 			void Update() override;
 			void Shutdown() override;
+
+		private:
+			bool isInitialized;
+			Window::GlfwWindowContext context;
+			std::set<Button> releasedButtons;
+
+			static void KeyCallback(GLFWwindow*, int, int, int, int);
+
+			static GlfwInputManager* ActiveInputManager;
+			static std::unordered_map<std::uint32_t, ModifierKey> ModifierMapping;
+			static std::unordered_map<std::uint32_t, Button> KeyMapping;
 		};
 	}
 }

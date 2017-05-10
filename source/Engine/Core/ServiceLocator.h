@@ -2,6 +2,7 @@
 
 #include "Singleton.h"
 #include "Service/AudioManager.h"
+#include "Service/InputManager.h"
 #include "Service/MemoryAllocator.h"
 #include "Service/Logger.h"
 #include "Service/RendererSystem.h"
@@ -22,6 +23,7 @@ namespace Viper
 		MemoryAllocator* memoryAllocator;
 		AudioManager* audioManager;
 		WindowManager* windowManager;
+		InputManager* inputManager;
 		RendererSystem* rendererSystem;
 
 		ServiceLocator();
@@ -52,6 +54,11 @@ namespace Viper
 		 */
 		void Provide(WindowManager& windowManager);
 
+		/** Provide an input manager implementation to the service locator
+		 *  @param inputManager An InputManager interface implementation
+		 */
+		void Provide(InputManager& inputManager);
+
 		/** Provide a renderer system implementation to the service locator
 		 *  @param rendererSystem A RendererSystem interface implementation
 		 */
@@ -76,6 +83,11 @@ namespace Viper
 		 *  @return A referece to the default WindowManager
 		 */
 		WindowManager& GetWindowManager() const;
+
+		/** Gets a reference to the default InputManager
+		 *  @return A referece to the default InputManager
+		 */
+		InputManager& GetInputManager() const;
 
 		/** Gets a reference to the default RendererSystem
 		 *  @return A referece to the default RendererSystem

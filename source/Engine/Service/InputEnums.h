@@ -2,14 +2,15 @@
 
 namespace Viper
 {
-	enum class ButtonState
+	enum class ButtonState : std::uint32_t
 	{
+		Neutral,
 		Pressed,
-		Released,
-		Repeat
+		Hold,
+		Released
 	};
 
-	enum class Button
+	enum class Button : std::uint32_t
 	{
 		Key_Unknown,
 		Key_Space,
@@ -132,29 +133,14 @@ namespace Viper
 		Key_RightAlt,
 		Key_RightSuper,
 		Key_Menu,
-		MouseButton_1,
-		MouseButton_2,
-		MouseButton_3,
-		MouseButton_4,
-		MouseButton_5,
-		MouseButton_6,
-		MouseButton_7,
-		MouseButton_8,
-		Joystick_1,
-		Joystick_2,
-		Joystick_3,
-		Joystick_4,
-		Joystick_5,
-		Joystick_6,
-		Joystick_7,
-		Joystick_8,
-		Joystick_9,
-		Joystick_10,
-		Joystick_11,
-		Joystick_12,
-		Joystick_13,
-		Joystick_14,
-		Joystick_15,
-		Joystick_16
+		MaxButtons
+	};
+
+	enum ModifierKey : std::uint32_t
+	{
+		Shift = 0x0001,
+		Control = 0x0002,
+		Alt = 0x0004,
+		Super = 0x0008
 	};
 }

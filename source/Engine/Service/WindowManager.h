@@ -2,6 +2,7 @@
 
 #include <cstdint>
 #include <string>
+#include "WindowContext.h"
 
 namespace Viper
 {
@@ -12,10 +13,10 @@ namespace Viper
 		virtual ~WindowManager() = default;
 
 		virtual void Initialize() = 0;
-		virtual std::uint64_t CreateGameWindow(std::uint32_t width, std::uint32_t height, const std::string& title) = 0;
-		virtual bool BeginUpdate() = 0;
-		virtual void EndUpdate() = 0;
-		virtual void DestroyGameWindow(std::uint64_t windowHandle) = 0;
+		virtual const WindowContext& CreateGameWindow(std::uint32_t width, std::uint32_t height, const std::string& title) = 0;
+		virtual bool BeginUpdate(const WindowContext& windowContext) = 0;
+		virtual void EndUpdate(const WindowContext& windowContext) = 0;
+		virtual void DestroyGameWindow(const WindowContext& windowContext) = 0;
 		virtual void Shutdown() = 0;
 	};
 }

@@ -12,6 +12,11 @@
 #endif
 
 
+#define WIDTH		1280
+#define HEIGHT		720
+#define TITLE		"Bobsled Battle"
+#define CONFIG_FILE "Config.ini"
+
 using namespace Viper;
 
 
@@ -20,7 +25,7 @@ void Initialize()
 	MemoryManager* allocator = new MemoryManager();
 	assert(allocator != nullptr);
 	Core::ModuleLoader::CreateInstance(*allocator);
-	Core::ModuleLoader::GetInstance().LoadModules("Config.ini");
+	Core::ModuleLoader::GetInstance().LoadModules(CONFIG_FILE);
 }
 
 void ShutDown()
@@ -37,7 +42,10 @@ int WINAPI wWinMain(HINSTANCE, HINSTANCE, PWSTR, int)
 
 	WindowManager& windowManager = ServiceLocator::GetInstance().GetWindowManager();
 	windowManager.Initialize();
-	windowManager.CreateGameWindow(1280, 720, "Bobsled Battle");
+	const WindowContext& windowContext = windowManager.CreateGameWindow(WIDTH, HEIGHT, TITLE);
+
+	InputManager& inputManager = ServiceLocator::GetInstance().GetInputManager();
+	inputManager.Initialize(windowContext);
 
 	RendererSystem& rendererSystem = ServiceLocator::GetInstance().GetRendererSystem();
 	rendererSystem.Initialize();
@@ -53,7 +61,7 @@ int WINAPI wWinMain(HINSTANCE, HINSTANCE, PWSTR, int)
 	audioManager.SetEvent3dAttributes("event:/GattlingGun-Fire", position, Viper::Vector3(0, 0, 0));
 	audioManager.PlayEvent("event:/GattlingGun-Fire");
 
-	while (windowManager.BeginUpdate())
+	while (windowManager.BeginUpdate(windowContext))
 	{
 		audioManager.Update();
 		position.z += 0.5;
@@ -61,7 +69,7 @@ int WINAPI wWinMain(HINSTANCE, HINSTANCE, PWSTR, int)
 		
 		rendererSystem.Update();
 		
-		windowManager.EndUpdate();
+		windowManager.EndUpdate(windowContext);
 		Sleep(500);
 	}
 

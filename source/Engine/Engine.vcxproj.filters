@@ -67,9 +67,6 @@
     <ClInclude Include="Service\WindowManager.h">
       <Filter>Service</Filter>
     </ClInclude>
-    <ClInclude Include="Window\WindowEvent.h">
-      <Filter>Window</Filter>
-    </ClInclude>
     <ClInclude Include="Service\RendererSystem.h">
       <Filter>Service</Filter>
     </ClInclude>
@@ -78,6 +75,9 @@
     </ClInclude>
     <ClInclude Include="Service\InputEnums.h">
       <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Service\WindowContext.h">
+      <Filter>Service</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -96,6 +96,9 @@
     </ClCompile>
     <ClCompile Include="Core\ModuleLoader.cpp">
       <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Service\InputManager.cpp">
+      <Filter>Service</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

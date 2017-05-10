@@ -1,15 +1,12 @@
 #include "GlfwWindowManager.h"
+#include <algorithm>
 #include <GLFW/glfw3.h>
+#include "GlfwWindowContext.h"
 
 namespace Viper
 {
 	namespace Window
 	{
-		GlfwWindowManager::GlfwWindowManager() :
-			window(nullptr)
-		{
-		}
-
 		void GlfwWindowManager::Initialize()
 		{
 			glfwInit();
@@ -20,16 +17,20 @@ namespace Viper
 			glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
 		}
 
-		std::uint64_t GlfwWindowManager::CreateGameWindow(std::uint32_t width, std::uint32_t height, const std::string& title)
+		const WindowContext& GlfwWindowManager::CreateGameWindow(std::uint32_t width, std::uint32_t height, const std::string& title)
 		{
-			window = glfwCreateWindow(width, height, title.c_str(), nullptr, nullptr);
+			GLFWwindow* window = glfwCreateWindow(width, height, title.c_str(), nullptr, nullptr);
 			glfwMakeContextCurrent(window);
-			return reinterpret_cast<std::uint64_t>(window);
+			GlfwWindowContext windowContext;
+			windowContext.window = window;
+			windows.emplace_back(windowContext);
+			return windows.back();
 		}
 
-		bool GlfwWindowManager::BeginUpdate()
+		bool GlfwWindowManager::BeginUpdate(const WindowContext& windowContext)
 		{
-			if (!glfwWindowShouldClose(window))
+			const GlfwWindowContext& context = static_cast<const GlfwWindowContext&>(windowContext);
+			if (!glfwWindowShouldClose(context.window))
 			{
 				glfwPollEvents();
 				return true;
@@ -37,14 +38,17 @@ namespace Viper
 			return false;
 		}
 
-		void GlfwWindowManager::EndUpdate()
+		void GlfwWindowManager::EndUpdate(const WindowContext& windowContext)
 		{
-			glfwSwapBuffers(window);
+			const GlfwWindowContext& context = static_cast<const GlfwWindowContext&>(windowContext);
+			glfwSwapBuffers(context.window);
 		}
 
-		void GlfwWindowManager::DestroyGameWindow(std::uint64_t windowId)
+		void GlfwWindowManager::DestroyGameWindow(const WindowContext& windowContext)
 		{
-			glfwDestroyWindow(reinterpret_cast<GLFWwindow*>(windowId));
+			const GlfwWindowContext& context = static_cast<const GlfwWindowContext&>(windowContext);
+			glfwDestroyWindow(context.window);
+			windows.erase(std::remove(windows.begin(), windows.end(), context));
 		}
 
 		void GlfwWindowManager::Shutdown()

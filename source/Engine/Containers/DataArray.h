@@ -1,12 +1,11 @@
-#ifndef DATA_ARRAY_HEADER
-#define DATA_ARRAY_HEADER
+#pragma once
 
 #include <algorithm>
 #include <cassert>
 #include <functional>
 #include <memory>
-#include "service/MemoryAllocator.h"
-#include "Types.h"
+#include "Service/MemoryAllocator.h"
+#include "Core/Types.h"
 
 
 #define MAX_ITEMS_ALLOWED		65535
@@ -198,5 +197,3 @@ namespace Viper
 #undef MAX_ITEMS_ALLOWED
 #undef ID_TO_SLOT
 #undef CREATE_ID
-
-#endif // DATA_ARRAY_HEADER

@@ -30,6 +30,11 @@ namespace Viper
 		windowManager = &windowManagerRef;
 	}
 
+	void ServiceLocator::Provide(InputManager& inputManagerRef)
+	{
+		inputManager = &inputManagerRef;
+	}
+
 	void ServiceLocator::Provide(RendererSystem& rendererSystemRef)
 	{
 		rendererSystem = &rendererSystemRef;
@@ -57,6 +62,12 @@ namespace Viper
 	{
 		assert(windowManager != nullptr);
 		return (*windowManager);
+	}
+
+	InputManager& ServiceLocator::GetInputManager() const
+	{
+		assert(inputManager != nullptr);
+		return (*inputManager);
 	}
 
 	RendererSystem& ServiceLocator::GetRendererSystem() const
