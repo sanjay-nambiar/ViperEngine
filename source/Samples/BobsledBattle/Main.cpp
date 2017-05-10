@@ -63,14 +63,26 @@ int WINAPI wWinMain(HINSTANCE, HINSTANCE, PWSTR, int)
 
 	while (windowManager.BeginUpdate(windowContext))
 	{
-		audioManager.Update();
-		position.z += 0.5;
-		audioManager.SetEvent3dAttributes("event:/GattlingGun-Fire", position, Viper::Vector3(0, 0, 0));
-		
+		inputManager.Update();
+		if (inputManager.GetButtonState(Button::Key_Escape) == ButtonState::Pressed)
+		{
+			break;
+		}
 		rendererSystem.Update();
-		
+
+		if (inputManager.GetButtonState(Button::Key_Up) == ButtonState::Pressed)
+		{
+			position.z += 0.1f;
+			audioManager.SetEvent3dAttributes("event:/GattlingGun-Fire", position, Viper::Vector3(0, 0, 0));
+		}
+		if (inputManager.GetButtonState(Button::Key_Down) == ButtonState::Pressed)
+		{
+			position.z -= 0.1f;
+			audioManager.SetEvent3dAttributes("event:/GattlingGun-Fire", position, Viper::Vector3(0, 0, 0));
+		}
+		audioManager.Update();
+
 		windowManager.EndUpdate(windowContext);
-		Sleep(500);
 	}
 
 	rendererSystem.Shutdown();
