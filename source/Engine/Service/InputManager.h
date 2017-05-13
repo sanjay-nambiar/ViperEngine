@@ -2,7 +2,7 @@
 
 #include <unordered_map>
 #include "InputEnums.h"
-#include "WindowContext.h"
+#include "Window/WindowContext.h"
 
 namespace Viper
 {

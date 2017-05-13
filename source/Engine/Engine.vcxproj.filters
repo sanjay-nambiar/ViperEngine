@@ -70,9 +70,6 @@
     <ClInclude Include="Service\InputEnums.h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="Service\WindowContext.h">
-      <Filter>Service</Filter>
-    </ClInclude>
     <ClInclude Include="Core\DynamicLibrary.h">
       <Filter>Core</Filter>
     </ClInclude>
@@ -84,6 +81,9 @@
     </ClInclude>
     <ClInclude Include="Core\ModuleImports.h">
       <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Window\WindowContext.h">
+      <Filter>Window</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -108,6 +108,9 @@
     </ClCompile>
     <ClCompile Include="Service\RendererSystem.cpp">
       <Filter>Service</Filter>
+    </ClCompile>
+    <ClCompile Include="Window\WindowContext.cpp">
+      <Filter>Window</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

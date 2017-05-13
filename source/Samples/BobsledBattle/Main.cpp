@@ -49,6 +49,7 @@ int WINAPI wWinMain(HINSTANCE, HINSTANCE, PWSTR, int)
 
 	RendererSystem& rendererSystem = ServiceLocator::GetInstance().GetRendererSystem();
 	rendererSystem.Initialize();
+	rendererSystem.SetViewport(windowContext);
 
 	// Test Audio
 	AudioManager& audioManager = ServiceLocator::GetInstance().GetAudioManager();

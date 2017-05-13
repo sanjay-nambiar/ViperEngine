@@ -4,6 +4,7 @@
 #include <vector>
 #include <unordered_map>
 #include "Core/Vector3.h"
+#include "Window/WindowContext.h"
 
 namespace Viper
 {
@@ -21,6 +22,7 @@ namespace Viper
 		virtual ~RendererSystem() = default;
 
 		virtual void Initialize() = 0;
+		virtual void SetViewport(const WindowContext& windowContext) = 0;
 		virtual void Update();
 		virtual void Shutdown() = 0;
 

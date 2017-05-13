@@ -1,7 +1,7 @@
 #pragma once
 
 #include <GLFW/glfw3.h>
-#include "Service/WindowContext.h"
+#include "Window/WindowContext.h"
 
 namespace Viper
 {

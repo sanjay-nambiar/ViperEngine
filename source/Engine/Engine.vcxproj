@@ -202,8 +202,8 @@
     <ClInclude Include="Service\Logger.h" />
     <ClInclude Include="Service\MemoryAllocator.h" />
     <ClInclude Include="Service\RendererSystem.h" />
-    <ClInclude Include="Service\WindowContext.h" />
     <ClInclude Include="Service\WindowManager.h" />
+    <ClInclude Include="Window\WindowContext.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core\ModuleLoader.cpp" />
@@ -219,6 +219,7 @@
     </ClCompile>
     <ClCompile Include="Service\InputManager.cpp" />
     <ClCompile Include="Service\RendererSystem.cpp" />
+    <ClCompile Include="Window\WindowContext.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

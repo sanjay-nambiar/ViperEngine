@@ -20,8 +20,9 @@ namespace Viper
 		const WindowContext& GlfwWindowManager::CreateGameWindow(std::uint32_t width, std::uint32_t height, const std::string& title)
 		{
 			GLFWwindow* window = glfwCreateWindow(width, height, title.c_str(), nullptr, nullptr);
-			glfwMakeContextCurrent(window);
 			GlfwWindowContext windowContext;
+			glfwMakeContextCurrent(window);
+			glfwGetFramebufferSize(window, &windowContext.width, &windowContext.height);
 			windowContext.window = window;
 			windows.emplace_back(windowContext);
 			return windows.back();

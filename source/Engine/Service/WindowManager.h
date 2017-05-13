@@ -2,7 +2,7 @@
 
 #include <cstdint>
 #include <string>
-#include "WindowContext.h"
+#include "Window/WindowContext.h"
 
 namespace Viper
 {
