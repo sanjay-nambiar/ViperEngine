@@ -49,6 +49,7 @@ namespace Viper
 			assert(ActiveInputManager != nullptr);
 			assert(ActiveInputManager->isInitialized);
 			assert(ActiveInputManager->context.window == window);
+			window;
 			if (KeyMapping.find(key) == KeyMapping.end())
 			{
 				return;

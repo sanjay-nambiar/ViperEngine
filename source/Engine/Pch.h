@@ -9,6 +9,8 @@
 #include <string>
 #include <unordered_map>
 
+#include "Core/Platform.h"
+#include "Core/DynamicLibrary.h"
 #include "Core/Types.h"
 #include "Core/ServiceLocator.h"
 #include "Core/Singleton.h"

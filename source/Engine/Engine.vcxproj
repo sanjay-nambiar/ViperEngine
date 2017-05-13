@@ -184,9 +184,11 @@
   <ItemGroup>
     <ClInclude Include="Containers\DataArray.h" />
     <ClInclude Include="Containers\Queue.h" />
+    <ClInclude Include="Core\DynamicLibrary.h" />
     <ClInclude Include="Core\ModuleExports.h" />
     <ClInclude Include="Core\ModuleImports.h" />
     <ClInclude Include="Core\ModuleLoader.h" />
+    <ClInclude Include="Core\Platform.h" />
     <ClInclude Include="Core\ServiceLocator.h" />
     <ClInclude Include="Core\Singleton.h" />
     <ClInclude Include="Core\Types.h" />
@@ -216,6 +218,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Service\InputManager.cpp" />
+    <ClCompile Include="Service\RendererSystem.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

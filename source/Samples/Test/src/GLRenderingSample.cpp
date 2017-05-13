@@ -1,8 +1,0 @@
-
-namespace Samples
-{
-	void GLRenderingSamples()
-	{
-		
-	}
-}

@@ -1,6 +1,5 @@
 #include "Pch.h"
 #include "ModuleLoader.h"
-#include <windows.h>
 #include <fstream>
 #include "Core/ModuleImports.h"
 #include "Service/AudioManager.h"
@@ -97,23 +96,21 @@ namespace Viper
 		template <typename ProvideModuleMethodT>
 		ProvideModuleMethodT ModuleLoader::LoadModuleFromDll(const std::string& moduleName, const std::string& sectionName)
 		{
-			const std::string dllName = moduleName + ".dll";
-			std::wstring wideStr(dllName.begin(), dllName.end());
-			HINSTANCE dllInstance = LoadLibrary(wideStr.c_str());
-			if (dllInstance == nullptr)
+			DYNAMIC_LIB_HANDLE libInstance = DYNAMIC_LIB_LOAD(moduleName);
+			if (libInstance == nullptr)
 			{
-				throw "Unable to load " + dllName;
+				throw "Unable to load " + moduleName;
 			}
 
 			const std::string methodName = "Provide" + sectionName;
-			ProvideModuleMethodT provideAudioManager = reinterpret_cast<ProvideModuleMethodT>(GetProcAddress(dllInstance, methodName.c_str()));
+			ProvideModuleMethodT provideAudioManager = reinterpret_cast<ProvideModuleMethodT>(DYNAMIC_LIB_GETSYM(libInstance, methodName.c_str()));
 			assert(provideAudioManager != nullptr);
 			if (provideAudioManager != nullptr)
 			{
 				return provideAudioManager;
 			}
-			FreeLibrary(dllInstance);
-			throw "Unable to get proc address InitializeAudio";
+			bool free = DYNAMIC_LIB_UNLOAD(libInstance);
+			throw "Unable to get proc address InitializeAudio. Library unloaded = %d." + free;
 		}
 	}
 }
