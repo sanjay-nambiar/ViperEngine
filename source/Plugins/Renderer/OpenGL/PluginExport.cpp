@@ -2,7 +2,7 @@
 #include "Core/ServiceLocator.h"
 #include "OpenGLRenderer.h"
 
-void ProvideRenderer(Viper::ServiceLocator& serviceLocator)
+void InitializeModule(Viper::ServiceLocator& serviceLocator, const std::unordered_map<std::string, std::string>&)
 {
 	Viper::MemoryAllocator& allocator = serviceLocator.GetMemoryAllocator();
 	void* memBlock = allocator.Allocate(sizeof(Viper::Renderer::OpenGLRenderer), 1);

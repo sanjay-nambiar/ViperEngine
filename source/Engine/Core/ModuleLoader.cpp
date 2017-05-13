@@ -9,9 +9,10 @@ namespace Viper
 {
 	namespace Core
 	{
-		const std::string ModuleLoader::AudioModuleSection = "Audio";
-		const std::string ModuleLoader::RendererModuleSection = "Renderer";
-		const std::string ModuleLoader::WindowSystemModuleSection = "WindowSystem";
+		ModuleLoader::~ModuleLoader()
+		{
+			UnloadModules();
+		}
 
 		void ModuleLoader::LoadModules(const std::string& configFilePath)
 		{
@@ -20,9 +21,7 @@ namespace Viper
 
 			configFile = configFilePath;
 			LoadConfigData();
-			InitializeWindowSystem();
-			InitializeAudio();
-			InitializeRenderer();
+			LoadModulesFromConfig();
 			ServiceLocator::GetInstance().ValidateServices();
 		}
 
@@ -31,6 +30,12 @@ namespace Viper
 			AudioManager& audioManager = ServiceLocator::GetInstance().GetAudioManager();
 			ServiceLocator::Destroy();
 			delete &audioManager;
+
+			for (auto& moduleHandle : moduleHandles)
+			{
+				DYNAMIC_LIB_UNLOAD(moduleHandle.handle);
+			}
+			moduleHandles.clear();
 			configData.clear();
 			configFile.clear();
 		}
@@ -66,51 +71,26 @@ namespace Viper
 			file.close();
 		}
 
-		void ModuleLoader::InitializeWindowSystem()
+		void ModuleLoader::LoadModulesFromConfig()
 		{
-			assert(configData.find(WindowSystemModuleSection) != configData.end());
-			std::unordered_map<std::string, std::string>& attributes = configData[WindowSystemModuleSection];
-			auto window = LoadModuleFromDll<funcProvideWindowSystem>(attributes["Plugin"], "WindowSystem");
-			assert(window != nullptr);
-			window(ServiceLocator::GetInstance());
-		}
-
-		void ModuleLoader::InitializeAudio()
-		{
-			assert(configData.find(AudioModuleSection) != configData.end());
-			std::unordered_map<std::string, std::string>& attributes = configData[AudioModuleSection];
-			auto audio = LoadModuleFromDll<funcProvideAudio>(attributes["Plugin"], "Audio");
-			assert(audio != nullptr);
-			audio(std::atoi(attributes["Channels"].c_str()), ServiceLocator::GetInstance());
-		}
-
-		void ModuleLoader::InitializeRenderer()
-		{
-			assert(configData.find(RendererModuleSection) != configData.end());
-			std::unordered_map<std::string, std::string>& attributes = configData[RendererModuleSection];
-			auto renderer = LoadModuleFromDll<funcProvideRenderer>(attributes["Plugin"], "Renderer");
-			assert(renderer != nullptr);
-			renderer(ServiceLocator::GetInstance());
-		}
-
-		template <typename ProvideModuleMethodT>
-		ProvideModuleMethodT ModuleLoader::LoadModuleFromDll(const std::string& moduleName, const std::string& sectionName)
-		{
-			DYNAMIC_LIB_HANDLE libInstance = DYNAMIC_LIB_LOAD(moduleName);
-			if (libInstance == nullptr)
+			for (const auto& entry : configData)
 			{
-				throw "Unable to load " + moduleName;
-			}
+				const auto& sectionName = entry.first;
+				const auto& attributes = entry.second;
+				assert(attributes.find("Plugin") != attributes.end());
+				const auto& moduleName = attributes.at("Plugin");
+				DYNAMIC_LIB_HANDLE libInstance = DYNAMIC_LIB_LOAD(moduleName);
+				if (libInstance == nullptr)
+				{
+					throw "Unable to load " + moduleName + "from section " + sectionName;
+				}
+				ModuleHandle handle = {libInstance};
+				moduleHandles.emplace_back(handle);
 
-			const std::string methodName = "Provide" + sectionName;
-			ProvideModuleMethodT provideAudioManager = reinterpret_cast<ProvideModuleMethodT>(DYNAMIC_LIB_GETSYM(libInstance, methodName.c_str()));
-			assert(provideAudioManager != nullptr);
-			if (provideAudioManager != nullptr)
-			{
-				return provideAudioManager;
+				funcInitializeModule initializeModule = reinterpret_cast<funcInitializeModule>(DYNAMIC_LIB_GETSYM(libInstance, InitializeModuleProcName.c_str()));
+				assert(initializeModule != nullptr);
+				initializeModule(ServiceLocator::GetInstance(), attributes);
 			}
-			bool free = DYNAMIC_LIB_UNLOAD(libInstance);
-			throw "Unable to get proc address InitializeAudio. Library unloaded = %d." + free;
 		}
 	}
 }

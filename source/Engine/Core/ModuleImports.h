@@ -1,19 +1,18 @@
 #pragma once
 
-#include "Service/AudioManager.h"
+#include <string>
+#include <unordered_map>
 #include "DynamicLibrary.h"
+
 
 namespace Viper
 {
+	static const std::string InitializeModuleProcName = "InitializeModule";
 	class ServiceLocator;
 }
 
 // Import declarations
-extern "C" MODULE_IMPORT void ProvideAudio(uint32_t maxChannels, Viper::ServiceLocator& serviceLocator);
-extern "C" MODULE_IMPORT void ProvideWindowSystem(Viper::ServiceLocator& serviceLocator);
-extern "C" MODULE_IMPORT void ProvideRenderer(Viper::ServiceLocator& serviceLocator);
+extern "C" MODULE_IMPORT void InitializeModule(Viper::ServiceLocator& serviceLocator, const std::unordered_map<std::string, std::string>& configAttributes);
 
 // Function pointers
-typedef void(__cdecl *funcProvideAudio) (uint32_t, Viper::ServiceLocator&);
-typedef void(__cdecl *funcProvideWindowSystem) (Viper::ServiceLocator&);
-typedef void(__cdecl *funcProvideRenderer) (Viper::ServiceLocator&);
+typedef void(__cdecl *funcInitializeModule) (Viper::ServiceLocator&, const std::unordered_map<std::string, std::string>&);

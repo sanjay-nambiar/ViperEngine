@@ -8,7 +8,7 @@
 	#define	DYNAMIC_LIB_HANDLE HINSTANCE
 	#define	DYNAMIC_LIB_LOAD(libraryName) LoadLibraryEx(std::wstring(libraryName.begin(), libraryName.end()).c_str(), nullptr, 0)
 	#define	DYNAMIC_LIB_GETSYM(libraryInstance, symbolName) GetProcAddress(libraryInstance, symbolName)
-	#define	DYNAMIC_LIB_UNLOAD(libraryInstance) !FreeLibrary(libraryInstance)
+	#define	DYNAMIC_LIB_UNLOAD(libraryInstance) FreeLibrary(libraryInstance)
 	
 	#define MODULE_EXPORT __declspec(dllexport)
 	#define MODULE_IMPORT __declspec(dllimport)

@@ -22,12 +22,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Pch.h" />
-    <ClInclude Include="Core\ModuleImports.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\ModuleExports.h">
-      <Filter>Core</Filter>
-    </ClInclude>
     <ClInclude Include="Core\ServiceLocator.h">
       <Filter>Core</Filter>
     </ClInclude>
@@ -83,6 +77,12 @@
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="Core\Platform.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\ModuleExports.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\ModuleImports.h">
       <Filter>Core</Filter>
     </ClInclude>
   </ItemGroup>

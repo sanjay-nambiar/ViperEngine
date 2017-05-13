@@ -1,6 +1,7 @@
 #pragma once
 
 #include <unordered_map>
+#include "DynamicLibrary.h"
 
 namespace Viper
 {
@@ -12,10 +13,15 @@ namespace Viper
 			void LoadModules(const std::string& configFilePath);
 			void UnloadModules();
 		private:
+			struct ModuleHandle
+			{
+				DYNAMIC_LIB_HANDLE handle;
+			};
+
 			friend Singleton<ModuleLoader>;
 
 			ModuleLoader() = default;
-			~ModuleLoader() = default;
+			~ModuleLoader();
 
 			ModuleLoader(const ModuleLoader&) = delete;
 			ModuleLoader(ModuleLoader&&) = delete;
@@ -23,20 +29,11 @@ namespace Viper
 			ModuleLoader& operator=(ModuleLoader&&) = delete;
 
 			void LoadConfigData();
-
-			void InitializeAudio();
-			void InitializeRenderer();
-			void InitializeWindowSystem();
-
-			template <typename ProvideModuleMethodT>
-			static ProvideModuleMethodT LoadModuleFromDll(const std::string& moduleName, const std::string& sectionName);
+			void LoadModulesFromConfig();
 
 			std::string configFile;
 			std::unordered_map<std::string, std::unordered_map<std::string, std::string>> configData;
-
-			static const std::string AudioModuleSection;
-			static const std::string RendererModuleSection;
-			static const std::string WindowSystemModuleSection;
+			std::vector<ModuleHandle> moduleHandles;
 		};
 	}
 }

@@ -5,8 +5,7 @@
 
 using namespace Viper;
 
-
-void ProvideWindowSystem(Viper::ServiceLocator& serviceLocator)
+void InitializeModule(Viper::ServiceLocator& serviceLocator, const std::unordered_map<std::string, std::string>&)
 {
 	MemoryAllocator& allocator = serviceLocator.GetMemoryAllocator();
 
