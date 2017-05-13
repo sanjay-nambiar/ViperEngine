@@ -1,5 +1,6 @@
 #pragma once
 
+#include <regex>
 #include <unordered_map>
 #include "DynamicLibrary.h"
 
@@ -34,6 +35,9 @@ namespace Viper
 			std::string configFile;
 			std::unordered_map<std::string, std::unordered_map<std::string, std::string>> configData;
 			std::vector<ModuleHandle> moduleHandles;
+
+			static const std::regex SectionTagPattern;
+			static const std::regex AttributeLinePattern;
 		};
 	}
 }

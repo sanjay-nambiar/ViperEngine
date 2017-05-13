@@ -3,12 +3,16 @@
 #include <fstream>
 #include "Core/ModuleImports.h"
 #include "Service/AudioManager.h"
+#include <regex>
 
 
 namespace Viper
 {
 	namespace Core
 	{
+		const std::regex ModuleLoader::SectionTagPattern = std::regex("^\\s*\\[\\s*([A-Za-z0-9_]+)\\s*\\]\\s*$");
+		const std::regex ModuleLoader::AttributeLinePattern = std::regex("^\\s*([^=]+)=(.*)$");
+
 		ModuleLoader::~ModuleLoader()
 		{
 			UnloadModules();
@@ -40,7 +44,6 @@ namespace Viper
 			configFile.clear();
 		}
 
-		//TODO: Improve parsing. consider white spaces
 		void ModuleLoader::LoadConfigData()
 		{
 			std::ifstream file;
@@ -54,18 +57,14 @@ namespace Viper
 			std::string sectionName;
 			while (std::getline(file, line))
 			{
-				if (line.size() > 0 && line[0] == '[' && line[line.size() - 1] == ']')
+				std::smatch matches;
+				if (std::regex_search(line, matches, SectionTagPattern))
 				{
-					sectionName = line.substr(1, line.length() - 2);
+					sectionName = matches.str(1);
 				}
-				else
+				else if (std::regex_search(line, matches, AttributeLinePattern))
 				{
-					size_t pos = line.find('=');
-					assert(pos < line.length());
-					configData[sectionName].insert({
-						line.substr(0, pos),
-						line.substr(pos + 1)
-					});
+					configData[sectionName].insert({matches.str(1), matches.str(2)});
 				}
 			}
 			file.close();
