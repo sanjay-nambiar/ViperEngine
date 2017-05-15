@@ -45,11 +45,7 @@ namespace Viper
 			{
 				throw std::runtime_error("Unable to locate shader file");
 			}
-			std::string shaderSource;
-			file.seekg(0, std::ios::end);
-			shaderSource.reserve(static_cast<int>(file.tellg()));
-			file.seekg(0, std::ios::beg);
-			shaderSource.assign((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
+			std::string shaderSource((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
 			file.close();
 
 			// Compile shader using the source code string read from the file
