@@ -220,6 +220,17 @@ xcopy "$(ProjectDir)Content" "$(OutDir)Content" /I /R /Y /E</Command>
   </ItemGroup>
   <ItemGroup>
     <None Include="Config.ini" />
+    <None Include="Content\Shaders\default.frag" />
+    <None Include="Content\Shaders\default.vert" />
+    <None Include="Content\Sounds\ZombieWars.bank" />
+    <None Include="Content\Sounds\ZombieWars.strings.bank" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="Content\Sounds\death.wav" />
+    <Media Include="Content\Sounds\gattling-gun.wav" />
+    <Media Include="Content\Sounds\pickup.wav" />
+    <Media Include="Content\Sounds\pistol.wav" />
+    <Media Include="Content\Sounds\wave-begin.wav" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

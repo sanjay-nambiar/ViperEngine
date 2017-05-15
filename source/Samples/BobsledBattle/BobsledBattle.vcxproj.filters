@@ -5,6 +5,15 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Resource Files\Content">
+      <UniqueIdentifier>{559e4290-2d16-42f5-9e97-7675290b5ce7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Content\Shaders">
+      <UniqueIdentifier>{742894e4-d4a1-47a7-b924-20002c6b9722}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Content\Sound">
+      <UniqueIdentifier>{0b9ea986-a63d-4a0b-b1b8-87f3cbd5b6a9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
@@ -17,5 +26,34 @@
     <None Include="Config.ini">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="Content\Sounds\ZombieWars.bank">
+      <Filter>Resource Files\Content\Sound</Filter>
+    </None>
+    <None Include="Content\Sounds\ZombieWars.strings.bank">
+      <Filter>Resource Files\Content\Sound</Filter>
+    </None>
+    <None Include="Content\Shaders\default.frag">
+      <Filter>Resource Files\Content\Shaders</Filter>
+    </None>
+    <None Include="Content\Shaders\default.vert">
+      <Filter>Resource Files\Content\Shaders</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="Content\Sounds\death.wav">
+      <Filter>Resource Files\Content\Sound</Filter>
+    </Media>
+    <Media Include="Content\Sounds\gattling-gun.wav">
+      <Filter>Resource Files\Content\Sound</Filter>
+    </Media>
+    <Media Include="Content\Sounds\pickup.wav">
+      <Filter>Resource Files\Content\Sound</Filter>
+    </Media>
+    <Media Include="Content\Sounds\pistol.wav">
+      <Filter>Resource Files\Content\Sound</Filter>
+    </Media>
+    <Media Include="Content\Sounds\wave-begin.wav">
+      <Filter>Resource Files\Content\Sound</Filter>
+    </Media>
   </ItemGroup>
 </Project>
