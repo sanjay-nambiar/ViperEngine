@@ -3,6 +3,7 @@
 #include "Service/RendererSystem.h"
 #include "glad/glad.h"
 #include "Window/WindowContext.h"
+#include <chrono>
 
 
 struct GLFWwindow;
@@ -25,6 +26,8 @@ namespace Viper
 		private:
 			GLuint shaderProgram;
 			GLuint VAO;
+			GLint alpha;
+			std::chrono::time_point<std::chrono::steady_clock> start;
 		};
 	}
 }

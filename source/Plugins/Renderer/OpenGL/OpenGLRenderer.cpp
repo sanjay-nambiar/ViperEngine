@@ -1,6 +1,7 @@
 #include "OpenGLRenderer.h"
 #include <stdexcept>
 #include "ShaderCompiler.h"
+#include <chrono>
 
 namespace Viper
 {
@@ -12,11 +13,14 @@ namespace Viper
 			{
 				throw std::runtime_error("Unable to initialize OpenGL");
 			}
+			glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
+			// Create shader program and use it
 			GLuint vertexShader = ShaderCompiler::CompileShaderFromFile("Content\\Shaders\\default.vert", ShaderCompiler::ShaderType::VERTEX_SHADER);
 			GLuint fragmentShader = ShaderCompiler::CompileShaderFromFile("Content\\Shaders\\default.frag", ShaderCompiler::ShaderType::FRAGMENT_SHADER);
 			std::vector<GLuint> shaders = {vertexShader, fragmentShader};
 			shaderProgram = ShaderCompiler::CreateProgramWithShaders(shaders);
+			glBindFragDataLocation(shaderProgram, 0, "outColor");
 			glUseProgram(shaderProgram);
 
 			// free shaders since program is created
@@ -29,28 +33,24 @@ namespace Viper
 				0.5f, -0.5f, 0.0f,
 				0.0f,  0.5f, 0.0f
 			};
-			GLuint indices[] = {
-				0, 1, 2
-			};
 
-			// create VertexBufferObject, ElementBufferObject and VertexArrayObject
+			// create VertexBufferObject and bind it and copy data
 			GLuint VBO;
 			glGenBuffers(1, &VBO);
-			GLuint EBO;
-			glGenBuffers(1, &EBO);
-			glGenVertexArrays(1, &VAO);
-
-			// configure the size and stride attributes of vertex buffer object and element buffer object
-			glBindVertexArray(VAO);
 			glBindBuffer(GL_ARRAY_BUFFER, VBO);
 			glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-			glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-			glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), static_cast<GLvoid*>(nullptr));
-			// bind the VAO for triangle and set to use our shader program
-			glEnableVertexAttribArray(0);
-			glBindVertexArray(0);
-			glUseProgram(shaderProgram);
+
+			// Create vertex attrib object and bind it
+			glGenVertexArrays(1, &VAO);
+			glBindVertexArray(VAO);
+
+			// configure the size and stride attributes of vertex buffer object and element buffer object
+			GLint positionAttribute = glGetAttribLocation(shaderProgram, "position");
+			glVertexAttribPointer(positionAttribute, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
+			glEnableVertexAttribArray(positionAttribute);
+
+			start = std::chrono::high_resolution_clock::now();
+			alpha = glGetUniformLocation(shaderProgram, "modifier");
 		}
 
 		void OpenGLRenderer::SetViewport(const WindowContext& windowContext)
@@ -61,12 +61,13 @@ namespace Viper
 		void OpenGLRenderer::Update()
 		{
 			RendererSystem::Update();
-			glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 			glClear(GL_COLOR_BUFFER_BIT);
 
-			glBindVertexArray(VAO);
-			glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr);
-			glBindVertexArray(0);
+			auto now = std::chrono::high_resolution_clock::now();
+			float time = std::chrono::duration_cast<std::chrono::duration<float>>(now - start).count();
+
+			glUniform1f(alpha, (sin(time * 4.0f) + 1.0f));
+			glDrawArrays(GL_TRIANGLES, 0, 3);
 		}
 
 		void OpenGLRenderer::Shutdown()
