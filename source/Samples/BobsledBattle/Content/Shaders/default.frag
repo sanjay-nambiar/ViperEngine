@@ -2,13 +2,11 @@
 
 uniform float modifier;
 
+in vec3 triangleColor;
+
 out vec4 outColor;
-in vec3 vertexColor;
 
 void main()
 {
-    outColor = vec4(mod((vertexColor.x + modifier), 1),
-		mod((vertexColor.y + modifier), 1),
-		mod((vertexColor.z + modifier), 1),
-		1.0f);
+    outColor = vec4(triangleColor * modifier, 1.0);
 }
