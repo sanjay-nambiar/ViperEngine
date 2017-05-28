@@ -75,10 +75,6 @@ namespace Viper
 
 
 			// Create and bind texture
-			GLuint texture;
-			glGenTextures(1, &texture);
-			glBindTexture(GL_TEXTURE_2D, texture);
-
 			OpenGLTextureLoader loader;
 			Graphics::Texture textureObj = loader.LoadTexture("Content/Textures/wall.jpg");
 
