@@ -3,9 +3,10 @@
 #include "Singleton.h"
 #include "Service/AudioManager.h"
 #include "Service/InputManager.h"
-#include "Service/MemoryAllocator.h"
 #include "Service/Logger.h"
+#include "Service/MemoryAllocator.h"
 #include "Service/RendererSystem.h"
+#include "Service/TextureLoader.h"
 #include "Service/WindowManager.h"
 
 
@@ -25,6 +26,7 @@ namespace Viper
 		WindowManager* windowManager;
 		InputManager* inputManager;
 		RendererSystem* rendererSystem;
+		TextureLoader* textureLoader;
 
 		ServiceLocator();
 		~ServiceLocator() = default;
@@ -64,6 +66,11 @@ namespace Viper
 		 */
 		void Provide(RendererSystem& rendererSystem);
 
+		/** Provide a textureLoader system implementation to the service locator
+		 *  @param textureLoader A TextureLoader interface implementation
+		 */
+		void Provide(TextureLoader& textureLoader);
+
 		/** Gets a reference to the default Logger
 		 *  @return A referece to the default logger
 		 */
@@ -93,6 +100,11 @@ namespace Viper
 		 *  @return A referece to the default RendererSystem
 		 */
 		RendererSystem& GetRendererSystem() const;
+
+		/** Gets a reference to the default TextureLoader
+		 *  @return A referece to the default TextureLoader
+		 */
+		TextureLoader& GetTextureLoader() const;
 
 		/** Checks if all services are loaded. Throws exception if any service is not configured
 		 */

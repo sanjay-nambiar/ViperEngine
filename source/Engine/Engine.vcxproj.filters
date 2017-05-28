@@ -19,6 +19,9 @@
     <Filter Include="Window">
       <UniqueIdentifier>{32fbae56-4830-4999-bf61-a4782ea34ff7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Graphics">
+      <UniqueIdentifier>{a58d1b9c-7519-40e8-98b6-251189f61e58}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Pch.h" />
@@ -85,6 +88,12 @@
     <ClInclude Include="Window\WindowContext.h">
       <Filter>Window</Filter>
     </ClInclude>
+    <ClInclude Include="Graphics\Texture.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Service\TextureLoader.h">
+      <Filter>Service</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Pch.cpp" />
@@ -111,6 +120,9 @@
     </ClCompile>
     <ClCompile Include="Window\WindowContext.cpp">
       <Filter>Window</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\Texture.cpp">
+      <Filter>Graphics</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

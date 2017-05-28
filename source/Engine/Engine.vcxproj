@@ -193,6 +193,7 @@
     <ClInclude Include="Core\Singleton.h" />
     <ClInclude Include="Core\Types.h" />
     <ClInclude Include="Core\Vector3.h" />
+    <ClInclude Include="Graphics\Texture.h" />
     <ClInclude Include="Memory\MemoryManager.h" />
     <ClInclude Include="Memory\StackAllocator.h" />
     <ClInclude Include="Pch.h" />
@@ -202,6 +203,7 @@
     <ClInclude Include="Service\Logger.h" />
     <ClInclude Include="Service\MemoryAllocator.h" />
     <ClInclude Include="Service\RendererSystem.h" />
+    <ClInclude Include="Service\TextureLoader.h" />
     <ClInclude Include="Service\WindowManager.h" />
     <ClInclude Include="Window\WindowContext.h" />
   </ItemGroup>
@@ -209,6 +211,7 @@
     <ClCompile Include="Core\ModuleLoader.cpp" />
     <ClCompile Include="Core\ServiceLocator.cpp" />
     <ClCompile Include="Core\Vector3.cpp" />
+    <ClCompile Include="Graphics\Texture.cpp" />
     <ClCompile Include="Memory\MemoryManager.cpp" />
     <ClCompile Include="Memory\StackAllocator.cpp" />
     <ClCompile Include="Pch.cpp">

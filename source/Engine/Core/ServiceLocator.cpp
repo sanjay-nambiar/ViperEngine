@@ -40,6 +40,11 @@ namespace Viper
 		rendererSystem = &rendererSystemRef;
 	}
 
+	void ServiceLocator::Provide(TextureLoader& textureLoaderRef)
+	{
+		textureLoader = &textureLoaderRef;
+	}
+
 	Logger& ServiceLocator::GetLogger() const
 	{
 		assert(logger != nullptr);
@@ -74,6 +79,12 @@ namespace Viper
 	{
 		assert(rendererSystem != nullptr);
 		return (*rendererSystem);
+	}
+
+	TextureLoader& ServiceLocator::GetTextureLoader() const
+	{
+		assert(textureLoader != nullptr);
+		return (*textureLoader);
 	}
 
 	void ServiceLocator::ValidateServices() const
