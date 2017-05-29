@@ -1,6 +1,7 @@
 #include "Pch.h"
 #include "ShaderCompiler.h"
 #include <fstream>
+#include "Graphics/Shader.h"
 
 #define INFO_LOG_LENGTH 512
 
@@ -8,7 +9,9 @@ namespace Viper
 {
 	namespace Renderer
 	{
-		GLuint ShaderCompiler::CompileShader(std::string shaderSource, ShaderType shaderType)
+		using namespace Graphics;
+
+		Shader ShaderCompiler::CompileShader(std::string shaderSource, ShaderType shaderType)
 		{
 			GLuint shaderId;
 			if (shaderType == ShaderType::VERTEX_SHADER)
@@ -34,10 +37,10 @@ namespace Viper
 				glGetShaderInfoLog(shaderId, INFO_LOG_LENGTH, nullptr, infoLog);
 				throw std::runtime_error(infoLog);
 			}
-			return shaderId;
+			return {shaderId, shaderType};
 		}
 
-		GLuint ShaderCompiler::CompileShaderFromFile(std::string filename, ShaderType shaderType)
+		Shader ShaderCompiler::CompileShaderFromFile(std::string filename, ShaderType shaderType)
 		{
 			// Read the shader source code from file
 			std::ifstream file(filename);
@@ -52,13 +55,13 @@ namespace Viper
 			return CompileShader(shaderSource, shaderType);
 		}
 
-		GLuint ShaderCompiler::CreateProgramWithShaders(std::vector<GLuint>& shaders)
+		GLuint ShaderCompiler::CreateProgramWithShaders(std::vector<Shader>& shaders)
 		{
 			// Links all the shaders and creates a program
 			GLuint shaderProgram = glCreateProgram();
-			for (GLuint shader : shaders)
+			for (const auto& shader : shaders)
 			{
-				glAttachShader(shaderProgram, shader);
+				glAttachShader(shaderProgram, shader.Id());
 			}
 			glLinkProgram(shaderProgram);
 

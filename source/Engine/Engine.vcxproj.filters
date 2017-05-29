@@ -94,6 +94,9 @@
     <ClInclude Include="Service\TextureLoader.h">
       <Filter>Service</Filter>
     </ClInclude>
+    <ClInclude Include="Graphics\Shader.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Pch.cpp" />
@@ -122,6 +125,9 @@
       <Filter>Window</Filter>
     </ClCompile>
     <ClCompile Include="Graphics\Texture.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\Shader.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
   </ItemGroup>

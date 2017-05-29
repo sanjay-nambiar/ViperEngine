@@ -1,5 +1,6 @@
 #include "OpenGLRenderer.h"
 #include <stdexcept>
+#include "Graphics/Shader.h"
 #include "ShaderCompiler.h"
 #include "Graphics/Texture.h"
 #include "Core/ServiceLocator.h"
@@ -9,6 +10,8 @@ namespace Viper
 {
 	namespace Renderer
 	{
+		using namespace Graphics;
+
 		void OpenGLRenderer::Initialize()
 		{
 			if (!gladLoadGL())
@@ -18,16 +21,16 @@ namespace Viper
 			glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
 			// Create shader program and use it
-			GLuint vertexShader = ShaderCompiler::CompileShaderFromFile("Content/Shaders/default.vert", ShaderCompiler::ShaderType::VERTEX_SHADER);
-			GLuint fragmentShader = ShaderCompiler::CompileShaderFromFile("Content/Shaders/default.frag", ShaderCompiler::ShaderType::FRAGMENT_SHADER);
-			std::vector<GLuint> shaders = {vertexShader, fragmentShader};
+			Shader vertexShader = ShaderCompiler::CompileShaderFromFile("Content/Shaders/default.vert", ShaderType::VERTEX_SHADER);
+			Shader fragmentShader = ShaderCompiler::CompileShaderFromFile("Content/Shaders/default.frag", ShaderType::FRAGMENT_SHADER);
+			std::vector<Shader> shaders = {vertexShader, fragmentShader};
 			shaderProgram = ShaderCompiler::CreateProgramWithShaders(shaders);
 			glBindFragDataLocation(shaderProgram, 0, "outColor");
 			glUseProgram(shaderProgram);
 
 			// free shaders since program is created
-			glDeleteShader(vertexShader);
-			glDeleteShader(fragmentShader);
+			glDeleteShader(vertexShader.Id());
+			glDeleteShader(fragmentShader.Id());
 
 			// vertices and indices to vertices for a tringle
 			GLfloat vertices[] = {
@@ -68,28 +71,14 @@ namespace Viper
 			glVertexAttribPointer(colorAttribute, 3, GL_FLOAT, GL_FALSE, 7 * sizeof(GLfloat), reinterpret_cast<void*>(2 * sizeof(GLfloat)));
 			glEnableVertexAttribArray(colorAttribute);
 
-
 			GLint textureAttribute = glGetAttribLocation(shaderProgram, "texCoord");
 			glVertexAttribPointer(textureAttribute, 2, GL_FLOAT, GL_FALSE, 7 * sizeof(GLfloat), reinterpret_cast<void*>(5 * sizeof(GLfloat)));
 			glEnableVertexAttribArray(textureAttribute);
 
-
-			// Create and bind texture
+			// load textures
 			OpenGLTextureLoader loader;
-			Graphics::Texture textureObj = loader.LoadTexture("Content/Textures/wall.jpg");
-
-			// Set texture wrapping options in each coordinate (x, y, z) = (s, t, r)
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
-			// Border color for texture if wrapping is clamp_to_border
-			float color[] = {1.0f, 0.0f, 0.0f, 1.0f};
-			glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, color);
-
-			// Generate mipmaps
-			glGenerateMipmap(GL_TEXTURE_2D);
-			// Texture scaling option (for scaling up and down)
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR_MIPMAP_NEAREST);
+			Graphics::Texture textureObj1 = loader.LoadTexture("Content/Textures/wall.jpg");
+			Graphics::Texture textureObj2 = loader.LoadTexture("Content/Textures/decal.jpg");
 		}
 
 		void OpenGLRenderer::SetViewport(const WindowContext& windowContext)
@@ -100,6 +89,7 @@ namespace Viper
 		void OpenGLRenderer::Update()
 		{
 			RendererSystem::Update();
+			glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 			glClear(GL_COLOR_BUFFER_BIT);
 
 			auto now = std::chrono::high_resolution_clock::now();
@@ -107,6 +97,14 @@ namespace Viper
 
 			GLuint modifier = glGetUniformLocation(shaderProgram, "modifier");
 			glUniform1f(modifier, ((sin(time * 4.0f) + 1.0f) / 2.0f));
+
+			glActiveTexture(GL_TEXTURE0);
+			glBindTexture(GL_TEXTURE_2D, 1);
+			glUniform1i(glGetUniformLocation(shaderProgram, "textureSample1"), 0);
+			glActiveTexture(GL_TEXTURE1);
+			glBindTexture(GL_TEXTURE_2D, 2);
+			glUniform1i(glGetUniformLocation(shaderProgram, "textureSample2"), 1);
+
 			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 		}
 
