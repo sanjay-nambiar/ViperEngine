@@ -12,7 +12,7 @@ namespace Viper
 		using namespace Graphics;
 
 		OpenGLRenderer::OpenGLRenderer() :
-			activeShaderProgram(0), VAO(0)
+			activeShaderProgram(0)
 		{
 		}
 
@@ -69,6 +69,7 @@ namespace Viper
 		void OpenGLRenderer::LoadMesh(const Graphics::Mesh& mesh)
 		{
 			// Create vertex attrib object and bind it
+			GLuint VAO;
 			glGenVertexArrays(1, &VAO);
 			glBindVertexArray(VAO);
 
@@ -96,6 +97,8 @@ namespace Viper
 			GLint textureAttribute = glGetAttribLocation(activeShaderProgram, "texCoord");
 			glVertexAttribPointer(textureAttribute, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), reinterpret_cast<void*>(6 * sizeof(GLfloat)));
 			glEnableVertexAttribArray(textureAttribute);
+
+			VAOs.push_back(VAO);
 		}
 
 		void OpenGLRenderer::Update()
@@ -117,7 +120,11 @@ namespace Viper
 			glBindTexture(GL_TEXTURE_2D, 2);
 			glUniform1i(glGetUniformLocation(activeShaderProgram, "textureSample2"), 1);
 
-			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+			for (const auto& VAO : VAOs)
+			{
+				glBindVertexArray(VAO);
+				glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+			}
 		}
 
 		void OpenGLRenderer::Shutdown()

@@ -36,8 +36,9 @@ namespace Viper
 		private:
 			std::unordered_map<Graphics::ShaderType, Graphics::Shader> activeShaders;
 			GLuint activeShaderProgram;
-			GLuint VAO;
 			std::chrono::time_point<std::chrono::steady_clock> start;
+
+			std::vector<GLuint> VAOs;
 		};
 	}
 }

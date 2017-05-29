@@ -62,18 +62,30 @@ int WINAPI wWinMain(HINSTANCE, HINSTANCE, PWSTR, int)
 
 	// vertices and indices to vertices for a tringle
 	float vertices[] = {
-		-0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,    0.0f, 0.0f, // Top-left
-		0.5f,  0.5f, 0.0f,    0.0f, 1.0f, 0.0f,    1.0f, 0.0f, // Top-right
-		0.5f, -0.5f, 0.0f,    0.0f, 0.0f, 1.0f,    1.0f, 1.0f, // Bottom-right
-		-0.5f, -0.5f, 0.0f,   1.0f, 1.0f, 1.0f,    0.0f, 1.0f  // Bottom-left
+		-0.95f,  0.40f, 0.0f,   1.0f, 0.0f, 0.0f,    0.0f, 0.0f, // Top-left
+		-0.45f,  0.40f, 0.0f,   0.0f, 1.0f, 0.0f,    1.0f, 0.0f, // Top-right
+		-0.45f, -0.40f, 0.0f,   0.0f, 0.0f, 1.0f,    1.0f, 1.0f, // Bottom-right
+		-0.95f, -0.40f, 0.0f,   1.0f, 1.0f, 1.0f,    0.0f, 1.0f  // Bottom-left
 	};
 	std::uint32_t elements[] = {
 		0, 1, 2,
 		2, 3, 0
 	};
-
 	Graphics::Mesh mesh(4, vertices, 2, elements);
 	rendererSystem.LoadMesh(mesh);
+
+	float vertices2[] = {
+		0.45f,  0.40f, 0.0f,   1.0f, 0.0f, 0.0f,    0.0f, 0.0f, // Top-left
+		0.95f,  0.40f, 0.0f,   0.0f, 1.0f, 0.0f,    1.0f, 0.0f, // Top-right
+		0.95f, -0.40f, 0.0f,   0.0f, 0.0f, 1.0f,    1.0f, 1.0f, // Bottom-right
+		0.45f, -0.40f, 0.0f,   1.0f, 1.0f, 1.0f,    0.0f, 1.0f  // Bottom-left
+	};
+	std::uint32_t elements2[] = {
+		0, 1, 2,
+		2, 3, 0
+	};
+	Graphics::Mesh mesh2(4, vertices2, 2, elements2);
+	rendererSystem.LoadMesh(mesh2);
 
 	// Test Audio
 	AudioManager& audioManager = ServiceLocator::GetInstance().GetAudioManager();
