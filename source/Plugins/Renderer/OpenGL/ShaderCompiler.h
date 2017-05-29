@@ -1,6 +1,6 @@
 #pragma once
 
-#include <vector>
+#include <unordered_map>
 #include "glad/glad.h"
 #include "Graphics/Shader.h"
 
@@ -35,7 +35,7 @@ namespace Viper
 			*	@param shaders The list of shaders to link
 			*	@return The id of the linked program
 			*/
-			static GLuint CreateProgramWithShaders(std::vector<Graphics::Shader>& shaders);
+			static GLuint CreateProgramWithShaders(const std::unordered_map<Graphics::ShaderType, Graphics::Shader>& shaders);
 		};
 	}
 }

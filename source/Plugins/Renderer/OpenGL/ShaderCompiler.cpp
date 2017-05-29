@@ -55,13 +55,13 @@ namespace Viper
 			return CompileShader(shaderSource, shaderType);
 		}
 
-		GLuint ShaderCompiler::CreateProgramWithShaders(std::vector<Shader>& shaders)
+		GLuint ShaderCompiler::CreateProgramWithShaders(const std::unordered_map<Graphics::ShaderType, Graphics::Shader>& shaders)
 		{
 			// Links all the shaders and creates a program
 			GLuint shaderProgram = glCreateProgram();
 			for (const auto& shader : shaders)
 			{
-				glAttachShader(shaderProgram, shader.Id());
+				glAttachShader(shaderProgram, shader.second.Id());
 			}
 			glLinkProgram(shaderProgram);
 

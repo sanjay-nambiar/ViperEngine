@@ -21,6 +21,7 @@ namespace Viper
 		class Shader final
 		{
 		public:
+			Shader();
 			Shader(std::uint32_t shaderId, ShaderType shaderType);
 			~Shader() = default;
 

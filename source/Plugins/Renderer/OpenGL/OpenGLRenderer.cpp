@@ -1,9 +1,8 @@
 #include "OpenGLRenderer.h"
 #include <stdexcept>
+#include "Graphics/Mesh.h"
 #include "Graphics/Shader.h"
 #include "ShaderCompiler.h"
-#include "Graphics/Texture.h"
-#include "Core/ServiceLocator.h"
 #include "OpenGLTextureLoader.h"
 
 namespace Viper
@@ -12,39 +11,63 @@ namespace Viper
 	{
 		using namespace Graphics;
 
+		OpenGLRenderer::OpenGLRenderer() :
+			activeShaderProgram(0), VAO(0)
+		{
+		}
+
 		void OpenGLRenderer::Initialize()
 		{
 			if (!gladLoadGL())
 			{
 				throw std::runtime_error("Unable to initialize OpenGL");
 			}
-			glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+		}
 
-			// Create shader program and use it
-			Shader vertexShader = ShaderCompiler::CompileShaderFromFile("Content/Shaders/default.vert", ShaderType::VERTEX_SHADER);
-			Shader fragmentShader = ShaderCompiler::CompileShaderFromFile("Content/Shaders/default.frag", ShaderType::FRAGMENT_SHADER);
-			std::vector<Shader> shaders = {vertexShader, fragmentShader};
-			shaderProgram = ShaderCompiler::CreateProgramWithShaders(shaders);
-			glBindFragDataLocation(shaderProgram, 0, "outColor");
-			glUseProgram(shaderProgram);
+		void OpenGLRenderer::SetViewport(const WindowContext& windowContext)
+		{
+			glViewport(windowContext.x, windowContext.y, windowContext.width, windowContext.height);
+		}
 
-			// free shaders since program is created
-			glDeleteShader(vertexShader.Id());
-			glDeleteShader(fragmentShader.Id());
+		Graphics::Shader OpenGLRenderer::LoadShaderSource(const std::string& shaderSource, Graphics::ShaderType shaderType)
+		{
+			return ShaderCompiler::CompileShader(shaderSource, shaderType);
+		}
 
-			// vertices and indices to vertices for a tringle
-			GLfloat vertices[] = {
-				-0.5f,  0.5f,   1.0f, 0.0f, 0.0f,    0.0f, 0.0f, // Top-left
-				0.5f,  0.5f,    0.0f, 1.0f, 0.0f,    1.0f, 0.0f, // Top-right
-				0.5f, -0.5f,    0.0f, 0.0f, 1.0f,    1.0f, 1.0f, // Bottom-right
-				-0.5f, -0.5f,   1.0f, 1.0f, 1.0f,    0.0f, 1.0f  // Bottom-left
-			};
+		Graphics::Shader OpenGLRenderer::LoadShaderFile(const std::string& shaderFile, Graphics::ShaderType shaderType)
+		{
+			return ShaderCompiler::CompileShaderFromFile(shaderFile, shaderType);
+		}
 
-			GLuint elements[] = {
-				0, 1, 2,
-				2, 3, 0
-			};
+		void OpenGLRenderer::DeleteShader(const Graphics::Shader& shader)
+		{
+			glDetachShader(activeShaderProgram, shader.Id());
+			glDeleteShader(shader.Id());
+		}
 
+		void OpenGLRenderer::UseShader(const Graphics::Shader& shader)
+		{
+			glDeleteProgram(activeShaderProgram);
+			activeShaders[shader.Type()] = shader;
+			GLuint program = ShaderCompiler::CreateProgramWithShaders(activeShaders);
+			glUseProgram(program);
+			activeShaderProgram = program;
+		}
+
+		void OpenGLRenderer::UseShaders(const std::vector<Graphics::Shader>& shaders)
+		{
+			glDeleteProgram(activeShaderProgram);
+			for (const auto& shader : shaders)
+			{
+				activeShaders[shader.Type()] = shader;
+			}
+			GLuint program = ShaderCompiler::CreateProgramWithShaders(activeShaders);
+			glUseProgram(program);
+			activeShaderProgram = program;
+		}
+
+		void OpenGLRenderer::LoadMesh(const Graphics::Mesh& mesh)
+		{
 			// Create vertex attrib object and bind it
 			glGenVertexArrays(1, &VAO);
 			glBindVertexArray(VAO);
@@ -53,37 +76,26 @@ namespace Viper
 			GLuint VBO;
 			glGenBuffers(1, &VBO);
 			glBindBuffer(GL_ARRAY_BUFFER, VBO);
-			glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+			glBufferData(GL_ARRAY_BUFFER, mesh.VertexDataSize(), mesh.VertexData(), GL_STATIC_DRAW);
 
 			// create VertexBufferObject and bind it and copy data
 			GLuint EBO;
 			glGenBuffers(1, &EBO);
 			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-			glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(elements), elements, GL_STATIC_DRAW);
-
+			glBufferData(GL_ELEMENT_ARRAY_BUFFER, mesh.TriDataSize(), mesh.TriData(), GL_STATIC_DRAW);
 
 			// configure the size and stride attributes of vertex buffer object and element buffer object
-			GLint positionAttribute = glGetAttribLocation(shaderProgram, "position");
-			glVertexAttribPointer(positionAttribute, 2, GL_FLOAT, GL_FALSE, 7 * sizeof(GLfloat), nullptr);
+			GLint positionAttribute = glGetAttribLocation(activeShaderProgram, "position");
+			glVertexAttribPointer(positionAttribute, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), nullptr);
 			glEnableVertexAttribArray(positionAttribute);
 
-			GLint colorAttribute = glGetAttribLocation(shaderProgram, "color");
-			glVertexAttribPointer(colorAttribute, 3, GL_FLOAT, GL_FALSE, 7 * sizeof(GLfloat), reinterpret_cast<void*>(2 * sizeof(GLfloat)));
+			GLint colorAttribute = glGetAttribLocation(activeShaderProgram, "color");
+			glVertexAttribPointer(colorAttribute, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), reinterpret_cast<void*>(3 * sizeof(GLfloat)));
 			glEnableVertexAttribArray(colorAttribute);
 
-			GLint textureAttribute = glGetAttribLocation(shaderProgram, "texCoord");
-			glVertexAttribPointer(textureAttribute, 2, GL_FLOAT, GL_FALSE, 7 * sizeof(GLfloat), reinterpret_cast<void*>(5 * sizeof(GLfloat)));
+			GLint textureAttribute = glGetAttribLocation(activeShaderProgram, "texCoord");
+			glVertexAttribPointer(textureAttribute, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), reinterpret_cast<void*>(6 * sizeof(GLfloat)));
 			glEnableVertexAttribArray(textureAttribute);
-
-			// load textures
-			OpenGLTextureLoader loader;
-			Graphics::Texture textureObj1 = loader.LoadTexture("Content/Textures/wall.jpg");
-			Graphics::Texture textureObj2 = loader.LoadTexture("Content/Textures/decal.jpg");
-		}
-
-		void OpenGLRenderer::SetViewport(const WindowContext& windowContext)
-		{
-			glViewport(windowContext.x, windowContext.y, windowContext.width, windowContext.height);
 		}
 
 		void OpenGLRenderer::Update()
@@ -95,15 +107,15 @@ namespace Viper
 			auto now = std::chrono::high_resolution_clock::now();
 			float time = std::chrono::duration_cast<std::chrono::duration<float>>(now - start).count();
 
-			GLuint modifier = glGetUniformLocation(shaderProgram, "modifier");
+			GLuint modifier = glGetUniformLocation(activeShaderProgram, "modifier");
 			glUniform1f(modifier, ((sin(time * 4.0f) + 1.0f) / 2.0f));
 
 			glActiveTexture(GL_TEXTURE0);
 			glBindTexture(GL_TEXTURE_2D, 1);
-			glUniform1i(glGetUniformLocation(shaderProgram, "textureSample1"), 0);
+			glUniform1i(glGetUniformLocation(activeShaderProgram, "textureSample1"), 0);
 			glActiveTexture(GL_TEXTURE1);
 			glBindTexture(GL_TEXTURE_2D, 2);
-			glUniform1i(glGetUniformLocation(shaderProgram, "textureSample2"), 1);
+			glUniform1i(glGetUniformLocation(activeShaderProgram, "textureSample2"), 1);
 
 			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 		}

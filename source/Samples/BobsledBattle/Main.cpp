@@ -2,6 +2,7 @@
 #include <windows.h>
 #include "Core/ServiceLocator.h"
 #include "Core/ModuleLoader.h"
+#include "Graphics/Mesh.h"
 #include "Memory/MemoryManager.h"
 #include "Service/AudioManager.h"
 #include "Service/RendererSystem.h"
@@ -50,6 +51,29 @@ int WINAPI wWinMain(HINSTANCE, HINSTANCE, PWSTR, int)
 	RendererSystem& rendererSystem = ServiceLocator::GetInstance().GetRendererSystem();
 	rendererSystem.Initialize();
 	rendererSystem.SetViewport(windowContext);
+
+	TextureLoader& loader = ServiceLocator::GetInstance().GetTextureLoader();
+	Graphics::Texture textureObj1 = loader.LoadTexture("Content/Textures/wall.jpg");
+	Graphics::Texture textureObj2 = loader.LoadTexture("Content/Textures/decal.jpg");
+
+	Graphics::Shader vertexShader = rendererSystem.LoadShaderFile("Content/Shaders/default.vert", Graphics::ShaderType::VERTEX_SHADER);
+	Graphics::Shader fragmentShader = rendererSystem.LoadShaderFile("Content/Shaders/default.frag", Graphics::ShaderType::FRAGMENT_SHADER);
+	rendererSystem.UseShaders({vertexShader, fragmentShader});
+
+	// vertices and indices to vertices for a tringle
+	float vertices[] = {
+		-0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,    0.0f, 0.0f, // Top-left
+		0.5f,  0.5f, 0.0f,    0.0f, 1.0f, 0.0f,    1.0f, 0.0f, // Top-right
+		0.5f, -0.5f, 0.0f,    0.0f, 0.0f, 1.0f,    1.0f, 1.0f, // Bottom-right
+		-0.5f, -0.5f, 0.0f,   1.0f, 1.0f, 1.0f,    0.0f, 1.0f  // Bottom-left
+	};
+	std::uint32_t elements[] = {
+		0, 1, 2,
+		2, 3, 0
+	};
+
+	Graphics::Mesh mesh(4, vertices, 2, elements);
+	rendererSystem.LoadMesh(mesh);
 
 	// Test Audio
 	AudioManager& audioManager = ServiceLocator::GetInstance().GetAudioManager();

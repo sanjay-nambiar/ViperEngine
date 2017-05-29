@@ -5,6 +5,11 @@ namespace Viper
 {
 	namespace Graphics
 	{
+		Shader::Shader() :
+			id(0), type(ShaderType::VERTEX_SHADER)
+		{
+		}
+
 		Shader::Shader(std::uint32_t shaderId, ShaderType shaderType) :
 			id(shaderId), type(shaderType)
 		{

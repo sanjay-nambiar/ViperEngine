@@ -193,6 +193,7 @@
     <ClInclude Include="Core\Singleton.h" />
     <ClInclude Include="Core\Types.h" />
     <ClInclude Include="Core\Vector3.h" />
+    <ClInclude Include="Graphics\Mesh.h" />
     <ClInclude Include="Graphics\Shader.h" />
     <ClInclude Include="Graphics\Texture.h" />
     <ClInclude Include="Memory\MemoryManager.h" />
@@ -212,6 +213,7 @@
     <ClCompile Include="Core\ModuleLoader.cpp" />
     <ClCompile Include="Core\ServiceLocator.cpp" />
     <ClCompile Include="Core\Vector3.cpp" />
+    <ClCompile Include="Graphics\Mesh.cpp" />
     <ClCompile Include="Graphics\Shader.cpp" />
     <ClCompile Include="Graphics\Texture.cpp" />
     <ClCompile Include="Memory\MemoryManager.cpp" />
