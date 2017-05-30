@@ -9,8 +9,14 @@
 
 namespace Viper
 {
-	namespace Graphics {
+	namespace Graphics
+	{
 		class Mesh;
+	}
+
+	namespace Gameplay
+	{
+		class Actor;
 	}
 
 	class RendererSystem
@@ -36,6 +42,8 @@ namespace Viper
 		virtual void UseShaders(const std::vector<Graphics::Shader>& shaders) = 0;
 
 		virtual void LoadMesh(const Graphics::Mesh& mesh) = 0;
+		virtual void AddActorToScene(const Gameplay::Actor& actor) = 0;
+
 		virtual void Update();
 		virtual void Shutdown() = 0;
 

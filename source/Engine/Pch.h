@@ -9,6 +9,8 @@
 #include <string>
 #include <unordered_map>
 
+#include "glm.hpp"
+
 #include "Core/Platform.h"
 #include "Core/DynamicLibrary.h"
 #include "Core/Types.h"

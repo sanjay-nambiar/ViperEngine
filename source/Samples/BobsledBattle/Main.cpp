@@ -1,7 +1,10 @@
 #include "Pch.h"
 #include <windows.h>
+#include "glm.hpp"
+#include "gtc/matrix_transform.hpp"
 #include "Core/ServiceLocator.h"
 #include "Core/ModuleLoader.h"
+#include "Gameplay/Actor.h"
 #include "Graphics/Mesh.h"
 #include "Memory/MemoryManager.h"
 #include "Service/AudioManager.h"
@@ -62,30 +65,25 @@ int WINAPI wWinMain(HINSTANCE, HINSTANCE, PWSTR, int)
 
 	// vertices and indices to vertices for a tringle
 	float vertices[] = {
-		-0.95f,  0.40f, 0.0f,   1.0f, 0.0f, 0.0f,    0.0f, 0.0f, // Top-left
-		-0.45f,  0.40f, 0.0f,   0.0f, 1.0f, 0.0f,    1.0f, 0.0f, // Top-right
-		-0.45f, -0.40f, 0.0f,   0.0f, 0.0f, 1.0f,    1.0f, 1.0f, // Bottom-right
-		-0.95f, -0.40f, 0.0f,   1.0f, 1.0f, 1.0f,    0.0f, 1.0f  // Bottom-left
+		-0.25f,  0.40f, 0.0f,   1.0f, 0.0f, 0.0f,    0.0f, 0.0f, // Top-left
+		 0.25f,  0.40f, 0.0f,   0.0f, 1.0f, 0.0f,    1.0f, 0.0f, // Top-right
+		 0.25f, -0.40f, 0.0f,   0.0f, 0.0f, 1.0f,    1.0f, 1.0f, // Bottom-right
+		-0.25f, -0.40f, 0.0f,   1.0f, 1.0f, 1.0f,    0.0f, 1.0f  // Bottom-left
 	};
 	std::uint32_t elements[] = {
 		0, 1, 2,
 		2, 3, 0
 	};
-	Graphics::Mesh mesh(4, vertices, 2, elements);
-	rendererSystem.LoadMesh(mesh);
+	Graphics::Mesh mesh1(4, vertices, 2, elements);
+	rendererSystem.LoadMesh(mesh1);
 
-	float vertices2[] = {
-		0.45f,  0.40f, 0.0f,   1.0f, 0.0f, 0.0f,    0.0f, 0.0f, // Top-left
-		0.95f,  0.40f, 0.0f,   0.0f, 1.0f, 0.0f,    1.0f, 0.0f, // Top-right
-		0.95f, -0.40f, 0.0f,   0.0f, 0.0f, 1.0f,    1.0f, 1.0f, // Bottom-right
-		0.45f, -0.40f, 0.0f,   1.0f, 1.0f, 1.0f,    0.0f, 1.0f  // Bottom-left
-	};
-	std::uint32_t elements2[] = {
-		0, 1, 2,
-		2, 3, 0
-	};
-	Graphics::Mesh mesh2(4, vertices2, 2, elements2);
-	rendererSystem.LoadMesh(mesh2);
+	Gameplay::Actor actor1(&mesh1, {&textureObj1, &textureObj2});
+	rendererSystem.AddActorToScene(actor1);
+	actor1.Transform() = glm::translate(actor1.Transform(), glm::vec3(-0.7f, 0.0f, 0.0f));
+
+	Gameplay::Actor actor2(&mesh1, {&textureObj1, &textureObj2});
+	rendererSystem.AddActorToScene(actor2);
+	actor2.Transform() = glm::translate(actor2.Transform(), glm::vec3(0.7f, 0.0f, 0.0f));
 
 	// Test Audio
 	AudioManager& audioManager = ServiceLocator::GetInstance().GetAudioManager();
@@ -105,8 +103,6 @@ int WINAPI wWinMain(HINSTANCE, HINSTANCE, PWSTR, int)
 		{
 			break;
 		}
-		rendererSystem.Update();
-
 		if (inputManager.GetButtonState(Button::Key_Up) == ButtonState::Pressed)
 		{
 			position.z += 0.01f;
@@ -122,6 +118,11 @@ int WINAPI wWinMain(HINSTANCE, HINSTANCE, PWSTR, int)
 			position.z = 0.0f;
 			audioManager.SetEvent3dAttributes("event:/GattlingGun-Fire", position, Viper::Vector3(0, 0, 0));
 		}
+
+		actor1.Transform() = glm::rotate(actor1.Transform(), glm::radians<float>(0.05f), glm::vec3(0.0f, 1.0f, 0.0f));
+		actor2.Transform() = glm::rotate(actor2.Transform(), glm::radians<float>(-0.05f), glm::vec3(0.0f, 1.0f, 0.0f));
+
+		rendererSystem.Update();
 		audioManager.Update();
 
 		windowManager.EndUpdate(windowContext);

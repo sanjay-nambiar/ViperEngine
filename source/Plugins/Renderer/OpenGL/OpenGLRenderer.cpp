@@ -1,9 +1,10 @@
 #include "OpenGLRenderer.h"
-#include <stdexcept>
+#include <glm.hpp>
+#include <gtc/type_ptr.hpp>
+#include "Gameplay/Actor.h"
 #include "Graphics/Mesh.h"
 #include "Graphics/Shader.h"
 #include "ShaderCompiler.h"
-#include "OpenGLTextureLoader.h"
 
 namespace Viper
 {
@@ -98,7 +99,12 @@ namespace Viper
 			glVertexAttribPointer(textureAttribute, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), reinterpret_cast<void*>(6 * sizeof(GLfloat)));
 			glEnableVertexAttribArray(textureAttribute);
 
-			VAOs.push_back(VAO);
+			meshes[&mesh] = VAO;
+		}
+
+		void OpenGLRenderer::AddActorToScene(const Gameplay::Actor& actor)
+		{
+			actors.push_back(&actor);
 		}
 
 		void OpenGLRenderer::Update()
@@ -120,9 +126,12 @@ namespace Viper
 			glBindTexture(GL_TEXTURE_2D, 2);
 			glUniform1i(glGetUniformLocation(activeShaderProgram, "textureSample2"), 1);
 
-			for (const auto& VAO : VAOs)
+			GLuint transformLoc = glGetUniformLocation(activeShaderProgram, "transform");
+
+			for (const auto& actor : actors)
 			{
-				glBindVertexArray(VAO);
+				glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(actor->Transform()));
+				glBindVertexArray(meshes[&actor->Mesh()]);
 				glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 			}
 		}

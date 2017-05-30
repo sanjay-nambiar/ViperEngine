@@ -6,8 +6,6 @@
 #include "glad/glad.h"
 #include "Window/WindowContext.h"
 
-
-
 struct GLFWwindow;
 
 namespace Viper
@@ -30,15 +28,17 @@ namespace Viper
 			void UseShaders(const std::vector<Graphics::Shader>& shaders) override;
 
 			void LoadMesh(const Graphics::Mesh& mesh) override;
+			void AddActorToScene(const Gameplay::Actor& actor) override;
+
 			void Update() override;
 			void Shutdown() override;
-
 		private:
 			std::unordered_map<Graphics::ShaderType, Graphics::Shader> activeShaders;
 			GLuint activeShaderProgram;
 			std::chrono::time_point<std::chrono::steady_clock> start;
 
-			std::vector<GLuint> VAOs;
+			std::unordered_map<const Graphics::Mesh*, GLuint> meshes;
+			std::vector<const Gameplay::Actor*> actors;
 		};
 	}
 }

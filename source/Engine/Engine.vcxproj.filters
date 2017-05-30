@@ -22,6 +22,9 @@
     <Filter Include="Graphics">
       <UniqueIdentifier>{a58d1b9c-7519-40e8-98b6-251189f61e58}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Gameplay">
+      <UniqueIdentifier>{a11d0cc1-50f9-4cd0-a39a-0347caefb192}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Pch.h" />
@@ -97,6 +100,9 @@
     <ClInclude Include="Graphics\Shader.h">
       <Filter>Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="Gameplay\Actor.h">
+      <Filter>Gameplay</Filter>
+    </ClInclude>
     <ClInclude Include="Graphics\Mesh.h">
       <Filter>Graphics</Filter>
     </ClInclude>
@@ -132,6 +138,9 @@
     </ClCompile>
     <ClCompile Include="Graphics\Shader.cpp">
       <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Gameplay\Actor.cpp">
+      <Filter>Gameplay</Filter>
     </ClCompile>
     <ClCompile Include="Graphics\Mesh.cpp">
       <Filter>Graphics</Filter>
