@@ -23,6 +23,7 @@ namespace Viper
 			{
 				throw std::runtime_error("Unable to initialize OpenGL");
 			}
+			glEnable(GL_DEPTH_TEST);
 		}
 
 		void OpenGLRenderer::SetViewport(const WindowContext& windowContext)
@@ -111,7 +112,7 @@ namespace Viper
 		{
 			RendererSystem::Update();
 			glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-			glClear(GL_COLOR_BUFFER_BIT);
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 			auto now = std::chrono::high_resolution_clock::now();
 			float time = std::chrono::duration_cast<std::chrono::duration<float>>(now - start).count();
@@ -126,13 +127,18 @@ namespace Viper
 			glBindTexture(GL_TEXTURE_2D, 2);
 			glUniform1i(glGetUniformLocation(activeShaderProgram, "textureSample2"), 1);
 
-			GLuint transformLoc = glGetUniformLocation(activeShaderProgram, "transform");
+			GLuint model= glGetUniformLocation(activeShaderProgram, "model");
+			GLuint view = glGetUniformLocation(activeShaderProgram, "view");
+			GLuint projection = glGetUniformLocation(activeShaderProgram, "projection");
 
 			for (const auto& actor : actors)
 			{
-				glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(actor->Transform()));
+				glUniformMatrix4fv(model, 1, GL_FALSE, glm::value_ptr(actor->Model()));
+				glUniformMatrix4fv(view, 1, GL_FALSE, glm::value_ptr(actor->View()));
+				glUniformMatrix4fv(projection, 1, GL_FALSE, glm::value_ptr(actor->Projection()));
+
 				glBindVertexArray(meshes[&actor->Mesh()]);
-				glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+				glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, nullptr);
 			}
 		}
 

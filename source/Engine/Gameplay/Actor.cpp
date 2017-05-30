@@ -23,14 +23,34 @@ namespace Viper
 			return textures;
 		}
 
-		glm::mat4& Actor::Transform()
+		glm::mat4& Actor::Model()
 		{
-			return transform;
+			return model;
 		}
 
-		const glm::mat4& Actor::Transform() const
+		const glm::mat4& Actor::Model() const
 		{
-			return transform;
+			return model;
+		}
+
+		glm::mat4& Actor::View()
+		{
+			return view;
+		}
+
+		const glm::mat4& Actor::View() const
+		{
+			return view;
+		}
+
+		glm::mat4& Actor::Projection()
+		{
+			return projection;
+		}
+
+		const glm::mat4& Actor::Projection() const
+		{
+			return projection;
 		}
 	}
 }
