@@ -17,8 +17,8 @@
 #endif
 
 
-#define WIDTH		1920
-#define HEIGHT		1080
+#define WIDTH		800
+#define HEIGHT		600
 #define TITLE		"Bobsled Battle"
 #define CONFIG_FILE "Config.ini"
 
