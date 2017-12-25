@@ -17,9 +17,9 @@ namespace Viper
 			glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
 		}
 
-		const WindowContext& GlfwWindowManager::CreateGameWindow(std::uint32_t width, std::uint32_t height, const std::string& title)
+		const WindowContext& GlfwWindowManager::CreateGameWindow(std::uint32_t width, std::uint32_t height, const std::string& title, bool fullScreen)
 		{
-			GLFWwindow* window = glfwCreateWindow(width, height, title.c_str(), glfwGetPrimaryMonitor(), nullptr);
+			GLFWwindow* window = glfwCreateWindow(width, height, title.c_str(), (fullScreen ? glfwGetPrimaryMonitor() : nullptr), nullptr);
 			GlfwWindowContext windowContext;
 			glfwMakeContextCurrent(window);
 			glfwGetFramebufferSize(window, &windowContext.width, &windowContext.height);

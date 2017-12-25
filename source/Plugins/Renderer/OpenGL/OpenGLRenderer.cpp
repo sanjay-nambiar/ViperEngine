@@ -90,7 +90,7 @@ namespace Viper
 			// configure the size and stride attributes of vertex buffer object and element buffer object
 			GLint positionAttribute = glGetAttribLocation(activeShaderProgram, "position");
 			glVertexAttribPointer(positionAttribute, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), nullptr);
-			glEnableVertexAttribArray(positionAttribute);
+			glEnableVertexAttribArray(positionAttribute);	
 
 			GLint colorAttribute = glGetAttribLocation(activeShaderProgram, "color");
 			glVertexAttribPointer(colorAttribute, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), reinterpret_cast<void*>(3 * sizeof(GLfloat)));

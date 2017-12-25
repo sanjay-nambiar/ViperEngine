@@ -3,17 +3,19 @@
 #include "OpenGLTextureLoader.h"
 #include "OpenGLRenderer.h"
 
-void InitializeModule(Viper::ServiceLocator& serviceLocator, const std::unordered_map<std::string, std::string>&)
-{
-	Viper::MemoryAllocator& allocator = serviceLocator.GetMemoryAllocator();
+using namespace Viper;
 
-	void* memBlock = allocator.Allocate(sizeof(Viper::Renderer::OpenGLRenderer), 1);
+void InitializeModule(ServiceLocator& serviceLocator, const std::unordered_map<std::string, std::string>&)
+{
+	MemoryAllocator& allocator = serviceLocator.GetMemoryAllocator();
+
+	void* memBlock = allocator.Allocate(sizeof(Renderer::OpenGLRenderer), 1);
 	assert(memBlock != nullptr);
-	Viper::Renderer::OpenGLRenderer* rendererSystem = new(memBlock) Viper::Renderer::OpenGLRenderer();
+	Renderer::OpenGLRenderer* rendererSystem = new(memBlock) Renderer::OpenGLRenderer();
 	serviceLocator.Provide(*rendererSystem);
 
-	void* memBlock2 = allocator.Allocate(sizeof(Viper::Renderer::OpenGLTextureLoader), 1);
+	void* memBlock2 = allocator.Allocate(sizeof(Renderer::OpenGLTextureLoader), 1);
 	assert(memBlock2 != nullptr);
-	Viper::Renderer::OpenGLTextureLoader* textureLoader = new(memBlock2) Viper::Renderer::OpenGLTextureLoader();
+	Renderer::OpenGLTextureLoader* textureLoader = new(memBlock2) Renderer::OpenGLTextureLoader();
 	serviceLocator.Provide(*textureLoader);
 }

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2003
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Audio", "Audio", "{F7731D46-5086-42CD-AA77-07A7D8E57971}"
 EndProject
@@ -22,6 +22,12 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Glfw", "..\source\Plugins\WindowSystem\Glfw\Glfw.vcxproj", "{348BB6C9-2D5A-4C0F-A6C1-055108D99804}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BobsledBattle", "..\source\Samples\BobsledBattle\BobsledBattle.vcxproj", "{8D7263A2-5EBF-44D7-ACEA-BCE9C7DFCB30}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Thirdparty", "Thirdparty", "{438A1F74-CE6F-49DD-A616-CBD997BEB866}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Glad", "..\source\Thirdparty\Glad\Glad.vcxproj", "{667A42AA-ED36-4A98-A2AB-DE04AD25CC5A}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SOIL", "..\source\Thirdparty\SOIL\SOIL.vcxproj", "{56FCB9E2-5619-413C-9660-2D15BA93CBC1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -71,6 +77,22 @@ Global
 		{8D7263A2-5EBF-44D7-ACEA-BCE9C7DFCB30}.Release|x64.Build.0 = Release|x64
 		{8D7263A2-5EBF-44D7-ACEA-BCE9C7DFCB30}.Release|x86.ActiveCfg = Release|Win32
 		{8D7263A2-5EBF-44D7-ACEA-BCE9C7DFCB30}.Release|x86.Build.0 = Release|Win32
+		{667A42AA-ED36-4A98-A2AB-DE04AD25CC5A}.Debug|x64.ActiveCfg = Debug|x64
+		{667A42AA-ED36-4A98-A2AB-DE04AD25CC5A}.Debug|x64.Build.0 = Debug|x64
+		{667A42AA-ED36-4A98-A2AB-DE04AD25CC5A}.Debug|x86.ActiveCfg = Debug|Win32
+		{667A42AA-ED36-4A98-A2AB-DE04AD25CC5A}.Debug|x86.Build.0 = Debug|Win32
+		{667A42AA-ED36-4A98-A2AB-DE04AD25CC5A}.Release|x64.ActiveCfg = Release|x64
+		{667A42AA-ED36-4A98-A2AB-DE04AD25CC5A}.Release|x64.Build.0 = Release|x64
+		{667A42AA-ED36-4A98-A2AB-DE04AD25CC5A}.Release|x86.ActiveCfg = Release|Win32
+		{667A42AA-ED36-4A98-A2AB-DE04AD25CC5A}.Release|x86.Build.0 = Release|Win32
+		{56FCB9E2-5619-413C-9660-2D15BA93CBC1}.Debug|x64.ActiveCfg = Debug|x64
+		{56FCB9E2-5619-413C-9660-2D15BA93CBC1}.Debug|x64.Build.0 = Debug|x64
+		{56FCB9E2-5619-413C-9660-2D15BA93CBC1}.Debug|x86.ActiveCfg = Debug|Win32
+		{56FCB9E2-5619-413C-9660-2D15BA93CBC1}.Debug|x86.Build.0 = Debug|Win32
+		{56FCB9E2-5619-413C-9660-2D15BA93CBC1}.Release|x64.ActiveCfg = Release|x64
+		{56FCB9E2-5619-413C-9660-2D15BA93CBC1}.Release|x64.Build.0 = Release|x64
+		{56FCB9E2-5619-413C-9660-2D15BA93CBC1}.Release|x86.ActiveCfg = Release|Win32
+		{56FCB9E2-5619-413C-9660-2D15BA93CBC1}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -83,5 +105,10 @@ Global
 		{14E0F32C-0008-4009-BEF1-54C120578187} = {F7731D46-5086-42CD-AA77-07A7D8E57971}
 		{348BB6C9-2D5A-4C0F-A6C1-055108D99804} = {CF52C455-6D17-462B-A81F-8EE48E9444E4}
 		{8D7263A2-5EBF-44D7-ACEA-BCE9C7DFCB30} = {707F2A23-D8A7-4C53-8064-B8C62EE835F1}
+		{667A42AA-ED36-4A98-A2AB-DE04AD25CC5A} = {438A1F74-CE6F-49DD-A616-CBD997BEB866}
+		{56FCB9E2-5619-413C-9660-2D15BA93CBC1} = {438A1F74-CE6F-49DD-A616-CBD997BEB866}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B1267565-12EB-416E-AE28-CE692CC9063E}
 	EndGlobalSection
 EndGlobal

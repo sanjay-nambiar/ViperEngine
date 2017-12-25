@@ -11,5 +11,11 @@ out vec4 finalColor;
 
 void main()
 {
-	finalColor = mix(texture(textureSample1, TexCoord), texture(textureSample2, TexCoord) * vec4(Color * modifier, 1.0), 0.65);
+	finalColor = texture(textureSample1, TexCoord);
+	vec4 color2 = texture(textureSample2, TexCoord) * vec4(Color * modifier, 1.0);
+	
+	if (finalColor.x < (3 * color2.x) || finalColor.y < (3 * color2.y) || finalColor.z < (3 * color2.z))
+	{
+		finalColor = color2;
+	}
 }

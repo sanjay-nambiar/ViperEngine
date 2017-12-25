@@ -17,7 +17,7 @@ namespace Viper
 			~GlfwWindowManager() = default;
 
 			void Initialize() override;
-			const WindowContext& CreateGameWindow(std::uint32_t width, std::uint32_t height, const std::string& title) override;
+			const WindowContext& CreateGameWindow(std::uint32_t width, std::uint32_t height, const std::string& title, bool fullScreen = false) override;
 			bool BeginUpdate(const WindowContext& windowHandle) override;
 			void EndUpdate(const WindowContext& windowHandle) override;
 			void DestroyGameWindow(const WindowContext& windowHandle) override;
