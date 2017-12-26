@@ -1,6 +1,9 @@
 #include "OpenGLTextureLoader.h"
-#include "SOIL.h"
 #include "glad/glad.h"
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"
+
+using namespace std;
 
 namespace Viper
 {
@@ -19,10 +22,14 @@ namespace Viper
 			float color[] = {1.0f, 0.0f, 0.0f, 1.0f};
 			glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, color);
 
-			GLint width, height;
-			unsigned char* image = SOIL_load_image(textureFile.c_str(), &width, &height, nullptr, SOIL_LOAD_RGB);
+			GLint width, height, channels;
+			unsigned char* image = stbi_load(textureFile.c_str(), &width, &height, &channels, 3);
+			if (image == nullptr)
+			{
+				throw runtime_error(string("Unable to load texture file ") + textureFile);
+			}
 			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
-			SOIL_free_image_data(image);
+			stbi_image_free(image);
 
 			// Generate mipmaps
 			glGenerateMipmap(GL_TEXTURE_2D);

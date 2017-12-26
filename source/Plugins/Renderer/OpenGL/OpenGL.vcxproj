@@ -55,6 +55,7 @@
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
   <ImportGroup Label="Shared">
+    <Import Project="..\..\..\Thirdparty\STB\STB.vcxitems" Label="Shared" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -101,7 +102,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;OPENGL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\source\Engine;$(SolutionDir)..\source\Thirdparty\Glad\include;$(SolutionDir)..\source\Thirdparty\SOIL;$(SolutionDir)..\external\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\source\Engine;$(SolutionDir)..\source\Thirdparty\Glad\include;$(SolutionDir)..\source\Thirdparty\STB;$(SolutionDir)..\external\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
       <DisableSpecificWarnings>4201</DisableSpecificWarnings>
     </ClCompile>
@@ -128,7 +129,7 @@ xcopy "$(OutDir)$(TargetName).pdb" "$(SolutionDir)bin\Plugins\$(PlatformName)\$(
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;_USRDLL;OPENGL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\source\Engine;$(SolutionDir)..\source\Thirdparty\Glad\include;$(SolutionDir)..\source\Thirdparty\SOIL;$(SolutionDir)..\external\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\source\Engine;$(SolutionDir)..\source\Thirdparty\Glad\include;$(SolutionDir)..\source\Thirdparty\STB;$(SolutionDir)..\external\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
       <DisableSpecificWarnings>4201</DisableSpecificWarnings>
     </ClCompile>
@@ -157,7 +158,7 @@ xcopy "$(OutDir)$(TargetName).pdb" "$(SolutionDir)bin\Plugins\$(PlatformName)\$(
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;OPENGL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\source\Engine;$(SolutionDir)..\source\Thirdparty\Glad\include;$(SolutionDir)..\source\Thirdparty\SOIL;$(SolutionDir)..\external\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\source\Engine;$(SolutionDir)..\source\Thirdparty\Glad\include;$(SolutionDir)..\source\Thirdparty\STB;$(SolutionDir)..\external\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
       <DisableSpecificWarnings>4201</DisableSpecificWarnings>
     </ClCompile>
@@ -188,7 +189,7 @@ xcopy "$(OutDir)$(TargetName).pdb" "$(SolutionDir)bin\Plugins\$(PlatformName)\$(
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;_USRDLL;OPENGL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\source\Engine;$(SolutionDir)..\source\Thirdparty\Glad\include;$(SolutionDir)..\source\Thirdparty\SOIL;$(SolutionDir)..\external\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\source\Engine;$(SolutionDir)..\source\Thirdparty\Glad\include;$(SolutionDir)..\source\Thirdparty\STB;$(SolutionDir)..\external\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
       <DisableSpecificWarnings>4201</DisableSpecificWarnings>
     </ClCompile>
@@ -215,9 +216,6 @@ xcopy "$(OutDir)$(TargetName).pdb" "$(SolutionDir)bin\Plugins\$(PlatformName)\$(
     </ProjectReference>
     <ProjectReference Include="..\..\..\Thirdparty\Glad\Glad.vcxproj">
       <Project>{667a42aa-ed36-4a98-a2ab-de04ad25cc5a}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Thirdparty\SOIL\SOIL.vcxproj">
-      <Project>{56fcb9e2-5619-413c-9660-2d15ba93cbc1}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
