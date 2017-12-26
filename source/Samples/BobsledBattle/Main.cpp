@@ -20,7 +20,7 @@
 #define WIDTH		800
 #define HEIGHT		600
 #define TITLE		"Bobsled Battle"
-#define CONFIG_FILE "Config.ini"
+#define CONFIG_FILE "Config.json"
 
 using namespace Viper;
 

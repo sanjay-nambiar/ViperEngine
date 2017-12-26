@@ -36,8 +36,8 @@ namespace Viper
 			std::unordered_map<std::string, std::unordered_map<std::string, std::string>> configData;
 			std::vector<ModuleHandle> moduleHandles;
 
-			static const std::regex SectionTagPattern;
-			static const std::regex AttributeLinePattern;
+			/*static const std::regex SectionTagPattern;
+			static const std::regex AttributeLinePattern;*/
 		};
 	}
 }

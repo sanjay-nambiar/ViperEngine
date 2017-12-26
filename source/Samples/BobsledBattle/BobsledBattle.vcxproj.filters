@@ -23,9 +23,6 @@
     <ClInclude Include="Pch.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Config.ini">
-      <Filter>Resource Files</Filter>
-    </None>
     <None Include="Content\Sounds\ZombieWars.bank">
       <Filter>Resource Files\Content\Sound</Filter>
     </None>
@@ -37,6 +34,9 @@
     </None>
     <None Include="Content\Shaders\default.vert">
       <Filter>Resource Files\Content\Shaders</Filter>
+    </None>
+    <None Include="Config.json">
+      <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

@@ -112,7 +112,9 @@
     </BuildLog>
     <PostBuildEvent>
       <Command>xcopy "$(SolutionDir)bin\Plugins\$(PlatformName)\$(Configuration)\*.*" "$(OutDir)" /I /R /Y
-xcopy "$(ProjectDir)Config.ini" "$(OutDir)" /I /R /Y
+
+xcopy "$(ProjectDir)Config.json" "$(OutDir)" /I /R /Y
+
 xcopy "$(ProjectDir)Content" "$(OutDir)Content" /I /R /Y /E</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -139,7 +141,9 @@ xcopy "$(ProjectDir)Content" "$(OutDir)Content" /I /R /Y /E</Command>
     </BuildLog>
     <PostBuildEvent>
       <Command>xcopy "$(SolutionDir)bin\Plugins\$(PlatformName)\$(Configuration)\*.*" "$(OutDir)" /I /R /Y
-xcopy "$(ProjectDir)Config.ini" "$(OutDir)" /I /R /Y
+
+xcopy "$(ProjectDir)Config.json" "$(OutDir)" /I /R /Y
+
 xcopy "$(ProjectDir)Content" "$(OutDir)Content" /I /R /Y /E</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -170,7 +174,9 @@ xcopy "$(ProjectDir)Content" "$(OutDir)Content" /I /R /Y /E</Command>
     </BuildLog>
     <PostBuildEvent>
       <Command>xcopy "$(SolutionDir)bin\Plugins\$(PlatformName)\$(Configuration)\*.*" "$(OutDir)" /I /R /Y
-xcopy "$(ProjectDir)Config.ini" "$(OutDir)" /I /R /Y
+
+xcopy "$(ProjectDir)Config.json" "$(OutDir)" /I /R /Y
+
 xcopy "$(ProjectDir)Content" "$(OutDir)Content" /I /R /Y /E</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -201,7 +207,9 @@ xcopy "$(ProjectDir)Content" "$(OutDir)Content" /I /R /Y /E</Command>
     </BuildLog>
     <PostBuildEvent>
       <Command>xcopy "$(SolutionDir)bin\Plugins\$(PlatformName)\$(Configuration)\*.*" "$(OutDir)" /I /R /Y
-xcopy "$(ProjectDir)Config.ini" "$(OutDir)" /I /R /Y
+
+xcopy "$(ProjectDir)Config.json" "$(OutDir)" /I /R /Y
+
 xcopy "$(ProjectDir)Content" "$(OutDir)Content" /I /R /Y /E</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -223,7 +231,7 @@ xcopy "$(ProjectDir)Content" "$(OutDir)Content" /I /R /Y /E</Command>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Config.ini" />
+    <None Include="Config.json" />
     <None Include="Content\Shaders\default.frag" />
     <None Include="Content\Shaders\default.vert" />
     <None Include="Content\Sounds\ZombieWars.bank" />

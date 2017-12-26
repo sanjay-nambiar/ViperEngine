@@ -1,17 +1,18 @@
 #include "Pch.h"
 #include "ModuleLoader.h"
 #include <fstream>
+#include "gason.h"
 #include "Core/ModuleImports.h"
 #include "Service/AudioManager.h"
-#include <regex>
 
+using namespace std;
 
 namespace Viper
 {
 	namespace Core
 	{
-		const std::regex ModuleLoader::SectionTagPattern = std::regex("^\\s*\\[\\s*([A-Za-z0-9_]+)\\s*\\]\\s*$");
-		const std::regex ModuleLoader::AttributeLinePattern = std::regex("^\\s*([^=]+)=(.*)$");
+		/*const regex ModuleLoader::SectionTagPattern = std::regex("^\\s*\\[\\s*([A-Za-z0-9_]+)\\s*\\]\\s*$");
+		const regex ModuleLoader::AttributeLinePattern = std::regex("^\\s*([^=]+)=(.*)$");*/
 
 		ModuleLoader::~ModuleLoader()
 		{
@@ -46,25 +47,34 @@ namespace Viper
 
 		void ModuleLoader::LoadConfigData()
 		{
-			std::ifstream file;
+			ifstream file;
 			file.open(configFile);
 			if (!file.is_open())
 			{
-				throw std::runtime_error("Unable to read module config file: " + configFile);
+				throw runtime_error("Unable to read module config file: " + configFile);
 			}
 
-			std::string line;
-			std::string sectionName;
-			while (std::getline(file, line))
+			string configJson((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
+
+			char *endptr;
+			JsonValue jsonObject;
+			JsonAllocator jsonAllocator;
+			int status = jsonParse(const_cast<char*>(configJson.c_str()), &endptr, &jsonObject, jsonAllocator);
+			if (status != JSON_OK)
 			{
-				std::smatch matches;
-				if (std::regex_search(line, matches, SectionTagPattern))
+				throw runtime_error(string(jsonStrError(status)) + " " + to_string(static_cast<size_t>(endptr - configJson.c_str())));
+			}
+
+			for (auto sectionIt = begin(jsonObject); sectionIt != JsonIterator::end(); ++sectionIt)
+			{
+				auto& section = sectionIt->value;
+				assert(section.getTag() == JSON_OBJECT);
+				string sectionName(sectionIt->key);
+				for (auto paramsIt = begin(section); paramsIt != JsonIterator::end(); ++paramsIt)
 				{
-					sectionName = matches.str(1);
-				}
-				else if (std::regex_search(line, matches, AttributeLinePattern))
-				{
-					configData[sectionName].insert({matches.str(1), matches.str(2)});
+					auto& param = paramsIt->value;
+					assert(param.getTag() == JSON_STRING);
+					configData[sectionName].insert({ string(paramsIt->key),  string(param.toString())});
 				}
 			}
 			file.close();
