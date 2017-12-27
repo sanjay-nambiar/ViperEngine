@@ -1,6 +1,6 @@
 #include "OpenGLRenderer.h"
-#include <glm.hpp>
-#include <gtc/type_ptr.hpp>
+#include "glm/glm.hpp"
+#include "glm/gtc/type_ptr.hpp"
 #include "Gameplay/Actor.h"
 #include "Graphics/Mesh.h"
 #include "Graphics/Shader.h"

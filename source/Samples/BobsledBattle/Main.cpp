@@ -1,7 +1,7 @@
 #include "Pch.h"
 #include <chrono>
-#include "glm.hpp"
-#include "gtc/matrix_transform.hpp"
+#include "glm/glm.hpp"
+#include "glm/gtc/matrix_transform.hpp"
 #include "Core/Platform.h"
 #include "Core/ServiceLocator.h"
 #include "Core/ModuleLoader.h"
