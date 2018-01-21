@@ -378,6 +378,29 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)glm\simd\vector_relational.h">
       <Filter>simd</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)glm\common.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)glm\exponential.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)glm\ext.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)glm\fwd.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)glm\geometric.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)glm\glm.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)glm\integer.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)glm\mat2x2.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)glm\mat2x3.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)glm\mat2x4.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)glm\mat3x2.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)glm\mat3x3.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)glm\mat3x4.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)glm\mat4x2.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)glm\mat4x3.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)glm\mat4x4.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)glm\matrix.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)glm\packing.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)glm\trigonometric.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)glm\vec2.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)glm\vec3.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)glm\vec4.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)glm\vector_relational.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)glm\detail\func_common.inl">
