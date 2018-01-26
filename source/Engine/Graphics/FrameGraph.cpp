@@ -53,6 +53,7 @@ namespace Viper
 
 		void FrameGraph::Compile()
 		{
+			// Calculate dependency based node weights. Zero weight nodes have no effect on output.
 			queue<FrameGraphNode*> reverseQueue;
 			graphEnd->nodeWeight = 0;
 			reverseQueue.push(graphEnd);
@@ -73,11 +74,29 @@ namespace Viper
 				}
 			}
 
+			// Sort render passes based on node weights and find the point from were no effect nodes start in the vector
 			sort(renderPasses.begin(), renderPasses.end(), [](FrameGraphRenderPassNode* a, FrameGraphRenderPassNode* b) {
 				return (a->nodeWeight > b->nodeWeight);
 			});
 			for (renderPassesIt = renderPasses.begin(); renderPassesIt != renderPasses.end() && (*renderPassesIt)->nodeWeight > 0; ++renderPassesIt);
 
+
+			// Some zero node weight resources maybe necessary to be allocated since a valid renderpass might still be writing to it.
+			// Bump up node weights for resources which doesn't affect the final output but is required for some passes to work.
+			for (auto& resource : resources)
+			{
+				if (resource->nodeWeight == 0)
+				{
+					for (auto& prev : resource->previous)
+					{
+						if (prev->nodeWeight > 0)
+						{
+							resource->nodeWeight = 1;
+						}
+					}
+				}
+			}
+			// Sort resouces based on node weights and find the point from were no effect nodes start in the vector
 			sort(resources.begin(), resources.end(), [](FrameGraphResourceNode* a, FrameGraphResourceNode* b) {
 				return (a->nodeWeight > b->nodeWeight);
 			});
