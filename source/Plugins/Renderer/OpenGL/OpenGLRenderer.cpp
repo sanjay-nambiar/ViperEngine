@@ -68,6 +68,26 @@ namespace Viper
 			activeShaderProgram = program;
 		}
 
+		GpuTextureResource* OpenGLRenderer::CreateTextureResource(const TextureDescription& description)
+		{
+			OpenGLTextureResource* resource = new OpenGLTextureResource();
+			glGenTextures(1, &resource->id);
+			glTexImage2D(description.target, description.level, description.internalFormat, description.width, description.height, 0, description.format, description.type, description.data);
+			glActiveTexture(GL_TEXTURE0);
+			glBindTexture(GL_TEXTURE_2D, resource->id);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+			return resource;
+		}
+
+		bool OpenGLRenderer::FreeTextureResource(GpuTextureResource& resource)
+		{
+			glDeleteTextures(1, &reinterpret_cast<OpenGLTextureResource&>(resource).id);
+			return true;
+		}
+
 		void OpenGLRenderer::LoadMesh(const Graphics::Mesh& mesh)
 		{
 			// Create vertex attrib object and bind it

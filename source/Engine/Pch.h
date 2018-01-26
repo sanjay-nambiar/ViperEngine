@@ -8,9 +8,11 @@
 #include <sstream>
 #include <string>
 #include <unordered_map>
+#include <vector>
 
 #include "glm/glm.hpp"
 
+#include "RTTI.h"
 #include "Core/Platform.h"
 #include "Core/DynamicLibrary.h"
 #include "Core/Types.h"

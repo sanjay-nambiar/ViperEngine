@@ -4,6 +4,11 @@
 
 namespace Viper
 {
+	TextureDescription::TextureDescription()
+		: data(nullptr)
+	{
+	}
+
 	RendererSystem::RendererSystem()
 	{
 		points = {

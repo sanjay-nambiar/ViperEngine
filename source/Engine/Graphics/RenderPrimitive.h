@@ -4,11 +4,11 @@ namespace Viper
 {
 	namespace Graphics
 	{
-		class FrameGraphBuilder
+		class RenderPrimitive
 		{
 		public:
-			FrameGraphBuilder();
-			~FrameGraphBuilder();
+			RenderPrimitive();
+			~RenderPrimitive();
 		};
 	}
 }

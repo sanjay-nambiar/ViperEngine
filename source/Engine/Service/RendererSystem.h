@@ -19,6 +19,28 @@ namespace Viper
 		class Actor;
 	}
 
+	struct TextureDescription
+	{
+		std::uint32_t target;
+		std::int32_t level;
+		std::int32_t internalFormat;
+		std::uint32_t width;
+		std::uint32_t height;
+		std::uint32_t format;
+		std::uint32_t type;
+		void* data;
+
+		std::uint32_t wrapS;
+		std::uint32_t wrapT;
+		std::uint32_t minFilter;
+		std::uint32_t magFilter;
+		TextureDescription();
+	};
+
+	struct GpuTextureResource
+	{
+	};
+
 	class RendererSystem
 	{
 	public:
@@ -41,6 +63,9 @@ namespace Viper
 		virtual void UseShader(const Graphics::Shader& shader) = 0;
 		virtual void UseShaders(const std::vector<Graphics::Shader>& shaders) = 0;
 
+		virtual GpuTextureResource* CreateTextureResource(const TextureDescription& description) = 0;
+		virtual bool FreeTextureResource(GpuTextureResource& resource) = 0;
+
 		virtual void LoadMesh(const Graphics::Mesh& mesh) = 0;
 		virtual void AddActorToScene(const Gameplay::Actor& actor) = 0;
 
@@ -52,5 +77,6 @@ namespace Viper
 
 	private:
 		std::unordered_map<Primitive, std::vector<Vector3>> points;
+		std::vector<GpuTextureResource*> resources;
 	};
 }

@@ -1,7 +1,7 @@
 #pragma once
 
 #include <vector>
-#include "RenderingPrimitive.h"
+#include "RenderPrimitive.h"
 
 namespace Viper
 {
@@ -12,9 +12,9 @@ namespace Viper
 		class RenderPass
 		{
 		public:
-			RenderPass();
-			~RenderPass();
-			void Render(std::vector<std::vector<RenderingPrimitive>> primtiives, BlackBoard& blackboard);
+			RenderPass() = default;
+			virtual ~RenderPass() = default;
+			virtual void Render(std::vector<std::vector<RenderPrimitive>> primtiives, BlackBoard& blackboard) = 0;
 		};
 	}
 }

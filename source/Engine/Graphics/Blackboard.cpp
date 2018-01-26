@@ -5,13 +5,6 @@ namespace Viper
 {
 	namespace Graphics
 	{
-		Blackboard::Blackboard()
-		{
-		}
-
-
-		Blackboard::~Blackboard()
-		{
-		}
+		int Blackboard;
 	}
 }

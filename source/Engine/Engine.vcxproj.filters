@@ -25,6 +25,9 @@
     <Filter Include="Gameplay">
       <UniqueIdentifier>{a11d0cc1-50f9-4cd0-a39a-0347caefb192}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Graphics\FrameGraph">
+      <UniqueIdentifier>{f782a2e7-d00a-48c4-aec2-76c813c0fe25}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Pch.h" />
@@ -106,30 +109,22 @@
     <ClInclude Include="Graphics\Mesh.h">
       <Filter>Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="Graphics\RenderPass.h">
+    <ClInclude Include="Graphics\RenderPrimitive.h">
       <Filter>Graphics</Filter>
     </ClInclude>
     <ClInclude Include="Graphics\Blackboard.h">
-      <Filter>Graphics</Filter>
+      <Filter>Graphics\FrameGraph</Filter>
     </ClInclude>
     <ClInclude Include="Graphics\FrameGraph.h">
-      <Filter>Graphics</Filter>
+      <Filter>Graphics\FrameGraph</Filter>
     </ClInclude>
-    <ClInclude Include="Graphics\FrameGraphBuilder.h">
-      <Filter>Graphics</Filter>
+    <ClInclude Include="Graphics\RenderPassBuilder.h">
+      <Filter>Graphics\FrameGraph</Filter>
     </ClInclude>
-    <ClInclude Include="Graphics\FrameGraphInputResource.h">
-      <Filter>Graphics</Filter>
+    <ClInclude Include="Graphics\RenderPass.h">
+      <Filter>Graphics\FrameGraph</Filter>
     </ClInclude>
-    <ClInclude Include="Graphics\FrameGraphRenderPassNode.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="Graphics\FrameGraphResourceNode.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="Graphics\RenderingPrimitive.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
+    <ClInclude Include="RTTI.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Pch.cpp" />
@@ -169,29 +164,22 @@
     <ClCompile Include="Graphics\Mesh.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="Graphics\RenderPass.cpp">
-      <Filter>Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="Graphics\Blackboard.cpp">
+    <ClCompile Include="Graphics\RenderPrimitive.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
     <ClCompile Include="Graphics\FrameGraph.cpp">
-      <Filter>Graphics</Filter>
+      <Filter>Graphics\FrameGraph</Filter>
     </ClCompile>
-    <ClCompile Include="Graphics\FrameGraphBuilder.cpp">
-      <Filter>Graphics</Filter>
+    <ClCompile Include="Graphics\Blackboard.cpp">
+      <Filter>Graphics\FrameGraph</Filter>
     </ClCompile>
-    <ClCompile Include="Graphics\FrameGraphInputResource.cpp">
-      <Filter>Graphics</Filter>
+    <ClCompile Include="Graphics\RenderPassBuilder.cpp">
+      <Filter>Graphics\FrameGraph</Filter>
     </ClCompile>
-    <ClCompile Include="Graphics\FrameGraphRenderPassNode.cpp">
-      <Filter>Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="Graphics\FrameGraphResourceNode.cpp">
-      <Filter>Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="Graphics\RenderingPrimitive.cpp">
-      <Filter>Graphics</Filter>
-    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Graphics\FrameGraph.inl">
+      <Filter>Graphics\FrameGraph</Filter>
+    </None>
   </ItemGroup>
 </Project>

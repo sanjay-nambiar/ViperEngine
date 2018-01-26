@@ -12,6 +12,11 @@ namespace Viper
 {
 	namespace Renderer
 	{
+		struct OpenGLTextureResource : public GpuTextureResource
+		{
+			uint32_t id;
+		};
+
 		class OpenGLRenderer final : public RendererSystem
 		{
 		public:
@@ -26,6 +31,9 @@ namespace Viper
 			void DeleteShader(const Graphics::Shader& shader) override;
 			void UseShader(const Graphics::Shader& shader) override;
 			void UseShaders(const std::vector<Graphics::Shader>& shaders) override;
+
+			GpuTextureResource* CreateTextureResource(const TextureDescription& description) override;
+			bool FreeTextureResource(GpuTextureResource& resource) override;
 
 			void LoadMesh(const Graphics::Mesh& mesh) override;
 			void AddActorToScene(const Gameplay::Actor& actor) override;

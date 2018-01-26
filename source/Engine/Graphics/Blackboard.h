@@ -5,11 +5,11 @@ namespace Viper
 {
 	namespace Graphics
 	{
-		class Blackboard
+		struct Blackboard final
 		{
 		public:
-			Blackboard();
-			~Blackboard();
+			Blackboard() = default;
+			~Blackboard() = default;
 
 			glm::mat4 cameraView;
 			glm::mat4 cameraProjection;

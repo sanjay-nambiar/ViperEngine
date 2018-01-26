@@ -201,18 +201,16 @@
     <ClInclude Include="Gameplay\Actor.h" />
     <ClInclude Include="Graphics\Blackboard.h" />
     <ClInclude Include="Graphics\FrameGraph.h" />
-    <ClInclude Include="Graphics\FrameGraphBuilder.h" />
-    <ClInclude Include="Graphics\FrameGraphInputResource.h" />
-    <ClInclude Include="Graphics\FrameGraphRenderPassNode.h" />
-    <ClInclude Include="Graphics\FrameGraphResourceNode.h" />
+    <ClInclude Include="Graphics\RenderPassBuilder.h" />
     <ClInclude Include="Graphics\Mesh.h" />
     <ClInclude Include="Graphics\RenderPass.h" />
-    <ClInclude Include="Graphics\RenderingPrimitive.h" />
+    <ClInclude Include="Graphics\RenderPrimitive.h" />
     <ClInclude Include="Graphics\Shader.h" />
     <ClInclude Include="Graphics\Texture.h" />
     <ClInclude Include="Memory\MemoryManager.h" />
     <ClInclude Include="Memory\StackAllocator.h" />
     <ClInclude Include="Pch.h" />
+    <ClInclude Include="RTTI.h" />
     <ClInclude Include="Service\AudioManager.h" />
     <ClInclude Include="Service\InputEnums.h" />
     <ClInclude Include="Service\InputManager.h" />
@@ -230,13 +228,9 @@
     <ClCompile Include="Gameplay\Actor.cpp" />
     <ClCompile Include="Graphics\Blackboard.cpp" />
     <ClCompile Include="Graphics\FrameGraph.cpp" />
-    <ClCompile Include="Graphics\FrameGraphBuilder.cpp" />
-    <ClCompile Include="Graphics\FrameGraphInputResource.cpp" />
-    <ClCompile Include="Graphics\FrameGraphRenderPassNode.cpp" />
-    <ClCompile Include="Graphics\FrameGraphResourceNode.cpp" />
+    <ClCompile Include="Graphics\RenderPassBuilder.cpp" />
     <ClCompile Include="Graphics\Mesh.cpp" />
-    <ClCompile Include="Graphics\RenderPass.cpp" />
-    <ClCompile Include="Graphics\RenderingPrimitive.cpp" />
+    <ClCompile Include="Graphics\RenderPrimitive.cpp" />
     <ClCompile Include="Graphics\Shader.cpp" />
     <ClCompile Include="Graphics\Texture.cpp" />
     <ClCompile Include="Memory\MemoryManager.cpp" />
@@ -255,6 +249,9 @@
     <ProjectReference Include="..\Thirdparty\gason\gason.vcxproj">
       <Project>{7f6c3703-e7b8-4576-907c-b7c31bf44f1b}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Graphics\FrameGraph.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
