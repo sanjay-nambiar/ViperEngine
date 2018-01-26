@@ -8,8 +8,8 @@ namespace Viper
 {
 	namespace Graphics
 	{
-		RenderPassBuilder::RenderPassBuilder()
-			: currentRenderPass(nullptr), resourceId(0)
+		RenderPassBuilder::RenderPassBuilder(FrameGraph& frameGraph)
+			: frameGraph(frameGraph), currentRenderPass(nullptr), resourceId(0)
 		{
 		}
 
@@ -29,6 +29,7 @@ namespace Viper
 			}
 			currentRenderPass->next.push_back(resource);
 			resource->previous.push_back(currentRenderPass);
+			frameGraph.resources.push_back(resource);
 		}
 
 		void RenderPassBuilder::CreateWrite(const TextureDescription& description)

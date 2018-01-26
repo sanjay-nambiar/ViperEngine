@@ -14,13 +14,12 @@ namespace Viper
 	{
 		struct FrameGraphNode : public RTTI
 		{
-			FrameGraphNode() = default;
+			FrameGraphNode();
 			~FrameGraphNode() = default;
 
 			std::vector<FrameGraphNode*> previous;
 			std::vector<FrameGraphNode*> next;
-		protected:
-			std::uintmax_t typeId;
+			uint32_t nodeWeight;
 
 			RTTI_DECLARATIONS(FrameGraphNode, RTTI)
 		};
@@ -71,17 +70,16 @@ namespace Viper
 		private:
 			friend class RenderPassBuilder;
 
-			void CullUnusedNodes();
-			void CalculateRenderPassSequence();
-
 			FrameGraphRenderPassNode* graphRoot;
 			FrameGraphResourceNode* graphEnd;
 			RenderPassBuilder builder;
 
 			// TODO: change this to a reference and initialize this from service locator in constructor
 			RendererSystem& rendererSystem;
-			std::vector<FrameGraphResourceNode*> resources;
 			std::vector<FrameGraphRenderPassNode*> renderPasses;
+			std::vector<FrameGraphRenderPassNode*>::iterator renderPassesIt;
+			std::vector<FrameGraphResourceNode*> resources;
+			std::vector<FrameGraphResourceNode*>::iterator resourcesIt;
 			std::vector<GpuTextureResource*> gpuResources;
 		};
 	}

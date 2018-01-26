@@ -7,6 +7,12 @@ namespace Viper
 {
 	namespace Graphics
 	{
+		FrameGraphNode::FrameGraphNode()
+			: nodeWeight(0)
+		{
+		}
+
+
 		RTTI_DEFINITIONS(FrameGraphRenderPassNode)
 
 		FrameGraphRenderPassNode::FrameGraphRenderPassNode(const string& name)
@@ -24,7 +30,7 @@ namespace Viper
 
 
 		FrameGraph::FrameGraph(ServiceLocator& serviceLocator)
-			: graphRoot(nullptr), graphEnd(nullptr), rendererSystem(serviceLocator.GetRendererSystem())
+			: graphRoot(nullptr), graphEnd(nullptr), builder(*this), rendererSystem(serviceLocator.GetRendererSystem())
 		{
 		}
 
@@ -50,14 +56,42 @@ namespace Viper
 
 		void FrameGraph::Compile()
 		{
-			CullUnusedNodes();
-			CalculateRenderPassSequence();
+			queue<FrameGraphNode*> reverseQueue;
+			graphEnd->nodeWeight = 0;
+			reverseQueue.push(graphEnd);
+
+			while (!reverseQueue.empty())
+			{
+				FrameGraphNode* node = reverseQueue.front();
+				reverseQueue.pop();
+
+				uint32_t newNodeWeight = node->nodeWeight + 1;
+				for (auto prev : node->previous)
+				{
+					if (newNodeWeight > prev->nodeWeight)
+					{
+						prev->nodeWeight = newNodeWeight;
+					}
+					reverseQueue.push(prev);
+				}
+			}
+
+			sort(renderPasses.begin(), renderPasses.end(), [](FrameGraphRenderPassNode* a, FrameGraphRenderPassNode* b) {
+				return (a->nodeWeight > b->nodeWeight);
+			});
+			for (renderPassesIt = renderPasses.begin(); renderPassesIt != renderPasses.end() && (*renderPassesIt)->nodeWeight > 0; ++renderPassesIt);
+
+			sort(resources.begin(), resources.end(), [](FrameGraphResourceNode* a, FrameGraphResourceNode* b) {
+				return (a->nodeWeight > b->nodeWeight);
+			});
+			for (resourcesIt = resources.begin(); resourcesIt != resources.end() && (*resourcesIt)->nodeWeight > 0; ++resourcesIt);
 		}
 
 		void FrameGraph::AllocateGpuResources()
 		{
-			for (auto resource : resources)
+			for (auto resourceIt = resources.begin(); resourceIt != resourcesIt; ++resourceIt)
 			{
+				auto& resource = *resourceIt;
 				if (resource->resourceAlias == resource->resourceId)
 				{
 					gpuResources.push_back(rendererSystem.CreateTextureResource(resource->description));
@@ -67,9 +101,9 @@ namespace Viper
 
 		void FrameGraph::Render()
 		{
-			for (auto renderPass : renderPasses)
+			for (auto renderIt = renderPasses.begin(); renderIt != renderPassesIt; ++renderIt)
 			{
-				renderPass->renderCallback();
+				(*renderIt)->renderCallback();
 			}
 		}
 
@@ -79,57 +113,6 @@ namespace Viper
 			{
 				rendererSystem.FreeTextureResource(*gpuResource);
 			}
-		}
-
-		void FrameGraph::CullUnusedNodes()
-		{
-		}
-
-		void FrameGraph::CalculateRenderPassSequence()
-		{
-			renderPasses.clear();
-			queue<FrameGraphNode*> execQueue;
-			execQueue.push(graphRoot);
-
-			while (!execQueue.empty())
-			{
-				FrameGraphNode* node = execQueue.front();
-				execQueue.pop();
-
-				FrameGraphRenderPassNode* renderPass = node->As<FrameGraphRenderPassNode>();
-				if (renderPass != nullptr)
-				{
-					bool processThisNode = true;
-					for (auto input : renderPass->previous)
-					{
-						auto resource = input->As<FrameGraphResourceNode>();
-						if (!resource->isResourceReady)
-						{
-							processThisNode = false;
-							break;
-						}
-					}
-
-					if (processThisNode)
-					{
-						renderPasses.push_back(renderPass);
-						for (auto output : renderPass->next)
-						{
-							auto resource = output->As<FrameGraphResourceNode>();
-							if (resource != nullptr)
-							{
-								resource->isResourceReady = true;
-							}
-						}
-					}
-				}
-
-				for (auto output : node->next)
-				{
-					execQueue.push(output);
-				}
-			}
-			assert(!renderPasses.empty());
 		}
 	}
 }

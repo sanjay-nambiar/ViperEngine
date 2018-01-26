@@ -21,11 +21,12 @@ namespace Viper
 		private:
 			friend class FrameGraph;
 
-			RenderPassBuilder();
+			RenderPassBuilder(FrameGraph& frameGraph);
 			~RenderPassBuilder() = default;
 
 			FrameGraphRenderPassNode& AddRenderPassNode(const std::string& name);
 
+			FrameGraph& frameGraph;
 			FrameGraphRenderPassNode* currentRenderPass;
 			uint32_t resourceId;
 		};
