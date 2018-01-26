@@ -23,8 +23,8 @@ namespace Viper
 		}
 
 
-		FrameGraph::FrameGraph()
-			: graphRoot(nullptr), graphEnd(nullptr), rendererSystem(nullptr)
+		FrameGraph::FrameGraph(ServiceLocator& serviceLocator)
+			: graphRoot(nullptr), graphEnd(nullptr), rendererSystem(serviceLocator.GetRendererSystem())
 		{
 		}
 
@@ -60,7 +60,7 @@ namespace Viper
 			{
 				if (resource->resourceAlias == resource->resourceId)
 				{
-					gpuResources.push_back(rendererSystem->CreateTextureResource(resource->description));
+					gpuResources.push_back(rendererSystem.CreateTextureResource(resource->description));
 				}
 			}
 		}
@@ -77,7 +77,7 @@ namespace Viper
 		{
 			for (auto gpuResource : gpuResources)
 			{
-				rendererSystem->FreeTextureResource(*gpuResource);
+				rendererSystem.FreeTextureResource(*gpuResource);
 			}
 		}
 

@@ -54,7 +54,7 @@ namespace Viper
 		class FrameGraph final
 		{
 		public:
-			FrameGraph();
+			FrameGraph(ServiceLocator& serviceLocator);
 			~FrameGraph();
 
 			template <typename PassDataT>
@@ -79,7 +79,7 @@ namespace Viper
 			RenderPassBuilder builder;
 
 			// TODO: change this to a reference and initialize this from service locator in constructor
-			RendererSystem* const rendererSystem;
+			RendererSystem& rendererSystem;
 			std::vector<FrameGraphResourceNode*> resources;
 			std::vector<FrameGraphRenderPassNode*> renderPasses;
 			std::vector<GpuTextureResource*> gpuResources;
