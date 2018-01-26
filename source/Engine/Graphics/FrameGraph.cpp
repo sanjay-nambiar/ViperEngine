@@ -13,15 +13,12 @@ namespace Viper
 		}
 
 
-		RTTI_DEFINITIONS(FrameGraphRenderPassNode)
-
 		FrameGraphRenderPassNode::FrameGraphRenderPassNode(const string& name)
 			: name(name)
 		{
 		}
 
 
-		RTTI_DEFINITIONS(FrameGraphResourceNode)
 
 		FrameGraphResourceNode::FrameGraphResourceNode(const TextureDescription& description)
 			: resourceId(0), resourceAlias(0), description(description), isResourceReady(false), gpuResource(nullptr)

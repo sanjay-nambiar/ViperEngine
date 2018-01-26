@@ -12,7 +12,7 @@ namespace Viper
 {
 	namespace Graphics
 	{
-		struct FrameGraphNode : public RTTI
+		struct FrameGraphNode
 		{
 			FrameGraphNode();
 			~FrameGraphNode() = default;
@@ -20,8 +20,6 @@ namespace Viper
 			std::vector<FrameGraphNode*> previous;
 			std::vector<FrameGraphNode*> next;
 			uint32_t nodeWeight;
-
-			RTTI_DECLARATIONS(FrameGraphNode, RTTI)
 		};
 
 		struct FrameGraphRenderPassNode final : public FrameGraphNode
@@ -30,8 +28,6 @@ namespace Viper
 
 			std::string name;
 			std::function<void()> renderCallback;
-
-			RTTI_DECLARATIONS(FrameGraphRenderPassNode, FrameGraphNode)
 		};
 
 		struct FrameGraphResourceNode final : public FrameGraphNode
@@ -46,8 +42,6 @@ namespace Viper
 
 			// runtime time fields
 			GpuTextureResource* gpuResource;
-
-			RTTI_DECLARATIONS(FrameGraphResourceNode, FrameGraphNode)
 		};
 
 		class FrameGraph final
