@@ -88,13 +88,13 @@ namespace Viper
 		void FrameGraph::CalculateRenderPassSequence()
 		{
 			renderPasses.clear();
-			vector<FrameGraphNode*> execQueue;
-			execQueue.push_back(graphRoot);
+			queue<FrameGraphNode*> execQueue;
+			execQueue.push(graphRoot);
 
 			while (!execQueue.empty())
 			{
 				FrameGraphNode* node = execQueue.front();
-				execQueue.pop_back();
+				execQueue.pop();
 
 				FrameGraphRenderPassNode* renderPass = node->As<FrameGraphRenderPassNode>();
 				if (renderPass != nullptr)
@@ -126,7 +126,7 @@ namespace Viper
 
 				for (auto output : node->next)
 				{
-					execQueue.push_back(output);
+					execQueue.push(output);
 				}
 			}
 			assert(!renderPasses.empty());

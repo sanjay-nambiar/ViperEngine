@@ -4,6 +4,7 @@
 #include <cstdint>
 #include <fstream>
 #include <iostream>
+#include <queue>
 #include <stdexcept>
 #include <sstream>
 #include <string>
