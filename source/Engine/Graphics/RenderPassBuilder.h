@@ -15,8 +15,8 @@ namespace Viper
 		{
 		public:
 			void Read(FrameGraphResourceNode& input);
-			void Write(FrameGraphResourceNode& output);
-			void CreateWrite(const TextureDescription& description);
+			void Write(const std::string& name, FrameGraphResourceNode& output);
+			void CreateWrite(const std::string& newName, const TextureDescription& description);
 
 		private:
 			friend class FrameGraph;

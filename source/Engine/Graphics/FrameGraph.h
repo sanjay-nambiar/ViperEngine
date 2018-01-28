@@ -14,9 +14,10 @@ namespace Viper
 	{
 		struct FrameGraphNode
 		{
-			FrameGraphNode();
+			FrameGraphNode(const std::string& name);
 			~FrameGraphNode() = default;
 
+			std::string name;
 			std::vector<FrameGraphNode*> previous;
 			std::vector<FrameGraphNode*> next;
 			uint32_t nodeWeight;
@@ -26,13 +27,12 @@ namespace Viper
 		{
 			FrameGraphRenderPassNode(const std::string& name);
 
-			std::string name;
 			std::function<void()> renderCallback;
 		};
 
 		struct FrameGraphResourceNode final : public FrameGraphNode
 		{
-			FrameGraphResourceNode(const TextureDescription& description);
+			FrameGraphResourceNode(const std::string& name, const TextureDescription& description);
 
 			// compile time fields
 			uint32_t resourceId;
@@ -60,6 +60,7 @@ namespace Viper
 			void AllocateGpuResources();
 			void Render();
 			void FreeGpuResources();
+			void DebugOutput(const std::string& graphName, const std::string& filename);
 
 		private:
 			friend class RenderPassBuilder;

@@ -7,21 +7,21 @@ namespace Viper
 {
 	namespace Graphics
 	{
-		FrameGraphNode::FrameGraphNode()
-			: nodeWeight(0)
+		FrameGraphNode::FrameGraphNode(const std::string& name)
+			: name(name), nodeWeight(0)
 		{
 		}
 
 
 		FrameGraphRenderPassNode::FrameGraphRenderPassNode(const string& name)
-			: name(name)
+			: FrameGraphNode(name)
 		{
 		}
 
 
 
-		FrameGraphResourceNode::FrameGraphResourceNode(const TextureDescription& description)
-			: resourceId(0), resourceAlias(0), description(description), isResourceReady(false), gpuResource(nullptr)
+		FrameGraphResourceNode::FrameGraphResourceNode(const std::string& name, const TextureDescription& description)
+			: FrameGraphNode(name), resourceId(0), resourceAlias(0), description(description), isResourceReady(false), gpuResource(nullptr)
 		{
 		}
 
@@ -129,6 +129,97 @@ namespace Viper
 			{
 				rendererSystem.FreeTextureResource(*gpuResource);
 			}
+		}
+
+		void FrameGraph::DebugOutput(const string& graphName, const string& filename)
+		{
+			assert(graphRoot != nullptr);
+			fstream file(filename, ios::out);
+			stringstream activeRenderPasses;
+			stringstream activeResources;
+			stringstream inactiveRenderPasses;
+			stringstream inactiveResources;
+			stringstream edges;
+			stringstream ranks;
+
+			activeRenderPasses << "\tnode [style=filled, fillcolor=\"orange\", fontcolor=\"white\", shape=rect]; ";
+			uint32_t renderPassIndex;
+			for (renderPassIndex = 0; renderPassIndex < renderPasses.size(); ++renderPassIndex)
+			{
+				auto& renderPass = renderPasses[renderPassIndex];
+
+				// edges declaration
+				edges << "\t" << renderPass->name << " -> { ";
+				for (auto& output : renderPass->next)
+				{
+					edges << output->name << " ";
+				}
+				edges << "}" << endl;
+
+				// node shape declaration
+				auto& nodeCategory = (renderPass->nodeWeight > 0) ? activeRenderPasses : inactiveRenderPasses;
+				nodeCategory << renderPass->name << "; ";
+			}
+
+			activeResources << "\tnode [style=filled, fillcolor=\"skyblue3\", fontcolor=\"white\", shape=ellipse]; ";
+			uint32_t resourceIndex;
+			for (resourceIndex = 0; resourceIndex < resources.size() && resources[resourceIndex]->nodeWeight > 0; ++resourceIndex)
+			{
+				auto& resource = resources[resourceIndex];
+
+				// edges declaration
+				edges << "\t" << resource->name << " -> { ";
+				for (auto& output : resource->next)
+				{
+					edges << output->name << " ";
+				}
+				edges << "}" << endl;
+
+				// node shape declaration
+				auto& nodeCategory = (resource->nodeWeight > 0) ? activeResources : inactiveResources;
+				nodeCategory << resource->name << "; ";
+			}
+
+			vector<FrameGraphNode*> nodes;
+			nodes.insert(end(nodes), begin(renderPasses), end(renderPasses));
+			nodes.insert(end(nodes), begin(resources), end(resources));
+			sort(nodes.begin(), nodes.end(), [](FrameGraphNode* a, FrameGraphNode* b) {
+				return (a->nodeWeight > b->nodeWeight);
+			});
+
+			ranks << "\t{ rank = same; " << nodes[0]->name;
+			uint32_t nodeWeight = nodes[0]->nodeWeight;
+			for (uint32_t i = 1; i < nodes.size(); ++i)
+			{
+				auto& node = nodes[i];
+				if (nodeWeight != node->nodeWeight)
+				{
+					nodeWeight = node->nodeWeight;
+					ranks << " }";
+					if (i < nodes.size() - 1)
+					{
+						ranks << endl << "\t{ rank = same; ";
+					}
+				}
+				else
+				{
+					ranks << ", " << node->name;
+				}
+			}
+
+			file << "digraph FrameGraph {" << endl << "\trankdir = LR;" << endl;
+			file << activeRenderPasses.str() << endl;
+			file << activeResources.str() << endl;
+			file << inactiveRenderPasses.str() << endl;
+			file << inactiveResources.str() << endl << endl;
+			file << edges.str() << endl << endl;
+			file << ranks.str() << endl << endl;
+			file << "\toverlap = false;" << endl;
+			file << "\tlabel = \"" << graphName << "\";" << endl;
+			file << "\tlabelloc = \"t\";" << endl;
+			file << "}" << endl;
+
+			file.close();
 		}
 	}
 }

@@ -19,9 +19,9 @@ namespace Viper
 			input.next.push_back(currentRenderPass);
 		}
 
-		void RenderPassBuilder::Write(FrameGraphResourceNode& output)
+		void RenderPassBuilder::Write(const string& newName, FrameGraphResourceNode& output)
 		{
-			FrameGraphResourceNode* resource = new FrameGraphResourceNode(output.description);
+			FrameGraphResourceNode* resource = new FrameGraphResourceNode(newName, output.description);
 			resource->resourceId = ++resourceId;
 			if (output.resourceAlias == 0)
 			{
@@ -32,10 +32,10 @@ namespace Viper
 			frameGraph.resources.push_back(resource);
 		}
 
-		void RenderPassBuilder::CreateWrite(const TextureDescription& description)
+		void RenderPassBuilder::CreateWrite(const string& name, const TextureDescription& description)
 		{
-			FrameGraphResourceNode resource(description);
-			Write(resource);
+			FrameGraphResourceNode resource(name, description);
+			Write(name, resource);
 		}
 
 		FrameGraphRenderPassNode& RenderPassBuilder::AddRenderPassNode(const string& name)
