@@ -51,8 +51,8 @@ namespace Viper
 			~FrameGraph();
 
 			template <typename PassDataT>
-			const std::vector<FrameGraphNode*>& AddRenderPass(const std::string& name, std::function<void(RenderPassBuilder&, PassDataT&)> setupCallback,
-				std::function<void(const PassDataT&, RendererSystem&)> execCallback);
+			FrameGraphRenderPassNode& AddRenderPass(const std::string& name, std::function<void(RenderPassBuilder&, PassDataT&)> setupCallback,
+				std::function<void(const PassDataT&)> execCallback);
 
 			void SetDisplayTarget(FrameGraphResourceNode& resource);
 
@@ -66,7 +66,7 @@ namespace Viper
 			friend class RenderPassBuilder;
 
 			FrameGraphRenderPassNode* graphRoot;
-			FrameGraphResourceNode* graphEnd;
+			FrameGraphNode* graphEnd;
 			RenderPassBuilder builder;
 
 			// TODO: change this to a reference and initialize this from service locator in constructor

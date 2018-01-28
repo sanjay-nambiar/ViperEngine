@@ -27,7 +27,7 @@ namespace Viper
 
 
 		FrameGraph::FrameGraph(ServiceLocator& serviceLocator)
-			: graphRoot(nullptr), graphEnd(nullptr), builder(*this), rendererSystem(serviceLocator.GetRendererSystem())
+			: graphRoot(nullptr), graphEnd(new FrameGraphNode("Present")), builder(*this), rendererSystem(serviceLocator.GetRendererSystem())
 		{
 		}
 
@@ -44,11 +44,13 @@ namespace Viper
 			{
 				delete resource;
 			}
+			delete graphEnd;
 		}
 
 		void FrameGraph::SetDisplayTarget(FrameGraphResourceNode& resource)
 		{
-			graphEnd = &resource;
+			resource.next.push_back(graphEnd);
+			graphEnd->previous.push_back(&resource);
 		}
 
 		void FrameGraph::Compile()
@@ -85,7 +87,7 @@ namespace Viper
 			// Bump up node weights for resources which doesn't affect the final output but is required for some passes to work.
 			for (auto& resource : resources)
 			{
-				if (resource->nodeWeight == 0)
+				if (resource->nodeWeight == 0 && resource != graphEnd)
 				{
 					for (auto& prev : resource->previous)
 					{
@@ -141,83 +143,143 @@ namespace Viper
 			stringstream inactiveResources;
 			stringstream edges;
 			stringstream ranks;
+			unordered_map<int, vector<FrameGraphNode*>> nodeMap;
+			vector<uint32_t> nodeWeights;
 
 			activeRenderPasses << "\tnode [style=filled, fillcolor=\"orange\", fontcolor=\"white\", shape=rect]; ";
+			inactiveRenderPasses << "\tnode [style=none, fontcolor=\"black\", shape=rect]; ";
 			uint32_t renderPassIndex;
 			for (renderPassIndex = 0; renderPassIndex < renderPasses.size(); ++renderPassIndex)
 			{
 				auto& renderPass = renderPasses[renderPassIndex];
 
-				// edges declaration
-				edges << "\t" << renderPass->name << " -> { ";
-				for (auto& output : renderPass->next)
-				{
-					edges << output->name << " ";
-				}
-				edges << "}" << endl;
-
 				// node shape declaration
 				auto& nodeCategory = (renderPass->nodeWeight > 0) ? activeRenderPasses : inactiveRenderPasses;
 				nodeCategory << renderPass->name << "; ";
+
+				// adding to rank map
+				if (nodeMap.find(renderPass->nodeWeight) == nodeMap.end())
+				{
+					vector<FrameGraphNode*> nodes;
+					nodeMap[renderPass->nodeWeight] = nodes;
+					nodeWeights.push_back(renderPass->nodeWeight);
+				}
+				nodeMap[renderPass->nodeWeight].push_back(renderPass);
+
+				// edges declaration
+				auto& renderPassNext = renderPass->next;
+				if (renderPassNext.empty() || (renderPassNext.size() == 1 && renderPassNext[0] == graphEnd))
+				{
+					continue;
+				}
+				edges << "\t" << renderPass->name << " -> { ";
+				bool isInactive = false;
+				for (uint32_t i = 0 ; i < renderPass->next.size(); ++i)
+				{
+					auto& output = renderPass->next[i];
+					isInactive = output->nodeWeight == 0;
+					if (isInactive && i > 0)
+					{
+						edges << "}" << endl << "\t" << renderPass->name << " -> { ";
+					}
+					edges << output->name << " ";
+					if (isInactive)
+					{
+						edges << "} [style=dotted];" << endl;
+						if (i < renderPass->next.size() - 1)
+						{
+							edges << "\t" << renderPass->name << " -> { ";
+						}
+					}
+				}
+				if (!isInactive)
+				{
+					edges << "}" << endl;
+				}
 			}
 
 			activeResources << "\tnode [style=filled, fillcolor=\"skyblue3\", fontcolor=\"white\", shape=ellipse]; ";
+			inactiveResources << "\tnode [style=none, fontcolor=\"black\", shape=ellipse]; ";
 			uint32_t resourceIndex;
-			for (resourceIndex = 0; resourceIndex < resources.size() && resources[resourceIndex]->nodeWeight > 0; ++resourceIndex)
+			for (resourceIndex = 0; resourceIndex < resources.size(); ++resourceIndex)
 			{
 				auto& resource = resources[resourceIndex];
-
-				// edges declaration
-				edges << "\t" << resource->name << " -> { ";
-				for (auto& output : resource->next)
-				{
-					edges << output->name << " ";
-				}
-				edges << "}" << endl;
 
 				// node shape declaration
 				auto& nodeCategory = (resource->nodeWeight > 0) ? activeResources : inactiveResources;
 				nodeCategory << resource->name << "; ";
-			}
 
-			vector<FrameGraphNode*> nodes;
-			nodes.insert(end(nodes), begin(renderPasses), end(renderPasses));
-			nodes.insert(end(nodes), begin(resources), end(resources));
-			sort(nodes.begin(), nodes.end(), [](FrameGraphNode* a, FrameGraphNode* b) {
-				return (a->nodeWeight > b->nodeWeight);
-			});
-
-			ranks << "\t{ rank = same; " << nodes[0]->name;
-			uint32_t nodeWeight = nodes[0]->nodeWeight;
-			for (uint32_t i = 1; i < nodes.size(); ++i)
-			{
-				auto& node = nodes[i];
-				if (nodeWeight != node->nodeWeight)
+				// adding to rank map
+				if (nodeMap.find(resource->nodeWeight) == nodeMap.end())
 				{
-					nodeWeight = node->nodeWeight;
-					ranks << " }";
-					if (i < nodes.size() - 1)
+					vector<FrameGraphNode*> nodes;
+					nodeMap[resource->nodeWeight] = nodes;
+					nodeWeights.push_back(resource->nodeWeight);
+				}
+				nodeMap[resource->nodeWeight].push_back(resource);
+
+				// edges declaration
+				auto& resourceNext = resource->next;
+				if (resourceNext.empty() || (resourceNext.size() == 1 && resourceNext[0] == graphEnd))
+				{
+					continue;
+				}
+				edges << "\t" << resource->name << " -> { ";
+				bool isInactive = false;
+				for (uint32_t i = 0; i < resource->next.size(); ++i)
+				{
+					auto& output = resource->next[i];
+					isInactive = output->nodeWeight == 0;
+					if (isInactive && i > 0)
 					{
-						ranks << endl << "\t{ rank = same; ";
+						edges << "}" << endl << "\t" << resource->name << " -> { ";
+					}
+					edges << output->name << " ";
+					if (isInactive)
+					{
+						edges << "} [style=dotted];" << endl;
+						if (i < resource->next.size() - 1)
+						{
+							edges << "\t" << resource->name << " -> { ";
+						}
 					}
 				}
-				else
+				if (!isInactive)
 				{
-					ranks << ", " << node->name;
+					edges << "}" << endl;
 				}
 			}
 
-			file << "digraph FrameGraph {" << endl << "\trankdir = LR;" << endl;
+			sort(nodeWeights.begin(), nodeWeights.end(), [](uint32_t a, uint32_t b) {
+				return (a > b);
+			});
+
+			for (auto weight : nodeWeights)
+			{
+				ranks << "\t{ rank=same; ";
+				auto& nodes = nodeMap[weight];
+				for (uint32_t i = 0; i < nodes.size(); ++i)
+				{
+					if (i > 0)
+					{
+						ranks << ", ";
+					}
+					ranks << nodes[i]->name;
+				}
+				ranks << " }" << endl;
+			}
+
+			file << "digraph FrameGraph {" << endl << "\trankdir=LR;" << endl;
 			file << activeRenderPasses.str() << endl;
 			file << activeResources.str() << endl;
 			file << inactiveRenderPasses.str() << endl;
 			file << inactiveResources.str() << endl << endl;
-			file << edges.str() << endl << endl;
-			file << ranks.str() << endl << endl;
+			file << edges.str() << endl;
+			file << ranks.str() << endl;
 			file << "\toverlap = false;" << endl;
 			file << "\tlabel = \"" << graphName << "\";" << endl;
 			file << "\tlabelloc = \"t\";" << endl;
-			file << "}" << endl;
+			file << "}";
 
 			file.close();
 		}

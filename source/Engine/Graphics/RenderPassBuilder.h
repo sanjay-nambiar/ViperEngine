@@ -14,9 +14,9 @@ namespace Viper
 		class RenderPassBuilder final
 		{
 		public:
-			void Read(FrameGraphResourceNode& input);
-			void Write(const std::string& name, FrameGraphResourceNode& output);
-			void CreateWrite(const std::string& newName, const TextureDescription& description);
+			FrameGraphResourceNode& Read(FrameGraphResourceNode& input);
+			FrameGraphResourceNode& Write(const std::string& name, FrameGraphResourceNode& output);
+			FrameGraphResourceNode& CreateWrite(const std::string& newName, const TextureDescription& description);
 
 		private:
 			friend class FrameGraph;

@@ -11,6 +11,7 @@
 #include "Service/AudioManager.h"
 #include "Service/RendererSystem.h"
 
+#include "Graphics/FrameGraph.h"
 
 #ifndef UNICODE
 #define UNICODE
@@ -22,8 +23,9 @@
 #define TITLE		"Bobsled Battle"
 #define CONFIG_FILE "Config.json"
 
+using namespace std;
 using namespace Viper;
-
+using namespace Viper::Graphics;
 
 void Initialize()
 {
@@ -129,6 +131,120 @@ void DefineCubeActors(std::vector<Gameplay::Actor*>& actors)
 	}
 }
 
+void TestFrameGraph()
+{
+	FrameGraph graph(ServiceLocator::GetInstance());
+
+	// Z Pass
+	struct ZPassData
+	{
+		FrameGraphResourceNode* Depth;
+	};
+
+	auto& zPrePass = graph.AddRenderPass<ZPassData>(string("ZPass"),
+		[&] (RenderPassBuilder& builder, ZPassData& data)
+		{
+			TextureDescription desc;
+			data.Depth = &builder.CreateWrite("Depth", desc);
+		},
+		[=] (const ZPassData&) { }
+	);
+
+	// GBuffer Pass
+	struct GBufferPassData
+	{
+		// Input
+		FrameGraphResourceNode* Depth;
+		// Output
+		FrameGraphResourceNode* Position;
+		FrameGraphResourceNode* Normal;
+		FrameGraphResourceNode* AlbedoSpec;
+	};
+
+	auto& gBufferPass = graph.AddRenderPass<GBufferPassData>(string("GBufferPass"),
+		[&](RenderPassBuilder& builder, GBufferPassData& data)
+		{
+			TextureDescription desc;
+			data.Depth = &builder.Read(*reinterpret_cast<FrameGraphResourceNode*>(zPrePass.next.front()));
+			data.Position = &builder.CreateWrite("Position", desc);
+			data.Normal = &builder.CreateWrite("Normal", desc);
+			data.AlbedoSpec = &builder.CreateWrite("AlbedoSpec", desc);
+		},
+		[=](const GBufferPassData&) { }
+	);
+
+	// Lighting Pass
+	struct LightingPassData
+	{
+		// Input
+		FrameGraphResourceNode* Position;
+		FrameGraphResourceNode* Normal;
+		FrameGraphResourceNode* AlbedoSpec;
+		// Output
+		FrameGraphResourceNode* LitScene;
+	};
+
+	auto& lightingPass = graph.AddRenderPass<LightingPassData>(string("LightingPass"),
+		[&](RenderPassBuilder& builder, LightingPassData& data)
+		{
+			TextureDescription desc;
+			data.Position = &builder.Read(*reinterpret_cast<FrameGraphResourceNode*>(gBufferPass.next[0]));
+			data.Normal = &builder.Read(*reinterpret_cast<FrameGraphResourceNode*>(gBufferPass.next[1]));
+			data.AlbedoSpec = &builder.Read(*reinterpret_cast<FrameGraphResourceNode*>(gBufferPass.next[2]));
+			data.LitScene = &builder.CreateWrite("LitScene", desc);
+		},
+		[=](const LightingPassData&) {}
+	);
+
+	// PostProcess Pass
+	struct PostProcessPassData
+	{
+		// Input
+		FrameGraphResourceNode* LitScene;
+		// Output
+		FrameGraphResourceNode* PostProcessScene;
+	};
+
+	auto& postProcessPass = graph.AddRenderPass<PostProcessPassData>(string("PostProcessPass"),
+		[&](RenderPassBuilder& builder, PostProcessPassData& data)
+		{
+			TextureDescription desc;
+			data.LitScene = &builder.Read(*reinterpret_cast<FrameGraphResourceNode*>(lightingPass.next.front()));
+			data.PostProcessScene = &builder.CreateWrite("PostProcessScene", desc);
+		},
+		[=](const PostProcessPassData&) {}
+	);
+
+	// Debug Pass
+	struct DebugPassData
+	{
+		// Input
+		FrameGraphResourceNode* Position;
+		// Output
+		FrameGraphResourceNode* DebugView;
+	};
+
+	auto& debugPass = graph.AddRenderPass<DebugPassData>(string("DebugPass"),
+		[&](RenderPassBuilder& builder, DebugPassData& data)
+		{
+			TextureDescription desc;
+			data.Position = &builder.Read(*reinterpret_cast<FrameGraphResourceNode*>(gBufferPass.next[0]));
+			data.DebugView = &builder.CreateWrite("DebugView", desc);
+		},
+		[=](const DebugPassData&) {}
+	);
+
+	postProcessPass;
+	debugPass;
+#ifdef _DEBUG
+	graph.SetDisplayTarget(*reinterpret_cast<FrameGraphResourceNode*>(debugPass.next.front()));
+#else
+	graph.SetDisplayTarget(*reinterpret_cast<FrameGraphResourceNode*>(postProcessPass.next.front()));
+#endif
+	graph.Compile();
+	graph.DebugOutput("Deferred Renderer", "deferred.gvz");
+}
+
 int WINAPI wWinMain(HINSTANCE, HINSTANCE, PWSTR, int)
 {
 	Initialize();
@@ -196,8 +312,11 @@ int WINAPI wWinMain(HINSTANCE, HINSTANCE, PWSTR, int)
 		windowManager.EndUpdate(windowContext);
 	}
 
+	TestFrameGraph();
+
 	rendererSystem.Shutdown();
 	windowManager.Shutdown();
 	ShutDown();
+
 	return 0;
 }
