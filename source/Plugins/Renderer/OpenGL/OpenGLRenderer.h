@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Service/RendererSystem.h"
+#include "Graphics/Renderer.h"
 #include <chrono>
 #include <unordered_map>
 #include "glad/glad.h"
@@ -11,14 +11,14 @@ struct GLFWwindow;
 
 namespace Viper
 {
-	namespace Renderer
+	namespace Graphics
 	{
-		struct OpenGLTextureResource : public Graphics::GpuTextureResource
+		struct OpenGLTextureResource : public GpuTextureResource
 		{
 			uint32_t id;
 		};
 
-		class OpenGLRenderer final : public RendererSystem
+		class OpenGLRenderer final : public Renderer
 		{
 		public:
 			OpenGLRenderer(ServiceLocator& serviceLocator);
@@ -27,16 +27,16 @@ namespace Viper
 			void Initialize() override;
 			void SetViewport(const WindowContext& windowContext) override;
 
-			Graphics::Shader LoadShaderSource(const std::string& shaderSource, Graphics::ShaderType shaderType) override;
-			Graphics::Shader LoadShaderFile(const std::string& shaderFile, Graphics::ShaderType shaderType) override;
-			void DeleteShader(const Graphics::Shader& shader) override;
-			void UseShader(const Graphics::Shader& shader) override;
-			void UseShaders(const std::vector<Graphics::Shader>& shaders) override;
+			Shader LoadShaderSource(const std::string& shaderSource, ShaderType shaderType) override;
+			Shader LoadShaderFile(const std::string& shaderFile, ShaderType shaderType) override;
+			void DeleteShader(const Shader& shader) override;
+			void UseShader(const Shader& shader) override;
+			void UseShaders(const std::vector<Shader>& shaders) override;
 
-			Graphics::GpuTextureResource* CreateTextureResource(const Graphics::TextureDescription& description) override;
-			bool FreeTextureResource(Graphics::GpuTextureResource& resource) override;
+			GpuTextureResource* CreateTextureResource(const TextureDescription& description) override;
+			bool FreeTextureResource(GpuTextureResource& resource) override;
 
-			void LoadMesh(const Graphics::Mesh& mesh) override;
+			void LoadMesh(const Mesh& mesh) override;
 			void AddActorToScene(const Gameplay::Actor& actor) override;
 
 			void Update() override;
@@ -44,11 +44,11 @@ namespace Viper
 
 		private:
 			ServiceLocator& serviceLocator;
-			std::unordered_map<Graphics::ShaderType, Graphics::Shader> activeShaders;
+			std::unordered_map<ShaderType, Shader> activeShaders;
 			GLuint activeShaderProgram;
 			std::chrono::time_point<std::chrono::steady_clock> start;
 
-			std::unordered_map<const Graphics::Mesh*, GLuint> meshes;
+			std::unordered_map<const Mesh*, GLuint> meshes;
 			std::vector<const Gameplay::Actor*> actors;
 		};
 	}

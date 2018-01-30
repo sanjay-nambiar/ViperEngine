@@ -3,7 +3,7 @@
 #include <fstream>
 #include "gason.h"
 #include "Core/ModuleImports.h"
-#include "Service/AudioManager.h"
+#include "Audio/AudioManager.h"
 
 using namespace std;
 
@@ -11,9 +11,6 @@ namespace Viper
 {
 	namespace Core
 	{
-		/*const regex ModuleLoader::SectionTagPattern = std::regex("^\\s*\\[\\s*([A-Za-z0-9_]+)\\s*\\]\\s*$");
-		const regex ModuleLoader::AttributeLinePattern = std::regex("^\\s*([^=]+)=(.*)$");*/
-
 		ModuleLoader::~ModuleLoader()
 		{
 			UnloadModules();

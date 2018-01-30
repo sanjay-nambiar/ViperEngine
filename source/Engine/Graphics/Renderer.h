@@ -20,11 +20,11 @@ namespace Viper
 		class Actor;
 	}
 
-	class RendererSystem
+	class Renderer
 	{
 	public:
-		RendererSystem();
-		virtual ~RendererSystem() = default;
+		Renderer();
+		virtual ~Renderer() = default;
 
 		virtual void Initialize() = 0;
 		virtual void SetViewport(const WindowContext& windowContext) = 0;

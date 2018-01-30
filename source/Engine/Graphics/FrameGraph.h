@@ -6,7 +6,7 @@
 #include <unordered_map>
 #include "RTTI.h"
 #include "RenderPassBuilder.h"
-#include "Service/RendererSystem.h"
+#include "Graphics/Renderer.h"
 
 namespace Viper
 {
@@ -70,7 +70,7 @@ namespace Viper
 			RenderPassBuilder builder;
 
 			// TODO: change this to a reference and initialize this from service locator in constructor
-			RendererSystem& rendererSystem;
+			Renderer& rendererSystem;
 			std::vector<FrameGraphRenderPassNode*> renderPasses;
 			std::vector<FrameGraphRenderPassNode*>::iterator renderPassesIt;
 			std::vector<FrameGraphResourceNode*> resources;

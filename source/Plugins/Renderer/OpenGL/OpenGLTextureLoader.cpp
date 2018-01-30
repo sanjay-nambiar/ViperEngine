@@ -7,9 +7,9 @@ using namespace std;
 
 namespace Viper
 {
-	namespace Renderer
+	namespace Graphics
 	{
-		Graphics::Texture OpenGLTextureLoader::LoadTexture(const std::string& textureFile)
+		Texture OpenGLTextureLoader::LoadTexture(const string& textureFile)
 		{
 			GLuint textureId;
 			glGenTextures(1, &textureId);
@@ -38,7 +38,7 @@ namespace Viper
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR_MIPMAP_NEAREST);
 
 			glBindTexture(GL_TEXTURE_2D, 0);
-			return Graphics::Texture(width, height, textureId);
+			return Texture(width, height, textureId);
 		}
 	}
 }

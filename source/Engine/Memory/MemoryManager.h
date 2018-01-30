@@ -1,7 +1,7 @@
 #ifndef MEMORY_MANAGER_HEADER
 #define MEMORY_MANAGER_HEADER
 
-#include "Service/MemoryAllocator.h"
+#include "Memory/MemoryAllocator.h"
 #include "Core/Types.h"
 
 namespace  Viper

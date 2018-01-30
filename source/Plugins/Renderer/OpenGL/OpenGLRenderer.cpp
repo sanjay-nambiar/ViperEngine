@@ -12,9 +12,8 @@ using namespace std;
 
 namespace Viper
 {
-	namespace Renderer
+	namespace Graphics
 	{
-		using namespace Graphics;
 
 		static const unordered_map<TextureType, uint32_t> TextureTypeMap = {
 			{ TextureType::TEXTURE_1D,          GL_TEXTURE_1D },
@@ -106,23 +105,23 @@ namespace Viper
 			glViewport(windowContext.x, windowContext.y, windowContext.width, windowContext.height);
 		}
 
-		Graphics::Shader OpenGLRenderer::LoadShaderSource(const std::string& shaderSource, Graphics::ShaderType shaderType)
+		Shader OpenGLRenderer::LoadShaderSource(const string& shaderSource, ShaderType shaderType)
 		{
 			return ShaderCompiler::CompileShader(shaderSource, shaderType);
 		}
 
-		Graphics::Shader OpenGLRenderer::LoadShaderFile(const std::string& shaderFile, Graphics::ShaderType shaderType)
+		Shader OpenGLRenderer::LoadShaderFile(const string& shaderFile, ShaderType shaderType)
 		{
 			return ShaderCompiler::CompileShaderFromFile(shaderFile, shaderType);
 		}
 
-		void OpenGLRenderer::DeleteShader(const Graphics::Shader& shader)
+		void OpenGLRenderer::DeleteShader(const Shader& shader)
 		{
 			glDetachShader(activeShaderProgram, shader.Id());
 			glDeleteShader(shader.Id());
 		}
 
-		void OpenGLRenderer::UseShader(const Graphics::Shader& shader)
+		void OpenGLRenderer::UseShader(const Shader& shader)
 		{
 			glDeleteProgram(activeShaderProgram);
 			activeShaders[shader.Type()] = shader;
@@ -131,7 +130,7 @@ namespace Viper
 			activeShaderProgram = program;
 		}
 
-		void OpenGLRenderer::UseShaders(const std::vector<Graphics::Shader>& shaders)
+		void OpenGLRenderer::UseShaders(const vector<Shader>& shaders)
 		{
 			glDeleteProgram(activeShaderProgram);
 			for (const auto& shader : shaders)
@@ -143,13 +142,14 @@ namespace Viper
 			activeShaderProgram = program;
 		}
 
-		GpuTextureResource* OpenGLRenderer::CreateTextureResource(const Graphics::TextureDescription& description)
+		GpuTextureResource* OpenGLRenderer::CreateTextureResource(const TextureDescription& description)
 		{
 			OpenGLTextureResource* resource = new OpenGLTextureResource();
 			glGenTextures(1, &resource->id);
 			const auto& target = TextureTypeMap.at(description.type);
 			const auto& format = TextureFormatMap.at(description.format);
-			glTexImage2D(target, 0, format.internalFormat, description.width, description.height, 0, format.format, format.type, description.data);
+			glTexImage2D(target, 0, format.internalFormat, description.width, description.height, 0, format.format,
+				format.type, description.data);
 			glActiveTexture(GL_TEXTURE0);
 			glBindTexture(target, resource->id);
 			glTexParameteri(target, GL_TEXTURE_WRAP_S, TextureWrappingMap.at(description.wrapS));
@@ -165,7 +165,7 @@ namespace Viper
 			return true;
 		}
 
-		void OpenGLRenderer::LoadMesh(const Graphics::Mesh& mesh)
+		void OpenGLRenderer::LoadMesh(const Mesh& mesh)
 		{
 			// Create vertex attrib object and bind it
 			GLuint VAO;
@@ -207,7 +207,7 @@ namespace Viper
 
 		void OpenGLRenderer::Update()
 		{
-			RendererSystem::Update();
+			Renderer::Update();
 			glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 

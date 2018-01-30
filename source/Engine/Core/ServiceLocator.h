@@ -1,13 +1,13 @@
 #pragma once
 
 #include "Singleton.h"
-#include "Service/AudioManager.h"
-#include "Service/InputManager.h"
-#include "Service/Logger.h"
-#include "Service/MemoryAllocator.h"
-#include "Service/RendererSystem.h"
-#include "Service/TextureLoader.h"
-#include "Service/WindowManager.h"
+#include "Audio/AudioManager.h"
+#include "Input/InputManager.h"
+#include "Logging/Logger.h"
+#include "Memory/MemoryAllocator.h"
+#include "Graphics/Renderer.h"
+#include "Graphics/TextureLoader.h"
+#include "Window/WindowManager.h"
 
 
 namespace Viper
@@ -25,7 +25,7 @@ namespace Viper
 		AudioManager* audioManager;
 		WindowManager* windowManager;
 		InputManager* inputManager;
-		RendererSystem* rendererSystem;
+		Renderer* rendererSystem;
 		TextureLoader* textureLoader;
 
 		ServiceLocator();
@@ -64,7 +64,7 @@ namespace Viper
 		/** Provide a renderer system implementation to the service locator
 		 *  @param rendererSystem A RendererSystem interface implementation
 		 */
-		void Provide(RendererSystem& rendererSystem);
+		void Provide(Renderer& rendererSystem);
 
 		/** Provide a textureLoader system implementation to the service locator
 		 *  @param textureLoader A TextureLoader interface implementation
@@ -99,7 +99,7 @@ namespace Viper
 		/** Gets a reference to the default RendererSystem
 		 *  @return A referece to the default RendererSystem
 		 */
-		RendererSystem& GetRendererSystem() const;
+		Renderer& GetRendererSystem() const;
 
 		/** Gets a reference to the default TextureLoader
 		 *  @return A referece to the default TextureLoader

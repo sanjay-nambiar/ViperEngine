@@ -187,6 +187,7 @@
     </BuildLog>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Audio\AudioManager.h" />
     <ClInclude Include="Containers\DataArray.h" />
     <ClInclude Include="Containers\Queue.h" />
     <ClInclude Include="Core\DynamicLibrary.h" />
@@ -201,6 +202,7 @@
     <ClInclude Include="Gameplay\Actor.h" />
     <ClInclude Include="Graphics\Blackboard.h" />
     <ClInclude Include="Graphics\FrameGraph.h" />
+    <ClInclude Include="Graphics\Renderer.h" />
     <ClInclude Include="Graphics\RendererTypes.h" />
     <ClInclude Include="Graphics\RenderPassBuilder.h" />
     <ClInclude Include="Graphics\Mesh.h" />
@@ -208,19 +210,17 @@
     <ClInclude Include="Graphics\RenderPrimitive.h" />
     <ClInclude Include="Graphics\Shader.h" />
     <ClInclude Include="Graphics\Texture.h" />
+    <ClInclude Include="Graphics\TextureLoader.h" />
+    <ClInclude Include="Input\InputEnums.h" />
+    <ClInclude Include="Input\InputManager.h" />
+    <ClInclude Include="Logging\Logger.h" />
+    <ClInclude Include="Memory\MemoryAllocator.h" />
     <ClInclude Include="Memory\MemoryManager.h" />
     <ClInclude Include="Memory\StackAllocator.h" />
     <ClInclude Include="Pch.h" />
     <ClInclude Include="RTTI.h" />
-    <ClInclude Include="Service\AudioManager.h" />
-    <ClInclude Include="Service\InputEnums.h" />
-    <ClInclude Include="Service\InputManager.h" />
-    <ClInclude Include="Service\Logger.h" />
-    <ClInclude Include="Service\MemoryAllocator.h" />
-    <ClInclude Include="Service\RendererSystem.h" />
-    <ClInclude Include="Service\TextureLoader.h" />
-    <ClInclude Include="Service\WindowManager.h" />
     <ClInclude Include="Window\WindowContext.h" />
+    <ClInclude Include="Window\WindowManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core\ModuleLoader.cpp" />
@@ -229,11 +229,13 @@
     <ClCompile Include="Gameplay\Actor.cpp" />
     <ClCompile Include="Graphics\Blackboard.cpp" />
     <ClCompile Include="Graphics\FrameGraph.cpp" />
+    <ClCompile Include="Graphics\Renderer.cpp" />
     <ClCompile Include="Graphics\RenderPassBuilder.cpp" />
     <ClCompile Include="Graphics\Mesh.cpp" />
     <ClCompile Include="Graphics\RenderPrimitive.cpp" />
     <ClCompile Include="Graphics\Shader.cpp" />
     <ClCompile Include="Graphics\Texture.cpp" />
+    <ClCompile Include="Input\InputManager.cpp" />
     <ClCompile Include="Memory\MemoryManager.cpp" />
     <ClCompile Include="Memory\StackAllocator.cpp" />
     <ClCompile Include="Pch.cpp">
@@ -242,8 +244,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="Service\InputManager.cpp" />
-    <ClCompile Include="Service\RendererSystem.cpp" />
     <ClCompile Include="Window\WindowContext.cpp" />
   </ItemGroup>
   <ItemGroup>

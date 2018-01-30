@@ -7,9 +7,8 @@
 
 namespace Viper
 {
-	namespace Renderer
+	namespace Graphics
 	{
-		using namespace Graphics;
 
 		Shader ShaderCompiler::CompileShader(std::string shaderSource, ShaderType shaderType)
 		{

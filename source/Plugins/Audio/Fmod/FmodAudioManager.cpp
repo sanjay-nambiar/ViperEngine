@@ -2,7 +2,7 @@
 #include "FmodAudioManager.h"
 #include <cassert>
 #include "FmodImplementation.h"
-#include "Service/MemoryAllocator.h"
+#include "Memory/MemoryAllocator.h"
 
 
 #define MAX_EVENT_PATH_LENGTH 100

@@ -28,6 +28,15 @@
     <Filter Include="Graphics\FrameGraph">
       <UniqueIdentifier>{f782a2e7-d00a-48c4-aec2-76c813c0fe25}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Input">
+      <UniqueIdentifier>{5335a8b4-ce22-473b-9680-6157c2015a96}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Logging">
+      <UniqueIdentifier>{2a185e58-359c-4931-b5af-af35306656ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Data">
+      <UniqueIdentifier>{f1ba9df3-8e27-447d-87e3-dd2e85c1ad11}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Pch.h" />
@@ -52,31 +61,10 @@
     <ClInclude Include="Containers\Queue.h">
       <Filter>Containers</Filter>
     </ClInclude>
-    <ClInclude Include="Service\AudioManager.h">
-      <Filter>Service</Filter>
-    </ClInclude>
-    <ClInclude Include="Service\Logger.h">
-      <Filter>Service</Filter>
-    </ClInclude>
-    <ClInclude Include="Service\MemoryAllocator.h">
-      <Filter>Service</Filter>
-    </ClInclude>
     <ClInclude Include="Memory\MemoryManager.h">
       <Filter>Memory</Filter>
     </ClInclude>
     <ClInclude Include="Core\ModuleLoader.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Service\WindowManager.h">
-      <Filter>Service</Filter>
-    </ClInclude>
-    <ClInclude Include="Service\RendererSystem.h">
-      <Filter>Service</Filter>
-    </ClInclude>
-    <ClInclude Include="Service\InputManager.h">
-      <Filter>Service</Filter>
-    </ClInclude>
-    <ClInclude Include="Service\InputEnums.h">
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="Core\DynamicLibrary.h">
@@ -94,23 +82,11 @@
     <ClInclude Include="Window\WindowContext.h">
       <Filter>Window</Filter>
     </ClInclude>
-    <ClInclude Include="Graphics\Texture.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="Service\TextureLoader.h">
-      <Filter>Service</Filter>
-    </ClInclude>
     <ClInclude Include="Graphics\Shader.h">
       <Filter>Graphics</Filter>
     </ClInclude>
     <ClInclude Include="Gameplay\Actor.h">
       <Filter>Gameplay</Filter>
-    </ClInclude>
-    <ClInclude Include="Graphics\Mesh.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="Graphics\RenderPrimitive.h">
-      <Filter>Graphics</Filter>
     </ClInclude>
     <ClInclude Include="Graphics\Blackboard.h">
       <Filter>Graphics\FrameGraph</Filter>
@@ -126,6 +102,39 @@
     </ClInclude>
     <ClInclude Include="RTTI.h" />
     <ClInclude Include="Graphics\RendererTypes.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Audio\AudioManager.h">
+      <Filter>Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Input\InputEnums.h">
+      <Filter>Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Input\InputManager.h">
+      <Filter>Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Logging\Logger.h">
+      <Filter>Logging</Filter>
+    </ClInclude>
+    <ClInclude Include="Window\WindowManager.h">
+      <Filter>Window</Filter>
+    </ClInclude>
+    <ClInclude Include="Memory\MemoryAllocator.h">
+      <Filter>Memory</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\TextureLoader.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Mesh.h">
+      <Filter>Graphics\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\RenderPrimitive.h">
+      <Filter>Graphics\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Texture.h">
+      <Filter>Graphics\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Renderer.h">
       <Filter>Graphics</Filter>
     </ClInclude>
   </ItemGroup>
@@ -146,29 +155,14 @@
     <ClCompile Include="Core\ModuleLoader.cpp">
       <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="Service\InputManager.cpp">
-      <Filter>Service</Filter>
-    </ClCompile>
-    <ClCompile Include="Service\RendererSystem.cpp">
-      <Filter>Service</Filter>
-    </ClCompile>
     <ClCompile Include="Window\WindowContext.cpp">
       <Filter>Window</Filter>
-    </ClCompile>
-    <ClCompile Include="Graphics\Texture.cpp">
-      <Filter>Graphics</Filter>
     </ClCompile>
     <ClCompile Include="Graphics\Shader.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
     <ClCompile Include="Gameplay\Actor.cpp">
       <Filter>Gameplay</Filter>
-    </ClCompile>
-    <ClCompile Include="Graphics\Mesh.cpp">
-      <Filter>Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="Graphics\RenderPrimitive.cpp">
-      <Filter>Graphics</Filter>
     </ClCompile>
     <ClCompile Include="Graphics\FrameGraph.cpp">
       <Filter>Graphics\FrameGraph</Filter>
@@ -178,6 +172,21 @@
     </ClCompile>
     <ClCompile Include="Graphics\RenderPassBuilder.cpp">
       <Filter>Graphics\FrameGraph</Filter>
+    </ClCompile>
+    <ClCompile Include="Input\InputManager.cpp">
+      <Filter>Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\Mesh.cpp">
+      <Filter>Graphics\Data</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\RenderPrimitive.cpp">
+      <Filter>Graphics\Data</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\Texture.cpp">
+      <Filter>Graphics\Data</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\Renderer.cpp">
+      <Filter>Graphics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -1,12 +1,12 @@
 #include "Pch.h"
-#include "RendererSystem.h"
+#include "Renderer.h"
 #include <iterator>
 
 namespace Viper
 {
 	using namespace Graphics;
 
-	RendererSystem::RendererSystem()
+	Renderer::Renderer()
 	{
 		points = {
 			{Primitive::Point, {}},
@@ -19,19 +19,19 @@ namespace Viper
 		points[Primitive::Triangle].reserve(1000);
 	}
 
-	void RendererSystem::Update()
+	void Renderer::Update()
 	{
 		points[Primitive::Point].clear();
 		points[Primitive::Line].clear();
 		points[Primitive::Triangle].clear();
 	}
 
-	void RendererSystem::AddPoint(const Vector3& pointToAdd, Primitive primitive)
+	void Renderer::AddPoint(const Vector3& pointToAdd, Primitive primitive)
 	{
 		points[primitive].push_back(pointToAdd);
 	}
 
-	void RendererSystem::AddPoints(const std::vector<Vector3> pointsToAdd, Primitive primitive)
+	void Renderer::AddPoints(const std::vector<Vector3> pointsToAdd, Primitive primitive)
 	{
 		points[primitive].insert(points[primitive].end(), pointsToAdd.begin(), pointsToAdd.end());
 	}

@@ -3,8 +3,8 @@
 
 
 #include <string>
-#include "Service/AudioManager.h"
-#include "Service/MemoryAllocator.h"
+#include "Audio/AudioManager.h"
+#include "Memory/MemoryAllocator.h"
 #include "Core/Types.h"
 #include "Core/Vector3.h"
 
