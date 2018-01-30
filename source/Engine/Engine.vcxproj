@@ -201,6 +201,7 @@
     <ClInclude Include="Gameplay\Actor.h" />
     <ClInclude Include="Graphics\Blackboard.h" />
     <ClInclude Include="Graphics\FrameGraph.h" />
+    <ClInclude Include="Graphics\RendererTypes.h" />
     <ClInclude Include="Graphics\RenderPassBuilder.h" />
     <ClInclude Include="Graphics\Mesh.h" />
     <ClInclude Include="Graphics\RenderPass.h" />

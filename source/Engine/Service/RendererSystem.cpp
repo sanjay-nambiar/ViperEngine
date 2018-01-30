@@ -4,10 +4,7 @@
 
 namespace Viper
 {
-	TextureDescription::TextureDescription()
-		: data(nullptr)
-	{
-	}
+	using namespace Graphics;
 
 	RendererSystem::RendererSystem()
 	{

@@ -142,12 +142,21 @@ void TestFrameGraph()
 	};
 
 	auto& zPrePass = graph.AddRenderPass<ZPassData>(string("ZPass"),
-		[&] (RenderPassBuilder& builder, ZPassData& data)
+		[&](RenderPassBuilder& builder, ZPassData& data)
 		{
 			TextureDescription desc;
+			desc.type = TextureType::TEXTURE_2D;
+			desc.format = TextureFormat::D32F;
+			desc.width = 1920;
+			desc.height = 1080;
+			desc.data = nullptr;
+			desc.wrapS = TextureWrapping::CLAMP_TO_EDGE;
+			desc.wrapT = TextureWrapping::CLAMP_TO_EDGE;
+			desc.minFilter = TextureFiltering::NEAREST;
+			desc.magFilter = TextureFiltering::NEAREST;
 			data.Depth = &builder.CreateWrite("Depth", desc);
 		},
-		[=] (const ZPassData&) { }
+		[=](const ZPassData&) {}
 	);
 
 	// GBuffer Pass
@@ -161,16 +170,28 @@ void TestFrameGraph()
 		FrameGraphResourceNode* AlbedoSpec;
 	};
 
+	TextureDescription commonTextureDesc;
+	commonTextureDesc.type = TextureType::TEXTURE_2D;
+	commonTextureDesc.format = TextureFormat::RGB32F;
+	commonTextureDesc.width = 1920;
+	commonTextureDesc.height = 1080;
+	commonTextureDesc.data = nullptr;
+	commonTextureDesc.wrapS = TextureWrapping::CLAMP_TO_EDGE;
+	commonTextureDesc.wrapT = TextureWrapping::CLAMP_TO_EDGE;
+	commonTextureDesc.minFilter = TextureFiltering::NEAREST;
+	commonTextureDesc.magFilter = TextureFiltering::NEAREST;
+
 	auto& gBufferPass = graph.AddRenderPass<GBufferPassData>(string("GBufferPass"),
 		[&](RenderPassBuilder& builder, GBufferPassData& data)
 		{
-			TextureDescription desc;
 			data.Depth = &builder.Read(*reinterpret_cast<FrameGraphResourceNode*>(zPrePass.next.front()));
-			data.Position = &builder.CreateWrite("Position", desc);
-			data.Normal = &builder.CreateWrite("Normal", desc);
-			data.AlbedoSpec = &builder.CreateWrite("AlbedoSpec", desc);
+			data.Position = &builder.CreateWrite("Position", commonTextureDesc);
+			data.Normal = &builder.CreateWrite("Normal", commonTextureDesc);
+			TextureDescription gbufferColor = commonTextureDesc;
+			gbufferColor.format = TextureFormat::RGBA32F;
+			data.AlbedoSpec = &builder.CreateWrite("AlbedoSpec", gbufferColor);
 		},
-		[=](const GBufferPassData&) { }
+		[=](const GBufferPassData&) {}
 	);
 
 	// Lighting Pass
@@ -187,11 +208,10 @@ void TestFrameGraph()
 	auto& lightingPass = graph.AddRenderPass<LightingPassData>(string("LightingPass"),
 		[&](RenderPassBuilder& builder, LightingPassData& data)
 		{
-			TextureDescription desc;
 			data.Position = &builder.Read(*reinterpret_cast<FrameGraphResourceNode*>(gBufferPass.next[0]));
 			data.Normal = &builder.Read(*reinterpret_cast<FrameGraphResourceNode*>(gBufferPass.next[1]));
 			data.AlbedoSpec = &builder.Read(*reinterpret_cast<FrameGraphResourceNode*>(gBufferPass.next[2]));
-			data.LitScene = &builder.CreateWrite("LitScene", desc);
+			data.LitScene = &builder.CreateWrite("LitScene", commonTextureDesc);
 		},
 		[=](const LightingPassData&) {}
 	);
@@ -208,9 +228,8 @@ void TestFrameGraph()
 	auto& postProcessPass = graph.AddRenderPass<PostProcessPassData>(string("PostProcessPass"),
 		[&](RenderPassBuilder& builder, PostProcessPassData& data)
 		{
-			TextureDescription desc;
 			data.LitScene = &builder.Read(*reinterpret_cast<FrameGraphResourceNode*>(lightingPass.next.front()));
-			data.PostProcessScene = &builder.CreateWrite("PostProcessScene", desc);
+			data.PostProcessScene = &builder.CreateWrite("PostProcessScene", commonTextureDesc);
 		},
 		[=](const PostProcessPassData&) {}
 	);
@@ -227,22 +246,24 @@ void TestFrameGraph()
 	auto& debugPass = graph.AddRenderPass<DebugPassData>(string("DebugPass"),
 		[&](RenderPassBuilder& builder, DebugPassData& data)
 		{
-			TextureDescription desc;
 			data.Position = &builder.Read(*reinterpret_cast<FrameGraphResourceNode*>(gBufferPass.next[0]));
-			data.DebugView = &builder.CreateWrite("DebugView", desc);
+			data.DebugView = &builder.CreateWrite("DebugView", commonTextureDesc);
 		},
 		[=](const DebugPassData&) {}
 	);
 
-	postProcessPass;
-	debugPass;
 #ifdef _DEBUG
+	postProcessPass;
 	graph.SetDisplayTarget(*reinterpret_cast<FrameGraphResourceNode*>(debugPass.next.front()));
 #else
+	debugPass;
 	graph.SetDisplayTarget(*reinterpret_cast<FrameGraphResourceNode*>(postProcessPass.next.front()));
 #endif
+
 	graph.Compile();
-	graph.DebugOutput("Deferred Renderer", "deferred.gvz");
+	graph.AllocateGpuResources();
+	graph.DebugOutput("Deferred Renderer", "deferred.dot");
+	graph.FreeGpuResources();
 }
 
 int WINAPI wWinMain(HINSTANCE, HINSTANCE, PWSTR, int)
@@ -313,7 +334,6 @@ int WINAPI wWinMain(HINSTANCE, HINSTANCE, PWSTR, int)
 	}
 
 	TestFrameGraph();
-
 	rendererSystem.Shutdown();
 	windowManager.Shutdown();
 	ShutDown();

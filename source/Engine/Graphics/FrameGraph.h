@@ -17,7 +17,7 @@ namespace Viper
 			FrameGraphNode(const std::string& name);
 			~FrameGraphNode() = default;
 
-			std::string name;
+			const std::string name;
 			std::vector<FrameGraphNode*> previous;
 			std::vector<FrameGraphNode*> next;
 			uint32_t nodeWeight;
@@ -37,7 +37,7 @@ namespace Viper
 			// compile time fields
 			uint32_t resourceId;
 			uint32_t resourceAlias;
-			TextureDescription description;
+			const TextureDescription description;
 			bool isResourceReady;
 
 			// runtime time fields

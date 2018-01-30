@@ -19,7 +19,6 @@ namespace Viper
 		}
 
 
-
 		FrameGraphResourceNode::FrameGraphResourceNode(const std::string& name, const TextureDescription& description)
 			: FrameGraphNode(name), resourceId(0), resourceAlias(0), description(description), isResourceReady(false), gpuResource(nullptr)
 		{
@@ -107,12 +106,14 @@ namespace Viper
 
 		void FrameGraph::AllocateGpuResources()
 		{
-			for (auto resourceIt = resources.begin(); resourceIt != resourcesIt; ++resourceIt)
+			for (auto resourceIt = resources.begin(); resourceIt != resources.end(); ++resourceIt)
 			{
 				auto& resource = *resourceIt;
 				if (resource->resourceAlias == resource->resourceId)
 				{
-					gpuResources.push_back(rendererSystem.CreateTextureResource(resource->description));
+					resource->gpuResource = rendererSystem.CreateTextureResource(resource->description);
+					assert(resource->gpuResource != nullptr);
+					gpuResources.push_back(resource->gpuResource);
 				}
 			}
 		}
@@ -146,8 +147,8 @@ namespace Viper
 			unordered_map<int, vector<FrameGraphNode*>> nodeMap;
 			vector<uint32_t> nodeWeights;
 
-			activeRenderPasses << "\tnode [style=filled, fillcolor=\"orange\", fontcolor=\"white\", shape=rect]; ";
-			inactiveRenderPasses << "\tnode [style=none, fontcolor=\"black\", shape=rect]; ";
+			activeRenderPasses << "\tnode [style=filled, fillcolor=\"orange\", fontcolor=\"white\", shape=rect];";
+			inactiveRenderPasses << "\tnode [fontcolor=\"black\", shape=rect];";
 			uint32_t renderPassIndex;
 			for (renderPassIndex = 0; renderPassIndex < renderPasses.size(); ++renderPassIndex)
 			{
@@ -155,7 +156,7 @@ namespace Viper
 
 				// node shape declaration
 				auto& nodeCategory = (renderPass->nodeWeight > 0) ? activeRenderPasses : inactiveRenderPasses;
-				nodeCategory << renderPass->name << "; ";
+				nodeCategory << " " << renderPass->name << ";";
 
 				// adding to rank map
 				if (nodeMap.find(renderPass->nodeWeight) == nodeMap.end())
@@ -198,8 +199,8 @@ namespace Viper
 				}
 			}
 
-			activeResources << "\tnode [style=filled, fillcolor=\"skyblue3\", fontcolor=\"white\", shape=ellipse]; ";
-			inactiveResources << "\tnode [style=none, fontcolor=\"black\", shape=ellipse]; ";
+			activeResources << "\tnode [style=filled, fillcolor=\"skyblue3\", fontcolor=\"white\", shape=ellipse];";
+			inactiveResources << "\tnode [fontcolor=\"black\", shape=ellipse];";
 			uint32_t resourceIndex;
 			for (resourceIndex = 0; resourceIndex < resources.size(); ++resourceIndex)
 			{
@@ -207,7 +208,7 @@ namespace Viper
 
 				// node shape declaration
 				auto& nodeCategory = (resource->nodeWeight > 0) ? activeResources : inactiveResources;
-				nodeCategory << resource->name << "; ";
+				nodeCategory << " " << resource->name << ";";
 
 				// adding to rank map
 				if (nodeMap.find(resource->nodeWeight) == nodeMap.end())
@@ -270,17 +271,16 @@ namespace Viper
 			}
 
 			file << "digraph FrameGraph {" << endl << "\trankdir=LR;" << endl;
-			file << activeRenderPasses.str() << endl;
-			file << activeResources.str() << endl;
 			file << inactiveRenderPasses.str() << endl;
-			file << inactiveResources.str() << endl << endl;
+			file << inactiveResources.str() << endl;
+			file << activeRenderPasses.str() << endl;
+			file << activeResources.str() << endl << endl;
 			file << edges.str() << endl;
 			file << ranks.str() << endl;
 			file << "\toverlap = false;" << endl;
 			file << "\tlabel = \"" << graphName << "\";" << endl;
 			file << "\tlabelloc = \"t\";" << endl;
 			file << "}";
-
 			file.close();
 		}
 	}

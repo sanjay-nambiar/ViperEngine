@@ -22,7 +22,7 @@ namespace Viper
 
 			PassDataT data;
 			setupCallback(builder, data);
-			
+
 			builder.currentRenderPass->renderCallback = [data, &execCallback]() {
 				execCallback(data);
 			};

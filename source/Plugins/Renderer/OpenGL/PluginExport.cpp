@@ -11,7 +11,7 @@ void InitializeModule(ServiceLocator& serviceLocator, const std::unordered_map<s
 
 	void* memBlock = allocator.Allocate(sizeof(Renderer::OpenGLRenderer), 1);
 	assert(memBlock != nullptr);
-	Renderer::OpenGLRenderer* rendererSystem = new(memBlock) Renderer::OpenGLRenderer();
+	Renderer::OpenGLRenderer* rendererSystem = new(memBlock) Renderer::OpenGLRenderer(serviceLocator);
 	serviceLocator.Provide(*rendererSystem);
 
 	void* memBlock2 = allocator.Allocate(sizeof(Renderer::OpenGLTextureLoader), 1);

@@ -5,6 +5,7 @@
 #include <unordered_map>
 #include "glad/glad.h"
 #include "Window/WindowContext.h"
+#include "Core/ServiceLocator.h"
 
 struct GLFWwindow;
 
@@ -12,7 +13,7 @@ namespace Viper
 {
 	namespace Renderer
 	{
-		struct OpenGLTextureResource : public GpuTextureResource
+		struct OpenGLTextureResource : public Graphics::GpuTextureResource
 		{
 			uint32_t id;
 		};
@@ -20,7 +21,7 @@ namespace Viper
 		class OpenGLRenderer final : public RendererSystem
 		{
 		public:
-			OpenGLRenderer();
+			OpenGLRenderer(ServiceLocator& serviceLocator);
 			~OpenGLRenderer() = default;
 
 			void Initialize() override;
@@ -32,15 +33,17 @@ namespace Viper
 			void UseShader(const Graphics::Shader& shader) override;
 			void UseShaders(const std::vector<Graphics::Shader>& shaders) override;
 
-			GpuTextureResource* CreateTextureResource(const TextureDescription& description) override;
-			bool FreeTextureResource(GpuTextureResource& resource) override;
+			Graphics::GpuTextureResource* CreateTextureResource(const Graphics::TextureDescription& description) override;
+			bool FreeTextureResource(Graphics::GpuTextureResource& resource) override;
 
 			void LoadMesh(const Graphics::Mesh& mesh) override;
 			void AddActorToScene(const Gameplay::Actor& actor) override;
 
 			void Update() override;
 			void Shutdown() override;
+
 		private:
+			ServiceLocator& serviceLocator;
 			std::unordered_map<Graphics::ShaderType, Graphics::Shader> activeShaders;
 			GLuint activeShaderProgram;
 			std::chrono::time_point<std::chrono::steady_clock> start;

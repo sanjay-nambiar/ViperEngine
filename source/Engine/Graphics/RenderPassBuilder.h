@@ -2,14 +2,13 @@
 
 namespace Viper
 {
-	struct TextureDescription;
-
 	namespace Graphics
 	{
 		class FrameGraph;
 		struct FrameGraphNode;
 		struct FrameGraphResourceNode;
 		struct FrameGraphRenderPassNode;
+		struct TextureDescription;
 
 		class RenderPassBuilder final
 		{

@@ -125,6 +125,9 @@
       <Filter>Graphics\FrameGraph</Filter>
     </ClInclude>
     <ClInclude Include="RTTI.h" />
+    <ClInclude Include="Graphics\RendererTypes.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Pch.cpp" />
