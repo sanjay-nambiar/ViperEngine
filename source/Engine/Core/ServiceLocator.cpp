@@ -1,9 +1,22 @@
 #include "Pch.h"
 #include "ServiceLocator.h"
+#include "Logging/Logger.h"
+#include "Memory/MemoryAllocator.h"
+#include "Audio/AudioManager.h"
+#include "Window/WindowManager.h"
+#include "Input/InputManager.h"
+#include "Graphics/Renderer.h"
+#include "Graphics/TextureLoader.h"
 #include <stdexcept>
 
 namespace Viper
 {
+	using namespace Logging;
+	using namespace Memory;
+	using namespace Audio;
+	using namespace Window;
+	using namespace Input;
+	using namespace Graphics;
 
 	ServiceLocator::ServiceLocator() :
 		logger(nullptr), memoryAllocator(nullptr), audioManager(nullptr), windowManager(nullptr)

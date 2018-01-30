@@ -1,35 +1,40 @@
 #include "Pch.h"
 #include "InputManager.h"
 
+using namespace std;
+
 namespace Viper
 {
-	InputManager::InputManager() :
-		modifierStates(0)
+	namespace Input
 	{
-		for (std::uint32_t index = static_cast<std::uint32_t>(Button::Key_Unknown);
-			index < static_cast<std::uint32_t>(Button::MaxButtons); ++index)
+		InputManager::InputManager() :
+			modifierStates(0)
 		{
-			buttonStates[static_cast<Button>(index)] = ButtonState::Neutral;
+			for (uint32_t index = static_cast<uint32_t>(Button::Key_Unknown);
+				index < static_cast<uint32_t>(Button::MaxButtons); ++index)
+			{
+				buttonStates[static_cast<Button>(index)] = ButtonState::Neutral;
+			}
 		}
-	}
 
-	const std::unordered_map<Button, ButtonState>& InputManager::GetButtonStates() const
-	{
-		return buttonStates;
-	}
+		const unordered_map<Button, ButtonState>& InputManager::GetButtonStates() const
+		{
+			return buttonStates;
+		}
 
-	ButtonState InputManager::GetButtonState(Button button) const
-	{
-		return buttonStates.at(button);
-	}
+		ButtonState InputManager::GetButtonState(Button button) const
+		{
+			return buttonStates.at(button);
+		}
 
-	std::uint32_t InputManager::ActiveModifiers() const
-	{
-		return modifierStates;
-	}
+		uint32_t InputManager::ActiveModifiers() const
+		{
+			return modifierStates;
+		}
 
-	bool InputManager::IsModifierActive(ModifierKey modifier) const
-	{
-		return ((modifierStates & static_cast<std::uint32_t>(modifier)) > 0);
+		bool InputManager::IsModifierActive(ModifierKey modifier) const
+		{
+			return ((modifierStates & static_cast<uint32_t>(modifier)) > 0);
+		}
 	}
 }

@@ -3,6 +3,8 @@
 #include "FmodAudioManager.h"
 
 using namespace Viper;
+using namespace Memory;
+using namespace Audio;
 
 #define CHANNELS_CONFIG_ATTRIBUTE "Channels"
 

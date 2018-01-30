@@ -49,9 +49,6 @@
     <ClInclude Include="Core\Types.h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="Core\Vector3.h">
-      <Filter>Core</Filter>
-    </ClInclude>
     <ClInclude Include="Memory\StackAllocator.h">
       <Filter>Memory</Filter>
     </ClInclude>
@@ -141,9 +138,6 @@
   <ItemGroup>
     <ClCompile Include="Pch.cpp" />
     <ClCompile Include="Core\ServiceLocator.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\Vector3.cpp">
       <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="Memory\StackAllocator.cpp">

@@ -21,4 +21,3 @@
 #include "Core/Types.h"
 #include "Core/ServiceLocator.h"
 #include "Core/Singleton.h"
-#include "Core/Vector3.h"

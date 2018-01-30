@@ -29,12 +29,12 @@ namespace Viper
 		Singleton& operator=(Singleton<T>&&) = delete;
 
 		static T* sInstance;
-		static MemoryManager* allocator;
+		static Memory::MemoryManager* allocator;
 	public:
 		/** Creates the singleton instance of the child class
 		 *  @param allocatorRef The memory allocator to use for getting heap memory
 		 */
-		static void CreateInstance(MemoryManager& allocatorRef)
+		static void CreateInstance(Memory::MemoryManager& allocatorRef)
 		{
 			assert(sInstance == nullptr);
 			allocator = &allocatorRef;
@@ -77,5 +77,5 @@ namespace Viper
 	};
 
 	template <typename T> T* Singleton<T>::sInstance(nullptr);
-	template <typename T> MemoryManager* Singleton<T>::allocator(nullptr);
+	template <typename T> Memory::MemoryManager* Singleton<T>::allocator(nullptr);
 }

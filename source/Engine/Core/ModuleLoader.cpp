@@ -29,7 +29,7 @@ namespace Viper
 
 		void ModuleLoader::UnloadModules()
 		{
-			AudioManager& audioManager = ServiceLocator::GetInstance().GetAudioManager();
+			Audio::AudioManager& audioManager = ServiceLocator::GetInstance().GetAudioManager();
 			ServiceLocator::Destroy();
 			delete &audioManager;
 

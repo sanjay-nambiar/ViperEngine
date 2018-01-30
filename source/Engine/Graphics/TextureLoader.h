@@ -5,12 +5,15 @@
 
 namespace Viper
 {
-	class TextureLoader
+	namespace Graphics
 	{
-	public:
-		TextureLoader() = default;
-		virtual ~TextureLoader() = default;
+		class TextureLoader
+		{
+		public:
+			TextureLoader() = default;
+			virtual ~TextureLoader() = default;
 
-		virtual Graphics::Texture LoadTexture(const std::string& textureFile) = 0;
-	};
+			virtual Graphics::Texture LoadTexture(const std::string& textureFile) = 0;
+		};
+	}
 }

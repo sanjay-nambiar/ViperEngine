@@ -6,6 +6,7 @@
 using namespace std;
 using namespace Viper;
 using namespace Viper::Graphics;
+using namespace Viper::Memory;
 
 void InitializeModule(ServiceLocator& serviceLocator, const unordered_map<string, string>&)
 {

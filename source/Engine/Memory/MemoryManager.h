@@ -1,36 +1,35 @@
-#ifndef MEMORY_MANAGER_HEADER
-#define MEMORY_MANAGER_HEADER
+#pragma once
 
 #include "Memory/MemoryAllocator.h"
 #include "Core/Types.h"
 
 namespace  Viper
-{	
-	/** A simple memory manager.
-	*  This class is a place holder for implementing a memory manager and it currently uses 
-	*  regular new and delete to allocate heap memory on demand
-	*/
-	class MemoryManager : public MemoryAllocator
+{
+	namespace Memory
 	{
-	public:
-		MemoryManager() = default;
-		~MemoryManager() = default;
-
-		/** Allocate memory
-		* A total of (elementSize * count) bytes of memory is allocated.
-		* @param elementSize The size of a single element in memory
-		* @param count The number of elements to allocate
-		* @return A pointer to the base of the allocated memory
+		/** A simple memory manager.
+		*  This class is a place holder for implementing a memory manager and it currently uses
+		*  regular new and delete to allocate heap memory on demand
 		*/
-		void* Allocate(size_t elementSize, uint32_t count) override;
+		class MemoryManager : public MemoryAllocator
+		{
+		public:
+			MemoryManager() = default;
+			~MemoryManager() = default;
 
-		/** Free allocated memory
-		* Free a block of memory previously allocated by the memory manager
-		* @param pointer The base pointer to the memory to be freed
-		*/
-		void Free(void* pointer) override;
-	};
+			/** Allocate memory
+			* A total of (elementSize * count) bytes of memory is allocated.
+			* @param elementSize The size of a single element in memory
+			* @param count The number of elements to allocate
+			* @return A pointer to the base of the allocated memory
+			*/
+			void* Allocate(size_t elementSize, uint32_t count) override;
+
+			/** Free allocated memory
+			* Free a block of memory previously allocated by the memory manager
+			* @param pointer The base pointer to the memory to be freed
+			*/
+			void Free(void* pointer) override;
+		};
+	}
 }
-
-
-#endif	// MEMORY_MANAGER_HEADER

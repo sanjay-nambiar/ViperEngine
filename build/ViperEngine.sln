@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2010
+VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Audio", "Audio", "{F7731D46-5086-42CD-AA77-07A7D8E57971}"
 EndProject
@@ -35,6 +35,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GLM", "..\source\Thirdparty
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		..\source\Thirdparty\GLM\GLM.vcxitems*{14e0f32c-0008-4009-bef1-54c120578187}*SharedItemsImports = 4
 		..\source\Thirdparty\GLM\GLM.vcxitems*{8d7263a2-5ebf-44d7-acea-bce9c7dfcb30}*SharedItemsImports = 4
 		..\source\Thirdparty\GLM\GLM.vcxitems*{a7b577de-e9de-418a-85ea-831991359af5}*SharedItemsImports = 4
 		..\source\Thirdparty\STB\STB.vcxitems*{a7b577de-e9de-418a-85ea-831991359af5}*SharedItemsImports = 4

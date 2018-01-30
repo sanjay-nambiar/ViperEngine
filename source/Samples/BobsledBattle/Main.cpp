@@ -7,10 +7,6 @@
 #include "Core/ModuleLoader.h"
 #include "Gameplay/Actor.h"
 #include "Graphics/Mesh.h"
-#include "Memory/MemoryManager.h"
-#include "Audio/AudioManager.h"
-#include "Graphics/Renderer.h"
-#include "Graphics/FrameGraph.h"
 
 #ifndef UNICODE
 #define UNICODE
@@ -27,6 +23,11 @@ using namespace Viper;
 using namespace Viper::Core;
 using namespace Viper::Graphics;
 using namespace Viper::Gameplay;
+using namespace Viper::Memory;
+using namespace Viper::Audio;
+using namespace Viper::Input;
+using namespace Viper::Window;
+
 
 void Initialize()
 {
@@ -291,13 +292,13 @@ int WINAPI wWinMain(HINSTANCE, HINSTANCE, PWSTR, int)
 
 	// Test Audio
 	AudioManager& audioManager = ServiceLocator::GetInstance().GetAudioManager();
-	audioManager.SetListener3dAttributes(Vector3(0, 0, 0), Vector3(0, 0, 1), Vector3(0, 1, 0));
+	audioManager.SetListener3dAttributes(vec3(0, 0, 0), vec3(0, 0, 1), vec3(0, 1, 0));
 	audioManager.LoadSoundBank("Content/Sounds/ZombieWars.bank");
 	audioManager.LoadSoundBank("Content/Sounds/ZombieWars.strings.bank");
 	audioManager.LoadSoundBankEvents("Content/Sounds/ZombieWars.bank");
 
-	Vector3 position(0, 0, 0);
-	audioManager.SetEvent3dAttributes("event:/GattlingGun-Fire", position, Vector3(0, 0, 0));
+	vec3 position(0, 0, 0);
+	audioManager.SetEvent3dAttributes("event:/GattlingGun-Fire", position, vec3(0, 0, 0));
 	audioManager.PlayEvent("event:/GattlingGun-Fire");
 
 	mat4 model;
@@ -311,17 +312,17 @@ int WINAPI wWinMain(HINSTANCE, HINSTANCE, PWSTR, int)
 		if (inputManager.GetButtonState(Button::Key_Up) == ButtonState::Pressed)
 		{
 			position.z += 0.01f;
-			audioManager.SetEvent3dAttributes("event:/GattlingGun-Fire", position, Vector3(0, 0, 0));
+			audioManager.SetEvent3dAttributes("event:/GattlingGun-Fire", position, vec3(0, 0, 0));
 		}
 		if (inputManager.GetButtonState(Button::Key_Down) == ButtonState::Pressed)
 		{
 			position.z -= 0.01f;
-			audioManager.SetEvent3dAttributes("event:/GattlingGun-Fire", position, Vector3(0, 0, 0));
+			audioManager.SetEvent3dAttributes("event:/GattlingGun-Fire", position, vec3(0, 0, 0));
 		}
 		if (inputManager.GetButtonState(Button::Key_Space) == ButtonState::Pressed && inputManager.IsModifierActive(ModifierKey::Control))
 		{
 			position.z = 0.0f;
-			audioManager.SetEvent3dAttributes("event:/GattlingGun-Fire", position, Vector3(0, 0, 0));
+			audioManager.SetEvent3dAttributes("event:/GattlingGun-Fire", position, vec3(0, 0, 0));
 		}
 
 		for (auto actor : actors)

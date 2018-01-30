@@ -5,6 +5,9 @@
 #include "fmod_studio.hpp"
 #include "fmod_studio_common.h"
 
+using namespace FMOD;
+using namespace glm;
+
 namespace Viper
 {
 	namespace  Audio
@@ -13,7 +16,7 @@ namespace Viper
 			: studioSystem(nullptr), fmodSystem(nullptr), banks(BankMap()),
 			events(EventMap()), eventGroups(EventGroupMap())
 		{
-			ErrorCheck(FMOD::Studio::System::create(&studioSystem));
+			ErrorCheck(Studio::System::create(&studioSystem));
 			ErrorCheck(studioSystem->initialize(maxChannels, FMOD_STUDIO_INIT_NORMAL, FMOD_INIT_NORMAL, nullptr));
 			ErrorCheck(studioSystem->getLowLevelSystem(&fmodSystem));
 		}
@@ -37,7 +40,7 @@ namespace Viper
 			}
 		}
 
-		FMOD_VECTOR FmodImplementation::VectorToFmod(const Vector3& vector)
+		FMOD_VECTOR FmodImplementation::VectorToFmod(const vec3& vector)
 		{
 			FMOD_VECTOR fVec;
 			fVec.x = vector.x;

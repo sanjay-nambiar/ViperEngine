@@ -3,7 +3,11 @@
 #include "GlfwInputManager.h"
 #include "GlfwWindowManager.h"
 
+using namespace std;
 using namespace Viper;
+using namespace Viper::Memory;
+using namespace Viper::Window;
+using namespace Viper::Input;
 
 void InitializeModule(Viper::ServiceLocator& serviceLocator, const std::unordered_map<std::string, std::string>&)
 {
