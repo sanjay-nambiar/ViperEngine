@@ -7,9 +7,6 @@
     <Filter Include="Memory">
       <UniqueIdentifier>{fcedb39a-1531-4ce1-bcd8-fd0a36172ec8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Service">
-      <UniqueIdentifier>{38db454d-5894-4266-8dd4-7bb756b53fe6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Containers">
       <UniqueIdentifier>{8bb941f2-36eb-4ce8-9a23-6aa9218d7deb}</UniqueIdentifier>
     </Filter>
@@ -36,6 +33,12 @@
     </Filter>
     <Filter Include="Graphics\Data">
       <UniqueIdentifier>{f1ba9df3-8e27-447d-87e3-dd2e85c1ad11}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Asset">
+      <UniqueIdentifier>{b1b1de3a-d4c6-4067-bdd4-fa620d4827dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Diagrams">
+      <UniqueIdentifier>{9ee4353e-def9-4fed-b473-4f9261e62297}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -97,7 +100,6 @@
     <ClInclude Include="Graphics\RenderPass.h">
       <Filter>Graphics\FrameGraph</Filter>
     </ClInclude>
-    <ClInclude Include="RTTI.h" />
     <ClInclude Include="Graphics\RendererTypes.h">
       <Filter>Graphics</Filter>
     </ClInclude>
@@ -133,6 +135,24 @@
     </ClInclude>
     <ClInclude Include="Graphics\Renderer.h">
       <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset\Asset.h">
+      <Filter>Asset</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Core.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\RTTI.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\StringID.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Checksum.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset\AssetManager.h">
+      <Filter>Asset</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -182,10 +202,61 @@
     <ClCompile Include="Graphics\Renderer.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="Asset\Asset.cpp">
+      <Filter>Asset</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\StringID.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Checksum.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Asset\AssetManager.cpp">
+      <Filter>Asset</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Graphics\FrameGraph.inl">
       <Filter>Graphics\FrameGraph</Filter>
+    </None>
+    <None Include="Core\Checksum.inl">
+      <Filter>Core</Filter>
+    </None>
+    <None Include="Diagrams\ServiceLocator.cd">
+      <Filter>Diagrams</Filter>
+    </None>
+    <None Include="Diagrams\FrameGraph.cd">
+      <Filter>Diagrams</Filter>
+    </None>
+    <None Include="Diagrams\Memory.cd">
+      <Filter>Diagrams</Filter>
+    </None>
+    <None Include="Diagrams\Rendering.cd">
+      <Filter>Diagrams</Filter>
+    </None>
+    <None Include="Diagrams\Asset.cd">
+      <Filter>Diagrams</Filter>
+    </None>
+    <None Include="Diagrams\Window.cd">
+      <Filter>Diagrams</Filter>
+    </None>
+    <None Include="Diagrams\Containers.cd">
+      <Filter>Diagrams</Filter>
+    </None>
+    <None Include="Diagrams\Logging.cd">
+      <Filter>Diagrams</Filter>
+    </None>
+    <None Include="Diagrams\Audio.cd">
+      <Filter>Diagrams</Filter>
+    </None>
+    <None Include="Diagrams\Gameplay.cd">
+      <Filter>Diagrams</Filter>
+    </None>
+    <None Include="Diagrams\Input.cd">
+      <Filter>Diagrams</Filter>
+    </None>
+    <None Include="Diagrams\Core.cd">
+      <Filter>Diagrams</Filter>
     </None>
   </ItemGroup>
 </Project>

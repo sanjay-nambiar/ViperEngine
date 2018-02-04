@@ -13,7 +13,7 @@ namespace Viper
 			TextureLoader() = default;
 			virtual ~TextureLoader() = default;
 
-			virtual Graphics::Texture LoadTexture(const std::string& textureFile) = 0;
+			virtual Texture LoadTexture(const std::string& textureFile) = 0;
 		};
 	}
 }

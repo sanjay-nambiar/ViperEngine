@@ -4,7 +4,6 @@
 #include <functional>
 #include <string>
 #include <unordered_map>
-#include "RTTI.h"
 #include "Core/ServiceLocator.h"
 #include "RenderPassBuilder.h"
 #include "Graphics/Renderer.h"

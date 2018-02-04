@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" GroupingSetting="Access">
+  <Class Name="Viper::Logging::Logger">
+    <Position X="15" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAAAAAAYAAAAAAAAAAAAAAAAEAAAAAAAAAAAA=</HashCode>
+      <FileName>Logging\Logger.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Viper::Memory::MemoryAllocator">
+    <Position X="3" Y="0.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>Memory\MemoryAllocator.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Viper::Audio::AudioManager">
+    <Position X="8.75" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>ACQIAQgAAAAAAAAEAABAAAAAACwAAAAAAwEEAAAAAAA=</HashCode>
+      <FileName>Audio\AudioManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Viper::Window::WindowManager">
+    <Position X="5" Y="0.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAIAIAAAAQCAAAAAAQAAAgAAgAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Window\WindowManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Viper::Input::InputManager">
+    <Position X="7" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAQAAAAAAAQAAQAACAAAAQAAAAAAAEEAAAACIAAAAAA=</HashCode>
+      <FileName>Input\InputManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Viper::Graphics::Renderer">
+    <Position X="11" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAQhAACABAAQASABIAAAAQABAAAAAgAEAACAAAAAAJA=</HashCode>
+      <FileName>Graphics\Renderer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Viper::Graphics::TextureLoader">
+    <Position X="13.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABQ=</HashCode>
+      <FileName>Graphics\TextureLoader.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Viper::ServiceLocator">
+    <Position X="0.5" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AJAAEAAAAIAAAgACAAAAAAAAAAgCIiBwAAIiAAAACAA=</HashCode>
+      <FileName>Core\ServiceLocator.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

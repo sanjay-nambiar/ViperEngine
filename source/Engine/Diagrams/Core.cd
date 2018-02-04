@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Viper::Checksum">
+    <Position X="0.5" Y="3" Width="3.75" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Core\Checksum.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Viper::CRC32">
+    <Position X="0.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Core\Checksum.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Viper::ServiceLocator">
+    <Position X="13" Y="1.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AJAAEAAAAIAAAgACAAAAAAAAAAgCIiBwAAIiAAAACAA=</HashCode>
+      <FileName>Core\ServiceLocator.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Viper::Core::ModuleLoader">
+    <Position X="5.5" Y="1.25" Width="2.25" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Struct Name="Viper::Core::ModuleLoader::ModuleHandle">
+        <TypeIdentifier>
+          <NewMemberFileName>Core\ModuleLoader.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Struct>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAAAAAAAAAAAAAIAIAAAAAAAIAAAAmAIAIAAA=</HashCode>
+      <FileName>Core\ModuleLoader.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Viper::RTTI">
+    <Position X="2.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAgAAAAAAAAAAAAAAABAQAAAIAAAAAAAAAA=</HashCode>
+      <FileName>Core\RTTI.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Viper::Singleton&lt;T&gt;">
+    <Position X="9" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAAAAAAAQCAAABABABAAAEAAAAgAAABAAA=</HashCode>
+      <FileName>Core\Singleton.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Viper::StringID">
+    <Position X="0.5" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAGAAAAAQAAAAAAAAAACAAAAAAAAAA=</HashCode>
+      <FileName>Core\StringID.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Typedef Name="funcInitializeModule" Collapsed="true">
+    <Position X="5.5" Y="6.25" Width="7" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Core\ModuleImports.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -2,9 +2,10 @@
 #include <chrono>
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
+#include "Core/StringID.h"
+#include "Core/ModuleLoader.h"
 #include "Core/Platform.h"
 #include "Core/ServiceLocator.h"
-#include "Core/ModuleLoader.h"
 #include "Gameplay/Actor.h"
 #include "Graphics/Mesh.h"
 
@@ -339,6 +340,8 @@ int WINAPI wWinMain(HINSTANCE, HINSTANCE, PWSTR, int)
 	renderer.Shutdown();
 	windowManager.Shutdown();
 	ShutDown();
+
+
 
 	return 0;
 }

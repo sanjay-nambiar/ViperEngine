@@ -15,9 +15,12 @@
 
 #include "glm/glm.hpp"
 
-#include "RTTI.h"
-#include "Core/Platform.h"
+#include "Core/Checksum.h"
+#include "Core/Core.h"
 #include "Core/DynamicLibrary.h"
-#include "Core/Types.h"
+#include "Core/Platform.h"
+#include "Core/RTTI.h"
 #include "Core/ServiceLocator.h"
 #include "Core/Singleton.h"
+#include "Core/StringID.h"
+#include "Core/Types.h"

@@ -187,16 +187,22 @@
     </BuildLog>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Asset\Asset.h" />
+    <ClInclude Include="Asset\AssetManager.h" />
     <ClInclude Include="Audio\AudioManager.h" />
     <ClInclude Include="Containers\DataArray.h" />
     <ClInclude Include="Containers\Queue.h" />
+    <ClInclude Include="Core\Checksum.h" />
+    <ClInclude Include="Core\Core.h" />
     <ClInclude Include="Core\DynamicLibrary.h" />
     <ClInclude Include="Core\ModuleExports.h" />
     <ClInclude Include="Core\ModuleImports.h" />
     <ClInclude Include="Core\ModuleLoader.h" />
     <ClInclude Include="Core\Platform.h" />
+    <ClInclude Include="Core\RTTI.h" />
     <ClInclude Include="Core\ServiceLocator.h" />
     <ClInclude Include="Core\Singleton.h" />
+    <ClInclude Include="Core\StringID.h" />
     <ClInclude Include="Core\Types.h" />
     <ClInclude Include="Gameplay\Actor.h" />
     <ClInclude Include="Graphics\Blackboard.h" />
@@ -217,13 +223,16 @@
     <ClInclude Include="Memory\MemoryManager.h" />
     <ClInclude Include="Memory\StackAllocator.h" />
     <ClInclude Include="Pch.h" />
-    <ClInclude Include="RTTI.h" />
     <ClInclude Include="Window\WindowContext.h" />
     <ClInclude Include="Window\WindowManager.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Asset\Asset.cpp" />
+    <ClCompile Include="Asset\AssetManager.cpp" />
+    <ClCompile Include="Core\Checksum.cpp" />
     <ClCompile Include="Core\ModuleLoader.cpp" />
     <ClCompile Include="Core\ServiceLocator.cpp" />
+    <ClCompile Include="Core\StringID.cpp" />
     <ClCompile Include="Gameplay\Actor.cpp" />
     <ClCompile Include="Graphics\Blackboard.cpp" />
     <ClCompile Include="Graphics\FrameGraph.cpp" />
@@ -250,6 +259,19 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Core\Checksum.inl" />
+    <None Include="Diagrams\Asset.cd" />
+    <None Include="Diagrams\Audio.cd" />
+    <None Include="Diagrams\Containers.cd" />
+    <None Include="Diagrams\Core.cd" />
+    <None Include="Diagrams\FrameGraph.cd" />
+    <None Include="Diagrams\Gameplay.cd" />
+    <None Include="Diagrams\Input.cd" />
+    <None Include="Diagrams\Logging.cd" />
+    <None Include="Diagrams\Memory.cd" />
+    <None Include="Diagrams\Rendering.cd" />
+    <None Include="Diagrams\ServiceLocator.cd" />
+    <None Include="Diagrams\Window.cd" />
     <None Include="Graphics\FrameGraph.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
