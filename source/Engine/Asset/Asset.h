@@ -8,18 +8,26 @@ namespace Viper
 	{
 		enum class AssetType
 		{
+			Invalid,
 			Texture,
 			Mesh,
+			Material,
 			Model,
-			Level,
+			Scene,
 			Data
 		};
 
 		class Asset
 		{
-			Asset(const StringID& assetFullName);
-		private:
+		public:
+			Asset(const StringID& assetFullName, AssetType type = AssetType::Invalid);
+			virtual ~Asset() = 0;
+
+			const StringID& AssetFullName() const;
+			AssetType Type() const;
+		protected:
 			StringID assetFullName;
+			AssetType type;
 		};
 	}
 }

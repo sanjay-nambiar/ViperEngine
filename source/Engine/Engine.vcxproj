@@ -189,6 +189,14 @@
   <ItemGroup>
     <ClInclude Include="Asset\Asset.h" />
     <ClInclude Include="Asset\AssetManager.h" />
+    <ClInclude Include="Asset\DataAsset.h" />
+    <ClInclude Include="Asset\MaterialAsset.h" />
+    <ClInclude Include="Asset\MeshAsset.h" />
+    <ClInclude Include="Asset\ModelAsset.h" />
+    <ClInclude Include="Asset\NonPbrMaterialAsset.h" />
+    <ClInclude Include="Asset\PbrMaterialAsset.h" />
+    <ClInclude Include="Asset\SceneAsset.h" />
+    <ClInclude Include="Asset\TextureAsset.h" />
     <ClInclude Include="Audio\AudioManager.h" />
     <ClInclude Include="Containers\DataArray.h" />
     <ClInclude Include="Containers\Queue.h" />
@@ -229,6 +237,14 @@
   <ItemGroup>
     <ClCompile Include="Asset\Asset.cpp" />
     <ClCompile Include="Asset\AssetManager.cpp" />
+    <ClCompile Include="Asset\DataAsset.cpp" />
+    <ClCompile Include="Asset\MaterialAsset.cpp" />
+    <ClCompile Include="Asset\MeshAsset.cpp" />
+    <ClCompile Include="Asset\ModelAsset.cpp" />
+    <ClCompile Include="Asset\NonPbrMaterialAsset.cpp" />
+    <ClCompile Include="Asset\PbrMaterialAsset.cpp" />
+    <ClCompile Include="Asset\SceneAsset.cpp" />
+    <ClCompile Include="Asset\TextureAsset.cpp" />
     <ClCompile Include="Core\Checksum.cpp" />
     <ClCompile Include="Core\ModuleLoader.cpp" />
     <ClCompile Include="Core\ServiceLocator.cpp" />
