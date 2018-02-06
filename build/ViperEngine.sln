@@ -13,8 +13,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugins", "Plugins", "{2D3C
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{707F2A23-D8A7-4C53-8064-B8C62EE835F1}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Engine", "..\source\Engine\Engine.vcxproj", "{FB32E549-5006-4BDE-85C3-425D3360AF51}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OpenGL", "..\source\Plugins\Renderer\OpenGL\OpenGL.vcxproj", "{A7B577DE-E9DE-418A-85EA-831991359AF5}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Fmod", "..\source\Plugins\Audio\Fmod\Fmod.vcxproj", "{14E0F32C-0008-4009-BEF1-54C120578187}"
@@ -33,6 +31,12 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gason", "..\source\Thirdpar
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GLM", "..\source\Thirdparty\GLM\GLM.vcxitems", "{A996F1AC-E71B-4507-BD64-9D5914BEE7DF}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Engine", "Engine", "{BBF52450-8466-4714-9161-BA7263D56BED}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{D7AC8D41-5B1D-4B39-8365-FE4CE8963734}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Viper", "..\source\Engine\Viper\Viper.vcxproj", "{FB32E549-5006-4BDE-85C3-425D3360AF51}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		..\source\Thirdparty\GLM\GLM.vcxitems*{14e0f32c-0008-4009-bef1-54c120578187}*SharedItemsImports = 4
@@ -50,14 +54,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{FB32E549-5006-4BDE-85C3-425D3360AF51}.Debug|x64.ActiveCfg = Debug|x64
-		{FB32E549-5006-4BDE-85C3-425D3360AF51}.Debug|x64.Build.0 = Debug|x64
-		{FB32E549-5006-4BDE-85C3-425D3360AF51}.Debug|x86.ActiveCfg = Debug|Win32
-		{FB32E549-5006-4BDE-85C3-425D3360AF51}.Debug|x86.Build.0 = Debug|Win32
-		{FB32E549-5006-4BDE-85C3-425D3360AF51}.Release|x64.ActiveCfg = Release|x64
-		{FB32E549-5006-4BDE-85C3-425D3360AF51}.Release|x64.Build.0 = Release|x64
-		{FB32E549-5006-4BDE-85C3-425D3360AF51}.Release|x86.ActiveCfg = Release|Win32
-		{FB32E549-5006-4BDE-85C3-425D3360AF51}.Release|x86.Build.0 = Release|Win32
 		{A7B577DE-E9DE-418A-85EA-831991359AF5}.Debug|x64.ActiveCfg = Debug|x64
 		{A7B577DE-E9DE-418A-85EA-831991359AF5}.Debug|x64.Build.0 = Debug|x64
 		{A7B577DE-E9DE-418A-85EA-831991359AF5}.Debug|x86.ActiveCfg = Debug|Win32
@@ -106,6 +102,14 @@ Global
 		{7F6C3703-E7B8-4576-907C-B7C31BF44F1B}.Release|x64.Build.0 = Release|x64
 		{7F6C3703-E7B8-4576-907C-B7C31BF44F1B}.Release|x86.ActiveCfg = Release|Win32
 		{7F6C3703-E7B8-4576-907C-B7C31BF44F1B}.Release|x86.Build.0 = Release|Win32
+		{FB32E549-5006-4BDE-85C3-425D3360AF51}.Debug|x64.ActiveCfg = Debug|x64
+		{FB32E549-5006-4BDE-85C3-425D3360AF51}.Debug|x64.Build.0 = Debug|x64
+		{FB32E549-5006-4BDE-85C3-425D3360AF51}.Debug|x86.ActiveCfg = Debug|Win32
+		{FB32E549-5006-4BDE-85C3-425D3360AF51}.Debug|x86.Build.0 = Debug|Win32
+		{FB32E549-5006-4BDE-85C3-425D3360AF51}.Release|x64.ActiveCfg = Release|x64
+		{FB32E549-5006-4BDE-85C3-425D3360AF51}.Release|x64.Build.0 = Release|x64
+		{FB32E549-5006-4BDE-85C3-425D3360AF51}.Release|x86.ActiveCfg = Release|Win32
+		{FB32E549-5006-4BDE-85C3-425D3360AF51}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -122,6 +126,8 @@ Global
 		{E912CEC2-B84D-486E-865E-1270F16B22FE} = {438A1F74-CE6F-49DD-A616-CBD997BEB866}
 		{7F6C3703-E7B8-4576-907C-B7C31BF44F1B} = {438A1F74-CE6F-49DD-A616-CBD997BEB866}
 		{A996F1AC-E71B-4507-BD64-9D5914BEE7DF} = {438A1F74-CE6F-49DD-A616-CBD997BEB866}
+		{D7AC8D41-5B1D-4B39-8365-FE4CE8963734} = {BBF52450-8466-4714-9161-BA7263D56BED}
+		{FB32E549-5006-4BDE-85C3-425D3360AF51} = {BBF52450-8466-4714-9161-BA7263D56BED}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B1267565-12EB-416E-AE28-CE692CC9063E}

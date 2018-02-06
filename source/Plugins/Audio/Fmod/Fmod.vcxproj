@@ -102,7 +102,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;FMOD_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)\..\source\Engine;$(SolutionDir)..\source\Thirdparty\GLM;$(SolutionDir)\..\external\fmod\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\source\Engine\Viper;$(SolutionDir)..\source\Thirdparty\GLM;$(SolutionDir)..\external\fmod\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
       <DisableSpecificWarnings>4201</DisableSpecificWarnings>
     </ClCompile>
@@ -130,7 +130,7 @@ xcopy "$(SolutionDir)..\external\fmod\lib\$(PlatformName)\$(Configuration)\*.dll
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;_USRDLL;FMOD_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)\..\source\Engine;$(SolutionDir)..\source\Thirdparty\GLM;$(SolutionDir)\..\external\fmod\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\source\Engine\Viper;$(SolutionDir)..\source\Thirdparty\GLM;$(SolutionDir)..\external\fmod\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
       <DisableSpecificWarnings>4201</DisableSpecificWarnings>
     </ClCompile>
@@ -160,7 +160,7 @@ xcopy "$(SolutionDir)..\external\fmod\lib\$(PlatformName)\$(Configuration)\*.dll
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;FMOD_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)\..\source\Engine;$(SolutionDir)..\source\Thirdparty\GLM;$(SolutionDir)\..\external\fmod\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\source\Engine\Viper;$(SolutionDir)..\source\Thirdparty\GLM;$(SolutionDir)..\external\fmod\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
       <DisableSpecificWarnings>4201</DisableSpecificWarnings>
     </ClCompile>
@@ -192,7 +192,7 @@ xcopy "$(SolutionDir)..\external\fmod\lib\$(PlatformName)\$(Configuration)\*.dll
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;_USRDLL;FMOD_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)\..\source\Engine;$(SolutionDir)..\source\Thirdparty\GLM;$(SolutionDir)\..\external\fmod\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\source\Engine\Viper;$(SolutionDir)..\source\Thirdparty\GLM;$(SolutionDir)..\external\fmod\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
       <DisableSpecificWarnings>4201</DisableSpecificWarnings>
     </ClCompile>
@@ -224,7 +224,7 @@ xcopy "$(SolutionDir)..\external\fmod\lib\$(PlatformName)\$(Configuration)\*.dll
     <ClInclude Include="FmodImplementation.h" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Engine\Engine.vcxproj">
+    <ProjectReference Include="..\..\..\Engine\Viper\Viper.vcxproj">
       <Project>{fb32e549-5006-4bde-85c3-425d3360af51}</Project>
     </ProjectReference>
   </ItemGroup>

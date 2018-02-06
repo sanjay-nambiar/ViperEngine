@@ -100,7 +100,7 @@
       <TreatWarningAsError>true</TreatWarningAsError>
       <PrecompiledHeaderFile>Pch.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>$(SolutionDir)\bin\$(ProjectName)\$(TargetName).pch</PrecompiledHeaderOutputFile>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\source\Audio\Fmod;$(SolutionDir)..\source\Engine;$(SolutionDir)..\source\Thirdparty\GLM;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\source\Audio\Fmod;$(SolutionDir)..\source\Engine\Viper;$(SolutionDir)..\source\Thirdparty\GLM;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4201</DisableSpecificWarnings>
     </ClCompile>
     <Link>
@@ -129,7 +129,7 @@ xcopy "$(ProjectDir)Content" "$(OutDir)Content" /I /R /Y /E</Command>
       <TreatWarningAsError>true</TreatWarningAsError>
       <PrecompiledHeaderFile>Pch.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>$(SolutionDir)\bin\$(ProjectName)\$(TargetName).pch</PrecompiledHeaderOutputFile>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\source\Audio\Fmod;$(SolutionDir)..\source\Engine;$(SolutionDir)..\source\Thirdparty\GLM;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\source\Audio\Fmod;$(SolutionDir)..\source\Engine\Viper;$(SolutionDir)..\source\Thirdparty\GLM;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4201</DisableSpecificWarnings>
     </ClCompile>
     <Link>
@@ -160,7 +160,7 @@ xcopy "$(ProjectDir)Content" "$(OutDir)Content" /I /R /Y /E</Command>
       <TreatWarningAsError>true</TreatWarningAsError>
       <PrecompiledHeaderFile>Pch.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>$(SolutionDir)\bin\$(ProjectName)\$(TargetName).pch</PrecompiledHeaderOutputFile>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\source\Audio\Fmod;$(SolutionDir)..\source\Engine;$(SolutionDir)..\source\Thirdparty\GLM;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\source\Audio\Fmod;$(SolutionDir)..\source\Engine\Viper;$(SolutionDir)..\source\Thirdparty\GLM;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4201</DisableSpecificWarnings>
     </ClCompile>
     <Link>
@@ -193,7 +193,7 @@ xcopy "$(ProjectDir)Content" "$(OutDir)Content" /I /R /Y /E</Command>
       <TreatWarningAsError>true</TreatWarningAsError>
       <PrecompiledHeaderFile>Pch.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>$(SolutionDir)\bin\$(ProjectName)\$(TargetName).pch</PrecompiledHeaderOutputFile>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\source\Audio\Fmod;$(SolutionDir)..\source\Engine;$(SolutionDir)..\source\Thirdparty\GLM;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\source\Audio\Fmod;$(SolutionDir)..\source\Engine\Viper;$(SolutionDir)..\source\Thirdparty\GLM;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4201</DisableSpecificWarnings>
     </ClCompile>
     <Link>
@@ -227,11 +227,6 @@ xcopy "$(ProjectDir)Content" "$(OutDir)Content" /I /R /Y /E</Command>
     <ClInclude Include="Pch.h" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Engine\Engine.vcxproj">
-      <Project>{fb32e549-5006-4bde-85c3-425d3360af51}</Project>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Config.json" />
     <None Include="Content\Shaders\default.frag" />
     <None Include="Content\Shaders\default.vert" />
@@ -244,6 +239,11 @@ xcopy "$(ProjectDir)Content" "$(OutDir)Content" /I /R /Y /E</Command>
     <Media Include="Content\Sounds\pickup.wav" />
     <Media Include="Content\Sounds\pistol.wav" />
     <Media Include="Content\Sounds\wave-begin.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Engine\Viper\Viper.vcxproj">
+      <Project>{fb32e549-5006-4bde-85c3-425d3360af51}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
