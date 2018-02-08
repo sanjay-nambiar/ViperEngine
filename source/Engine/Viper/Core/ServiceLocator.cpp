@@ -1,27 +1,44 @@
 #include "Viper.h"
-#include "ServiceLocator.h"
-#include "Logging/Logger.h"
-#include "Memory/MemoryAllocator.h"
-#include "Audio/AudioManager.h"
-#include "Window/WindowManager.h"
-#include "Input/InputManager.h"
-#include "Graphics/Renderer.h"
-#include "Graphics/TextureLoader.h"
-#include <stdexcept>
 
 namespace Viper
 {
+	using namespace Audio;
+	using namespace Gameplay;
+	using namespace Graphics;
+	using namespace Input;
 	using namespace Logging;
 	using namespace Memory;
-	using namespace Audio;
 	using namespace Window;
-	using namespace Input;
-	using namespace Graphics;
 
 	ServiceLocator::ServiceLocator() :
 		logger(nullptr), memoryAllocator(nullptr), audioManager(nullptr), windowManager(nullptr)
 	{
 	};
+
+	void ServiceLocator::Provide(AudioManager& audioManagerRef)
+	{
+		audioManager = &audioManagerRef;
+	}
+
+	void ServiceLocator::Provide(Game& gameRef)
+	{
+		game = &gameRef;
+	}
+
+	void ServiceLocator::Provide(Renderer& rendererSystemRef)
+	{
+		rendererSystem = &rendererSystemRef;
+	}
+
+	void ServiceLocator::Provide(TextureLoader& textureLoaderRef)
+	{
+		textureLoader = &textureLoaderRef;
+	}
+
+	void ServiceLocator::Provide(InputManager& inputManagerRef)
+	{
+		inputManager = &inputManagerRef;
+	}
 
 	void ServiceLocator::Provide(Logger& loggerRef)
 	{
@@ -33,29 +50,39 @@ namespace Viper
 		memoryAllocator = &memoryAllocatorRef;
 	}
 
-	void ServiceLocator::Provide(AudioManager& audioManagerRef)
-	{
-		audioManager = &audioManagerRef;
-	}
-
 	void ServiceLocator::Provide(WindowManager& windowManagerRef)
 	{
 		windowManager = &windowManagerRef;
 	}
 
-	void ServiceLocator::Provide(InputManager& inputManagerRef)
+	AudioManager& ServiceLocator::GetAudioManager() const
 	{
-		inputManager = &inputManagerRef;
+		assert(audioManager != nullptr);
+		return (*audioManager);
 	}
 
-	void ServiceLocator::Provide(Renderer& rendererSystemRef)
+	Game& ServiceLocator::GetGame() const
 	{
-		rendererSystem = &rendererSystemRef;
+		assert(game != nullptr);
+		return (*game);
 	}
 
-	void ServiceLocator::Provide(TextureLoader& textureLoaderRef)
+	Renderer& ServiceLocator::GetRendererSystem() const
 	{
-		textureLoader = &textureLoaderRef;
+		assert(rendererSystem != nullptr);
+		return (*rendererSystem);
+	}
+
+	TextureLoader& ServiceLocator::GetTextureLoader() const
+	{
+		assert(textureLoader != nullptr);
+		return (*textureLoader);
+	}
+
+	InputManager& ServiceLocator::GetInputManager() const
+	{
+		assert(inputManager != nullptr);
+		return (*inputManager);
 	}
 
 	Logger& ServiceLocator::GetLogger() const
@@ -70,34 +97,10 @@ namespace Viper
 		return (*memoryAllocator);
 	}
 
-	AudioManager& ServiceLocator::GetAudioManager() const
-	{
-		assert(audioManager != nullptr);
-		return (*audioManager);
-	}
-
 	WindowManager& ServiceLocator::GetWindowManager() const
 	{
 		assert(windowManager != nullptr);
 		return (*windowManager);
-	}
-
-	InputManager& ServiceLocator::GetInputManager() const
-	{
-		assert(inputManager != nullptr);
-		return (*inputManager);
-	}
-
-	Renderer& ServiceLocator::GetRendererSystem() const
-	{
-		assert(rendererSystem != nullptr);
-		return (*rendererSystem);
-	}
-
-	TextureLoader& ServiceLocator::GetTextureLoader() const
-	{
-		assert(textureLoader != nullptr);
-		return (*textureLoader);
 	}
 
 	void ServiceLocator::ValidateServices() const

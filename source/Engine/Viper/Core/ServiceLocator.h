@@ -5,16 +5,17 @@
 
 namespace Viper
 {
-	namespace Logging { class Logger;  }
-	namespace Memory { class MemoryAllocator; }
 	namespace Audio { class AudioManager; }
-	namespace Window { class WindowManager; }
-	namespace Input { class InputManager; }
+	namespace Gameplay { class Game; }
 	namespace Graphics
-	{ 
+	{
 		class Renderer;
 		class TextureLoader;
 	}
+	namespace Input { class InputManager; }
+	namespace Logging { class Logger;  }
+	namespace Memory { class MemoryAllocator; }
+	namespace Window { class WindowManager; }
 
 	/** This is a singleton class which keeps a handle to all the services
 	 *  Services should be provided to this class throught the provide method
@@ -24,13 +25,14 @@ namespace Viper
 	{
 		friend Singleton<ServiceLocator>;
 
-		Logging::Logger* logger;
-		Memory::MemoryAllocator* memoryAllocator;
 		Audio::AudioManager* audioManager;
-		Window::WindowManager* windowManager;
-		Input::InputManager* inputManager;
+		Gameplay::Game* game;
 		Graphics::Renderer* rendererSystem;
 		Graphics::TextureLoader* textureLoader;
+		Input::InputManager* inputManager;
+		Logging::Logger* logger;
+		Memory::MemoryAllocator* memoryAllocator;
+		Window::WindowManager* windowManager;
 
 		ServiceLocator();
 		~ServiceLocator() = default;
@@ -40,6 +42,31 @@ namespace Viper
 		ServiceLocator& operator=(const ServiceLocator&) = delete;
 		ServiceLocator& operator=(ServiceLocator&&) = delete;
 	public:
+		/** Provide an audio manager implementation to the service locator
+		*  @param audioManager An AudioManager interface implementation
+		*/
+		void Provide(Audio::AudioManager& audioManager);
+
+		/** Provide a game implementation to the service locator
+		*  @param game A game interface implementation
+		*/
+		void Provide(Gameplay::Game& game);
+
+		/** Provide a renderer system implementation to the service locator
+		*  @param rendererSystem A RendererSystem interface implementation
+		*/
+		void Provide(Graphics::Renderer& rendererSystem);
+
+		/** Provide a textureLoader system implementation to the service locator
+		*  @param textureLoader A TextureLoader interface implementation
+		*/
+		void Provide(Graphics::TextureLoader& textureLoader);
+
+		/** Provide an input manager implementation to the service locator
+		*  @param inputManager An InputManager interface implementation
+		*/
+		void Provide(Input::InputManager& inputManager);
+
 		/** Provide a logger implementation to the service locator
 		 *  @param logger A Logger interface implementation
 		 */
@@ -50,30 +77,35 @@ namespace Viper
 		 */
 		void Provide(Memory::MemoryAllocator& memoryAllocator);
 
-		/** Provide an audio manager implementation to the service locator
-		 *  @param audioManager An AudioManager interface implementation
-		 */
-		void Provide(Audio::AudioManager& audioManager);
-
 		/** Provide a window manager implementation to the service locator
 		 *  @param windowManager A WindowManager interface implementation
 		 */
 		void Provide(Window::WindowManager& windowManager);
 
-		/** Provide an input manager implementation to the service locator
-		 *  @param inputManager An InputManager interface implementation
-		 */
-		void Provide(Input::InputManager& inputManager);
+		/** Gets a reference to the default AudioManager
+		*  @return A referece to the default AudioManager
+		*/
+		Audio::AudioManager& GetAudioManager() const;
 
-		/** Provide a renderer system implementation to the service locator
-		 *  @param rendererSystem A RendererSystem interface implementation
-		 */
-		void Provide(Graphics::Renderer& rendererSystem);
+		/** Gets a reference to the active game
+		*  @return A referece to the active Game
+		*/
+		Gameplay::Game& GetGame() const;
 
-		/** Provide a textureLoader system implementation to the service locator
-		 *  @param textureLoader A TextureLoader interface implementation
-		 */
-		void Provide(Graphics::TextureLoader& textureLoader);
+		/** Gets a reference to the default RendererSystem
+		*  @return A referece to the default RendererSystem
+		*/
+		Graphics::Renderer& GetRendererSystem() const;
+
+		/** Gets a reference to the default TextureLoader
+		*  @return A referece to the default TextureLoader
+		*/
+		Graphics::TextureLoader& GetTextureLoader() const;
+
+		/** Gets a reference to the default InputManager
+		*  @return A referece to the default InputManager
+		*/
+		Input::InputManager& GetInputManager() const;
 
 		/** Gets a reference to the default Logger
 		 *  @return A referece to the default logger
@@ -85,30 +117,10 @@ namespace Viper
 		 */
 		Memory::MemoryAllocator& GetMemoryAllocator() const;
 
-		/** Gets a reference to the default AudioManager
-		 *  @return A referece to the default AudioManager
-		 */
-		Audio::AudioManager& GetAudioManager() const;
-
 		/** Gets a reference to the default WindowManager
 		 *  @return A referece to the default WindowManager
 		 */
 		Window::WindowManager& GetWindowManager() const;
-
-		/** Gets a reference to the default InputManager
-		 *  @return A referece to the default InputManager
-		 */
-		Input::InputManager& GetInputManager() const;
-
-		/** Gets a reference to the default RendererSystem
-		 *  @return A referece to the default RendererSystem
-		 */
-		Graphics::Renderer& GetRendererSystem() const;
-
-		/** Gets a reference to the default TextureLoader
-		 *  @return A referece to the default TextureLoader
-		 */
-		Graphics::TextureLoader& GetTextureLoader() const;
 
 		/** Checks if all services are loaded. Throws exception if any service is not configured
 		 */

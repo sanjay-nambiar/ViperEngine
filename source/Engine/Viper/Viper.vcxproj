@@ -203,15 +203,8 @@
     <ClInclude Include="Containers\Queue.h" />
     <ClInclude Include="Core\Checksum.h" />
     <ClInclude Include="Core\Core.h" />
-    <ClInclude Include="Core\DynamicLibrary.h" />
-    <ClInclude Include="Core\GameClock.h" />
     <ClInclude Include="Core\GameException.h" />
-    <ClInclude Include="Core\GameTime.h" />
     <ClInclude Include="Core\MatrixHelper.h" />
-    <ClInclude Include="Core\ModuleExports.h" />
-    <ClInclude Include="Core\ModuleImports.h" />
-    <ClInclude Include="Core\ModuleLoader.h" />
-    <ClInclude Include="Core\Platform.h" />
     <ClInclude Include="Core\RTTI.h" />
     <ClInclude Include="Core\ServiceLocator.h" />
     <ClInclude Include="Core\Singleton.h" />
@@ -220,6 +213,9 @@
     <ClInclude Include="Core\Types.h" />
     <ClInclude Include="Core\VectorHelper.h" />
     <ClInclude Include="Gameplay\Actor.h" />
+    <ClInclude Include="Gameplay\Game.h" />
+    <ClInclude Include="Gameplay\GameClock.h" />
+    <ClInclude Include="Gameplay\GameTime.h" />
     <ClInclude Include="Graphics\Blackboard.h" />
     <ClInclude Include="Graphics\FrameGraph.h" />
     <ClInclude Include="Graphics\Renderer.h" />
@@ -237,6 +233,11 @@
     <ClInclude Include="Memory\MemoryAllocator.h" />
     <ClInclude Include="Memory\MemoryManager.h" />
     <ClInclude Include="Memory\StackAllocator.h" />
+    <ClInclude Include="Platform\DynamicLibrary.h" />
+    <ClInclude Include="Platform\ModuleExports.h" />
+    <ClInclude Include="Platform\ModuleImports.h" />
+    <ClInclude Include="Platform\ModuleLoader.h" />
+    <ClInclude Include="Platform\Platform.h" />
     <ClInclude Include="Viper.h" />
     <ClInclude Include="Window\WindowContext.h" />
     <ClInclude Include="Window\WindowManager.h" />
@@ -253,16 +254,16 @@
     <ClCompile Include="Asset\SceneAsset.cpp" />
     <ClCompile Include="Asset\TextureAsset.cpp" />
     <ClCompile Include="Core\Checksum.cpp" />
-    <ClCompile Include="Core\GameClock.cpp" />
     <ClCompile Include="Core\GameException.cpp" />
-    <ClCompile Include="Core\GameTime.cpp" />
     <ClCompile Include="Core\MatrixHelper.cpp" />
-    <ClCompile Include="Core\ModuleLoader.cpp" />
     <ClCompile Include="Core\ServiceLocator.cpp" />
     <ClCompile Include="Core\StreamHelper.cpp" />
     <ClCompile Include="Core\StringID.cpp" />
     <ClCompile Include="Core\VectorHelper.cpp" />
     <ClCompile Include="Gameplay\Actor.cpp" />
+    <ClCompile Include="Gameplay\Game.cpp" />
+    <ClCompile Include="Gameplay\GameClock.cpp" />
+    <ClCompile Include="Gameplay\GameTime.cpp" />
     <ClCompile Include="Graphics\Blackboard.cpp" />
     <ClCompile Include="Graphics\FrameGraph.cpp" />
     <ClCompile Include="Graphics\Renderer.cpp" />
@@ -274,6 +275,7 @@
     <ClCompile Include="Input\InputManager.cpp" />
     <ClCompile Include="Memory\MemoryManager.cpp" />
     <ClCompile Include="Memory\StackAllocator.cpp" />
+    <ClCompile Include="Platform\ModuleLoader.cpp" />
     <ClCompile Include="Viper.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

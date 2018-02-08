@@ -1,7 +1,7 @@
-#include "Core/ModuleExports.h"
 #include "Core/ServiceLocator.h"
 #include "OpenGLTextureLoader.h"
 #include "OpenGLRenderer.h"
+#include "Platform/ModuleExports.h"
 
 using namespace std;
 using namespace Viper;

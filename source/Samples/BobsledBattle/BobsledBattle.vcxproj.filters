@@ -16,11 +16,12 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Main.cpp" />
     <ClCompile Include="Pch.cpp" />
+    <ClCompile Include="BobsledBattle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Pch.h" />
+    <ClInclude Include="BobsledBattle.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Content\Sounds\ZombieWars.bank">

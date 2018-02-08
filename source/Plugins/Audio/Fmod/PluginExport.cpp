@@ -1,6 +1,6 @@
-#include "Core/ModuleExports.h"
 #include "Core/ServiceLocator.h"
 #include "FmodAudioManager.h"
+#include "Platform/ModuleExports.h"
 
 using namespace Viper;
 using namespace Memory;

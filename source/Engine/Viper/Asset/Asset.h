@@ -21,7 +21,7 @@ namespace Viper
 		{
 		public:
 			Asset(const StringID& assetFullName, AssetType type = AssetType::Invalid);
-			virtual ~Asset() = 0;
+			virtual ~Asset() = default;
 
 			const StringID& AssetFullName() const;
 			AssetType Type() const;

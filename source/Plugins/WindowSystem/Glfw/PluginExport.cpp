@@ -1,5 +1,5 @@
-#include "Core/ModuleExports.h"
 #include "Core/ServiceLocator.h"
+#include "Platform/ModuleExports.h"
 #include "GlfwInputManager.h"
 #include "GlfwWindowManager.h"
 

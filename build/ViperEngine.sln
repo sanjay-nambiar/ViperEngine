@@ -37,6 +37,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{D7AC8D41
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Viper", "..\source\Engine\Viper\Viper.vcxproj", "{FB32E549-5006-4BDE-85C3-425D3360AF51}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Game", "..\source\Engine\Game\Game.vcxproj", "{B27A41B0-59CA-4F99-9CB7-BF14BEF37B13}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		..\source\Thirdparty\GLM\GLM.vcxitems*{14e0f32c-0008-4009-bef1-54c120578187}*SharedItemsImports = 4
@@ -44,6 +46,8 @@ Global
 		..\source\Thirdparty\GLM\GLM.vcxitems*{a7b577de-e9de-418a-85ea-831991359af5}*SharedItemsImports = 4
 		..\source\Thirdparty\STB\STB.vcxitems*{a7b577de-e9de-418a-85ea-831991359af5}*SharedItemsImports = 4
 		..\source\Thirdparty\GLM\GLM.vcxitems*{a996f1ac-e71b-4507-bd64-9d5914bee7df}*SharedItemsImports = 9
+		..\source\Thirdparty\GLM\GLM.vcxitems*{b27a41b0-59ca-4f99-9cb7-bf14bef37b13}*SharedItemsImports = 4
+		..\source\Thirdparty\STB\STB.vcxitems*{b27a41b0-59ca-4f99-9cb7-bf14bef37b13}*SharedItemsImports = 4
 		..\source\Thirdparty\STB\STB.vcxitems*{e912cec2-b84d-486e-865e-1270f16b22fe}*SharedItemsImports = 9
 		..\source\Thirdparty\GLM\GLM.vcxitems*{fb32e549-5006-4bde-85c3-425d3360af51}*SharedItemsImports = 4
 		..\source\Thirdparty\STB\STB.vcxitems*{fb32e549-5006-4bde-85c3-425d3360af51}*SharedItemsImports = 4
@@ -111,6 +115,14 @@ Global
 		{FB32E549-5006-4BDE-85C3-425D3360AF51}.Release|x64.Build.0 = Release|x64
 		{FB32E549-5006-4BDE-85C3-425D3360AF51}.Release|x86.ActiveCfg = Release|Win32
 		{FB32E549-5006-4BDE-85C3-425D3360AF51}.Release|x86.Build.0 = Release|Win32
+		{B27A41B0-59CA-4F99-9CB7-BF14BEF37B13}.Debug|x64.ActiveCfg = Debug|x64
+		{B27A41B0-59CA-4F99-9CB7-BF14BEF37B13}.Debug|x64.Build.0 = Debug|x64
+		{B27A41B0-59CA-4F99-9CB7-BF14BEF37B13}.Debug|x86.ActiveCfg = Debug|Win32
+		{B27A41B0-59CA-4F99-9CB7-BF14BEF37B13}.Debug|x86.Build.0 = Debug|Win32
+		{B27A41B0-59CA-4F99-9CB7-BF14BEF37B13}.Release|x64.ActiveCfg = Release|x64
+		{B27A41B0-59CA-4F99-9CB7-BF14BEF37B13}.Release|x64.Build.0 = Release|x64
+		{B27A41B0-59CA-4F99-9CB7-BF14BEF37B13}.Release|x86.ActiveCfg = Release|Win32
+		{B27A41B0-59CA-4F99-9CB7-BF14BEF37B13}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -129,6 +141,7 @@ Global
 		{A996F1AC-E71B-4507-BD64-9D5914BEE7DF} = {438A1F74-CE6F-49DD-A616-CBD997BEB866}
 		{D7AC8D41-5B1D-4B39-8365-FE4CE8963734} = {BBF52450-8466-4714-9161-BA7263D56BED}
 		{FB32E549-5006-4BDE-85C3-425D3360AF51} = {BBF52450-8466-4714-9161-BA7263D56BED}
+		{B27A41B0-59CA-4F99-9CB7-BF14BEF37B13} = {BBF52450-8466-4714-9161-BA7263D56BED}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B1267565-12EB-416E-AE28-CE692CC9063E}

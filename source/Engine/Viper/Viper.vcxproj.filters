@@ -40,6 +40,9 @@
     <Filter Include="Diagrams">
       <UniqueIdentifier>{9ee4353e-def9-4fed-b473-4f9261e62297}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Platform">
+      <UniqueIdentifier>{67c738cf-1892-47eb-8836-970505fbe9f9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\ServiceLocator.h">
@@ -62,21 +65,6 @@
     </ClInclude>
     <ClInclude Include="Memory\MemoryManager.h">
       <Filter>Memory</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\ModuleLoader.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\DynamicLibrary.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Platform.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\ModuleExports.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\ModuleImports.h">
-      <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="Window\WindowContext.h">
       <Filter>Window</Filter>
@@ -177,13 +165,7 @@
     <ClInclude Include="Asset\NonPbrMaterialAsset.h">
       <Filter>Asset</Filter>
     </ClInclude>
-    <ClInclude Include="Core\GameClock.h">
-      <Filter>Core</Filter>
-    </ClInclude>
     <ClInclude Include="Core\GameException.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\GameTime.h">
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="Core\MatrixHelper.h">
@@ -196,6 +178,30 @@
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="Viper.h" />
+    <ClInclude Include="Gameplay\Game.h">
+      <Filter>Gameplay</Filter>
+    </ClInclude>
+    <ClInclude Include="Gameplay\GameClock.h">
+      <Filter>Gameplay</Filter>
+    </ClInclude>
+    <ClInclude Include="Gameplay\GameTime.h">
+      <Filter>Gameplay</Filter>
+    </ClInclude>
+    <ClInclude Include="Platform\DynamicLibrary.h">
+      <Filter>Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="Platform\ModuleExports.h">
+      <Filter>Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="Platform\ModuleImports.h">
+      <Filter>Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="Platform\ModuleLoader.h">
+      <Filter>Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="Platform\Platform.h">
+      <Filter>Platform</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core\ServiceLocator.cpp">
@@ -206,9 +212,6 @@
     </ClCompile>
     <ClCompile Include="Memory\MemoryManager.cpp">
       <Filter>Memory</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\ModuleLoader.cpp">
-      <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="Window\WindowContext.cpp">
       <Filter>Window</Filter>
@@ -279,13 +282,7 @@
     <ClCompile Include="Asset\NonPbrMaterialAsset.cpp">
       <Filter>Asset</Filter>
     </ClCompile>
-    <ClCompile Include="Core\GameClock.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
     <ClCompile Include="Core\GameException.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\GameTime.cpp">
       <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="Core\MatrixHelper.cpp">
@@ -298,6 +295,18 @@
       <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="Viper.cpp" />
+    <ClCompile Include="Gameplay\GameClock.cpp">
+      <Filter>Gameplay</Filter>
+    </ClCompile>
+    <ClCompile Include="Gameplay\GameTime.cpp">
+      <Filter>Gameplay</Filter>
+    </ClCompile>
+    <ClCompile Include="Platform\ModuleLoader.cpp">
+      <Filter>Platform</Filter>
+    </ClCompile>
+    <ClCompile Include="Gameplay\Game.cpp">
+      <Filter>Gameplay</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Graphics\FrameGraph.inl">
