@@ -46,9 +46,9 @@ namespace Viper
 		return *this;
 	}
 
-	OutputStreamHelper& OutputStreamHelper::operator<<(float value)
+	OutputStreamHelper& OutputStreamHelper::operator<<(float32_t value)
 	{
-		mStream.write((char*)&value, sizeof(float));
+		mStream.write((char*)&value, sizeof(float32_t));
 
 		return *this;
 	}
@@ -132,9 +132,9 @@ namespace Viper
 		return *this;
 	}
 
-	InputStreamHelper& InputStreamHelper::operator >> (float& value)
+	InputStreamHelper& InputStreamHelper::operator >> (float32_t& value)
 	{
-		mStream.read((char*)&value, sizeof(float));
+		mStream.read((char*)&value, sizeof(float32_t));
 
 		return *this;
 	}

@@ -19,7 +19,7 @@ namespace Viper
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
 			// Border color for texture if wrapping is clamp_to_border
-			float color[] = {1.0f, 0.0f, 0.0f, 1.0f};
+			float32_t color[] = {1.0f, 0.0f, 0.0f, 1.0f};
 			glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, color);
 
 			GLint width, height, channels;

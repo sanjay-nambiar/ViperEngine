@@ -18,8 +18,8 @@ namespace Viper
 		const std::chrono::milliseconds& ElapsedGameTime() const;
 		void SetElapsedGameTime(const std::chrono::milliseconds& elapsedGameTime);
 
-		std::chrono::duration<float> TotalGameTimeSeconds() const;
-		std::chrono::duration<float> ElapsedGameTimeSeconds() const;
+		std::chrono::duration<float32_t> TotalGameTimeSeconds() const;
+		std::chrono::duration<float32_t> ElapsedGameTimeSeconds() const;
 
 	private:
 		std::chrono::high_resolution_clock::time_point mCurrentTime;

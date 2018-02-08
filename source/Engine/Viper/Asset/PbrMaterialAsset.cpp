@@ -16,17 +16,17 @@ namespace Viper
 			return albedo;
 		}
 
-		float PbrMaterialAsset::Metallic() const
+		float32_t PbrMaterialAsset::Metallic() const
 		{
 			return metallic;
 		}
 
-		float PbrMaterialAsset::Roughness() const
+		float32_t PbrMaterialAsset::Roughness() const
 		{
 			return roughness;
 		}
 
-		float PbrMaterialAsset::AmbientOcclusion() const
+		float32_t PbrMaterialAsset::AmbientOcclusion() const
 		{
 			return ao;
 		}

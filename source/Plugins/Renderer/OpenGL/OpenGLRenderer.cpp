@@ -212,7 +212,7 @@ namespace Viper
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 			auto now = std::chrono::high_resolution_clock::now();
-			float time = std::chrono::duration_cast<std::chrono::duration<float>>(now - start).count();
+			float32_t time = std::chrono::duration_cast<std::chrono::duration<float32_t>>(now - start).count();
 
 			GLuint modifier = glGetUniformLocation(activeShaderProgram, "modifier");
 			glUniform1f(modifier, ((sin(time * 4.0f) + 1.0f) / 2.0f));

@@ -19,7 +19,7 @@ namespace Viper
 			std::uint32_t Height() const;
 			std::uint32_t Channels() const;
 			const std::uint8_t* Data() const;
-			const float* HdrData() const;
+			const float32_t* HdrData() const;
 		private:
 			std::uint32_t width;
 			std::uint32_t height;
@@ -27,7 +27,7 @@ namespace Viper
 			union
 			{
 				std::uint8_t* data;
-				float* hdrData;
+				float32_t* hdrData;
 			} image;
 		};
 	}

@@ -60,13 +60,13 @@ namespace Viper
 			 *  @param eventName The name of the event whose volume needs to be set
 			 *  @param volumedB The new volume value in decibels
 			*/
-			virtual void SetEventVolume(const std::string& eventName, float volumedB) = 0;
+			virtual void SetEventVolume(const std::string& eventName, float32_t volumedB) = 0;
 
 			/** Sets the playback volume of all the events belonging to the specified group
 			 *	@param groupName The name of the group whose volume needs to be set
 			 *	@param volumedB The new volume value in decibels
 			*/
-			virtual void SetGroupVolume(const std::string& groupName, float volumedB) = 0;
+			virtual void SetGroupVolume(const std::string& groupName, float32_t volumedB) = 0;
 
 			/** Plays an audio event
 			 *  @param eventName The name of the event to be played

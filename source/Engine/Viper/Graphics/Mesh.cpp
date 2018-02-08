@@ -7,13 +7,13 @@ namespace Viper
 	{
 		#define FLOATS_PER_VERTEX 8	// 3D coordinates + RGB colors + UV
 
-		Mesh::Mesh(std::uint32_t verticesCount, float vertices[], std::uint32_t triangleCount, std::uint32_t tris[])
+		Mesh::Mesh(std::uint32_t verticesCount, float32_t vertices[], std::uint32_t triangleCount, std::uint32_t tris[])
 		{
 			vertexCount = verticesCount;
-			vertexData = new float[vertexCount * FLOATS_PER_VERTEX];
+			vertexData = new float32_t[vertexCount * FLOATS_PER_VERTEX];
 			triCount = triangleCount;
 			triData = new std::uint32_t[triCount * 3];
-			memcpy(vertexData, vertices, sizeof(float) * vertexCount * FLOATS_PER_VERTEX);
+			memcpy(vertexData, vertices, sizeof(float32_t) * vertexCount * FLOATS_PER_VERTEX);
 			memcpy(triData, tris, sizeof(std::uint32_t) * triCount * 3);
 		}
 
@@ -28,14 +28,14 @@ namespace Viper
 			return vertexCount;
 		}
 
-		const float* Mesh::VertexData() const
+		const float32_t* Mesh::VertexData() const
 		{
 			return vertexData;
 		}
 
 		std::uint32_t Mesh::VertexDataSize() const
 		{
-			return (sizeof(float) * vertexCount * FLOATS_PER_VERTEX);
+			return (sizeof(float32_t) * vertexCount * FLOATS_PER_VERTEX);
 		}
 
 		std::uint32_t Mesh::TriCount() const

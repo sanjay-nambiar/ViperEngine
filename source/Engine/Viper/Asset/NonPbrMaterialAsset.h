@@ -16,7 +16,7 @@ namespace Viper
 			const glm::vec3& Ambient() const;
 			const glm::vec3& Diffuse() const;
 			const glm::vec3& Specular() const;
-			float SpecularPower() const;
+			float32_t SpecularPower() const;
 			const TextureAsset* AmbientMap() const;
 			const TextureAsset* DiffuseMap() const;
 			const TextureAsset* SpecularMap() const;
@@ -26,7 +26,7 @@ namespace Viper
 			glm::vec3 ambient;
 			glm::vec3 diffuse;
 			glm::vec3 specular;
-			float specularPower;
+			float32_t specularPower;
 			const TextureAsset* ambientMap;
 			const TextureAsset* diffuseMap;
 			const TextureAsset* specularMap;

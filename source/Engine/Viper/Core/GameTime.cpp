@@ -40,13 +40,13 @@ namespace Viper
 		mElapsedGameTime = elapsedGameTime;
 	}
 
-	duration<float> GameTime::TotalGameTimeSeconds() const
+	duration<float32_t> GameTime::TotalGameTimeSeconds() const
 	{
-		return duration_cast<duration<float>>(mTotalGameTime);
+		return duration_cast<duration<float32_t>>(mTotalGameTime);
 	}
 
-	duration<float> GameTime::ElapsedGameTimeSeconds() const
+	duration<float32_t> GameTime::ElapsedGameTimeSeconds() const
 	{
-		return duration_cast<duration<float>>(mElapsedGameTime);
+		return duration_cast<duration<float32_t>>(mElapsedGameTime);
 	}
 }

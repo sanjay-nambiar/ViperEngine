@@ -39,8 +39,8 @@ namespace  Viper
 				const glm::vec3& velocity = glm::vec3{0,0,0}) override;
 			void SetEvent3dAttributes(const std::string& eventName, const glm::vec3& position, const glm::vec3& velocity = glm::vec3{0,0,0}) override;
 			void SetEventGroup(const std::string& eventName, const std::string& groupName) override;
-			void SetEventVolume(const std::string& eventName, float volumedB) override;
-			void SetGroupVolume(const std::string& groupName, float volumedB) override;
+			void SetEventVolume(const std::string& eventName, float32_t volumedB) override;
+			void SetGroupVolume(const std::string& groupName, float32_t volumedB) override;
 
 			void PlayEvent(const std::string& eventName) override;
 			void StopEvent(const std::string& eventName, bool_t isImmediate = false) override;

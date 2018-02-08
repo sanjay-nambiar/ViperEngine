@@ -18,7 +18,7 @@ namespace Viper
 		OutputStreamHelper& operator<<(int64_t value);
 		OutputStreamHelper& operator<<(uint32_t value);
 		OutputStreamHelper& operator<<(uint64_t value);
-		OutputStreamHelper& operator<<(float value);
+		OutputStreamHelper& operator<<(float32_t value);
 		OutputStreamHelper& operator<<(const std::string& value);
 		OutputStreamHelper& operator<<(const glm::mat4& value);
 		OutputStreamHelper& operator<<(bool value);
@@ -43,7 +43,7 @@ namespace Viper
 		InputStreamHelper& operator>>(int64_t& value);
 		InputStreamHelper& operator>>(uint32_t& value);
 		InputStreamHelper& operator>>(uint64_t& value);
-		InputStreamHelper& operator>>(float& value);
+		InputStreamHelper& operator>>(float32_t& value);
 		InputStreamHelper& operator>>(std::string& value);
 		InputStreamHelper& operator>>(glm::mat4& value);
 		InputStreamHelper& operator>>(bool& value);

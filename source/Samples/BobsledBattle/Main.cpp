@@ -55,7 +55,7 @@ void DefineCubeActors(vector<Gameplay::Actor*>& actors)
 	Renderer& renderer = ServiceLocator::GetInstance().GetRendererSystem();
 
 	// vertices and indices to vertices for the cube
-	float vertices[] = {
+	float32_t vertices[] = {
 		-0.5f, -0.5f, -0.5f,    1.0f, 0.0f, 0.0f,   0.0f, 0.0f,
 		0.5f, -0.5f, -0.5f,    0.0f, 1.0f, 0.0f,   1.0f, 0.0f,
 		0.5f,  0.5f, -0.5f,    0.0f, 0.0f, 1.0f,   1.0f, 1.0f,
@@ -125,10 +125,10 @@ void DefineCubeActors(vector<Gameplay::Actor*>& actors)
 	{
 		Actor& actor = *(new Actor(&mesh, {&textureObj1, &textureObj2}));
 		actor.Model() = translate(actor.Model(), cubePositions[i]);
-		float angle = 20.0f * i;
+		float32_t angle = 20.0f * i;
 		actor.Model() = rotate(actor.Model(), radians(angle), vec3(1.0f, 0.3f, 0.5f));
 		actor.View() = translate(actor.View(), vec3(-1.0f, 0.0f, -3.0f));
-		actor.Projection() = perspective(radians(45.0f), static_cast<float>(WIDTH) / HEIGHT, 0.1f, 100.0f);
+		actor.Projection() = perspective(radians(45.0f), static_cast<float32_t>(WIDTH) / HEIGHT, 0.1f, 100.0f);
 		renderer.AddActorToScene(actor);
 		actors.push_back(&actor);
 	}

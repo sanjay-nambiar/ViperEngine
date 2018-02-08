@@ -146,14 +146,14 @@ namespace Viper
 			implementation->eventGroups[groupName].emplace_back(eventName);
 		}
 
-		void FmodAudioManager::SetEventVolume(const string& eventName, float volumedB)
+		void FmodAudioManager::SetEventVolume(const string& eventName, float32_t volumedB)
 		{
 			auto foundit = implementation->events.find(eventName);
 			assert(foundit != implementation->events.end());
 			FmodImplementation::ErrorCheck(foundit->second->setVolume(volumedB));
 		}
 
-		void FmodAudioManager::SetGroupVolume(const string& groupName, float volumedB)
+		void FmodAudioManager::SetGroupVolume(const string& groupName, float32_t volumedB)
 		{
 			if (implementation->eventGroups.find(groupName) == implementation->eventGroups.end())
 			{

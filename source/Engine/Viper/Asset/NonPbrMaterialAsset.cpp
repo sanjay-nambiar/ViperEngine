@@ -28,7 +28,7 @@ namespace Viper
 			return specular;
 		}
 
-		float NonPbrMaterialAsset::SpecularPower() const
+		float32_t NonPbrMaterialAsset::SpecularPower() const
 		{
 			return specularPower;
 		}

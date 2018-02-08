@@ -46,7 +46,7 @@ namespace Viper
 			return image.data;
 		}
 
-		const float* TextureAsset::HdrData() const
+		const float32_t* TextureAsset::HdrData() const
 		{
 			return image.hdrData;
 		}
