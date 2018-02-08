@@ -12,6 +12,8 @@ using namespace std;
 
 namespace Viper
 {
+	using namespace Window;
+
 	namespace Graphics
 	{
 

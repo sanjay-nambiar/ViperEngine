@@ -27,7 +27,7 @@ namespace Viper
 			virtual ~Renderer() = default;
 
 			virtual void Initialize() = 0;
-			virtual void SetViewport(const WindowContext& windowContext) = 0;
+			virtual void SetViewport(const Window::WindowContext& windowContext) = 0;
 
 			virtual Graphics::Shader LoadShaderSource(const std::string& shaderSource, Graphics::ShaderType shaderType) = 0;
 			virtual Graphics::Shader LoadShaderFile(const std::string& shaderFile, Graphics::ShaderType shaderType) = 0;

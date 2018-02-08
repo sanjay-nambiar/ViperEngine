@@ -16,7 +16,6 @@ namespace Viper
 {
 	using namespace std;
 	using namespace Audio;
-	using namespace Core;
 	using namespace Gameplay;
 	using namespace Input;
 	using namespace Memory;
@@ -36,10 +35,6 @@ namespace Viper
 
 			auto& serviceLocator = ServiceLocator::GetInstance();
 			auto& game = serviceLocator.Get<Game>();
-			uint32_t width = game.Width();
-			uint32_t height = game.Height();
-			const auto& title = game.Title();
-			width; height; title;
 
 			auto& windowManager = serviceLocator.Get<WindowManager>();
 			windowManager.Initialize();

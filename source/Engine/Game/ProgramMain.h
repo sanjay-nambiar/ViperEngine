@@ -4,7 +4,7 @@
 
 namespace Viper
 {
-	struct WindowContext;
+	namespace Window { struct WindowContext; }
 
 	namespace Platform
 	{
@@ -15,7 +15,7 @@ namespace Viper
 			void Update();
 			void Shutdown();
 		private:
-			const WindowContext* windowContext;
+			const Window::WindowContext* windowContext;
 			static const std::string ConfigFile;
 		};
 	}

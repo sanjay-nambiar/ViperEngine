@@ -6,7 +6,7 @@ using namespace std;
 
 namespace Viper
 {
-	namespace Core
+	namespace Platform
 	{
 		ModuleLoader::~ModuleLoader()
 		{
