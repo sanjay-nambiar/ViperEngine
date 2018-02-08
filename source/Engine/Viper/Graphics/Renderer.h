@@ -3,6 +3,7 @@
 #include <unordered_map>
 #include <vector>
 #include "glm/glm.hpp"
+#include "Core/Service.h"
 #include "Core/Types.h"
 #include "Graphics/RendererTypes.h"
 #include "Graphics/Shader.h"
@@ -19,7 +20,7 @@ namespace Viper
 	{
 		class Mesh;
 
-		class Renderer
+		class Renderer : public Service
 		{
 		public:
 			Renderer();
@@ -46,6 +47,7 @@ namespace Viper
 			void AddPoint(const glm::vec3& point, Graphics::Primitive primitive);
 			void AddPoints(const std::vector<glm::vec3> points, Graphics::Primitive primitive);
 
+			static const ServiceType Type;
 		private:
 			std::unordered_map<Graphics::Primitive, std::vector<glm::vec3>> points;
 			std::vector<Graphics::GpuTextureResource*> resources;

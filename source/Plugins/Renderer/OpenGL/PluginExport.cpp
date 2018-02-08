@@ -10,7 +10,7 @@ using namespace Viper::Memory;
 
 void InitializeModule(ServiceLocator& serviceLocator, const unordered_map<string, string>&)
 {
-	MemoryAllocator& allocator = serviceLocator.GetMemoryAllocator();
+	auto& allocator = serviceLocator.Get<MemoryAllocator>();
 
 	void* memBlock = allocator.Allocate(sizeof(OpenGLRenderer), 1);
 	assert(memBlock != nullptr);

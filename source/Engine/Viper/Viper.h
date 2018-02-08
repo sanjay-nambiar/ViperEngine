@@ -10,6 +10,7 @@
 #include <sstream>
 #include <string>
 #include <sstream>
+#include <type_traits>
 #include <unordered_map>
 #include <vector>
 
@@ -35,6 +36,7 @@
 #include "Core/GameException.h"
 #include "Core/MatrixHelper.h"
 #include "Core/RTTI.h"
+#include "Core/Service.h"
 #include "Core/ServiceLocator.h"
 #include "Core/Singleton.h"
 #include "Core/StreamHelper.h"

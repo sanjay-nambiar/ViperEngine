@@ -37,7 +37,7 @@ namespace Bobsled
 
 	void BobsledBattle::Initialize()
 	{
-		auto& renderer = serviceLocator.GetRendererSystem();
+		auto& renderer = serviceLocator.Get<Renderer>();
 		Shader vertexShader = renderer.LoadShaderFile("Content/Shaders/default.vert", ShaderType::VERTEX_SHADER);
 		Shader fragmentShader = renderer.LoadShaderFile("Content/Shaders/default.frag", ShaderType::FRAGMENT_SHADER);
 		renderer.UseShaders({ vertexShader, fragmentShader });
@@ -45,7 +45,7 @@ namespace Bobsled
 		DefineCubeActors();
 
 		// Test Audio
-		AudioManager& audioManager = serviceLocator.GetAudioManager();
+		auto& audioManager = serviceLocator.Get<AudioManager>();
 		audioManager.SetListener3dAttributes(vec3(0, 0, 0), vec3(0, 0, 1), vec3(0, 1, 0));
 		audioManager.LoadSoundBank("Content/Sounds/ZombieWars.bank");
 		audioManager.LoadSoundBank("Content/Sounds/ZombieWars.strings.bank");
@@ -58,9 +58,9 @@ namespace Bobsled
 
 	bool BobsledBattle::Update(const GameTime&)
 	{
-		auto& inputManager = serviceLocator.GetInputManager();
-		auto& audioManager = serviceLocator.GetAudioManager();
-		auto& renderer = serviceLocator.GetRendererSystem();
+		auto& inputManager = serviceLocator.Get<InputManager>();
+		auto& audioManager = serviceLocator.Get<AudioManager>();
+		auto& renderer = serviceLocator.Get<Renderer>();
 
 		inputManager.Update();
 		if (inputManager.GetButtonState(Button::Key_Escape) == ButtonState::Pressed)
@@ -99,11 +99,11 @@ namespace Bobsled
 
 	void BobsledBattle::DefineCubeActors()
 	{
-		TextureLoader& loader = serviceLocator.GetTextureLoader();
+		auto& loader = serviceLocator.Get<TextureLoader>();
 		Texture textureObj1 = loader.LoadTexture("Content/Textures/wall.jpg");
 		Texture textureObj2 = loader.LoadTexture("Content/Textures/decal.jpg");
 
-		Renderer& renderer = serviceLocator.GetRendererSystem();
+		auto& renderer = serviceLocator.Get<Renderer>();
 
 		// vertices and indices to vertices for the cube
 		float32_t vertices[] = {
@@ -328,7 +328,7 @@ void InitializeModule(ServiceLocator& serviceLocator, const unordered_map<string
 	uint32_t width = atoi(configAttributes.at(WIDTH_ATTRIBUTE).c_str());
 	uint32_t height = atoi(configAttributes.at(HEIGHT_ATTRIBUTE).c_str());
 
-	MemoryAllocator& allocator = serviceLocator.GetMemoryAllocator();
+	auto& allocator = serviceLocator.Get<MemoryAllocator>();
 	void* memBlock = allocator.Allocate(sizeof(BobsledBattle), 1);
 	assert(memBlock != nullptr);
 	BobsledBattle* battle = new(memBlock) BobsledBattle(serviceLocator, width, height, configAttributes.at(TITLE_ATTRIBUTE));

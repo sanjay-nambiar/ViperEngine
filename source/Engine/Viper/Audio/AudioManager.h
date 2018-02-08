@@ -2,6 +2,7 @@
 
 #include <string>
 #include "glm/glm.hpp"
+#include "Core/Service.h"
 #include "Core/Types.h"
 
 namespace Viper
@@ -13,9 +14,11 @@ namespace Viper
 		 *  A simple implementation can treat a SoundBank as a single sound file
 		 *  and have a default event for the sound.
 		*/
-		class AudioManager
+		class AudioManager : public Service
 		{
 		public:
+			AudioManager();
+
 			/** Loads a sound bank into the system
 			 * @param bankName The sound bank file name to load into the system
 			 * @param isAsync If set to true, loads the sound bank asynchronously. False by default.
@@ -101,6 +104,8 @@ namespace Viper
 
 			virtual ~AudioManager()
 			{};
+
+			static const ServiceType Type;
 		};
 	}
 }

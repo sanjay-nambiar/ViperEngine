@@ -21,12 +21,13 @@ namespace Viper
 			configFile = configFilePath;
 			LoadConfigData();
 			LoadModulesFromConfig();
-			ServiceLocator::GetInstance().ValidateServices();
+			ServiceLocator::GetInstance().Validate();
 		}
 
 		void ModuleLoader::UnloadModules()
 		{
-			Audio::AudioManager& audioManager = ServiceLocator::GetInstance().GetAudioManager();
+			//TODO: investigate this special case for audio manager
+			auto& audioManager = ServiceLocator::GetInstance().Get<Audio::AudioManager>();
 			ServiceLocator::Destroy();
 			delete &audioManager;
 

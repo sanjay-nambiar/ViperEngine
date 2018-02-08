@@ -6,8 +6,10 @@ namespace Viper
 {
 	namespace Gameplay
 	{
+		const ServiceType Game::Type = ServiceType::Game;
+
 		Game::Game(uint32_t width, uint32_t height, const string& title) :
-			width(width), height(height), title(title)
+			Service(Type), width(width), height(height), title(title)
 		{
 		}
 

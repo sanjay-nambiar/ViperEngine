@@ -202,6 +202,9 @@
     <ClInclude Include="Platform\Platform.h">
       <Filter>Platform</Filter>
     </ClInclude>
+    <ClInclude Include="Core\Service.h">
+      <Filter>Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core\ServiceLocator.cpp">
@@ -307,6 +310,24 @@
     <ClCompile Include="Gameplay\Game.cpp">
       <Filter>Gameplay</Filter>
     </ClCompile>
+    <ClCompile Include="Core\Service.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Audio\AudioManager.cpp">
+      <Filter>Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\TextureLoader.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Window\WindowManager.cpp">
+      <Filter>Window</Filter>
+    </ClCompile>
+    <ClCompile Include="Logging\Logger.cpp">
+      <Filter>Logging</Filter>
+    </ClCompile>
+    <ClCompile Include="Memory\MemoryAllocator.cpp">
+      <Filter>Memory</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Graphics\FrameGraph.inl">
@@ -350,6 +371,9 @@
     </None>
     <None Include="Diagrams\Core.cd">
       <Filter>Diagrams</Filter>
+    </None>
+    <None Include="Core\ServiceLocator.inl">
+      <Filter>Core</Filter>
     </None>
   </ItemGroup>
 </Project>

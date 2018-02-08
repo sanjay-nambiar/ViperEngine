@@ -1,12 +1,13 @@
 #include "Viper.h"
-#include "Renderer.h"
-#include <iterator>
 
 namespace Viper
 {
 	using namespace Graphics;
 
-	Renderer::Renderer()
+	const ServiceType Renderer::Type = ServiceType::Renderer;
+
+	Renderer::Renderer() :
+		Service(Type)
 	{
 		points = {
 			{Primitive::Point, {}},

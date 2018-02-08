@@ -13,101 +13,63 @@ namespace Viper
 	ServiceLocator::ServiceLocator() :
 		logger(nullptr), memoryAllocator(nullptr), audioManager(nullptr), windowManager(nullptr)
 	{
-	};
-
-	void ServiceLocator::Provide(AudioManager& audioManagerRef)
-	{
-		audioManager = &audioManagerRef;
 	}
 
-	void ServiceLocator::Provide(Game& gameRef)
+	void ServiceLocator::Provide(Service& service)
 	{
-		game = &gameRef;
+		services.insert({ service.Type(), &service });
 	}
 
-	void ServiceLocator::Provide(Renderer& rendererSystemRef)
+	template<>
+	AudioManager& ServiceLocator::Get<AudioManager>()
 	{
-		rendererSystem = &rendererSystemRef;
+		return *(static_cast<AudioManager*>(services[ServiceType::AudioManager]));
 	}
 
-	void ServiceLocator::Provide(TextureLoader& textureLoaderRef)
+	template<>
+	Game& ServiceLocator::Get<Game>()
 	{
-		textureLoader = &textureLoaderRef;
+		return *(static_cast<Game*>(services[ServiceType::Game]));
 	}
 
-	void ServiceLocator::Provide(InputManager& inputManagerRef)
+	template<>
+	Renderer& ServiceLocator::Get<Renderer>()
 	{
-		inputManager = &inputManagerRef;
+		return *(static_cast<Renderer*>(services[ServiceType::Renderer]));
 	}
 
-	void ServiceLocator::Provide(Logger& loggerRef)
+	template<>
+	TextureLoader& ServiceLocator::Get<TextureLoader>()
 	{
-		logger = &loggerRef;
+		return *(static_cast<TextureLoader*>(services[ServiceType::TextureLoader]));
 	}
 
-	void ServiceLocator::Provide(MemoryAllocator& memoryAllocatorRef)
+	template<>
+	InputManager& ServiceLocator::Get<InputManager>()
 	{
-		memoryAllocator = &memoryAllocatorRef;
+		return *(static_cast<InputManager*>(services[ServiceType::InputManager]));
 	}
 
-	void ServiceLocator::Provide(WindowManager& windowManagerRef)
+	template<>
+	Logger& ServiceLocator::Get<Logger>()
 	{
-		windowManager = &windowManagerRef;
+		return *(static_cast<Logger*>(services[ServiceType::Logger]));
 	}
 
-	AudioManager& ServiceLocator::GetAudioManager() const
+	template<>
+	MemoryAllocator& ServiceLocator::Get<MemoryAllocator>()
 	{
-		assert(audioManager != nullptr);
-		return (*audioManager);
+		return *(static_cast<MemoryAllocator*>(services[ServiceType::MemoryAllocator]));
 	}
 
-	Game& ServiceLocator::GetGame() const
+	template<>
+	WindowManager& ServiceLocator::Get<WindowManager>()
 	{
-		assert(game != nullptr);
-		return (*game);
+		return *(static_cast<WindowManager*>(services[ServiceType::WindowManager]));
 	}
 
-	Renderer& ServiceLocator::GetRendererSystem() const
+	void ServiceLocator::Validate() const
 	{
-		assert(rendererSystem != nullptr);
-		return (*rendererSystem);
-	}
-
-	TextureLoader& ServiceLocator::GetTextureLoader() const
-	{
-		assert(textureLoader != nullptr);
-		return (*textureLoader);
-	}
-
-	InputManager& ServiceLocator::GetInputManager() const
-	{
-		assert(inputManager != nullptr);
-		return (*inputManager);
-	}
-
-	Logger& ServiceLocator::GetLogger() const
-	{
-		assert(logger != nullptr);
-		return (*logger);
-	}
-
-	MemoryAllocator& ServiceLocator::GetMemoryAllocator() const
-	{
-		assert(memoryAllocator != nullptr);
-		return (*memoryAllocator);
-	}
-
-	WindowManager& ServiceLocator::GetWindowManager() const
-	{
-		assert(windowManager != nullptr);
-		return (*windowManager);
-	}
-
-	void ServiceLocator::ValidateServices() const
-	{
-		if (!(/*logger != nullptr &&  */memoryAllocator != nullptr && audioManager != nullptr))
-		{
-			throw std::runtime_error("One or more services not configured.");
-		}
+		//TODO: fill in
 	}
 }

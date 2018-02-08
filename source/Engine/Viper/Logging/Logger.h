@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include "Core/Service.h"
 
 namespace Viper
 {
@@ -8,9 +9,11 @@ namespace Viper
 	{
 		/** This is an interface for logger implementations
 		*/
-		class Logger
+		class Logger : public Service
 		{
 		public:
+			Logger();
+
 			/** Writes debug level logs to the log stream
 			 * @param message The debug log message
 			*/
@@ -25,6 +28,8 @@ namespace Viper
 			virtual void Warn(std::string& message) = 0;
 
 			virtual ~Logger() = 0;
+
+			static const ServiceType Type;
 		};
 	}
 }

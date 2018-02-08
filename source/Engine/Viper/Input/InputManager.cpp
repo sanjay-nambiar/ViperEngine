@@ -7,8 +7,10 @@ namespace Viper
 {
 	namespace Input
 	{
+		const ServiceType InputManager::Type = ServiceType::InputManager;
+
 		InputManager::InputManager() :
-			modifierStates(0)
+			Service(Type), modifierStates(0)
 		{
 			for (uint32_t index = static_cast<uint32_t>(Button::Key_Unknown);
 				index < static_cast<uint32_t>(Button::MaxButtons); ++index)

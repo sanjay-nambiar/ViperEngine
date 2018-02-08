@@ -26,7 +26,7 @@ namespace Viper
 
 
 		FrameGraph::FrameGraph(ServiceLocator& serviceLocator)
-			: graphRoot(nullptr), graphEnd(new FrameGraphNode("Present")), builder(*this), rendererSystem(serviceLocator.GetRendererSystem())
+			: graphRoot(nullptr), graphEnd(new FrameGraphNode("Present")), builder(*this), rendererSystem(serviceLocator.Get<Renderer>())
 		{
 		}
 

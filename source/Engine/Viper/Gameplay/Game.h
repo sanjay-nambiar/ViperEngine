@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include "Core/Service.h"
 #include "Core/Types.h"
 
 namespace Viper
@@ -9,7 +10,7 @@ namespace Viper
 	{
 		class GameTime;
 
-		class Game
+		class Game : public Service
 		{
 		public:
 			Game(std::uint32_t width, std::uint32_t height, const std::string& title);
@@ -20,6 +21,8 @@ namespace Viper
 			std::uint32_t Width() const;
 			std::uint32_t Height() const;
 			const std::string& Title() const;
+
+			static const ServiceType Type;
 		protected:
 			std::uint32_t width;
 			std::uint32_t height;

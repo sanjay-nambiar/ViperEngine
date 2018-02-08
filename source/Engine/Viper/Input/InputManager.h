@@ -1,6 +1,7 @@
 #pragma once
 
 #include <unordered_map>
+#include "Core/Service.h"
 #include "InputEnums.h"
 #include "Window/WindowContext.h"
 
@@ -8,7 +9,7 @@ namespace Viper
 {
 	namespace Input
 	{
-		class InputManager
+		class InputManager : public Service
 		{
 		public:
 			InputManager();
@@ -22,6 +23,8 @@ namespace Viper
 			ButtonState GetButtonState(Button) const;
 			std::uint32_t ActiveModifiers() const;
 			bool IsModifierActive(ModifierKey modifier) const;
+
+			static const ServiceType Type;
 		protected:
 			std::unordered_map<Button, ButtonState> buttonStates;
 			std::uint32_t modifierStates;

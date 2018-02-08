@@ -11,7 +11,7 @@ using namespace Viper::Input;
 
 void InitializeModule(Viper::ServiceLocator& serviceLocator, const std::unordered_map<std::string, std::string>&)
 {
-	MemoryAllocator& allocator = serviceLocator.GetMemoryAllocator();
+	auto& allocator = serviceLocator.Get<MemoryAllocator>();
 
 	void* memBlock = allocator.Allocate(sizeof(Window::GlfwWindowManager), 1);
 	assert(memBlock != nullptr);

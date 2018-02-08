@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Core/Service.h"
 #include "Core/Types.h"
 
 namespace  Viper
@@ -8,9 +9,11 @@ namespace  Viper
 	{
 		/** Interface for implementing memory allocators / managers
 		*/
-		class MemoryAllocator
+		class MemoryAllocator : public Service
 		{
 		public:
+			MemoryAllocator();
+
 			virtual ~MemoryAllocator()
 			{};
 
@@ -27,6 +30,8 @@ namespace  Viper
 			* @param pointer The base pointer to the memory to be freed
 			*/
 			virtual void Free(void* pointer) = 0;
+
+			static const ServiceType Type;
 		};
 	}
 }

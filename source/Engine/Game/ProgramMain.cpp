@@ -35,20 +35,20 @@ namespace Viper
 			ModuleLoader::GetInstance().LoadModules(ConfigFile);
 
 			auto& serviceLocator = ServiceLocator::GetInstance();
-			Game& game = serviceLocator.GetGame();
+			auto& game = serviceLocator.Get<Game>();
 			uint32_t width = game.Width();
 			uint32_t height = game.Height();
 			const auto& title = game.Title();
 			width; height; title;
 
-			auto& windowManager = serviceLocator.GetWindowManager();
+			auto& windowManager = serviceLocator.Get<WindowManager>();
 			windowManager.Initialize();
 			windowContext = &windowManager.CreateGameWindow(game.Width(), game.Height(), game.Title());
 
-			InputManager& inputManager = serviceLocator.GetInputManager();
+			auto& inputManager = serviceLocator.Get<InputManager>();
 			inputManager.Initialize(*windowContext);
 
-			Renderer& renderer = serviceLocator.GetRendererSystem();
+			auto& renderer = serviceLocator.Get<Renderer>();
 			renderer.Initialize();
 			renderer.SetViewport(*windowContext);
 
@@ -58,8 +58,8 @@ namespace Viper
 		void ProgramMain::Update()
 		{
 			auto& serviceLocator = ServiceLocator::GetInstance();
-			auto& windowManager = serviceLocator.GetWindowManager();
-			auto& game = serviceLocator.GetGame();
+			auto& windowManager = serviceLocator.Get<WindowManager>();
+			auto& game = serviceLocator.Get<Game>();
 			GameTime time;
 			while (windowManager.BeginUpdate(*windowContext))
 			{
@@ -74,10 +74,10 @@ namespace Viper
 		void ProgramMain::Shutdown()
 		{
 			auto& serviceLocator = ServiceLocator::GetInstance();
-			serviceLocator.GetRendererSystem().Shutdown();
-			serviceLocator.GetWindowManager().Shutdown();
+			serviceLocator.Get<Renderer>().Shutdown();
+			serviceLocator.Get<WindowManager>().Shutdown();
 
-			auto& allocator = serviceLocator.GetMemoryAllocator();
+			auto& allocator = serviceLocator.Get<MemoryAllocator>();
 			ModuleLoader::GetInstance().UnloadModules();
 			ModuleLoader::Destroy();
 			delete &allocator;

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include "Core/Service.h"
 #include "Core/Types.h"
 #include "Window/WindowContext.h"
 
@@ -8,10 +9,10 @@ namespace Viper
 {
 	namespace Window
 	{
-		class WindowManager
+		class WindowManager : public Service
 		{
 		public:
-			WindowManager() = default;
+			WindowManager();
 			virtual ~WindowManager() = default;
 
 			virtual void Initialize() = 0;
@@ -20,6 +21,8 @@ namespace Viper
 			virtual void EndUpdate(const WindowContext& windowContext) = 0;
 			virtual void DestroyGameWindow(const WindowContext& windowContext) = 0;
 			virtual void Shutdown() = 0;
+
+			static const ServiceType Type;
 		};
 	}
 }

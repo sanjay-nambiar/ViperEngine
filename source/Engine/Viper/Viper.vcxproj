@@ -206,6 +206,7 @@
     <ClInclude Include="Core\GameException.h" />
     <ClInclude Include="Core\MatrixHelper.h" />
     <ClInclude Include="Core\RTTI.h" />
+    <ClInclude Include="Core\Service.h" />
     <ClInclude Include="Core\ServiceLocator.h" />
     <ClInclude Include="Core\Singleton.h" />
     <ClInclude Include="Core\StreamHelper.h" />
@@ -253,9 +254,11 @@
     <ClCompile Include="Asset\PbrMaterialAsset.cpp" />
     <ClCompile Include="Asset\SceneAsset.cpp" />
     <ClCompile Include="Asset\TextureAsset.cpp" />
+    <ClCompile Include="Audio\AudioManager.cpp" />
     <ClCompile Include="Core\Checksum.cpp" />
     <ClCompile Include="Core\GameException.cpp" />
     <ClCompile Include="Core\MatrixHelper.cpp" />
+    <ClCompile Include="Core\Service.cpp" />
     <ClCompile Include="Core\ServiceLocator.cpp" />
     <ClCompile Include="Core\StreamHelper.cpp" />
     <ClCompile Include="Core\StringID.cpp" />
@@ -272,7 +275,10 @@
     <ClCompile Include="Graphics\RenderPrimitive.cpp" />
     <ClCompile Include="Graphics\Shader.cpp" />
     <ClCompile Include="Graphics\Texture.cpp" />
+    <ClCompile Include="Graphics\TextureLoader.cpp" />
     <ClCompile Include="Input\InputManager.cpp" />
+    <ClCompile Include="Logging\Logger.cpp" />
+    <ClCompile Include="Memory\MemoryAllocator.cpp" />
     <ClCompile Include="Memory\MemoryManager.cpp" />
     <ClCompile Include="Memory\StackAllocator.cpp" />
     <ClCompile Include="Platform\ModuleLoader.cpp" />
@@ -283,6 +289,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Window\WindowContext.cpp" />
+    <ClCompile Include="Window\WindowManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="$(SolutionDir)..\source\Thirdparty\gason\gason.vcxproj">
@@ -291,6 +298,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Core\Checksum.inl" />
+    <None Include="Core\ServiceLocator.inl" />
     <None Include="Diagrams\Asset.cd" />
     <None Include="Diagrams\Audio.cd" />
     <None Include="Diagrams\Containers.cd" />

@@ -1,4 +1,8 @@
 {
+  "Audio": {
+    "Plugin": "FmodAudio",
+    "Channels": "100"
+  },
   "Renderer": {
     "Plugin": "OpenGLRenderer"
   },
