@@ -7,7 +7,7 @@ namespace Viper
 {
 	namespace Asset
 	{
-		ModelAsset::ModelAsset(StringID& assetFullName) :
+		ModelAsset::ModelAsset(const StringID& assetFullName) :
 			Asset(assetFullName, AssetType::Model)
 		{
 		}

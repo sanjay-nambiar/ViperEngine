@@ -5,7 +5,7 @@ namespace Viper
 {
 	namespace Asset
 	{
-		MaterialAsset::MaterialAsset(StringID assetFullName) :
+		MaterialAsset::MaterialAsset(const StringID& assetFullName) :
 			Asset(assetFullName, AssetType::Material), normalMap(nullptr)
 		{
 		}

@@ -46,6 +46,7 @@ Global
 		..\source\Thirdparty\GLM\GLM.vcxitems*{a996f1ac-e71b-4507-bd64-9d5914bee7df}*SharedItemsImports = 9
 		..\source\Thirdparty\STB\STB.vcxitems*{e912cec2-b84d-486e-865e-1270f16b22fe}*SharedItemsImports = 9
 		..\source\Thirdparty\GLM\GLM.vcxitems*{fb32e549-5006-4bde-85c3-425d3360af51}*SharedItemsImports = 4
+		..\source\Thirdparty\STB\STB.vcxitems*{fb32e549-5006-4bde-85c3-425d3360af51}*SharedItemsImports = 4
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64

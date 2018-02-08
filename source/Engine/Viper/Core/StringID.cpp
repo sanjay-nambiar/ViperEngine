@@ -27,17 +27,17 @@ namespace Viper
 		HashToStringLookup()[hash] = literal;
 	}
 
-	const string& StringID::ToString()
+	const string& StringID::ToString() const
 	{
 		return HashToStringLookup()[hash];
 	}
 
-	bool StringID::operator==(const StringID& other)
+	bool StringID::operator==(const StringID& other) const
 	{
 		return (hash == other.hash);
 	}
 
-	bool StringID::operator!=(const StringID& other)
+	bool StringID::operator!=(const StringID& other) const
 	{
 		return (hash != other.hash);
 	}

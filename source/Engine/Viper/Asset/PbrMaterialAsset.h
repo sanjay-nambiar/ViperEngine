@@ -10,7 +10,7 @@ namespace Viper
 		class PbrMaterialAsset : public MaterialAsset
 		{
 		public:
-			PbrMaterialAsset(StringID assetFullName);
+			PbrMaterialAsset(const StringID& assetFullName);
 			~PbrMaterialAsset() = default;
 
 			const glm::vec3& Albedo() const;

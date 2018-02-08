@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Asset.h"
 #include <utility>
 #include <vector>
+#include "Asset.h"
 
 namespace Viper
 {
@@ -14,7 +14,7 @@ namespace Viper
 		class ModelAsset : public Asset
 		{
 		public:
-			ModelAsset(StringID& assetFullName);
+			ModelAsset(const StringID& assetFullName);
 			~ModelAsset() = default;
 
 			const std::vector<std::pair<const MeshAsset*, const MaterialAsset*>>& Meshes() const;

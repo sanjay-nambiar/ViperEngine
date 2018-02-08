@@ -11,9 +11,9 @@ namespace Viper
 		StringID(std::uint32_t hash);
 		StringID(const std::string& literal);
 
-		const std::string& ToString();
-		bool operator==(const StringID& other);
-		bool operator!=(const StringID& other);
+		const std::string& ToString() const;
+		bool operator==(const StringID& other) const;
+		bool operator!=(const StringID& other) const;
 	private:
 		std::uint32_t hash;
 	};

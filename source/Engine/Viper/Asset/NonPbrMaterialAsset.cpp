@@ -7,7 +7,7 @@ namespace Viper
 {
 	namespace Asset
 	{
-		NonPbrMaterialAsset::NonPbrMaterialAsset(StringID assetFullName) :
+		NonPbrMaterialAsset::NonPbrMaterialAsset(const StringID& assetFullName) :
 			MaterialAsset(assetFullName), ambientMap(nullptr), diffuseMap(nullptr),
 			specularMap(nullptr), specularPowerMap(nullptr), opacityMap(nullptr)
 		{

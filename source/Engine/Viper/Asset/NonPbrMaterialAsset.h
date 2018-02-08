@@ -1,7 +1,7 @@
 #pragma once
 
-#include "MaterialAsset.h"
 #include "glm/glm.hpp"
+#include "MaterialAsset.h"
 
 namespace Viper
 {
@@ -10,7 +10,7 @@ namespace Viper
 		class NonPbrMaterialAsset : public MaterialAsset
 		{
 		public:
-			NonPbrMaterialAsset(StringID assetFullName);
+			NonPbrMaterialAsset(const StringID& assetFullName);
 			~NonPbrMaterialAsset() = default;
 
 			const glm::vec3& Ambient() const;

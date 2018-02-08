@@ -5,7 +5,7 @@ namespace Viper
 {
 	namespace Asset
 	{
-		PbrMaterialAsset::PbrMaterialAsset(StringID assetFullName) :
+		PbrMaterialAsset::PbrMaterialAsset(const StringID& assetFullName) :
 			MaterialAsset(assetFullName), albedoMap(nullptr), metallicMap(nullptr),
 			roughnessMap(nullptr), aoMap(nullptr), metallic(0.0f), roughness(0.0f), ao(0.0f)
 		{

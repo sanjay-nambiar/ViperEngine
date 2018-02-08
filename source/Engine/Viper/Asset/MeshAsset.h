@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Asset.h"
 #include <vector>
 #include "glm/glm.hpp"
+#include "Asset.h"
 
 namespace Viper
 {
@@ -11,7 +11,7 @@ namespace Viper
 		class MeshAsset : public Asset
 		{
 		public:
-			MeshAsset(StringID& assetFullName);
+			MeshAsset(const StringID& assetFullName);
 			~MeshAsset() = default;
 
 			const std::vector<glm::vec3>& Vertices() const;

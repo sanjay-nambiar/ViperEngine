@@ -8,7 +8,7 @@ namespace Viper
 {
 	namespace Asset
 	{
-		MeshAsset::MeshAsset(StringID& assetFullName) :
+		MeshAsset::MeshAsset(const StringID& assetFullName) :
 			Asset(assetFullName, AssetType::Mesh)
 		{
 		}

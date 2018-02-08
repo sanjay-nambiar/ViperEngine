@@ -11,7 +11,7 @@ namespace Viper
 		class MaterialAsset : public Asset
 		{
 		public:
-			MaterialAsset(StringID assetFullName);
+			MaterialAsset(const StringID& assetFullName);
 			~MaterialAsset() = default;
 
 			const TextureAsset* NormalMap() const;

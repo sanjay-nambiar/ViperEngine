@@ -56,6 +56,7 @@
   </ImportGroup>
   <ImportGroup Label="Shared">
     <Import Project="$(SolutionDir)..\source\Thirdparty\GLM\GLM.vcxitems" Label="Shared" />
+    <Import Project="..\..\Thirdparty\STB\STB.vcxitems" Label="Shared" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -96,7 +97,7 @@
       <PrecompiledHeaderFile>Pch.h</PrecompiledHeaderFile>
       <TreatWarningAsError>true</TreatWarningAsError>
       <PrecompiledHeaderOutputFile>$(SolutionDir)\bin\$(ProjectName)\$(TargetName).pch</PrecompiledHeaderOutputFile>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)..\source\Thirdparty\GLM;$(SolutionDir)..\source\Thirdparty\gason</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)..\source\Thirdparty\GLM;$(SolutionDir)..\source\Thirdparty\gason;$(SolutionDir)..\source\Thirdparty\STB</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4201</DisableSpecificWarnings>
     </ClCompile>
     <Link>
@@ -119,7 +120,7 @@
       <PrecompiledHeaderFile>Pch.h</PrecompiledHeaderFile>
       <TreatWarningAsError>true</TreatWarningAsError>
       <PrecompiledHeaderOutputFile>$(SolutionDir)\bin\$(ProjectName)\$(TargetName).pch</PrecompiledHeaderOutputFile>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)..\source\Thirdparty\GLM;$(SolutionDir)..\source\Thirdparty\gason</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)..\source\Thirdparty\GLM;$(SolutionDir)..\source\Thirdparty\gason;$(SolutionDir)..\source\Thirdparty\STB</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4201</DisableSpecificWarnings>
     </ClCompile>
     <Link>
@@ -144,7 +145,7 @@
       <PrecompiledHeaderFile>Pch.h</PrecompiledHeaderFile>
       <TreatWarningAsError>true</TreatWarningAsError>
       <PrecompiledHeaderOutputFile>$(SolutionDir)\bin\$(ProjectName)\$(TargetName).pch</PrecompiledHeaderOutputFile>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)..\source\Thirdparty\GLM;$(SolutionDir)..\source\Thirdparty\gason</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)..\source\Thirdparty\GLM;$(SolutionDir)..\source\Thirdparty\gason;$(SolutionDir)..\source\Thirdparty\STB</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4201</DisableSpecificWarnings>
     </ClCompile>
     <Link>
@@ -171,7 +172,7 @@
       <PrecompiledHeaderFile>Pch.h</PrecompiledHeaderFile>
       <TreatWarningAsError>true</TreatWarningAsError>
       <PrecompiledHeaderOutputFile>$(SolutionDir)\bin\$(ProjectName)\$(TargetName).pch</PrecompiledHeaderOutputFile>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)..\source\Thirdparty\GLM;$(SolutionDir)..\source\Thirdparty\gason</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)..\source\Thirdparty\GLM;$(SolutionDir)..\source\Thirdparty\gason;$(SolutionDir)..\source\Thirdparty\STB</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4201</DisableSpecificWarnings>
     </ClCompile>
     <Link>
@@ -203,6 +204,10 @@
     <ClInclude Include="Core\Checksum.h" />
     <ClInclude Include="Core\Core.h" />
     <ClInclude Include="Core\DynamicLibrary.h" />
+    <ClInclude Include="Core\GameClock.h" />
+    <ClInclude Include="Core\GameException.h" />
+    <ClInclude Include="Core\GameTime.h" />
+    <ClInclude Include="Core\MatrixHelper.h" />
     <ClInclude Include="Core\ModuleExports.h" />
     <ClInclude Include="Core\ModuleImports.h" />
     <ClInclude Include="Core\ModuleLoader.h" />
@@ -210,8 +215,10 @@
     <ClInclude Include="Core\RTTI.h" />
     <ClInclude Include="Core\ServiceLocator.h" />
     <ClInclude Include="Core\Singleton.h" />
+    <ClInclude Include="Core\StreamHelper.h" />
     <ClInclude Include="Core\StringID.h" />
     <ClInclude Include="Core\Types.h" />
+    <ClInclude Include="Core\VectorHelper.h" />
     <ClInclude Include="Gameplay\Actor.h" />
     <ClInclude Include="Graphics\Blackboard.h" />
     <ClInclude Include="Graphics\FrameGraph.h" />
@@ -246,9 +253,15 @@
     <ClCompile Include="Asset\SceneAsset.cpp" />
     <ClCompile Include="Asset\TextureAsset.cpp" />
     <ClCompile Include="Core\Checksum.cpp" />
+    <ClCompile Include="Core\GameClock.cpp" />
+    <ClCompile Include="Core\GameException.cpp" />
+    <ClCompile Include="Core\GameTime.cpp" />
+    <ClCompile Include="Core\MatrixHelper.cpp" />
     <ClCompile Include="Core\ModuleLoader.cpp" />
     <ClCompile Include="Core\ServiceLocator.cpp" />
+    <ClCompile Include="Core\StreamHelper.cpp" />
     <ClCompile Include="Core\StringID.cpp" />
+    <ClCompile Include="Core\VectorHelper.cpp" />
     <ClCompile Include="Gameplay\Actor.cpp" />
     <ClCompile Include="Graphics\Blackboard.cpp" />
     <ClCompile Include="Graphics\FrameGraph.cpp" />
