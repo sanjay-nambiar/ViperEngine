@@ -2,6 +2,7 @@
 
 #include <regex>
 #include <unordered_map>
+#include "Singleton.h"
 #include "DynamicLibrary.h"
 
 namespace Viper

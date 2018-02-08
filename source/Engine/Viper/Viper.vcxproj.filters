@@ -42,7 +42,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Pch.h" />
     <ClInclude Include="Core\ServiceLocator.h">
       <Filter>Core</Filter>
     </ClInclude>
@@ -196,9 +195,9 @@
     <ClInclude Include="Core\VectorHelper.h">
       <Filter>Core</Filter>
     </ClInclude>
+    <ClInclude Include="Viper.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Pch.cpp" />
     <ClCompile Include="Core\ServiceLocator.cpp">
       <Filter>Core</Filter>
     </ClCompile>
@@ -298,6 +297,7 @@
     <ClCompile Include="Core\VectorHelper.cpp">
       <Filter>Core</Filter>
     </ClCompile>
+    <ClCompile Include="Viper.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Graphics\FrameGraph.inl">

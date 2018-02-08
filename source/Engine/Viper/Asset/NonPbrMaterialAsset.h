@@ -1,6 +1,7 @@
 #pragma once
 
 #include "glm/glm.hpp"
+#include "Core/Types.h"
 #include "MaterialAsset.h"
 
 namespace Viper
