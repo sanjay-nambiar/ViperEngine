@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Service/WindowManager.h"
+#include "Window/WindowManager.h"
 #include "GlfwWindowContext.h"
 #include <vector>
 

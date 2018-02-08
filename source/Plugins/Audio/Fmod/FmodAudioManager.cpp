@@ -2,14 +2,20 @@
 #include "FmodAudioManager.h"
 #include <cassert>
 #include "FmodImplementation.h"
-#include "Service/MemoryAllocator.h"
+#include "Memory/MemoryAllocator.h"
 
 
 #define MAX_EVENT_PATH_LENGTH 100
 #define MAX_EVENTS_PER_GROUP 50
 
+using namespace std;
+using namespace glm;
+using namespace FMOD;
+
 namespace Viper
 {
+	using namespace Memory;
+
 	namespace Audio
 	{
 		FmodAudioManager::FmodAudioManager(uint32_t maxChannels, MemoryAllocator& allocator)
@@ -19,7 +25,7 @@ namespace Viper
 			new (implementation) FmodImplementation(maxChannels);
 			if (implementation == nullptr)
 			{
-				throw std::runtime_error("Out of memory while creating FMOD implementation");
+				throw runtime_error("Out of memory while creating FMOD implementation");
 			}
 		}
 
@@ -39,7 +45,7 @@ namespace Viper
 			auto foundIt = implementation->banks.find(bankName);
 			assert(foundIt == implementation->banks.end());
 
-			FMOD::Studio::Bank* bank;
+			Studio::Bank* bank;
 			FMOD_STUDIO_LOAD_BANK_FLAGS flags = FMOD_STUDIO_LOAD_BANK_NORMAL;
 			if (isAsync)
 			{
@@ -55,15 +61,15 @@ namespace Viper
 
 		void FmodAudioManager::LoadSoundBankEvents(const std::string& bankName)
 		{
-			FMOD::Studio::Bank* bank = implementation->banks[bankName];
+			Studio::Bank* bank = implementation->banks[bankName];
 			assert(bank != nullptr);
 
 			// Load all events from the bank
 			int32_t eventCount;
 			FmodImplementation::ErrorCheck(bank->getEventCount(&eventCount));
 			assert(eventCount > 0);
-			FMOD::Studio::EventDescription** eventDescriptions =
-				static_cast<FMOD::Studio::EventDescription**>(allocator.Allocate(sizeof(FMOD::Studio::EventDescription*), eventCount));
+			Studio::EventDescription** eventDescriptions =
+				static_cast<Studio::EventDescription**>(allocator.Allocate(sizeof(Studio::EventDescription*), eventCount));
 			FmodImplementation::ErrorCheck(bank->getEventList(eventDescriptions, eventCount, &eventCount));
 			for (int32_t i = 0; i < eventCount; i++)
 			{
@@ -72,7 +78,7 @@ namespace Viper
 				FmodImplementation::ErrorCheck(eventDescriptions[i]->getPath(eventPath, MAX_EVENT_PATH_LENGTH, &eventPathLength));
 
 				// create event instance
-				FMOD::Studio::EventInstance* eventInstance = nullptr;
+				Studio::EventInstance* eventInstance = nullptr;
 				FmodImplementation::ErrorCheck(eventDescriptions[i]->createInstance(&eventInstance));
 				implementation->events[std::string(eventPath)] = eventInstance;
 			}
@@ -88,8 +94,8 @@ namespace Viper
 			int32_t eventCount;
 			FmodImplementation::ErrorCheck(foundIt->second->getEventCount(&eventCount));
 			assert(eventCount > 0);
-			FMOD::Studio::EventDescription** eventDescriptions =
-				static_cast<FMOD::Studio::EventDescription**>(allocator.Allocate(sizeof(FMOD::Studio::EventDescription*), eventCount));
+			Studio::EventDescription** eventDescriptions =
+				static_cast<Studio::EventDescription**>(allocator.Allocate(sizeof(Studio::EventDescription*), eventCount));
 			FmodImplementation::ErrorCheck(foundIt->second->getEventList(eventDescriptions, eventCount, &eventCount));
 			for (int32_t i = 0; i < eventCount; i++)
 			{
@@ -104,7 +110,7 @@ namespace Viper
 			implementation->banks.erase(foundIt);
 		}
 
-		void FmodAudioManager::SetListener3dAttributes(const Vector3& position, const Vector3& forward, const Vector3& up, const Vector3& velocity)
+		void FmodAudioManager::SetListener3dAttributes(const vec3& position, const vec3& forward, const vec3& up, const vec3& velocity)
 		{
 			FMOD_VECTOR fmodPosition = FmodImplementation::VectorToFmod(position);
 			FMOD_VECTOR fmodVelocity = FmodImplementation::VectorToFmod(velocity);
@@ -113,7 +119,7 @@ namespace Viper
 			FmodImplementation::ErrorCheck(implementation->fmodSystem->set3DListenerAttributes(0, &fmodPosition, &fmodVelocity, &fmodForward, &fmodUp));
 		}
 
-		void FmodAudioManager::SetEvent3dAttributes(const std::string& eventName, const Vector3& position, const Vector3& velocity)
+		void FmodAudioManager::SetEvent3dAttributes(const string& eventName, const vec3& position, const vec3& velocity)
 		{
 			auto foundIt = implementation->events.find(eventName);
 			assert(foundIt != implementation->events.end());
@@ -124,43 +130,43 @@ namespace Viper
 			foundIt->second->set3DAttributes(&attributes);
 		}
 
-		void FmodAudioManager::PlayEvent(const std::string& eventName)
+		void FmodAudioManager::PlayEvent(const string& eventName)
 		{
 			auto foundit = implementation->events.find(eventName);
 			assert(foundit != implementation->events.end());
 			foundit->second->start();
 		}
 
-		void FmodAudioManager::SetEventGroup(const std::string& eventName, const std::string& groupName)
+		void FmodAudioManager::SetEventGroup(const string& eventName, const string& groupName)
 		{
 			if (implementation->eventGroups.find(groupName) == implementation->eventGroups.end())
 			{
-				implementation->eventGroups[groupName] = std::vector<std::string>(MAX_EVENTS_PER_GROUP);
+				implementation->eventGroups[groupName] = vector<string>(MAX_EVENTS_PER_GROUP);
 			}
 			implementation->eventGroups[groupName].emplace_back(eventName);
 		}
 
-		void FmodAudioManager::SetEventVolume(const std::string& eventName, float volumedB)
+		void FmodAudioManager::SetEventVolume(const string& eventName, float32_t volumedB)
 		{
 			auto foundit = implementation->events.find(eventName);
 			assert(foundit != implementation->events.end());
 			FmodImplementation::ErrorCheck(foundit->second->setVolume(volumedB));
 		}
 
-		void FmodAudioManager::SetGroupVolume(const std::string& groupName, float volumedB)
+		void FmodAudioManager::SetGroupVolume(const string& groupName, float32_t volumedB)
 		{
 			if (implementation->eventGroups.find(groupName) == implementation->eventGroups.end())
 			{
 				return;
 			}
-			std::vector<std::string>& events = implementation->eventGroups[groupName];
+			vector<string>& events = implementation->eventGroups[groupName];
 			for(uint32_t i = 0; i < events.size(); i++)
 			{
 				FmodImplementation::ErrorCheck(implementation->events[events[i]]->setVolume(volumedB));
 			}
 		}
 
-		void FmodAudioManager::StopEvent(const std::string& eventName, bool_t isImmediate)
+		void FmodAudioManager::StopEvent(const string& eventName, bool_t isImmediate)
 		{
 			auto foundIt = implementation->events.find(eventName);
 			assert(foundIt != implementation->events.end());
@@ -170,7 +176,7 @@ namespace Viper
 			FmodImplementation::ErrorCheck(foundIt->second->stop(mode));
 		}
 
-		void FmodAudioManager::StopGroup(const std::string& groupName, bool_t isImmediate)
+		void FmodAudioManager::StopGroup(const string& groupName, bool_t isImmediate)
 		{
 			if (implementation->eventGroups.find(groupName) == implementation->eventGroups.end())
 			{
@@ -179,7 +185,7 @@ namespace Viper
 
 			FMOD_STUDIO_STOP_MODE mode;
 			mode = isImmediate ? FMOD_STUDIO_STOP_IMMEDIATE : FMOD_STUDIO_STOP_ALLOWFADEOUT;
-			std::vector<std::string>& events = implementation->eventGroups[groupName];
+			vector<string>& events = implementation->eventGroups[groupName];
 			for (uint32_t i = 0; i < events.size(); i++)
 			{
 				implementation->events[events[i]]->stop(mode);
@@ -196,7 +202,7 @@ namespace Viper
 			}
 		}
 
-		bool_t FmodAudioManager::IsPlaying(const std::string& eventName) const
+		bool_t FmodAudioManager::IsPlaying(const string& eventName) const
 		{
 			auto foundIt = implementation->events.find(eventName);
 			if (foundIt == implementation->events.end())

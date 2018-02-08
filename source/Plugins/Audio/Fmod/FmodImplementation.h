@@ -5,8 +5,8 @@
 #include <vector>
 #include "fmod.hpp"
 #include "fmod_studio.hpp"
+#include "glm/glm.hpp"
 #include "Core/Types.h"
-#include "Core/Vector3.h"
 #include "FmodAudioManager.h"
 
 namespace Viper
@@ -33,7 +33,7 @@ namespace Viper
 			EventGroupMap eventGroups;
 
 			static void ErrorCheck(FMOD_RESULT result);
-			static FMOD_VECTOR VectorToFmod(const Vector3& vector);
+			static FMOD_VECTOR VectorToFmod(const glm::vec3& vector);
 		};
 	}
 }

@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" GroupingSetting="Access">
+  <Class Name="Viper::DataArray&lt;T&gt;">
+    <Position X="0.5" Y="0.5" Width="5.5" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Struct Name="Viper::DataArray&lt;T&gt;::DataItem">
+        <TypeIdentifier>
+          <NewMemberFileName>Containers\DataArray.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Struct>
+      <Typedef Name="Viper::DataArray&lt;T&gt;::PredicateFunction" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Containers\DataArray.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Typedef>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAAAAAADQRAgUBIAAAAAAAEAAAAAAAAEBAAA=</HashCode>
+      <FileName>Containers\DataArray.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Viper::Queue&lt;T&gt;">
+    <Position X="6.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAgCgAAAAAAAAAAAAAQAAABAAAAAAAAAABAgA=</HashCode>
+      <FileName>Containers\Queue.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

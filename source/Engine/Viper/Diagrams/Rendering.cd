@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" GroupingSetting="Access">
+  <Class Name="Viper::Graphics::Renderer">
+    <Position X="6" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAQhAACABAAQASABIAAAAQABAAAAAgAEAACAAAAAAJA=</HashCode>
+      <FileName>Graphics\Renderer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Viper::Graphics::Shader">
+    <Position X="8.5" Y="3" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>QAACAAAAAAAAAAAAAAAAAAAAAAABAAAABQAAAAAAAgA=</HashCode>
+      <FileName>Graphics\Shader.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Viper::Graphics::TextureLoader">
+    <Position X="8.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABQ=</HashCode>
+      <FileName>Graphics\TextureLoader.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Viper::Graphics::RenderPrimitive">
+    <Position X="10.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAEAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Graphics\RenderPrimitive.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Viper::Graphics::Texture" Collapsed="true">
+    <Position X="0.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAABAhAAAAAAAAQAAEAAAAAAAAAIAAAAAAAI=</HashCode>
+      <FileName>Graphics\Texture.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="Viper::Graphics::TextureDescription">
+    <Position X="4" Y="1.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAAAEQAQAAASAAAAABBAAAAAAAQAAAAAAA=</HashCode>
+      <FileName>Graphics\RendererTypes.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Viper::Graphics::GpuTextureResource" Collapsed="true">
+    <Position X="0.5" Y="2" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Graphics\RendererTypes.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Enum Name="Viper::Graphics::TextureType" Collapsed="true">
+    <Position X="0.5" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAABAAAAAAAA=</HashCode>
+      <FileName>Graphics\RendererTypes.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Viper::Graphics::TextureFormat" Collapsed="true">
+    <Position X="4" Y="0.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAgAAQAACACJACACBgAiIAgQAAAgAACIIBUYBTQBAEA=</HashCode>
+      <FileName>Graphics\RendererTypes.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Viper::Graphics::TextureWrapping" Collapsed="true">
+    <Position X="2.25" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gACAAAAAAAAAAAAAAAAAAAEAAAAgAAAAAAIAAAAAAAA=</HashCode>
+      <FileName>Graphics\RendererTypes.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Viper::Graphics::TextureFiltering" Collapsed="true">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAAAAgAABEAAAAAAAAgAAAAAAAAACAA=</HashCode>
+      <FileName>Graphics\RendererTypes.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Viper::Graphics::Primitive" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAABAAAAAAAAAAAAAAAAAAAAAAABAAA=</HashCode>
+      <FileName>Graphics\RendererTypes.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Viper::Graphics::ShaderType" Collapsed="true">
+    <Position X="8.5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAAEAAAAgAgAAAAAAAAAAAAAAAAIAAAAQAAA=</HashCode>
+      <FileName>Graphics\Shader.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

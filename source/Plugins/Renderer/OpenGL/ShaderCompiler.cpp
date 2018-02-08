@@ -1,4 +1,3 @@
-#include "Pch.h"
 #include "ShaderCompiler.h"
 #include <fstream>
 #include "Graphics/Shader.h"
@@ -7,9 +6,8 @@
 
 namespace Viper
 {
-	namespace Renderer
+	namespace Graphics
 	{
-		using namespace Graphics;
 
 		Shader ShaderCompiler::CompileShader(std::string shaderSource, ShaderType shaderType)
 		{

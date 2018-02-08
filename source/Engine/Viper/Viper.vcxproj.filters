@@ -1,0 +1,379 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Core">
+      <UniqueIdentifier>{396256f9-ef6d-46a3-bc16-5d69354e5d73}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Memory">
+      <UniqueIdentifier>{fcedb39a-1531-4ce1-bcd8-fd0a36172ec8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Containers">
+      <UniqueIdentifier>{8bb941f2-36eb-4ce8-9a23-6aa9218d7deb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Audio">
+      <UniqueIdentifier>{4173f721-197e-4d14-bfaf-7c41caa1b9e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Window">
+      <UniqueIdentifier>{32fbae56-4830-4999-bf61-a4782ea34ff7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics">
+      <UniqueIdentifier>{a58d1b9c-7519-40e8-98b6-251189f61e58}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Gameplay">
+      <UniqueIdentifier>{a11d0cc1-50f9-4cd0-a39a-0347caefb192}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\FrameGraph">
+      <UniqueIdentifier>{f782a2e7-d00a-48c4-aec2-76c813c0fe25}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Input">
+      <UniqueIdentifier>{5335a8b4-ce22-473b-9680-6157c2015a96}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Logging">
+      <UniqueIdentifier>{2a185e58-359c-4931-b5af-af35306656ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Data">
+      <UniqueIdentifier>{f1ba9df3-8e27-447d-87e3-dd2e85c1ad11}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Asset">
+      <UniqueIdentifier>{b1b1de3a-d4c6-4067-bdd4-fa620d4827dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Diagrams">
+      <UniqueIdentifier>{9ee4353e-def9-4fed-b473-4f9261e62297}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Platform">
+      <UniqueIdentifier>{67c738cf-1892-47eb-8836-970505fbe9f9}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Core\ServiceLocator.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Singleton.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Types.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Memory\StackAllocator.h">
+      <Filter>Memory</Filter>
+    </ClInclude>
+    <ClInclude Include="Containers\DataArray.h">
+      <Filter>Containers</Filter>
+    </ClInclude>
+    <ClInclude Include="Containers\Queue.h">
+      <Filter>Containers</Filter>
+    </ClInclude>
+    <ClInclude Include="Memory\MemoryManager.h">
+      <Filter>Memory</Filter>
+    </ClInclude>
+    <ClInclude Include="Window\WindowContext.h">
+      <Filter>Window</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Shader.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Gameplay\Actor.h">
+      <Filter>Gameplay</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Blackboard.h">
+      <Filter>Graphics\FrameGraph</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\FrameGraph.h">
+      <Filter>Graphics\FrameGraph</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\RenderPassBuilder.h">
+      <Filter>Graphics\FrameGraph</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\RenderPass.h">
+      <Filter>Graphics\FrameGraph</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\RendererTypes.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Audio\AudioManager.h">
+      <Filter>Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Input\InputEnums.h">
+      <Filter>Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Input\InputManager.h">
+      <Filter>Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Logging\Logger.h">
+      <Filter>Logging</Filter>
+    </ClInclude>
+    <ClInclude Include="Window\WindowManager.h">
+      <Filter>Window</Filter>
+    </ClInclude>
+    <ClInclude Include="Memory\MemoryAllocator.h">
+      <Filter>Memory</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\TextureLoader.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Mesh.h">
+      <Filter>Graphics\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\RenderPrimitive.h">
+      <Filter>Graphics\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Texture.h">
+      <Filter>Graphics\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Renderer.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset\Asset.h">
+      <Filter>Asset</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Core.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\RTTI.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\StringID.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Checksum.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset\AssetManager.h">
+      <Filter>Asset</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset\DataAsset.h">
+      <Filter>Asset</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset\MeshAsset.h">
+      <Filter>Asset</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset\ModelAsset.h">
+      <Filter>Asset</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset\SceneAsset.h">
+      <Filter>Asset</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset\TextureAsset.h">
+      <Filter>Asset</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset\MaterialAsset.h">
+      <Filter>Asset</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset\PbrMaterialAsset.h">
+      <Filter>Asset</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset\NonPbrMaterialAsset.h">
+      <Filter>Asset</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\GameException.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\MatrixHelper.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\StreamHelper.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\VectorHelper.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Viper.h" />
+    <ClInclude Include="Gameplay\Game.h">
+      <Filter>Gameplay</Filter>
+    </ClInclude>
+    <ClInclude Include="Gameplay\GameClock.h">
+      <Filter>Gameplay</Filter>
+    </ClInclude>
+    <ClInclude Include="Gameplay\GameTime.h">
+      <Filter>Gameplay</Filter>
+    </ClInclude>
+    <ClInclude Include="Platform\DynamicLibrary.h">
+      <Filter>Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="Platform\ModuleExports.h">
+      <Filter>Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="Platform\ModuleImports.h">
+      <Filter>Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="Platform\ModuleLoader.h">
+      <Filter>Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="Platform\Platform.h">
+      <Filter>Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Service.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Core\ServiceLocator.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Memory\StackAllocator.cpp">
+      <Filter>Memory</Filter>
+    </ClCompile>
+    <ClCompile Include="Memory\MemoryManager.cpp">
+      <Filter>Memory</Filter>
+    </ClCompile>
+    <ClCompile Include="Window\WindowContext.cpp">
+      <Filter>Window</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\Shader.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Gameplay\Actor.cpp">
+      <Filter>Gameplay</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\FrameGraph.cpp">
+      <Filter>Graphics\FrameGraph</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\Blackboard.cpp">
+      <Filter>Graphics\FrameGraph</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\RenderPassBuilder.cpp">
+      <Filter>Graphics\FrameGraph</Filter>
+    </ClCompile>
+    <ClCompile Include="Input\InputManager.cpp">
+      <Filter>Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\Mesh.cpp">
+      <Filter>Graphics\Data</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\RenderPrimitive.cpp">
+      <Filter>Graphics\Data</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\Texture.cpp">
+      <Filter>Graphics\Data</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\Renderer.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Asset\Asset.cpp">
+      <Filter>Asset</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\StringID.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Checksum.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Asset\AssetManager.cpp">
+      <Filter>Asset</Filter>
+    </ClCompile>
+    <ClCompile Include="Asset\DataAsset.cpp">
+      <Filter>Asset</Filter>
+    </ClCompile>
+    <ClCompile Include="Asset\MeshAsset.cpp">
+      <Filter>Asset</Filter>
+    </ClCompile>
+    <ClCompile Include="Asset\ModelAsset.cpp">
+      <Filter>Asset</Filter>
+    </ClCompile>
+    <ClCompile Include="Asset\SceneAsset.cpp">
+      <Filter>Asset</Filter>
+    </ClCompile>
+    <ClCompile Include="Asset\TextureAsset.cpp">
+      <Filter>Asset</Filter>
+    </ClCompile>
+    <ClCompile Include="Asset\MaterialAsset.cpp">
+      <Filter>Asset</Filter>
+    </ClCompile>
+    <ClCompile Include="Asset\PbrMaterialAsset.cpp">
+      <Filter>Asset</Filter>
+    </ClCompile>
+    <ClCompile Include="Asset\NonPbrMaterialAsset.cpp">
+      <Filter>Asset</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\GameException.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\MatrixHelper.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\StreamHelper.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\VectorHelper.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Viper.cpp" />
+    <ClCompile Include="Gameplay\GameClock.cpp">
+      <Filter>Gameplay</Filter>
+    </ClCompile>
+    <ClCompile Include="Gameplay\GameTime.cpp">
+      <Filter>Gameplay</Filter>
+    </ClCompile>
+    <ClCompile Include="Platform\ModuleLoader.cpp">
+      <Filter>Platform</Filter>
+    </ClCompile>
+    <ClCompile Include="Gameplay\Game.cpp">
+      <Filter>Gameplay</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Service.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Audio\AudioManager.cpp">
+      <Filter>Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\TextureLoader.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Window\WindowManager.cpp">
+      <Filter>Window</Filter>
+    </ClCompile>
+    <ClCompile Include="Logging\Logger.cpp">
+      <Filter>Logging</Filter>
+    </ClCompile>
+    <ClCompile Include="Memory\MemoryAllocator.cpp">
+      <Filter>Memory</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Graphics\FrameGraph.inl">
+      <Filter>Graphics\FrameGraph</Filter>
+    </None>
+    <None Include="Core\Checksum.inl">
+      <Filter>Core</Filter>
+    </None>
+    <None Include="Diagrams\ServiceLocator.cd">
+      <Filter>Diagrams</Filter>
+    </None>
+    <None Include="Diagrams\FrameGraph.cd">
+      <Filter>Diagrams</Filter>
+    </None>
+    <None Include="Diagrams\Memory.cd">
+      <Filter>Diagrams</Filter>
+    </None>
+    <None Include="Diagrams\Rendering.cd">
+      <Filter>Diagrams</Filter>
+    </None>
+    <None Include="Diagrams\Asset.cd">
+      <Filter>Diagrams</Filter>
+    </None>
+    <None Include="Diagrams\Window.cd">
+      <Filter>Diagrams</Filter>
+    </None>
+    <None Include="Diagrams\Containers.cd">
+      <Filter>Diagrams</Filter>
+    </None>
+    <None Include="Diagrams\Logging.cd">
+      <Filter>Diagrams</Filter>
+    </None>
+    <None Include="Diagrams\Audio.cd">
+      <Filter>Diagrams</Filter>
+    </None>
+    <None Include="Diagrams\Gameplay.cd">
+      <Filter>Diagrams</Filter>
+    </None>
+    <None Include="Diagrams\Input.cd">
+      <Filter>Diagrams</Filter>
+    </None>
+    <None Include="Diagrams\Core.cd">
+      <Filter>Diagrams</Filter>
+    </None>
+    <None Include="Core\ServiceLocator.inl">
+      <Filter>Core</Filter>
+    </None>
+  </ItemGroup>
+</Project>

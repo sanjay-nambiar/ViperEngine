@@ -9,10 +9,7 @@ namespace Viper
 	namespace Graphics
 	{
 		enum class ShaderType;
-	}
 
-	namespace Renderer
-	{
 		/** GLSL shader compiler utility class
 		 *  This class has methods to compile GLSL shaders and link them
 		 */

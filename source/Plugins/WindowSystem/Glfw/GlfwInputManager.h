@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Service/InputManager.h"
+#include "Input/InputManager.h"
 #include "GlfwWindowContext.h"
 #include <set>
 

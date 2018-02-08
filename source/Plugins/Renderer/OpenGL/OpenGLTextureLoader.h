@@ -1,10 +1,10 @@
 #pragma once
 
-#include "Service/TextureLoader.h"
+#include "Graphics/TextureLoader.h"
 
 namespace Viper
 {
-	namespace Renderer
+	namespace Graphics
 	{
 		class OpenGLTextureLoader final : public TextureLoader
 		{
