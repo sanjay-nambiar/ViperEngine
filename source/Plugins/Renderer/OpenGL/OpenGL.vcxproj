@@ -55,8 +55,8 @@
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
   <ImportGroup Label="Shared">
-    <Import Project="..\..\..\Thirdparty\STB\STB.vcxitems" Label="Shared" />
-    <Import Project="..\..\..\Thirdparty\GLM\GLM.vcxitems" Label="Shared" />
+    <Import Project="..\..\..\Thirdparty\glm\glm.vcxitems" Label="Shared" />
+    <Import Project="..\..\..\Thirdparty\stb\stb.vcxitems" Label="Shared" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -103,7 +103,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;OPENGL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\source\Engine\Viper;$(SolutionDir)..\source\Thirdparty\Glad\include;$(SolutionDir)..\source\Thirdparty\STB;$(SolutionDir)..\source\Thirdparty\GLM;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\source\Engine\Viper;$(SolutionDir)..\source\Thirdparty\glad\include;$(SolutionDir)..\source\Thirdparty\stb;$(SolutionDir)..\source\Thirdparty\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
       <DisableSpecificWarnings>4201</DisableSpecificWarnings>
     </ClCompile>
@@ -130,7 +130,7 @@ xcopy "$(OutDir)$(TargetName).pdb" "$(SolutionDir)bin\Plugins\$(PlatformName)\$(
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;_USRDLL;OPENGL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\source\Engine\Viper;$(SolutionDir)..\source\Thirdparty\Glad\include;$(SolutionDir)..\source\Thirdparty\STB;$(SolutionDir)..\source\Thirdparty\GLM;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\source\Engine\Viper;$(SolutionDir)..\source\Thirdparty\glad\include;$(SolutionDir)..\source\Thirdparty\stb;$(SolutionDir)..\source\Thirdparty\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
       <DisableSpecificWarnings>4201</DisableSpecificWarnings>
     </ClCompile>
@@ -159,7 +159,7 @@ xcopy "$(OutDir)$(TargetName).pdb" "$(SolutionDir)bin\Plugins\$(PlatformName)\$(
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;OPENGL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\source\Engine\Viper;$(SolutionDir)..\source\Thirdparty\Glad\include;$(SolutionDir)..\source\Thirdparty\STB;$(SolutionDir)..\source\Thirdparty\GLM;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\source\Engine\Viper;$(SolutionDir)..\source\Thirdparty\glad\include;$(SolutionDir)..\source\Thirdparty\stb;$(SolutionDir)..\source\Thirdparty\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
       <DisableSpecificWarnings>4201</DisableSpecificWarnings>
     </ClCompile>
@@ -190,7 +190,7 @@ xcopy "$(OutDir)$(TargetName).pdb" "$(SolutionDir)bin\Plugins\$(PlatformName)\$(
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;_USRDLL;OPENGL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\source\Engine\Viper;$(SolutionDir)..\source\Thirdparty\Glad\include;$(SolutionDir)..\source\Thirdparty\STB;$(SolutionDir)..\source\Thirdparty\GLM;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\source\Engine\Viper;$(SolutionDir)..\source\Thirdparty\glad\include;$(SolutionDir)..\source\Thirdparty\stb;$(SolutionDir)..\source\Thirdparty\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
       <DisableSpecificWarnings>4201</DisableSpecificWarnings>
     </ClCompile>
@@ -215,7 +215,7 @@ xcopy "$(OutDir)$(TargetName).pdb" "$(SolutionDir)bin\Plugins\$(PlatformName)\$(
     <ProjectReference Include="..\..\..\Engine\Viper\Viper.vcxproj">
       <Project>{fb32e549-5006-4bde-85c3-425d3360af51}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\Thirdparty\Glad\Glad.vcxproj">
+    <ProjectReference Include="..\..\..\Thirdparty\glad\glad.vcxproj">
       <Project>{667a42aa-ed36-4a98-a2ab-de04ad25cc5a}</Project>
     </ProjectReference>
   </ItemGroup>

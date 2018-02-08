@@ -55,8 +55,8 @@
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
   <ImportGroup Label="Shared">
-    <Import Project="..\..\Thirdparty\STB\STB.vcxitems" Label="Shared" />
-    <Import Project="..\..\Thirdparty\GLM\GLM.vcxitems" Label="Shared" />
+    <Import Project="..\..\Thirdparty\glm\glm.vcxitems" Label="Shared" />
+    <Import Project="..\..\Thirdparty\stb\stb.vcxitems" Label="Shared" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -93,7 +93,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)..\source\Engine\Viper;$(SolutionDir)..\source\Thirdparty\STB;$(SolutionDir)..\source\Thirdparty\GLM;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)..\source\Engine\Viper;$(SolutionDir)..\source\Thirdparty\stb;$(SolutionDir)..\source\Thirdparty\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <BuildLog>
       <Path>$(SolutionDir)bin\$(ProjectName)\$(MSBuildProjectName).log</Path>
@@ -105,7 +105,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)..\source\Engine\Viper;$(SolutionDir)..\source\Thirdparty\STB;$(SolutionDir)..\source\Thirdparty\GLM;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)..\source\Engine\Viper;$(SolutionDir)..\source\Thirdparty\stb;$(SolutionDir)..\source\Thirdparty\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <BuildLog>
       <Path>$(SolutionDir)bin\$(ProjectName)\$(MSBuildProjectName).log</Path>
@@ -119,7 +119,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)..\source\Engine\Viper;$(SolutionDir)..\source\Thirdparty\STB;$(SolutionDir)..\source\Thirdparty\GLM;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)..\source\Engine\Viper;$(SolutionDir)..\source\Thirdparty\stb;$(SolutionDir)..\source\Thirdparty\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -137,7 +137,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)..\source\Engine\Viper;$(SolutionDir)..\source\Thirdparty\STB;$(SolutionDir)..\source\Thirdparty\GLM;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)..\source\Engine\Viper;$(SolutionDir)..\source\Thirdparty\stb;$(SolutionDir)..\source\Thirdparty\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
