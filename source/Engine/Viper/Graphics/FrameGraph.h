@@ -1,12 +1,12 @@
 #pragma once
 
-#include <cstdint>
 #include <functional>
 #include <string>
 #include <unordered_map>
 #include "Core/ServiceLocator.h"
+#include "Core/Types.h"
+#include "Renderer.h"
 #include "RenderPassBuilder.h"
-#include "Graphics/Renderer.h"
 
 namespace Viper
 {

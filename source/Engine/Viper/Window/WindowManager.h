@@ -1,7 +1,7 @@
 #pragma once
 
-#include <cstdint>
 #include <string>
+#include "Core/Types.h"
 #include "Window/WindowContext.h"
 
 namespace Viper

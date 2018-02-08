@@ -1,7 +1,7 @@
 #pragma once
 
-#include <cstdint>
 #include "Asset.h"
+#include "Core/Types.h"
 
 namespace Viper
 {

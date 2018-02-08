@@ -1,12 +1,12 @@
 #pragma once
 
-#include <cstdint>
-#include <vector>
 #include <unordered_map>
+#include <vector>
 #include "glm/glm.hpp"
-#include "Window/WindowContext.h"
-#include "Graphics/Shader.h"
+#include "Core/Types.h"
 #include "Graphics/RendererTypes.h"
+#include "Graphics/Shader.h"
+#include "Window/WindowContext.h"
 
 namespace Viper
 {

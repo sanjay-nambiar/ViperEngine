@@ -1,6 +1,6 @@
 #pragma once
 
-#include <cstdint>
+#include "Core/Types.h"
 
 namespace Viper
 {

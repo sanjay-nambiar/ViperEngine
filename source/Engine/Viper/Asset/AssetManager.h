@@ -2,8 +2,8 @@
 
 #include <unordered_set>
 #include <vector>
-#include "Core/Core.h"
 #include "Asset/Asset.h"
+#include "Core/Core.h"
 
 namespace Viper
 {

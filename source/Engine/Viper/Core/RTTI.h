@@ -1,7 +1,7 @@
 #pragma once
 
 #include <string>
-#include <cstdint>
+#include "Types.h"
 
 namespace Viper
 {
