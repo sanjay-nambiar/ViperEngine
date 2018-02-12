@@ -7,29 +7,35 @@ namespace Viper
 {
 	namespace Asset
 	{
+		struct PbrMaterialData final : public MaterialData
+		{
+			glm::vec3 albedo;
+			float32_t metallic;
+			float32_t roughness;
+			float32_t ao;
+			TextureAsset* albedoMap;
+			TextureAsset* metallicMap;
+			TextureAsset* roughnessMap;
+			TextureAsset* aoMap;
+
+			PbrMaterialData();
+			~PbrMaterialData() = default;
+		};
+
 		class PbrMaterialAsset : public MaterialAsset
 		{
 		public:
 			PbrMaterialAsset(const StringID& assetFullName);
 			~PbrMaterialAsset() = default;
 
-			const glm::vec3& Albedo() const;
-			float32_t Metallic() const;
-			float32_t Roughness() const;
-			float32_t AmbientOcclusion() const;
-			const TextureAsset* AlbedoMap() const;
-			const TextureAsset* MetallicMap() const;
-			const TextureAsset* RoughnessMap() const;
-			const TextureAsset* AmbientOcclusionMap() const;
+			PbrMaterialData& Data();
+
+			void Load(InputStreamHelper& inputHelper) override;
+			void Save(OutputStreamHelper& outputHelper) const override;
+		protected:
+			const MaterialData& BaseData() const override;
 		private:
-			glm::vec3 albedo;
-			float32_t metallic;
-			float32_t roughness;
-			float32_t ao;
-			const TextureAsset* albedoMap;
-			const TextureAsset* metallicMap;
-			const TextureAsset* roughnessMap;
-			const TextureAsset* aoMap;
+			PbrMaterialData data;
 		};
 	}
 }

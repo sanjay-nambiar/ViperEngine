@@ -56,7 +56,6 @@
   </ImportGroup>
   <ImportGroup Label="Shared">
     <Import Project="..\..\Thirdparty\glm\glm.vcxitems" Label="Shared" />
-    <Import Project="..\..\Thirdparty\stb\stb.vcxitems" Label="Shared" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -97,7 +96,7 @@
       <PrecompiledHeaderFile>Viper.h</PrecompiledHeaderFile>
       <TreatWarningAsError>true</TreatWarningAsError>
       <PrecompiledHeaderOutputFile>$(SolutionDir)\bin\$(ProjectName)\$(TargetName).pch</PrecompiledHeaderOutputFile>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)..\source\Thirdparty\glm;$(SolutionDir)..\source\Thirdparty\gason;$(SolutionDir)..\source\Thirdparty\stb</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)..\source\Thirdparty\glm;$(SolutionDir)..\source\Thirdparty\gason</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4201</DisableSpecificWarnings>
     </ClCompile>
     <Link>
@@ -120,7 +119,7 @@
       <PrecompiledHeaderFile>Viper.h</PrecompiledHeaderFile>
       <TreatWarningAsError>true</TreatWarningAsError>
       <PrecompiledHeaderOutputFile>$(SolutionDir)\bin\$(ProjectName)\$(TargetName).pch</PrecompiledHeaderOutputFile>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)..\source\Thirdparty\glm;$(SolutionDir)..\source\Thirdparty\gason;$(SolutionDir)..\source\Thirdparty\stb</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)..\source\Thirdparty\glm;$(SolutionDir)..\source\Thirdparty\gason</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4201</DisableSpecificWarnings>
     </ClCompile>
     <Link>
@@ -145,7 +144,7 @@
       <PrecompiledHeaderFile>Viper.h</PrecompiledHeaderFile>
       <TreatWarningAsError>true</TreatWarningAsError>
       <PrecompiledHeaderOutputFile>$(SolutionDir)\bin\$(ProjectName)\$(TargetName).pch</PrecompiledHeaderOutputFile>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)..\source\Thirdparty\glm;$(SolutionDir)..\source\Thirdparty\gason;$(SolutionDir)..\source\Thirdparty\stb</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)..\source\Thirdparty\glm;$(SolutionDir)..\source\Thirdparty\gason</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4201</DisableSpecificWarnings>
     </ClCompile>
     <Link>
@@ -172,7 +171,7 @@
       <PrecompiledHeaderFile>Viper.h</PrecompiledHeaderFile>
       <TreatWarningAsError>true</TreatWarningAsError>
       <PrecompiledHeaderOutputFile>$(SolutionDir)\bin\$(ProjectName)\$(TargetName).pch</PrecompiledHeaderOutputFile>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)..\source\Thirdparty\glm;$(SolutionDir)..\source\Thirdparty\gason;$(SolutionDir)..\source\Thirdparty\stb</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)..\source\Thirdparty\glm;$(SolutionDir)..\source\Thirdparty\gason</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4201</DisableSpecificWarnings>
     </ClCompile>
     <Link>
@@ -212,6 +211,7 @@
     <ClInclude Include="Core\StreamHelper.h" />
     <ClInclude Include="Core\StringID.h" />
     <ClInclude Include="Core\Types.h" />
+    <ClInclude Include="Core\Utility.h" />
     <ClInclude Include="Core\VectorHelper.h" />
     <ClInclude Include="Gameplay\Actor.h" />
     <ClInclude Include="Gameplay\Game.h" />
@@ -262,6 +262,7 @@
     <ClCompile Include="Core\ServiceLocator.cpp" />
     <ClCompile Include="Core\StreamHelper.cpp" />
     <ClCompile Include="Core\StringID.cpp" />
+    <ClCompile Include="Core\Utility.cpp" />
     <ClCompile Include="Core\VectorHelper.cpp" />
     <ClCompile Include="Gameplay\Actor.cpp" />
     <ClCompile Include="Gameplay\Game.cpp" />

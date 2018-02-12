@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="MeshProcessor.cpp" />
+    <ClCompile Include="ModelProcessor.cpp" />
+    <ClCompile Include="Program.cpp" />
+    <ClCompile Include="Pch.cpp" />
+    <ClCompile Include="MaterialProcessor.cpp" />
+    <ClCompile Include="TextureProcessor.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="MeshProcessor.h" />
+    <ClInclude Include="ModelProcessor.h" />
+    <ClInclude Include="Pch.h" />
+    <ClInclude Include="MaterialProcessor.h" />
+    <ClInclude Include="TextureProcessor.h" />
+  </ItemGroup>
+</Project>

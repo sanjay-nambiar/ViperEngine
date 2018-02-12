@@ -24,7 +24,13 @@ namespace Viper
 	StringID::StringID(const std::string& literal) :
 		hash(Checksum::Compute<CRC32>(literal))
 	{
+		assert(HashToStringLookup().find(hash) == HashToStringLookup().end() || HashToStringLookup()[hash] == literal);
 		HashToStringLookup()[hash] = literal;
+	}
+
+	StringID::StringID(const StringID& rhs) :
+		hash(rhs.hash)
+	{
 	}
 
 	const string& StringID::ToString() const

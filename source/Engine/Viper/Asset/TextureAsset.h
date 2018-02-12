@@ -9,26 +9,34 @@ namespace Viper
 	{
 		class AssetManager;
 
+		struct TextureData
+		{
+			TextureData();
+			~TextureData() = default;
+
+			std::uint32_t width;
+			std::uint32_t height;
+			std::uint32_t channels;
+			bool isHdr;
+			union
+			{
+				const uchar8_t* data;
+				const float32_t* hdrData;
+			} image;
+		};
+
 		class TextureAsset : public Asset
 		{
 		public:
 			TextureAsset(const StringID& assetFullName);
 			~TextureAsset() = default;
 
-			std::uint32_t Width() const;
-			std::uint32_t Height() const;
-			std::uint32_t Channels() const;
-			const std::uint8_t* Data() const;
-			const float32_t* HdrData() const;
+			TextureData& Data();
+
+			void Load(InputStreamHelper& inputHelper) override;
+			void Save(OutputStreamHelper& outputHelper) const override;
 		private:
-			std::uint32_t width;
-			std::uint32_t height;
-			std::uint32_t channels;
-			union
-			{
-				std::uint8_t* data;
-				float32_t* hdrData;
-			} image;
+			TextureData data;
 		};
 	}
 }

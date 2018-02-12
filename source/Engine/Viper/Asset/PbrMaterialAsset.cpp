@@ -1,54 +1,61 @@
 #include "Viper.h"
 #include "PbrMaterialAsset.h"
 
+using namespace std;
+
 namespace Viper
 {
 	namespace Asset
 	{
+		PbrMaterialData::PbrMaterialData() :
+			albedoMap(nullptr), metallicMap(nullptr), roughnessMap(nullptr), aoMap(nullptr),
+			metallic(0.0f), roughness(0.0f), ao(0.0f)
+		{
+			isPbr = true;
+		}
+
 		PbrMaterialAsset::PbrMaterialAsset(const StringID& assetFullName) :
-			MaterialAsset(assetFullName), albedoMap(nullptr), metallicMap(nullptr),
-			roughnessMap(nullptr), aoMap(nullptr), metallic(0.0f), roughness(0.0f), ao(0.0f)
+			MaterialAsset(assetFullName)
 		{
 		}
 
-		const glm::vec3& PbrMaterialAsset::Albedo() const
+		void PbrMaterialAsset::Load(InputStreamHelper& inputHelper)
 		{
-			return albedo;
+			inputHelper >> data.isPbr;
+			inputHelper >> data.albedo;
+			inputHelper >> data.metallic;
+			inputHelper >> data.roughness;
+			inputHelper >> data.ao;
+			data.normalMap = LoadTextureHelper(inputHelper);
+			data.albedoMap = LoadTextureHelper(inputHelper);
+			data.metallicMap = LoadTextureHelper(inputHelper);
+			data.roughnessMap = LoadTextureHelper(inputHelper);
+			data.aoMap = LoadTextureHelper(inputHelper);
 		}
 
-		float32_t PbrMaterialAsset::Metallic() const
+		void PbrMaterialAsset::Save(OutputStreamHelper& outputHelper) const
 		{
-			return metallic;
+			outputHelper << data.isPbr;
+			outputHelper << data.albedo;
+			outputHelper << data.metallic;
+			outputHelper << data.roughness;
+			outputHelper << data.ao;
+			SaveTextureHelper(data.normalMap, outputHelper);
+			SaveTextureHelper(data.albedoMap, outputHelper);
+			SaveTextureHelper(data.metallicMap, outputHelper);
+			SaveTextureHelper(data.roughnessMap, outputHelper);
+			SaveTextureHelper(data.aoMap, outputHelper);
 		}
 
-		float32_t PbrMaterialAsset::Roughness() const
+		PbrMaterialData& PbrMaterialAsset::Data()
 		{
-			return roughness;
+			return data;
 		}
 
-		float32_t PbrMaterialAsset::AmbientOcclusion() const
+		const MaterialData& PbrMaterialAsset::BaseData() const
 		{
-			return ao;
-		}
-		
-		const TextureAsset* PbrMaterialAsset::AlbedoMap() const
-		{
-			return albedoMap;
-		}
-
-		const TextureAsset* PbrMaterialAsset::MetallicMap() const
-		{
-			return metallicMap;
-		}
-
-		const TextureAsset* PbrMaterialAsset::RoughnessMap() const
-		{
-			return roughnessMap;
-		}
-
-		const TextureAsset* PbrMaterialAsset::AmbientOcclusionMap() const
-		{
-			return aoMap;
+			auto baseData = static_cast<const MaterialData*>(&data);
+			return *baseData;
 		}
 	}
 }

@@ -1,18 +1,51 @@
 #include "Viper.h"
-#include "MaterialAsset.h"
+
+using namespace std;
 
 namespace Viper
 {
 	namespace Asset
 	{
-		MaterialAsset::MaterialAsset(const StringID& assetFullName) :
-			Asset(assetFullName, AssetType::Material), normalMap(nullptr)
+		MaterialData::MaterialData() :
+			isPbr(false), normalMap(nullptr)
 		{
 		}
 
-		const TextureAsset* MaterialAsset::NormalMap() const
+		MaterialAsset::MaterialAsset(const StringID& assetFullName) :
+			Asset(assetFullName, AssetType::Material)
 		{
-			return normalMap;
+		}
+
+		bool MaterialAsset::IsPbr() const
+		{
+			return BaseData().isPbr;
+		}
+
+		TextureAsset* MaterialAsset::LoadTextureHelper(InputStreamHelper& helper)
+		{
+			bool tempBool;
+			string tempString;
+			helper >> tempBool;
+			if (tempBool)
+			{
+				helper >> tempString;
+				TextureAsset* texture = new TextureAsset(tempString);
+				static_cast<Asset*>(texture)->Load();
+				return texture;
+			}
+			return nullptr;
+		}
+
+		void MaterialAsset::SaveTextureHelper(TextureAsset* textureAsset, OutputStreamHelper& helper)
+		{
+			helper << (textureAsset != nullptr);
+			if (textureAsset != nullptr)
+			{
+				const auto& textureFileName = textureAsset->AssetFullName().ToString();
+				helper << textureFileName;
+				auto rawFilename = Utility::GetFilenameWithoutExtension(textureFileName);
+				textureAsset->SaveAs(rawFilename + ".vtex");
+			}
 		}
 	}
 }

@@ -62,6 +62,36 @@ namespace Viper
 		return *this;
 	}
 
+	OutputStreamHelper& OutputStreamHelper::operator<<(const vec2& value)
+	{
+		for (int i = 0; i < 2; i++)
+		{
+			*this << value[i];
+		}
+
+		return *this;
+	}
+
+	OutputStreamHelper& OutputStreamHelper::operator<<(const vec3& value)
+	{
+		for (int i = 0; i < 3; i++)
+		{
+			*this << value[i];
+		}
+
+		return *this;
+	}
+
+	OutputStreamHelper& OutputStreamHelper::operator<<(const vec4& value)
+	{
+		for (int i = 0; i < 4; i++)
+		{
+			*this << value[i];
+		}
+
+		return *this;
+	}
+
 	OutputStreamHelper& OutputStreamHelper::operator<<(const mat4& value)
 	{
 		for (int i = 0; i < 4; i++)
@@ -146,6 +176,36 @@ namespace Viper
 
 		value.resize(stringLength);
 		mStream.read(&value[0], stringLength);
+
+		return *this;
+	}
+
+	InputStreamHelper& InputStreamHelper::operator >> (vec2& value)
+	{
+		for (int i = 0; i < 2; i++)
+		{
+			*this >> value[i];
+		}
+
+		return *this;
+	}
+
+	InputStreamHelper& InputStreamHelper::operator >> (vec3& value)
+	{
+		for (int i = 0; i < 3; i++)
+		{
+			*this >> value[i];
+		}
+
+		return *this;
+	}
+
+	InputStreamHelper& InputStreamHelper::operator >> (vec4& value)
+	{
+		for (int i = 0; i < 4; i++)
+		{
+			*this >> value[i];
+		}
 
 		return *this;
 	}

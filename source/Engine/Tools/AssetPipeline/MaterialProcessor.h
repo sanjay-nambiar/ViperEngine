@@ -1,0 +1,39 @@
+#pragma once
+
+#include <unordered_map>
+#include "Asset/NonPbrMaterialAsset.h"
+#include "Asset/PbrMaterialAsset.h"
+#include "Asset/TextureAsset.h"
+
+struct aiMaterial;
+
+namespace ModelPipeline
+{
+	enum class TextureType
+	{
+		Diffuse,
+		Specular,
+		Ambient,
+		Height,
+		Normal,
+		SpecularPower,
+		Displacement,
+		Opacity,
+		Reflection,
+		Emissive,
+		Invalid
+	};
+
+    class MaterialProcessor
+    {
+    public:
+		MaterialProcessor() = delete;
+
+		static Viper::Asset::MaterialAsset* LoadMaterial(aiMaterial& material);
+	private:
+		static Viper::Asset::MaterialAsset* LoadPbrMaterial(aiMaterial& material);
+		static Viper::Asset::MaterialAsset* LoadNonPbrMaterial(aiMaterial& material);
+        static void InitializeTextureTypeMappings();
+        static std::unordered_map<TextureType, std::uint32_t> sTextureTypeMappings;
+    };
+}

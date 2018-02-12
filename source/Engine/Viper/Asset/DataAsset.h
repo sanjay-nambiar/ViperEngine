@@ -11,6 +11,9 @@ namespace Viper
 		public:
 			DataAsset(StringID& assetFullName);
 			~DataAsset() = default;
+
+			void Load(InputStreamHelper& inputHelper) override;
+			void Save(OutputStreamHelper& outputHelper) const override;
 		};
 	}
 }

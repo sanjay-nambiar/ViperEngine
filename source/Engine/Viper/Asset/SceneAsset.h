@@ -11,6 +11,9 @@ namespace Viper
 		public:
 			SceneAsset(StringID& assetFullName);
 			~SceneAsset() = default;
+
+			void Load(InputStreamHelper& inputHelper) override;
+			void Save(OutputStreamHelper& outputHelper) const override;
 		};
 	}
 }

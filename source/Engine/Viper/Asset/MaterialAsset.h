@@ -8,15 +8,27 @@ namespace Viper
 	{
 		class TextureAsset;
 
+		struct MaterialData
+		{
+			bool isPbr;
+			TextureAsset* normalMap;
+
+			MaterialData();
+			virtual ~MaterialData() = default;
+		};
+
 		class MaterialAsset : public Asset
 		{
 		public:
 			MaterialAsset(const StringID& assetFullName);
 			~MaterialAsset() = default;
 
-			const TextureAsset* NormalMap() const;
+			bool IsPbr() const;
 		protected:
-			const TextureAsset* normalMap;
+			virtual const MaterialData& BaseData() const = 0;
+
+			static TextureAsset* LoadTextureHelper(InputStreamHelper& helper);
+			static void SaveTextureHelper(TextureAsset* textureAsset, OutputStreamHelper& helper);
 		};
 	}
 }

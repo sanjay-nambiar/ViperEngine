@@ -205,6 +205,9 @@
     <ClInclude Include="Core\Service.h">
       <Filter>Core</Filter>
     </ClInclude>
+    <ClInclude Include="Core\Utility.h">
+      <Filter>Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core\ServiceLocator.cpp">
@@ -327,6 +330,9 @@
     </ClCompile>
     <ClCompile Include="Memory\MemoryAllocator.cpp">
       <Filter>Memory</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Utility.cpp">
+      <Filter>Core</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

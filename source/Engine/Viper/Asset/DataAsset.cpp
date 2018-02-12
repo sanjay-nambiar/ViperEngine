@@ -9,5 +9,13 @@ namespace Viper
 			Asset(assetFullName, AssetType::Data)
 		{
 		}
+
+		void DataAsset::Load(InputStreamHelper&)
+		{
+		}
+
+		void DataAsset::Save(OutputStreamHelper&) const
+		{
+		}
 	}
 }

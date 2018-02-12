@@ -2,60 +2,61 @@
 #include "NonPbrMaterialAsset.h"
 
 using namespace glm;
+using namespace std;
 
 namespace Viper
 {
 	namespace Asset
 	{
+		NonPbrMaterialData::NonPbrMaterialData() :
+			ambientMap(nullptr), diffuseMap(nullptr), specularMap(nullptr),
+			specularPowerMap(nullptr), opacityMap(nullptr)
+		{
+		}
+
 		NonPbrMaterialAsset::NonPbrMaterialAsset(const StringID& assetFullName) :
-			MaterialAsset(assetFullName), ambientMap(nullptr), diffuseMap(nullptr),
-			specularMap(nullptr), specularPowerMap(nullptr), opacityMap(nullptr)
+			MaterialAsset(assetFullName)
 		{
 		}
 
-		const vec3& NonPbrMaterialAsset::Ambient() const
+		void NonPbrMaterialAsset::Load(InputStreamHelper& inputHelper)
 		{
-			return ambient;
+			inputHelper >> data.isPbr;
+			inputHelper >> data.ambient;
+			inputHelper >> data.diffuse;
+			inputHelper >> data.specular;
+			inputHelper >> data.specularPower;
+			data.normalMap = LoadTextureHelper(inputHelper);
+			data.ambientMap = LoadTextureHelper(inputHelper);
+			data.diffuseMap = LoadTextureHelper(inputHelper);
+			data.specularMap = LoadTextureHelper(inputHelper);
+			data.specularPowerMap = LoadTextureHelper(inputHelper);
+			data.opacityMap = LoadTextureHelper(inputHelper);
 		}
 
-		const vec3& NonPbrMaterialAsset::Diffuse() const
+		void NonPbrMaterialAsset::Save(OutputStreamHelper& outputHelper) const
 		{
-			return diffuse;
+			outputHelper << data.isPbr;
+			outputHelper << data.ambient;
+			outputHelper << data.diffuse;
+			outputHelper << data.specular;
+			outputHelper << data.specularPower;
+			SaveTextureHelper(data.normalMap, outputHelper);
+			SaveTextureHelper(data.ambientMap, outputHelper);
+			SaveTextureHelper(data.diffuseMap, outputHelper);
+			SaveTextureHelper(data.specularMap, outputHelper);
+			SaveTextureHelper(data.specularPowerMap, outputHelper);
 		}
 
-		const vec3& NonPbrMaterialAsset::Specular() const
+		NonPbrMaterialData& NonPbrMaterialAsset::Data()
 		{
-			return specular;
+			return data;
 		}
 
-		float32_t NonPbrMaterialAsset::SpecularPower() const
+		const MaterialData& NonPbrMaterialAsset::BaseData() const
 		{
-			return specularPower;
-		}
-
-		const TextureAsset* NonPbrMaterialAsset::AmbientMap() const
-		{
-			return ambientMap;
-		}
-
-		const TextureAsset* NonPbrMaterialAsset::DiffuseMap() const
-		{
-			return diffuseMap;
-		}
-
-		const TextureAsset* NonPbrMaterialAsset::SpecularMap() const
-		{
-			return specularMap;
-		}
-
-		const TextureAsset* NonPbrMaterialAsset::SpecularPowerMap() const
-		{
-			return specularPowerMap;
-		}
-
-		const TextureAsset* NonPbrMaterialAsset::OpacityMap() const
-		{
-			return opacityMap;
+			auto baseData = static_cast<const MaterialData*>(&data);
+			return *baseData;
 		}
 	}
 }

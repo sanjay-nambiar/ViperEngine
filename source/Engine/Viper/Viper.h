@@ -5,6 +5,7 @@
 #include <cstdint>
 #include <fstream>
 #include <iostream>
+#include <memory>
 #include <queue>
 #include <stdexcept>
 #include <sstream>
@@ -16,7 +17,6 @@
 
 #include "gason.h"
 #include "glm/glm.hpp"
-#include "stb_image.h"
 
 #include "Asset/Asset.h"
 #include "Asset/AssetManager.h"
@@ -42,6 +42,7 @@
 #include "Core/StreamHelper.h"
 #include "Core/StringID.h"
 #include "Core/Types.h"
+#include "Core/Utility.h"
 #include "Core/VectorHelper.h"
 #include "Gameplay/Actor.h"
 #include "Gameplay/Game.h"

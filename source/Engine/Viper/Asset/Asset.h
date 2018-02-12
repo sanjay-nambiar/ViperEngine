@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Core/StringID.h"
+#include "Core/StreamHelper.h"
 
 namespace Viper
 {
@@ -25,7 +26,14 @@ namespace Viper
 
 			const StringID& AssetFullName() const;
 			AssetType Type() const;
-		protected:
+			
+			void Load();
+			void Save();
+			void SaveAs(const StringID& assetNewName);
+
+			virtual void Load(InputStreamHelper& inputHelper) = 0;
+			virtual void Save(OutputStreamHelper& outputHelper) const = 0;
+
 			StringID assetFullName;
 			AssetType type;
 		};

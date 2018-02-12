@@ -1,6 +1,7 @@
 #pragma once
 
 #include <exception>
+#include <string>
 
 namespace Viper
 {
@@ -8,5 +9,6 @@ namespace Viper
 	{
 	public:
 		GameException(const char* const& message);
+		GameException(const std::string& message);
 	};
 }
