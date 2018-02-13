@@ -18,6 +18,14 @@ namespace Viper
 		{
 		}
 
+		TextureAsset::~TextureAsset()
+		{
+			if (data.image.data != nullptr)
+			{
+				delete[] data.image.data;
+			}
+		}
+
 		void TextureAsset::Load(InputStreamHelper& inputHelper)
 		{
 			inputHelper >> data.width;

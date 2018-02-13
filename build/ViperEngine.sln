@@ -47,10 +47,8 @@ Global
 		..\source\Thirdparty\glm\glm.vcxitems*{8d7263a2-5ebf-44d7-acea-bce9c7dfcb30}*SharedItemsImports = 4
 		..\source\Thirdparty\stb\stb.vcxitems*{a178c969-d639-489d-9a19-cd24c2930f9f}*SharedItemsImports = 4
 		..\source\Thirdparty\glm\glm.vcxitems*{a7b577de-e9de-418a-85ea-831991359af5}*SharedItemsImports = 4
-		..\source\Thirdparty\stb\stb.vcxitems*{a7b577de-e9de-418a-85ea-831991359af5}*SharedItemsImports = 4
 		..\source\Thirdparty\glm\glm.vcxitems*{a996f1ac-e71b-4507-bd64-9d5914bee7df}*SharedItemsImports = 9
 		..\source\Thirdparty\glm\glm.vcxitems*{b27a41b0-59ca-4f99-9cb7-bf14bef37b13}*SharedItemsImports = 4
-		..\source\Thirdparty\stb\stb.vcxitems*{b27a41b0-59ca-4f99-9cb7-bf14bef37b13}*SharedItemsImports = 4
 		..\source\Thirdparty\stb\stb.vcxitems*{e912cec2-b84d-486e-865e-1270f16b22fe}*SharedItemsImports = 9
 		..\source\Thirdparty\glm\glm.vcxitems*{fb32e549-5006-4bde-85c3-425d3360af51}*SharedItemsImports = 4
 	EndGlobalSection

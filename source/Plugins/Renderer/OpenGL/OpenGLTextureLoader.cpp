@@ -1,12 +1,13 @@
-#include "OpenGLTextureLoader.h"
 #include "glad/glad.h"
-#define STB_IMAGE_IMPLEMENTATION
-#include "stb_image.h"
+#include "OpenGLTextureLoader.h"
+#include "Asset/TextureAsset.h"
 
 using namespace std;
 
 namespace Viper
 {
+	using namespace Asset;
+
 	namespace Graphics
 	{
 		Texture OpenGLTextureLoader::LoadTexture(const string& textureFile)
@@ -22,14 +23,14 @@ namespace Viper
 			float32_t color[] = {1.0f, 0.0f, 0.0f, 1.0f};
 			glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, color);
 
-			GLint width, height, channels;
-			unsigned char* image = stbi_load(textureFile.c_str(), &width, &height, &channels, 3);
-			if (image == nullptr)
+			TextureAsset asset(StringID(textureFile.c_str()));
+			static_cast<Viper::Asset::Asset*>(&asset)->Load();
+			auto& textureData = asset.Data();
+			if (textureData.image.data == nullptr)
 			{
 				throw runtime_error(string("Unable to load texture file ") + textureFile);
 			}
-			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
-			stbi_image_free(image);
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, textureData.width, textureData.height, 0, GL_RGB, GL_UNSIGNED_BYTE, textureData.image.data);
 
 			// Generate mipmaps
 			glGenerateMipmap(GL_TEXTURE_2D);
@@ -38,7 +39,7 @@ namespace Viper
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR_MIPMAP_NEAREST);
 
 			glBindTexture(GL_TEXTURE_2D, 0);
-			return Texture(width, height, textureId);
+			return Texture(textureData.width, textureData.height, textureId);
 		}
 	}
 }

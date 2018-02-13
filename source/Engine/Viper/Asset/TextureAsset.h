@@ -29,7 +29,7 @@ namespace Viper
 		{
 		public:
 			TextureAsset(const StringID& assetFullName);
-			~TextureAsset() = default;
+			~TextureAsset();
 
 			TextureData& Data();
 

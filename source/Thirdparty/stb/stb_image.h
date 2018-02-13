@@ -828,6 +828,10 @@ static void    *stbi__pnm_load(stbi__context *s, int *x, int *y, int *comp, int 
 static int      stbi__pnm_info(stbi__context *s, int *x, int *y, int *comp);
 #endif
 
+#ifndef STBI_NO_DDS
+#include "stbi_dds.h"
+#endif
+
 // this is not threadsafe
 static const char *stbi__g_failure_reason;
 
@@ -1133,6 +1137,14 @@ STBIDEF stbi_uc *stbi_load(char const *filename, int *x, int *y, int *comp, int 
    FILE *f = stbi__fopen(filename, "rb");
    unsigned char *result;
    if (!f) return stbi__errpuc("can't fopen", "Unable to open file");
+#ifndef STBI_NO_DDS
+   if (stbi_dds_test_file(f))
+   {
+         result = stbi_dds_load_from_file(f,x,y,comp,req_comp);
+         fclose(f);
+         return result;
+   }
+#endif
    result = stbi_load_from_file(f,x,y,comp,req_comp);
    fclose(f);
    return result;
@@ -6759,17 +6771,21 @@ static int stbi__pic_info(stbi__context *s, int *x, int *y, int *comp)
 }
 #endif
 
-// *************************************************************************************************
-// Portable Gray Map and Portable Pixel Map loader
-// by Ken Miller
-//
-// PGM: http://netpbm.sourceforge.net/doc/pgm.html
-// PPM: http://netpbm.sourceforge.net/doc/ppm.html
-//
-// Known limitations:
-//    Does not support comments in the header section
-//    Does not support ASCII image data (formats P2 and P3)
-//    Does not support 16-bit-per-channel
+#ifndef STBI_NO_DDS
+#include "stbi_dds_c.h"
+#endif
+
+      // *************************************************************************************************
+      // Portable Gray Map and Portable Pixel Map loader
+      // by Ken Miller
+      //
+      // PGM: http://netpbm.sourceforge.net/doc/pgm.html
+      // PPM: http://netpbm.sourceforge.net/doc/ppm.html
+      //
+      // Known limitations:
+      //    Does not support comments in the header section
+      //    Does not support ASCII image data (formats P2 and P3)
+      //    Does not support 16-bit-per-channel
 
 #ifndef STBI_NO_PNM
 
