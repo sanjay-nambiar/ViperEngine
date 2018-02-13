@@ -26,12 +26,17 @@ namespace ModelPipeline
 			throw GameException(importer.GetErrorString());
 		}
 
+		auto modelName = Utility::GetFilenameWithoutExtension(filename);
 		if (scene->HasMaterials())
 		{
 			for (uint32_t i = 0; i < scene->mNumMaterials; i++)
 			{
-				auto materialAsset = MaterialProcessor::LoadMaterial(*(scene->mMaterials[i]));
-				modelData.materials.push_back(materialAsset);
+				auto materialAsset = MaterialProcessor::LoadMaterial(*(scene->mMaterials[i]), modelName + "-" 
+					+ to_string(modelData.materials.size()) + ".vmat");
+				if (materialAsset != nullptr)
+				{
+					modelData.materials.push_back(materialAsset);
+				}
 			}
 		}
 
@@ -39,11 +44,10 @@ namespace ModelPipeline
 		{
 			for (uint32_t i = 0; i < scene->mNumMeshes; i++)
 			{
-				auto& assimpMaterial = *(scene->mMeshes[i]);
-				auto meshAsset = MeshProcessor::LoadMesh(modelData, assimpMaterial);
+				auto& assimpMesh = *(scene->mMeshes[i]);
+				auto meshAsset = MeshProcessor::LoadMesh(assimpMesh, modelName + "-" + to_string(i) + ".vmsh");
 				modelData.meshes.push_back(meshAsset);
-				modelData.meshMaterialMap.insert({ i, assimpMaterial.mMaterialIndex });
-				meshAsset->Data().materialAsset = modelData.materials.at(assimpMaterial.mMaterialIndex);
+				modelData.meshMaterialMap.insert({ i, assimpMesh.mMaterialIndex });
 			}
 		}
 		return modelAsset;

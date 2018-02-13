@@ -35,6 +35,9 @@ namespace Viper
 
 			void Load(InputStreamHelper& inputHelper) override;
 			void Save(OutputStreamHelper& outputHelper) const override;
+
+			bool operator==(const TextureAsset& rhs) const;
+			bool operator!=(const TextureAsset& rhs) const;
 		private:
 			TextureData data;
 		};

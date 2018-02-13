@@ -75,32 +75,32 @@ namespace Viper
 
 		void MeshAsset::Save(OutputStreamHelper& outputHelper) const
 		{
-			outputHelper << data.vertices.size();
+			outputHelper << static_cast<uint32_t>(data.vertices.size());
 			for (auto& vertex : data.vertices)
 			{
 				outputHelper << vertex;
 			}
-			outputHelper << data.normals.size();
+			outputHelper << static_cast<uint32_t>(data.normals.size());
 			for (auto& normal : data.normals)
 			{
 				outputHelper << normal;
 			}
-			outputHelper << data.tangents.size();
+			outputHelper << static_cast<uint32_t>(data.tangents.size());
 			for (auto& tangent : data.tangents)
 			{
 				outputHelper << tangent;
 			}
-			outputHelper << data.biNormals.size();
+			outputHelper << static_cast<uint32_t>(data.biNormals.size());
 			for (auto& biNormal : data.biNormals)
 			{
 				outputHelper << biNormal;
 			}
-			outputHelper << data.textureCoordinates.size();
+			outputHelper << static_cast<uint32_t>(data.textureCoordinates.size());
 			for (auto& textureCoordinate : data.textureCoordinates)
 			{
 				outputHelper << textureCoordinate;
 			}
-			outputHelper << data.vertexColors.size();
+			outputHelper << static_cast<uint32_t>(data.vertexColors.size());
 			for (auto& vertexColor : data.vertexColors)
 			{
 				outputHelper << vertexColor;
@@ -108,11 +108,24 @@ namespace Viper
 
 			outputHelper << data.faceCount;
 
-			outputHelper << data.indices.size();
+			outputHelper << static_cast<uint32_t>(data.indices.size());
 			for (auto& indice : data.indices)
 			{
 				outputHelper << indice;
 			}
+		}
+
+		bool MeshAsset::operator==(const MeshAsset& rhs) const
+		{
+			return ((data.vertices == rhs.data.vertices) && (data.normals == rhs.data.normals) &&
+				(data.tangents == rhs.data.tangents) && (data.biNormals == rhs.data.biNormals) &&
+				(data.textureCoordinates == rhs.data.textureCoordinates) && (data.vertexColors == rhs.data.vertexColors) &&
+				(data.indices == rhs.data.indices));
+		}
+
+		bool MeshAsset::operator!=(const MeshAsset& rhs) const
+		{
+			return !(*this == rhs);
 		}
 
 		MeshData& MeshAsset::Data()

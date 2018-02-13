@@ -42,9 +42,9 @@ namespace Viper
 			if (textureAsset != nullptr)
 			{
 				const auto& textureFileName = textureAsset->AssetFullName().ToString();
-				helper << textureFileName;
-				auto rawFilename = Utility::GetFilenameWithoutExtension(textureFileName);
-				textureAsset->SaveAs(rawFilename + ".vtex");
+				auto rawFilename = Utility::GetFilenameWithoutExtension(textureFileName) + ".vtex";
+				textureAsset->SaveAs(rawFilename);
+				helper << rawFilename;
 			}
 		}
 	}

@@ -32,6 +32,9 @@ namespace Viper
 
 			void Load(InputStreamHelper& inputHelper) override;
 			void Save(OutputStreamHelper& outputHelper) const override;
+
+			bool operator==(const MaterialAsset& rhs) const override;
+			bool operator!=(const MaterialAsset& rhs) const override;
 		protected:
 			const MaterialData& BaseData() const override;
 		private:

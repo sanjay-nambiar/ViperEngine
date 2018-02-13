@@ -12,6 +12,7 @@ namespace Viper
 			ambientMap(nullptr), diffuseMap(nullptr), specularMap(nullptr),
 			specularPowerMap(nullptr), opacityMap(nullptr)
 		{
+			isPbr = false;
 		}
 
 		NonPbrMaterialAsset::NonPbrMaterialAsset(const StringID& assetFullName) :
@@ -46,11 +47,36 @@ namespace Viper
 			SaveTextureHelper(data.diffuseMap, outputHelper);
 			SaveTextureHelper(data.specularMap, outputHelper);
 			SaveTextureHelper(data.specularPowerMap, outputHelper);
+			SaveTextureHelper(data.opacityMap, outputHelper);
 		}
 
 		NonPbrMaterialData& NonPbrMaterialAsset::Data()
 		{
 			return data;
+		}
+
+		bool NonPbrMaterialAsset::operator==(const MaterialAsset& rhs) const
+		{
+			if (rhs.IsPbr())
+			{
+				return false;
+			}
+			auto& rhsMaterial = static_cast<const NonPbrMaterialAsset&>(rhs);
+			return ((data.ambient == rhsMaterial.data.ambient) &&
+				(data.diffuse == rhsMaterial.data.diffuse) &&
+				(data.specular == rhsMaterial.data.specular) &&
+				(data.specularPower == rhsMaterial.data.specularPower)); //&&
+				/*IS_TEXTURE_EQUAL(data.normalMap, rhsMaterial.data.normalMap) &&
+				IS_TEXTURE_EQUAL(data.ambientMap, rhsMaterial.data.ambientMap) &&
+				IS_TEXTURE_EQUAL(data.diffuseMap, rhsMaterial.data.diffuseMap) &&
+				IS_TEXTURE_EQUAL(data.specularMap, rhsMaterial.data.specularMap) &&
+				IS_TEXTURE_EQUAL(data.specularPowerMap, rhsMaterial.data.specularPowerMap) &&
+				IS_TEXTURE_EQUAL(data.opacityMap, rhsMaterial.data.opacityMap));*/
+		}
+
+		bool NonPbrMaterialAsset::operator!=(const MaterialAsset& rhs) const
+		{
+			return !(*this == rhs);
 		}
 
 		const MaterialData& NonPbrMaterialAsset::BaseData() const

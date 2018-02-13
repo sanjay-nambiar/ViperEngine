@@ -71,6 +71,9 @@ int main(int argc, char* argv[])
 		{
 			auto modelAsset = ModelProcessor::LoadModel(inFilename, false);
 			modelAsset->SaveAs(StringID(rawFilename + ".vmod"));
+			auto modelAsset2 = new ModelAsset(StringID(rawFilename + ".vmod"));
+			static_cast<Viper::Asset::Asset*>(modelAsset2)->Load();
+			assert(*modelAsset == *modelAsset2);
 		}
 		else if (type == InputAssetType::Texture)
 		{

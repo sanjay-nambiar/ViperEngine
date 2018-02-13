@@ -28,6 +28,9 @@ namespace Viper
 
 			void Load(InputStreamHelper& inputHelper) override;
 			void Save(OutputStreamHelper& outputHelper) const override;
+
+			bool operator==(const ModelAsset& rhs) const;
+			bool operator!=(const ModelAsset& rhs) const;
 		private:
 			ModelData data;
 		};

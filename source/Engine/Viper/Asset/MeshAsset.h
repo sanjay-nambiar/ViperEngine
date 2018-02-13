@@ -20,7 +20,6 @@ namespace Viper
 			std::vector<glm::vec4> vertexColors;
 			std::uint32_t faceCount;
 			std::vector<std::uint32_t> indices;
-			MaterialAsset* materialAsset;
 		};
 
 		class MeshAsset : public Asset
@@ -33,6 +32,9 @@ namespace Viper
 
 			void Load(InputStreamHelper& inputHelper) override;
 			void Save(OutputStreamHelper& outputHelper) const override;
+
+			bool operator==(const MeshAsset& rhs) const;
+			bool operator!=(const MeshAsset& rhs) const;
 		private:
 			MeshData data;
 		};

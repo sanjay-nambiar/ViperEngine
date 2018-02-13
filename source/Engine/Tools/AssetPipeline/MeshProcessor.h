@@ -1,5 +1,6 @@
 #pragma once
 
+#include <string>
 #include "Asset/MeshAsset.h"
 
 struct aiMesh;
@@ -11,6 +12,6 @@ namespace ModelPipeline
     public:
 		MeshProcessor() = delete;
 
-		static Viper::Asset::MeshAsset* LoadMesh(Viper::Asset::ModelData& model, aiMesh& mesh);
+		static Viper::Asset::MeshAsset* LoadMesh(aiMesh& mesh, const std::string& assetFullName);
     };
 }

@@ -7,11 +7,10 @@ using namespace Viper::Asset;
 
 namespace ModelPipeline
 {
-	MeshAsset* MeshProcessor::LoadMesh(ModelData& modelData, aiMesh& mesh)
+	MeshAsset* MeshProcessor::LoadMesh(aiMesh& mesh, const string& assetFullName)
 	{
-		auto meshAsset = new MeshAsset(StringID(""));
+		auto meshAsset = new MeshAsset(StringID(assetFullName));
 		auto& meshData = meshAsset->Data();
-		meshData.materialAsset = modelData.materials.at(mesh.mMaterialIndex);
 
 		// Vertices
 		meshData.vertices.reserve(mesh.mNumVertices);

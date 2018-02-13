@@ -9,20 +9,27 @@ namespace ModelPipeline
 {
 	unordered_map<TextureType, uint32_t> MaterialProcessor::sTextureTypeMappings;
 
-	MaterialAsset* MaterialProcessor::LoadMaterial(aiMaterial& material)
+	MaterialAsset* MaterialProcessor::LoadMaterial(aiMaterial& material, const string& assetFullName)
 	{
+		// Ignore default material
+		aiString name;
+		material.Get(AI_MATKEY_NAME, name);
+		if (string(AI_DEFAULT_MATERIAL_NAME) == string(name.C_Str()))
+		{
+			return nullptr;
+		}
 		InitializeTextureTypeMappings();
-		return LoadNonPbrMaterial(material);
+		return LoadNonPbrMaterial(material, assetFullName);
 	}
 
-	MaterialAsset* MaterialProcessor::LoadPbrMaterial(aiMaterial&)
+	MaterialAsset* MaterialProcessor::LoadPbrMaterial(aiMaterial&, const string& assetFullName)
 	{
-		return new PbrMaterialAsset(StringID(""));
+		return new PbrMaterialAsset(StringID(assetFullName));
 	}
 
-	MaterialAsset* MaterialProcessor::LoadNonPbrMaterial(aiMaterial& material)
+	MaterialAsset* MaterialProcessor::LoadNonPbrMaterial(aiMaterial& material, const string& assetFullName)
 	{
-		auto materialAsset = new NonPbrMaterialAsset(StringID(""));
+		auto materialAsset = new NonPbrMaterialAsset(StringID(assetFullName));
 		auto& materialData = materialAsset->Data();
 
 		aiColor3D color(0.0f, 0.0f, 0.0f);

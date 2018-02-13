@@ -1,5 +1,6 @@
 #pragma once
 
+#include <string>
 #include <unordered_map>
 #include "Asset/NonPbrMaterialAsset.h"
 #include "Asset/PbrMaterialAsset.h"
@@ -29,10 +30,10 @@ namespace ModelPipeline
     public:
 		MaterialProcessor() = delete;
 
-		static Viper::Asset::MaterialAsset* LoadMaterial(aiMaterial& material);
+		static Viper::Asset::MaterialAsset* LoadMaterial(aiMaterial& material, const std::string& assetFullName);
 	private:
-		static Viper::Asset::MaterialAsset* LoadPbrMaterial(aiMaterial& material);
-		static Viper::Asset::MaterialAsset* LoadNonPbrMaterial(aiMaterial& material);
+		static Viper::Asset::MaterialAsset* LoadPbrMaterial(aiMaterial& material, const std::string& assetFullName);
+		static Viper::Asset::MaterialAsset* LoadNonPbrMaterial(aiMaterial& material, const std::string& assetFullName);
         static void InitializeTextureTypeMappings();
         static std::unordered_map<TextureType, std::uint32_t> sTextureTypeMappings;
     };

@@ -21,7 +21,6 @@ namespace Viper
 
 		void PbrMaterialAsset::Load(InputStreamHelper& inputHelper)
 		{
-			inputHelper >> data.isPbr;
 			inputHelper >> data.albedo;
 			inputHelper >> data.metallic;
 			inputHelper >> data.roughness;
@@ -50,6 +49,29 @@ namespace Viper
 		PbrMaterialData& PbrMaterialAsset::Data()
 		{
 			return data;
+		}
+
+		bool PbrMaterialAsset::operator==(const MaterialAsset& rhs) const
+		{
+			if (!rhs.IsPbr())
+			{
+				return false;
+			}
+			auto& rhsMaterial = static_cast<const PbrMaterialAsset&>(rhs);
+			return ((data.albedo == rhsMaterial.data.albedo) &&
+				(data.metallic == rhsMaterial.data.metallic) &&
+				(data.roughness == rhsMaterial.data.roughness) &&
+				(data.ao == rhsMaterial.data.ao) &&
+				IS_TEXTURE_EQUAL(data.normalMap, rhsMaterial.data.normalMap) &&
+				IS_TEXTURE_EQUAL(data.albedoMap, rhsMaterial.data.albedoMap) &&
+				IS_TEXTURE_EQUAL(data.metallicMap, rhsMaterial.data.metallicMap) &&
+				IS_TEXTURE_EQUAL(data.roughnessMap, rhsMaterial.data.roughnessMap) &&
+				IS_TEXTURE_EQUAL(data.aoMap, rhsMaterial.data.aoMap));
+		}
+
+		bool PbrMaterialAsset::operator!=(const MaterialAsset& rhs) const
+		{
+			return !(*this == rhs);
 		}
 
 		const MaterialData& PbrMaterialAsset::BaseData() const

@@ -21,35 +21,30 @@ namespace Viper
 	OutputStreamHelper& OutputStreamHelper::operator<<(int32_t value)
 	{
 		WriteObject(mStream, value);
-
 		return *this;
 	}
 
 	OutputStreamHelper& OutputStreamHelper::operator<<(int64_t value)
 	{
 		WriteObject(mStream, value);
-
 		return *this;
 	}
 
 	OutputStreamHelper& OutputStreamHelper::operator<<(uint32_t value)
 	{
 		WriteObject(mStream, value);
-
 		return *this;
 	}
 
 	OutputStreamHelper& OutputStreamHelper::operator<<(uint64_t value)
 	{
 		WriteObject(mStream, value);
-
 		return *this;
 	}
 
 	OutputStreamHelper& OutputStreamHelper::operator<<(float32_t value)
 	{
 		mStream.write((char*)&value, sizeof(float32_t));
-
 		return *this;
 	}
 
@@ -58,37 +53,30 @@ namespace Viper
 		uint32_t size = static_cast<uint32_t>(value.size());
 		WriteObject(mStream, size);
 		mStream.write(&value[0], size);
-
 		return *this;
 	}
 
 	OutputStreamHelper& OutputStreamHelper::operator<<(const vec2& value)
 	{
-		for (int i = 0; i < 2; i++)
-		{
-			*this << value[i];
-		}
-
+		*this << value.x;
+		*this << value.y;
 		return *this;
 	}
 
 	OutputStreamHelper& OutputStreamHelper::operator<<(const vec3& value)
 	{
-		for (int i = 0; i < 3; i++)
-		{
-			*this << value[i];
-		}
-
+		*this << value.x;
+		*this << value.y;
+		*this << value.z;
 		return *this;
 	}
 
 	OutputStreamHelper& OutputStreamHelper::operator<<(const vec4& value)
 	{
-		for (int i = 0; i < 4; i++)
-		{
-			*this << value[i];
-		}
-
+		*this << value.x;
+		*this << value.y;
+		*this << value.z;
+		*this << value.w;
 		return *this;
 	}
 
@@ -101,24 +89,19 @@ namespace Viper
 				*this << value[i][j];
 			}
 		}
-
 		return *this;
 	}
 
 	OutputStreamHelper& OutputStreamHelper::operator<<(bool value)
 	{
 		WriteObject(mStream, static_cast<byte>(value ? 1 : 0));
-
 		return *this;
 	}
 
 	template <typename T>
 	void OutputStreamHelper::WriteObject(ostream& stream, T value)
 	{
-		for (uint32_t size = sizeof(T); size > 0; --size, value >>= 8)
-		{
-			stream.put(static_cast<char>(value & 0xFF));
-		}
+		stream.write(reinterpret_cast<char*>(&value), sizeof(T));
 	}
 
 #pragma endregion OutputStreamHelper
@@ -137,21 +120,18 @@ namespace Viper
 	InputStreamHelper& InputStreamHelper::operator >> (int32_t& value)
 	{
 		ReadObject(mStream, value);
-
 		return *this;
 	}
 
 	InputStreamHelper& InputStreamHelper::operator >> (int64_t& value)
 	{
 		ReadObject(mStream, value);
-
 		return *this;
 	}
 
 	InputStreamHelper& InputStreamHelper::operator >> (uint32_t& value)
 	{
 		ReadObject(mStream, value);
-
 		return *this;
 	}
 
@@ -164,7 +144,7 @@ namespace Viper
 
 	InputStreamHelper& InputStreamHelper::operator >> (float32_t& value)
 	{
-		mStream.read((char*)&value, sizeof(float32_t));
+		mStream.read(reinterpret_cast<char*>(&value), sizeof(float32_t));
 
 		return *this;
 	}
@@ -182,31 +162,25 @@ namespace Viper
 
 	InputStreamHelper& InputStreamHelper::operator >> (vec2& value)
 	{
-		for (int i = 0; i < 2; i++)
-		{
-			*this >> value[i];
-		}
-
+		*this >> value.x;
+		*this >> value.y;
 		return *this;
 	}
 
 	InputStreamHelper& InputStreamHelper::operator >> (vec3& value)
 	{
-		for (int i = 0; i < 3; i++)
-		{
-			*this >> value[i];
-		}
-
+		*this >> value.x;
+		*this >> value.y;
+		*this >> value.z;
 		return *this;
 	}
 
 	InputStreamHelper& InputStreamHelper::operator >> (vec4& value)
 	{
-		for (int i = 0; i < 4; i++)
-		{
-			*this >> value[i];
-		}
-
+		*this >> value.x;
+		*this >> value.y;
+		*this >> value.z;
+		*this >> value.w;
 		return *this;
 	}
 
@@ -219,7 +193,6 @@ namespace Viper
 				*this >> value[i][j];
 			}
 		}
-
 		return *this;
 	}
 
@@ -236,12 +209,12 @@ namespace Viper
 	template <typename T>
 	void InputStreamHelper::ReadObject(istream& stream, T& value)
 	{
-		value = 0;
-
+		/*value = 0;
 		for (uint32_t size = 0; size < sizeof(T); ++size)
 		{
 			value |= stream.get() << (8 * size);
-		}
+		}*/
+		stream.read(reinterpret_cast<char*>(&value), sizeof(T));
 	}
 
 #pragma endregion InputStreamHelper
