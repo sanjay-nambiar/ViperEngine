@@ -65,13 +65,13 @@ namespace Viper
 			return ((data.ambient == rhsMaterial.data.ambient) &&
 				(data.diffuse == rhsMaterial.data.diffuse) &&
 				(data.specular == rhsMaterial.data.specular) &&
-				(data.specularPower == rhsMaterial.data.specularPower)); //&&
-				/*IS_TEXTURE_EQUAL(data.normalMap, rhsMaterial.data.normalMap) &&
+				(data.specularPower == rhsMaterial.data.specularPower) &&
+				IS_TEXTURE_EQUAL(data.normalMap, rhsMaterial.data.normalMap) &&
 				IS_TEXTURE_EQUAL(data.ambientMap, rhsMaterial.data.ambientMap) &&
 				IS_TEXTURE_EQUAL(data.diffuseMap, rhsMaterial.data.diffuseMap) &&
 				IS_TEXTURE_EQUAL(data.specularMap, rhsMaterial.data.specularMap) &&
 				IS_TEXTURE_EQUAL(data.specularPowerMap, rhsMaterial.data.specularPowerMap) &&
-				IS_TEXTURE_EQUAL(data.opacityMap, rhsMaterial.data.opacityMap));*/
+				IS_TEXTURE_EQUAL(data.opacityMap, rhsMaterial.data.opacityMap));
 		}
 
 		bool NonPbrMaterialAsset::operator!=(const MaterialAsset& rhs) const
