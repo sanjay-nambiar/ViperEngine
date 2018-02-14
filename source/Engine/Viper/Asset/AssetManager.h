@@ -20,7 +20,7 @@ namespace Viper
 			std::vector<Asset> Search(const StringID& assetSearchPath);
 		private:
 			std::vector<Asset> loadedAssets;
-			std::unordered_set<Asset> loadedAssetsLookup;
+			std::unordered_set<uint32_t> loadedAssetsLookup;
 		};
 	}
 }

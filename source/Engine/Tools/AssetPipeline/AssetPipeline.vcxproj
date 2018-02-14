@@ -125,7 +125,7 @@
       <AdditionalIncludeDirectories>$(SolutionDir)..\source\Engine\Viper;$(SolutionDir)..\source\Thirdparty\glm;$(SolutionDir)..\thirdparty\assimp\include;$(SolutionDir)..\source\Thirdparty\stb</AdditionalIncludeDirectories>
       <TreatWarningAsError>false</TreatWarningAsError>
       <PrecompiledHeaderFile>Pch.h</PrecompiledHeaderFile>
-      <DisableSpecificWarnings>4201;4996</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4201;4505;4127;4996</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -148,7 +148,7 @@
       <AdditionalIncludeDirectories>$(SolutionDir)..\source\Engine\Viper;$(SolutionDir)..\source\Thirdparty\glm;$(SolutionDir)..\thirdparty\assimp\include;$(SolutionDir)..\source\Thirdparty\stb</AdditionalIncludeDirectories>
       <TreatWarningAsError>false</TreatWarningAsError>
       <PrecompiledHeaderFile>Pch.h</PrecompiledHeaderFile>
-      <DisableSpecificWarnings>4201;4996</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4201;4505;4127;4996</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -173,7 +173,7 @@
       <AdditionalIncludeDirectories>$(SolutionDir)..\source\Engine\Viper;$(SolutionDir)..\source\Thirdparty\glm;$(SolutionDir)..\thirdparty\assimp\include;$(SolutionDir)..\source\Thirdparty\stb</AdditionalIncludeDirectories>
       <TreatWarningAsError>false</TreatWarningAsError>
       <PrecompiledHeaderFile>Pch.h</PrecompiledHeaderFile>
-      <DisableSpecificWarnings>4201;4996</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4201;4505;4127;4996</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -200,7 +200,7 @@
       <AdditionalIncludeDirectories>$(SolutionDir)..\source\Engine\Viper;$(SolutionDir)..\source\Thirdparty\glm;$(SolutionDir)..\thirdparty\assimp\include;$(SolutionDir)..\source\Thirdparty\stb</AdditionalIncludeDirectories>
       <TreatWarningAsError>false</TreatWarningAsError>
       <PrecompiledHeaderFile>Pch.h</PrecompiledHeaderFile>
-      <DisableSpecificWarnings>4201;4996</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4201;4505;4127;4996</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
