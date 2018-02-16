@@ -32,7 +32,7 @@ namespace ModelPipeline
 			for (uint32_t i = 0; i < scene->mNumMaterials; i++)
 			{
 				auto materialAsset = MaterialProcessor::LoadMaterial(*(scene->mMaterials[i]), modelName + "-" 
-					+ to_string(modelData.materials.size()) + ".vmat");
+					+ to_string(modelData.materials.size()) + ".vmtl");
 				if (materialAsset != nullptr)
 				{
 					modelData.materials.push_back(materialAsset);

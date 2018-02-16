@@ -70,8 +70,8 @@ int main(int argc, char* argv[])
 		if (type == InputAssetType::Model)
 		{
 			auto modelAsset = ModelProcessor::LoadModel(inFilename, false);
-			modelAsset->SaveAs(StringID(rawFilename + ".vmod"));
-			auto modelAsset2 = new ModelAsset(StringID(rawFilename + ".vmod"));
+			modelAsset->SaveAs(StringID(rawFilename + ".vmdl"));
+			auto modelAsset2 = new ModelAsset(StringID(rawFilename + ".vmdl"));
 			static_cast<Viper::Asset::Asset*>(modelAsset2)->Load();
 			assert(*modelAsset == *modelAsset2);
 		}
