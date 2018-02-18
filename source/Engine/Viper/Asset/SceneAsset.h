@@ -4,7 +4,7 @@
 
 namespace Viper
 {
-	namespace Asset
+	namespace Assets
 	{
 		class SceneAsset : public Asset
 		{
@@ -12,8 +12,9 @@ namespace Viper
 			SceneAsset(StringID& assetFullName);
 			~SceneAsset() = default;
 
-			void Load(InputStreamHelper& inputHelper) override;
-			void Save(OutputStreamHelper& outputHelper) const override;
+		private:
+			void LoadFrom(InputStreamHelper& inputHelper) override;
+			void SaveTo(OutputStreamHelper& outputHelper) const override;
 		};
 	}
 }

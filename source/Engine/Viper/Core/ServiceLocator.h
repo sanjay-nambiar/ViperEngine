@@ -54,6 +54,7 @@ namespace Viper
 		friend Singleton<ServiceLocator>;
 
 		std::unordered_map<ServiceType, Service*> services;
+		Assets::AssetManager* assetManager;
 		Audio::AudioManager* audioManager;
 		Gameplay::Game* game;
 		Graphics::Renderer* rendererSystem;

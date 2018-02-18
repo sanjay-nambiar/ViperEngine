@@ -2,7 +2,7 @@
 
 using namespace std;
 using namespace Viper;
-using namespace Viper::Asset;
+using namespace Viper::Assets;
 using namespace TexturePipeline;
 
 namespace ModelPipeline

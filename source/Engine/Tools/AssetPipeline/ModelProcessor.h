@@ -12,6 +12,6 @@ namespace ModelPipeline
     public:
 		ModelProcessor() = delete;
 
-		static Viper::Asset::ModelAsset* LoadModel(const std::string& filename, bool flipUVs = false);
+		static Viper::Assets::ModelAsset* LoadModel(const std::string& filename, bool flipUVs = false);
     };
 }

@@ -6,7 +6,7 @@ using namespace std;
 
 namespace Viper
 {
-	using namespace Asset;
+	using namespace Assets;
 
 	namespace Graphics
 	{
@@ -24,7 +24,7 @@ namespace Viper
 			glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, color);
 
 			TextureAsset asset(StringID(textureFile.c_str()));
-			static_cast<Viper::Asset::Asset*>(&asset)->Load();
+			asset.Load();
 			auto& textureData = asset.Data();
 			if (textureData.image.data == nullptr)
 			{

@@ -4,7 +4,7 @@ using namespace std;
 
 namespace Viper
 {
-	namespace Asset
+	namespace Assets
 	{
 		MaterialData::MaterialData() :
 			isPbr(false), normalMap(nullptr)
@@ -30,7 +30,7 @@ namespace Viper
 			{
 				helper >> tempString;
 				TextureAsset* texture = new TextureAsset(tempString);
-				static_cast<Asset*>(texture)->Load();
+				texture->Load();
 				return texture;
 			}
 			return nullptr;
@@ -42,8 +42,8 @@ namespace Viper
 			if (textureAsset != nullptr)
 			{
 				const auto& textureFileName = textureAsset->AssetFullName().ToString();
-				auto rawFilename = Utility::GetFilenameWithoutExtension(textureFileName) + ".vtex";
-				textureAsset->SaveAs(rawFilename);
+				auto rawFilename = Utility::GetFilenameWithoutExtension(textureFileName);
+				textureAsset->Save();
 				helper << rawFilename;
 			}
 		}

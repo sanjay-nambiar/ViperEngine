@@ -3,7 +3,7 @@
 using namespace std;
 using namespace glm;
 using namespace Viper;
-using namespace Viper::Asset;
+using namespace Viper::Assets;
 
 namespace ModelPipeline
 {

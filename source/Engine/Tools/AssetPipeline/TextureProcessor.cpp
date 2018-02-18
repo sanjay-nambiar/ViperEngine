@@ -4,7 +4,7 @@
 
 using namespace std;
 using namespace Viper;
-using namespace Viper::Asset;
+using namespace Viper::Assets;
 
 namespace TexturePipeline
 {

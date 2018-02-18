@@ -5,7 +5,7 @@
 
 namespace Viper
 {
-	namespace Asset
+	namespace Assets
 	{
 		class AssetManager;
 
@@ -33,12 +33,12 @@ namespace Viper
 
 			TextureData& Data();
 
-			void Load(InputStreamHelper& inputHelper) override;
-			void Save(OutputStreamHelper& outputHelper) const override;
-
 			bool operator==(const TextureAsset& rhs) const;
 			bool operator!=(const TextureAsset& rhs) const;
 		private:
+			void LoadFrom(InputStreamHelper& inputHelper) override;
+			void SaveTo(OutputStreamHelper& outputHelper) const override;
+
 			TextureData data;
 		};
 	}

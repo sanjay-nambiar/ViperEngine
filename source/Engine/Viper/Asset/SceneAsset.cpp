@@ -5,18 +5,18 @@ using namespace std;
 
 namespace Viper
 {
-	namespace Asset
+	namespace Assets
 	{
 		SceneAsset::SceneAsset(StringID& assetFullName) :
 			Asset(assetFullName, AssetType::Scene)
 		{
 		}
 
-		void SceneAsset::Load(InputStreamHelper&)
+		void SceneAsset::LoadFrom(InputStreamHelper&)
 		{
 		}
 
-		void SceneAsset::Save(OutputStreamHelper&) const
+		void SceneAsset::SaveTo(OutputStreamHelper&) const
 		{
 		}
 	}

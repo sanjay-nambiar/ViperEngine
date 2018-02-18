@@ -6,14 +6,32 @@ using namespace glm;
 
 namespace Viper
 {
-	namespace Asset
+	namespace Assets
 	{
 		MeshAsset::MeshAsset(const StringID& assetFullName) :
 			Asset(assetFullName, AssetType::Mesh)
 		{
 		}
 
-		void MeshAsset::Load(InputStreamHelper& inputHelper)
+		bool MeshAsset::operator==(const MeshAsset& rhs) const
+		{
+			return ((data.vertices == rhs.data.vertices) && (data.normals == rhs.data.normals) &&
+				(data.tangents == rhs.data.tangents) && (data.biNormals == rhs.data.biNormals) &&
+				(data.textureCoordinates == rhs.data.textureCoordinates) && (data.vertexColors == rhs.data.vertexColors) &&
+				(data.indices == rhs.data.indices));
+		}
+
+		bool MeshAsset::operator!=(const MeshAsset& rhs) const
+		{
+			return !(*this == rhs);
+		}
+
+		MeshData& MeshAsset::Data()
+		{
+			return data;
+		}
+
+		void MeshAsset::LoadFrom(InputStreamHelper& inputHelper)
 		{
 			uint32_t tempCount, temp;
 			glm::vec3 tempVec3;
@@ -73,7 +91,7 @@ namespace Viper
 			}
 		}
 
-		void MeshAsset::Save(OutputStreamHelper& outputHelper) const
+		void MeshAsset::SaveTo(OutputStreamHelper& outputHelper) const
 		{
 			outputHelper << static_cast<uint32_t>(data.vertices.size());
 			for (auto& vertex : data.vertices)
@@ -113,24 +131,6 @@ namespace Viper
 			{
 				outputHelper << indice;
 			}
-		}
-
-		bool MeshAsset::operator==(const MeshAsset& rhs) const
-		{
-			return ((data.vertices == rhs.data.vertices) && (data.normals == rhs.data.normals) &&
-				(data.tangents == rhs.data.tangents) && (data.biNormals == rhs.data.biNormals) &&
-				(data.textureCoordinates == rhs.data.textureCoordinates) && (data.vertexColors == rhs.data.vertexColors) &&
-				(data.indices == rhs.data.indices));
-		}
-
-		bool MeshAsset::operator!=(const MeshAsset& rhs) const
-		{
-			return !(*this == rhs);
-		}
-
-		MeshData& MeshAsset::Data()
-		{
-			return data;
 		}
 	}
 }

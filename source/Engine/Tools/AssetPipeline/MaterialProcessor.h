@@ -30,10 +30,10 @@ namespace ModelPipeline
     public:
 		MaterialProcessor() = delete;
 
-		static Viper::Asset::MaterialAsset* LoadMaterial(aiMaterial& material, const std::string& assetFullName);
+		static Viper::Assets::MaterialAsset* LoadMaterial(aiMaterial& material, const std::string& assetFullName);
 	private:
-		static Viper::Asset::MaterialAsset* LoadPbrMaterial(aiMaterial& material, const std::string& assetFullName);
-		static Viper::Asset::MaterialAsset* LoadNonPbrMaterial(aiMaterial& material, const std::string& assetFullName);
+		static Viper::Assets::MaterialAsset* LoadPbrMaterial(aiMaterial& material, const std::string& assetFullName);
+		static Viper::Assets::MaterialAsset* LoadNonPbrMaterial(aiMaterial& material, const std::string& assetFullName);
         static void InitializeTextureTypeMappings();
         static std::unordered_map<TextureType, std::uint32_t> sTextureTypeMappings;
     };

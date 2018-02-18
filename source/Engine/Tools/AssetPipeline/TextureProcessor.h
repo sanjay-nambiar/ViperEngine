@@ -9,6 +9,6 @@ namespace TexturePipeline
 	public:
 		TextureProcessor() = delete;
 
-		static Viper::Asset::TextureAsset* LoadTexture(const std::string& filename);
+		static Viper::Assets::TextureAsset* LoadTexture(const std::string& filename);
 	};
 }

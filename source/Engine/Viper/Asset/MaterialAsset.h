@@ -4,7 +4,7 @@
 
 namespace Viper
 {
-	namespace Asset
+	namespace Assets
 	{
 		class TextureAsset;
 

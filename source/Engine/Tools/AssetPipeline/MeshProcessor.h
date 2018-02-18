@@ -12,6 +12,6 @@ namespace ModelPipeline
     public:
 		MeshProcessor() = delete;
 
-		static Viper::Asset::MeshAsset* LoadMesh(aiMesh& mesh, const std::string& assetFullName);
+		static Viper::Assets::MeshAsset* LoadMesh(aiMesh& mesh, const std::string& assetFullName);
     };
 }

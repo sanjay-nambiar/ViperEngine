@@ -6,7 +6,7 @@
 
 namespace Viper
 {
-	namespace Asset
+	namespace Assets
 	{
 		class MaterialAsset;
 
@@ -30,12 +30,12 @@ namespace Viper
 
 			MeshData& Data();
 
-			void Load(InputStreamHelper& inputHelper) override;
-			void Save(OutputStreamHelper& outputHelper) const override;
-
 			bool operator==(const MeshAsset& rhs) const;
 			bool operator!=(const MeshAsset& rhs) const;
 		private:
+			void LoadFrom(InputStreamHelper& inputHelper) override;
+			void SaveTo(OutputStreamHelper& outputHelper) const override;
+
 			MeshData data;
 		};
 	}

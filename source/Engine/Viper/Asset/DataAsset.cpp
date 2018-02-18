@@ -3,18 +3,18 @@
 
 namespace Viper
 {
-	namespace Asset
+	namespace Assets
 	{
 		DataAsset::DataAsset(StringID& assetFullName) :
 			Asset(assetFullName, AssetType::Data)
 		{
 		}
 
-		void DataAsset::Load(InputStreamHelper&)
+		void DataAsset::LoadFrom(InputStreamHelper&)
 		{
 		}
 
-		void DataAsset::Save(OutputStreamHelper&) const
+		void DataAsset::SaveTo(OutputStreamHelper&) const
 		{
 		}
 	}

@@ -6,7 +6,7 @@
 
 namespace Viper
 {
-	namespace Asset
+	namespace Assets
 	{
 		struct NonPbrMaterialData final : MaterialData
 		{
@@ -32,14 +32,14 @@ namespace Viper
 
 			NonPbrMaterialData& Data();
 
-			void Load(InputStreamHelper& inputHelper) override;
-			void Save(OutputStreamHelper& outputHelper) const override;
-
 			bool operator==(const MaterialAsset& rhs) const override;
 			bool operator!=(const MaterialAsset& rhs) const override;
 		protected:
 			virtual const MaterialData& BaseData() const override;
 		private:
+			void LoadFrom(InputStreamHelper& inputHelper) override;
+			void SaveTo(OutputStreamHelper& outputHelper) const override;
+
 			NonPbrMaterialData data;
 		};
 	}

@@ -1,11 +1,12 @@
 #pragma once
 
+#include <iostream>
 #include "Core/StringID.h"
 #include "Core/StreamHelper.h"
 
 namespace Viper
 {
-	namespace Asset
+	namespace Assets
 	{
 		enum class AssetType
 		{
@@ -18,6 +19,8 @@ namespace Viper
 			Data
 		};
 
+		class AssetManager;
+
 		class Asset
 		{
 		public:
@@ -26,16 +29,15 @@ namespace Viper
 
 			const StringID& AssetFullName() const;
 			AssetType Type() const;
-			
+
 			void Load();
 			void Save();
-			void SaveAs(const StringID& assetNewName);
-
-			virtual void Load(InputStreamHelper& inputHelper) = 0;
-			virtual void Save(OutputStreamHelper& outputHelper) const = 0;
 
 			StringID assetFullName;
 			AssetType type;
+		protected:
+			virtual void LoadFrom(InputStreamHelper& inputHelper) = 0;
+			virtual void SaveTo(OutputStreamHelper& outputHelper) const = 0;
 		};
 	}
 }

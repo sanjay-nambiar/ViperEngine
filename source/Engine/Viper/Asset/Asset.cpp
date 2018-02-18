@@ -1,11 +1,12 @@
 #include "Viper.h"
 #include "Asset.h"
+#include "AssetManager.h"
 
 using namespace std;
 
 namespace Viper
 {
-	namespace Asset
+	namespace Assets
 	{
 		Asset::Asset(const StringID& assetFullName, AssetType type) :
 			assetFullName(assetFullName), type(type)
@@ -24,32 +25,16 @@ namespace Viper
 
 		void Asset::Load()
 		{
-			ifstream file(assetFullName.ToString(), ios::binary);
-			if (!file.is_open())
-			{
-				throw GameException("Unable to load asset : " + assetFullName.ToString());
-			}
-			InputStreamHelper helper(file);
-			Load(helper);
-			file.close();
+			auto& assetManager = ServiceLocator::GetInstance().Get<AssetManager>();
+			auto& helper = assetManager.GetAssetInputStream(assetFullName);
+			LoadFrom(helper);
 		}
 
 		void Asset::Save()
 		{
-			ofstream file(assetFullName.ToString(), ios::binary);
-			if (!file.is_open())
-			{
-				throw GameException("Unable to save asset : " + assetFullName.ToString());
-			}
-			OutputStreamHelper helper(file);
-			Save(helper);
-			file.close();
-		}
-
-		void Asset::SaveAs(const StringID& assetNewName)
-		{
-			assetFullName = assetNewName;
-			Save();
+			auto& assetManager = ServiceLocator::GetInstance().Get<AssetManager>();
+			auto& helper = assetManager.GetAssetOutputStream(assetFullName);
+			SaveTo(helper);
 		}
 	}
 }
