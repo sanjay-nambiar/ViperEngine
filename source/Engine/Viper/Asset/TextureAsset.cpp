@@ -13,10 +13,7 @@ namespace Viper
 		{
 		}
 
-		TextureAsset::TextureAsset(const StringID& assetFullName) :
-			Asset(assetFullName)
-		{
-		}
+		ASSET_DEFINITION(TextureAsset, Asset, AssetType::Texture)
 
 		TextureAsset::~TextureAsset()
 		{

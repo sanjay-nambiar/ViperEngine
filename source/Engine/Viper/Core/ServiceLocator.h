@@ -9,6 +9,7 @@ namespace Viper
 	// Forward declarations
 	class Service;
 	namespace Audio { class AudioManager; }
+	namespace Assets { class AssetManager; }
 	namespace Gameplay { class Game; }
 	namespace Graphics
 	{

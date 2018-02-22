@@ -14,10 +14,7 @@ namespace Viper
 			isPbr = true;
 		}
 
-		PbrMaterialAsset::PbrMaterialAsset(const StringID& assetFullName) :
-			MaterialAsset(assetFullName)
-		{
-		}
+		ASSET_DEFINITION(PbrMaterialAsset, MaterialAsset, AssetType::PbrMaterial)
 
 		PbrMaterialData& PbrMaterialAsset::Data()
 		{

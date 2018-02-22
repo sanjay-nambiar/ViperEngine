@@ -9,7 +9,7 @@ namespace Viper
 		class DataAsset : public Asset
 		{
 		public:
-			DataAsset(StringID& assetFullName);
+			ASSET_DECLARATION(DataAsset)
 			~DataAsset() = default;
 
 		private:

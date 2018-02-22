@@ -18,6 +18,18 @@ namespace Viper
 		return mStream;
 	}
 
+	OutputStreamHelper& OutputStreamHelper::operator<<(int8_t value)
+	{
+		WriteObject(mStream, value);
+		return *this;
+	}
+
+	OutputStreamHelper& OutputStreamHelper::operator<<(int16_t value)
+	{
+		WriteObject(mStream, value);
+		return *this;
+	}
+
 	OutputStreamHelper& OutputStreamHelper::operator<<(int32_t value)
 	{
 		WriteObject(mStream, value);
@@ -25,6 +37,18 @@ namespace Viper
 	}
 
 	OutputStreamHelper& OutputStreamHelper::operator<<(int64_t value)
+	{
+		WriteObject(mStream, value);
+		return *this;
+	}
+
+	OutputStreamHelper& OutputStreamHelper::operator<<(uint8_t value)
+	{
+		WriteObject(mStream, value);
+		return *this;
+	}
+
+	OutputStreamHelper& OutputStreamHelper::operator<<(uint16_t value)
 	{
 		WriteObject(mStream, value);
 		return *this;
@@ -117,39 +141,63 @@ namespace Viper
 		return mStream;
 	}
 
-	InputStreamHelper& InputStreamHelper::operator >> (int32_t& value)
+	InputStreamHelper& InputStreamHelper::operator>>(int8_t& value)
 	{
 		ReadObject(mStream, value);
 		return *this;
 	}
 
-	InputStreamHelper& InputStreamHelper::operator >> (int64_t& value)
+	InputStreamHelper& InputStreamHelper::operator>>(int16_t& value)
 	{
 		ReadObject(mStream, value);
 		return *this;
 	}
 
-	InputStreamHelper& InputStreamHelper::operator >> (uint32_t& value)
+	InputStreamHelper& InputStreamHelper::operator>>(int32_t& value)
 	{
 		ReadObject(mStream, value);
 		return *this;
 	}
 
-	InputStreamHelper& InputStreamHelper::operator >> (uint64_t& value)
+	InputStreamHelper& InputStreamHelper::operator>>(int64_t& value)
+	{
+		ReadObject(mStream, value);
+		return *this;
+	}
+
+	InputStreamHelper& InputStreamHelper::operator>>(uint8_t& value)
+	{
+		ReadObject(mStream, value);
+		return *this;
+	}
+
+	InputStreamHelper& InputStreamHelper::operator>>(uint16_t& value)
+	{
+		ReadObject(mStream, value);
+		return *this;
+	}
+
+	InputStreamHelper& InputStreamHelper::operator>>(uint32_t& value)
+	{
+		ReadObject(mStream, value);
+		return *this;
+	}
+
+	InputStreamHelper& InputStreamHelper::operator>>(uint64_t& value)
 	{
 		ReadObject(mStream, value);
 
 		return *this;
 	}
 
-	InputStreamHelper& InputStreamHelper::operator >> (float32_t& value)
+	InputStreamHelper& InputStreamHelper::operator>>(float32_t& value)
 	{
 		mStream.read(reinterpret_cast<char*>(&value), sizeof(float32_t));
 
 		return *this;
 	}
 
-	InputStreamHelper& InputStreamHelper::operator >> (string& value)
+	InputStreamHelper& InputStreamHelper::operator>>(string& value)
 	{
 		uint32_t stringLength;
 		ReadObject(mStream, stringLength);
@@ -160,14 +208,14 @@ namespace Viper
 		return *this;
 	}
 
-	InputStreamHelper& InputStreamHelper::operator >> (vec2& value)
+	InputStreamHelper& InputStreamHelper::operator>>(vec2& value)
 	{
 		*this >> value.x;
 		*this >> value.y;
 		return *this;
 	}
 
-	InputStreamHelper& InputStreamHelper::operator >> (vec3& value)
+	InputStreamHelper& InputStreamHelper::operator>>(vec3& value)
 	{
 		*this >> value.x;
 		*this >> value.y;
@@ -175,7 +223,7 @@ namespace Viper
 		return *this;
 	}
 
-	InputStreamHelper& InputStreamHelper::operator >> (vec4& value)
+	InputStreamHelper& InputStreamHelper::operator>>(vec4& value)
 	{
 		*this >> value.x;
 		*this >> value.y;
@@ -184,7 +232,7 @@ namespace Viper
 		return *this;
 	}
 
-	InputStreamHelper& InputStreamHelper::operator >> (mat4& value)
+	InputStreamHelper& InputStreamHelper::operator>>(mat4& value)
 	{
 		for (int i = 0; i < 4; i++)
 		{
@@ -196,7 +244,7 @@ namespace Viper
 		return *this;
 	}
 
-	InputStreamHelper& InputStreamHelper::operator >> (bool& value)
+	InputStreamHelper& InputStreamHelper::operator>>(bool& value)
 	{
 		byte boolValue;
 		ReadObject(mStream, boolValue);

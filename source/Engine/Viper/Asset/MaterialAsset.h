@@ -20,7 +20,7 @@ namespace Viper
 		class MaterialAsset : public Asset
 		{
 		public:
-			MaterialAsset(const StringID& assetFullName);
+			MaterialAsset(const StringID& assetFullName, AssetType type);
 			~MaterialAsset() = default;
 
 			bool IsPbr() const;

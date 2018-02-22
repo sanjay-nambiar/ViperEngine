@@ -189,6 +189,8 @@
   <ItemGroup>
     <ClInclude Include="Asset\Asset.h" />
     <ClInclude Include="Asset\AssetManager.h" />
+    <ClInclude Include="Asset\AssetRegistry.h" />
+    <ClInclude Include="Asset\AssetType.h" />
     <ClInclude Include="Asset\DataAsset.h" />
     <ClInclude Include="Asset\MaterialAsset.h" />
     <ClInclude Include="Asset\MeshAsset.h" />
@@ -246,6 +248,7 @@
   <ItemGroup>
     <ClCompile Include="Asset\Asset.cpp" />
     <ClCompile Include="Asset\AssetManager.cpp" />
+    <ClCompile Include="Asset\AssetRegistry.cpp" />
     <ClCompile Include="Asset\DataAsset.cpp" />
     <ClCompile Include="Asset\MaterialAsset.cpp" />
     <ClCompile Include="Asset\MeshAsset.cpp" />

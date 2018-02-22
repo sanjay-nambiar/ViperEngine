@@ -21,7 +21,7 @@ namespace Viper
 		class ModelAsset : public Asset
 		{
 		public:
-			ModelAsset(const StringID& assetFullName);
+			ASSET_DECLARATION(ModelAsset)
 			~ModelAsset() = default;
 
 			ModelData& Data();

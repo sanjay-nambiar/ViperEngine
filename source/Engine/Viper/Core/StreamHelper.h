@@ -16,8 +16,12 @@ namespace Viper
 
 		std::ostream& Stream();
 
+		OutputStreamHelper& operator<<(int8_t value);
+		OutputStreamHelper& operator<<(int16_t value);
 		OutputStreamHelper& operator<<(int32_t value);
 		OutputStreamHelper& operator<<(int64_t value);
+		OutputStreamHelper& operator<<(uint8_t value);
+		OutputStreamHelper& operator<<(uint16_t value);
 		OutputStreamHelper& operator<<(uint32_t value);
 		OutputStreamHelper& operator<<(uint64_t value);
 		OutputStreamHelper& operator<<(float32_t value);
@@ -44,8 +48,12 @@ namespace Viper
 
 		std::istream& Stream();
 
+		InputStreamHelper& operator>>(int8_t& value);
+		InputStreamHelper& operator>>(int16_t& value);
 		InputStreamHelper& operator>>(int32_t& value);
 		InputStreamHelper& operator>>(int64_t& value);
+		InputStreamHelper& operator>>(uint8_t& value);
+		InputStreamHelper& operator>>(uint16_t& value);
 		InputStreamHelper& operator>>(uint32_t& value);
 		InputStreamHelper& operator>>(uint64_t& value);
 		InputStreamHelper& operator>>(float32_t& value);

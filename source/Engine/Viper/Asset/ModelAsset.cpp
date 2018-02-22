@@ -7,10 +7,7 @@ namespace Viper
 {
 	namespace Assets
 	{
-		ModelAsset::ModelAsset(const StringID& assetFullName) :
-			Asset(assetFullName, AssetType::Model)
-		{
-		}
+		ASSET_DEFINITION(ModelAsset, Asset, AssetType::Model)
 
 		bool ModelAsset::operator==(const ModelAsset& rhs) const
 		{

@@ -208,6 +208,12 @@
     <ClInclude Include="Core\Utility.h">
       <Filter>Core</Filter>
     </ClInclude>
+    <ClInclude Include="Asset\AssetRegistry.h">
+      <Filter>Asset</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset\AssetType.h">
+      <Filter>Asset</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core\ServiceLocator.cpp">
@@ -334,6 +340,7 @@
     <ClCompile Include="Core\Utility.cpp">
       <Filter>Core</Filter>
     </ClCompile>
+    <ClCompile Include="Asset\AssetRegistry.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Graphics\FrameGraph.inl">

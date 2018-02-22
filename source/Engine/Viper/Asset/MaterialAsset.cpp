@@ -11,8 +11,8 @@ namespace Viper
 		{
 		}
 
-		MaterialAsset::MaterialAsset(const StringID& assetFullName) :
-			Asset(assetFullName, AssetType::Material)
+		MaterialAsset::MaterialAsset(const StringID& assetFullName, AssetType type) :
+			Asset(assetFullName, type)
 		{
 		}
 

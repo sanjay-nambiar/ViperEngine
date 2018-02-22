@@ -28,7 +28,7 @@ namespace Viper
 		class TextureAsset : public Asset
 		{
 		public:
-			TextureAsset(const StringID& assetFullName);
+			ASSET_DECLARATION(TextureAsset)
 			~TextureAsset();
 
 			TextureData& Data();

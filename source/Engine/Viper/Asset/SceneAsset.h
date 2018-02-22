@@ -9,7 +9,7 @@ namespace Viper
 		class SceneAsset : public Asset
 		{
 		public:
-			SceneAsset(StringID& assetFullName);
+			ASSET_DECLARATION(SceneAsset)
 			~SceneAsset() = default;
 
 		private:

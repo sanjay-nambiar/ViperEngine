@@ -7,10 +7,7 @@ namespace Viper
 {
 	namespace Assets
 	{
-		SceneAsset::SceneAsset(StringID& assetFullName) :
-			Asset(assetFullName, AssetType::Scene)
-		{
-		}
+		ASSET_DEFINITION(SceneAsset, Asset, AssetType::Scene)
 
 		void SceneAsset::LoadFrom(InputStreamHelper&)
 		{

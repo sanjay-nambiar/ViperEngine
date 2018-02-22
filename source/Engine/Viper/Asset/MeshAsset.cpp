@@ -8,10 +8,7 @@ namespace Viper
 {
 	namespace Assets
 	{
-		MeshAsset::MeshAsset(const StringID& assetFullName) :
-			Asset(assetFullName, AssetType::Mesh)
-		{
-		}
+		ASSET_DEFINITION(MeshAsset, Asset, AssetType::Mesh)
 
 		bool MeshAsset::operator==(const MeshAsset& rhs) const
 		{

@@ -1,11 +1,15 @@
 #pragma once
 
+#include <fstream>
 #include <unordered_set>
 #include <vector>
 #include "Asset/Asset.h"
+#include "Asset/AssetRegistry.h"
+#include "Asset/AssetType.h"
 #include "Core/Core.h"
 #include "Core/Service.h"
 #include "Core/StreamHelper.h"
+#include "Core/Types.h"
 
 namespace Viper
 {
@@ -18,16 +22,37 @@ namespace Viper
 		public:
 			AssetManager();
 			~AssetManager() = default;
+
+			void Initialize(const std::string& assetRegistryFile);
+			void Shutdown();
+
 			void LoadSynchronous(const StringID& assetFullName);
 			void UnloadSynchronous(const StringID& assetFullName);
+
+			void LoadAll();
 			void UnloadAll();
-			std::vector<Asset> Search(const StringID& assetSearchPath);
 		private:
+			struct OffsetData
+			{
+				StringID resourceFile;
+				std::uint32_t offset;
+			};
+
 			InputStreamHelper& GetAssetInputStream(StringID assetFullname);
 			OutputStreamHelper& GetAssetOutputStream(StringID assetFullname);
 
-			std::vector<Asset> loadedAssets;
-			std::unordered_set<uint32_t> loadedAssetsLookup;
+			static void ReadAssetRegistry(AssetRegistry& registry, InputStreamHelper& helper);
+			static void SaveAssetRegistry(AssetRegistry& registry, OutputStreamHelper& helper);
+
+			void LoadRegistryData(AssetRegistry& registry);
+			void OpenFile(std::ifstream& file, const std::string& filename);
+			void LoadAsset(InputStreamHelper& helper, StringID assetId, std::uint32_t offset);
+
+			std::unordered_map<std::uint32_t, OffsetData> assetMetadata;
+			std::unordered_map<std::uint32_t, std::vector<StringID>> fileMetadata;
+			std::unordered_map<std::uint32_t, Asset*> loadedAssets;
+
+			static std::unordered_map<AssetType, AssetConstructor> Constructors;
 
 			friend class Asset;
 		};

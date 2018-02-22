@@ -20,6 +20,7 @@
 
 #include "Asset/Asset.h"
 #include "Asset/AssetManager.h"
+#include "Asset/AssetRegistry.h"
 #include "Asset/DataAsset.h"
 #include "Asset/MaterialAsset.h"
 #include "Asset/MeshAsset.h"

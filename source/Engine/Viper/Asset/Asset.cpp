@@ -1,6 +1,4 @@
 #include "Viper.h"
-#include "Asset.h"
-#include "AssetManager.h"
 
 using namespace std;
 
@@ -34,7 +32,13 @@ namespace Viper
 		{
 			auto& assetManager = ServiceLocator::GetInstance().Get<AssetManager>();
 			auto& helper = assetManager.GetAssetOutputStream(assetFullName);
+			helper << static_cast<uint8_t>(type);
 			SaveTo(helper);
+		}
+
+		void Asset::RegisterAssetType(AssetType type, const AssetConstructor& constructor)
+		{
+			AssetManager::Constructors[type] = constructor;
 		}
 	}
 }

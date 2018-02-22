@@ -27,7 +27,7 @@ namespace Viper
 		class NonPbrMaterialAsset : public MaterialAsset
 		{
 		public:
-			NonPbrMaterialAsset(const StringID& assetFullName);
+			ASSET_DECLARATION(NonPbrMaterialAsset)
 			~NonPbrMaterialAsset() = default;
 
 			NonPbrMaterialData& Data();

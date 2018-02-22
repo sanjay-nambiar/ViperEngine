@@ -25,7 +25,7 @@ namespace Viper
 		class MeshAsset : public Asset
 		{
 		public:
-			MeshAsset(const StringID& assetFullName);
+			ASSET_DECLARATION(MeshAsset)
 			~MeshAsset() = default;
 
 			MeshData& Data();

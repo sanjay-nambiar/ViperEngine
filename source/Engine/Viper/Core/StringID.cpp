@@ -33,9 +33,20 @@ namespace Viper
 	{
 	}
 
+	StringID& StringID::operator=(const StringID& rhs)
+	{
+		hash = rhs.hash;
+		return *this;
+	}
+
 	const string& StringID::ToString() const
 	{
 		return HashToStringLookup()[hash];
+	}
+
+	const std::uint32_t StringID::Hash() const
+	{
+		return hash;
 	}
 
 	bool StringID::operator==(const StringID& other) const

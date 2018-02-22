@@ -1,14 +1,10 @@
 #include "Viper.h"
-#include "DataAsset.h"
 
 namespace Viper
 {
 	namespace Assets
 	{
-		DataAsset::DataAsset(StringID& assetFullName) :
-			Asset(assetFullName, AssetType::Data)
-		{
-		}
+		ASSET_DEFINITION(DataAsset, Asset, AssetType::Data)
 
 		void DataAsset::LoadFrom(InputStreamHelper&)
 		{

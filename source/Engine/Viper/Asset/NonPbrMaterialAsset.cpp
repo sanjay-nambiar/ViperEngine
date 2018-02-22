@@ -15,10 +15,7 @@ namespace Viper
 			isPbr = false;
 		}
 
-		NonPbrMaterialAsset::NonPbrMaterialAsset(const StringID& assetFullName) :
-			MaterialAsset(assetFullName)
-		{
-		}
+		ASSET_DEFINITION(NonPbrMaterialAsset, MaterialAsset, AssetType::NonPbrMaterial)
 
 		NonPbrMaterialData& NonPbrMaterialAsset::Data()
 		{
