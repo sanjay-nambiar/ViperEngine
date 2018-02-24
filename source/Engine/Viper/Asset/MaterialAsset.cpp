@@ -29,14 +29,12 @@ namespace Viper
 			if (tempBool)
 			{
 				helper >> tempString;
-				TextureAsset* texture = new TextureAsset(tempString);
-				texture->Load();
-				return texture;
+				return static_cast<TextureAsset*>(assetManager.LoadSynchronous(StringID(tempString)));
 			}
 			return nullptr;
 		}
 
-		void MaterialAsset::SaveTextureHelper(TextureAsset* textureAsset, OutputStreamHelper& helper)
+		void MaterialAsset::SaveTextureHelper(TextureAsset* textureAsset, OutputStreamHelper& helper) const
 		{
 			helper << (textureAsset != nullptr);
 			if (textureAsset != nullptr)

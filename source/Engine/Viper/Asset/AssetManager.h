@@ -26,7 +26,7 @@ namespace Viper
 			void Initialize(const std::string& assetRegistryFile);
 			void Shutdown();
 
-			void LoadSynchronous(const StringID& assetFullName);
+			Asset* LoadSynchronous(const StringID& assetFullName);
 			void UnloadSynchronous(const StringID& assetFullName);
 
 			void LoadAll();
@@ -38,15 +38,15 @@ namespace Viper
 				std::uint32_t offset;
 			};
 
-			InputStreamHelper& GetAssetInputStream(StringID assetFullname);
-			OutputStreamHelper& GetAssetOutputStream(StringID assetFullname);
+			InputStreamHelper& GetAssetInputHelper(StringID assetFullname);
+			OutputStreamHelper& GetAssetOutputHelper(StringID assetFullname);
 
 			static void ReadAssetRegistry(AssetRegistry& registry, InputStreamHelper& helper);
 			static void SaveAssetRegistry(AssetRegistry& registry, OutputStreamHelper& helper);
 
 			void LoadRegistryData(AssetRegistry& registry);
 			void OpenFile(std::ifstream& file, const std::string& filename);
-			void LoadAsset(InputStreamHelper& helper, StringID assetId, std::uint32_t offset);
+			Asset* LoadAsset(InputStreamHelper& helper, StringID assetId, std::uint32_t offset);
 
 			std::unordered_map<std::uint32_t, OffsetData> assetMetadata;
 			std::unordered_map<std::uint32_t, std::vector<StringID>> fileMetadata;

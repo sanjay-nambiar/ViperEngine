@@ -22,6 +22,7 @@
 #include "assimp/postprocess.h"
 
 // Engine
+#include "Asset/AssetManager.h"
 #include "Asset/ModelAsset.h"
 #include "Asset/MeshAsset.h"
 #include "Asset/MaterialAsset.h"
@@ -29,8 +30,10 @@
 #include "Asset/PbrMaterialAsset.h"
 #include "Asset/TextureAsset.h"
 #include "Core/GameException.h"
+#include "Core/ServiceLocator.h"
 #include "Core/StringID.h"
 #include "Core/Utility.h"
+#include "Memory/MemoryAllocator.h"
 
  // Local
 #include "ModelProcessor.h"

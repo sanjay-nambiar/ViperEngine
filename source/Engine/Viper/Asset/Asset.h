@@ -26,13 +26,14 @@ namespace Viper
 
 			void Load();
 			void Save();
-
-			StringID assetFullName;
-			AssetType type;
 		protected:
 			virtual void LoadFrom(InputStreamHelper& inputHelper) = 0;
 			virtual void SaveTo(OutputStreamHelper& outputHelper) const = 0;
 
+			StringID assetFullName;
+			AssetType type;
+
+			AssetManager& assetManager;
 			static void RegisterAssetType(AssetType type, const AssetConstructor& constructor);
 		};
 
@@ -43,15 +44,15 @@ namespace Viper
 		public:											\
 		AssetClass(const StringID& name);
 
-#define ASSET_DEFINITION(AssetClass, ParentClass, AssetTypeEnum)												\
-		const bool AssetClass::IsAssetTypeRegistered = RegisterAssetType();										\
-		bool AssetClass::RegisterAssetType()																	\
-		{																										\
-			Asset::RegisterAssetType(AssetTypeEnum, [](const StringID& name) -> Asset* {				\
-				return new AssetClass(name);															\
-			});																									\
-			return true;																						\
-		}																										\
+#define ASSET_DEFINITION(AssetClass, ParentClass, AssetTypeEnum)								\
+		const bool AssetClass::IsAssetTypeRegistered = RegisterAssetType();						\
+		bool AssetClass::RegisterAssetType()													\
+		{																						\
+			Asset::RegisterAssetType(AssetTypeEnum, [](const StringID& name) -> Asset* {		\
+				return new AssetClass(name);													\
+			});																					\
+			return true;																		\
+		}																						\
 		AssetClass::AssetClass(const StringID& name) : ParentClass(name, AssetTypeEnum) {}
 	}
 }

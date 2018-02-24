@@ -7,7 +7,7 @@ namespace Viper
 	namespace Assets
 	{
 		Asset::Asset(const StringID& assetFullName, AssetType type) :
-			assetFullName(assetFullName), type(type)
+			assetManager(ServiceLocator::GetInstance().Get<AssetManager>()), assetFullName(assetFullName), type(type)
 		{
 		}
 
@@ -23,15 +23,13 @@ namespace Viper
 
 		void Asset::Load()
 		{
-			auto& assetManager = ServiceLocator::GetInstance().Get<AssetManager>();
-			auto& helper = assetManager.GetAssetInputStream(assetFullName);
+			auto& helper = assetManager.GetAssetInputHelper(assetFullName);
 			LoadFrom(helper);
 		}
 
 		void Asset::Save()
 		{
-			auto& assetManager = ServiceLocator::GetInstance().Get<AssetManager>();
-			auto& helper = assetManager.GetAssetOutputStream(assetFullName);
+			auto& helper = assetManager.GetAssetOutputHelper(assetFullName);
 			helper << static_cast<uint8_t>(type);
 			SaveTo(helper);
 		}

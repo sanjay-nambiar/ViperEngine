@@ -5,6 +5,7 @@ using namespace ModelPipeline;
 using namespace TexturePipeline;
 using namespace Viper;
 using namespace Viper::Assets;
+using namespace Viper::Memory;
 
 enum class InputAssetType
 {
@@ -21,9 +22,15 @@ int PrintUsage(const string& executableName)
 
 int main(int argc, char* argv[])
 {
+	// Initialize service locator and asset manager
+	MemoryManager allocator;
+	ServiceLocator::CreateInstance(allocator);
+	auto& serviceLocator = ServiceLocator::GetInstance();
+	AssetManager assetManager;
+	serviceLocator.Provide(assetManager);
+
 	InputAssetType type = InputAssetType::Invalid;
 	string inFilename;
-
 	if (argc < 4)
 	{
 		return PrintUsage(argv[0]);
@@ -87,5 +94,6 @@ int main(int argc, char* argv[])
 		return 1;
 	}
 
+	serviceLocator.Destroy();
 	return 0;
 }

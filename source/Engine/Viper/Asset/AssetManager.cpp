@@ -31,19 +31,21 @@ namespace Viper
 			UnloadAll();
 		}
 
-		void AssetManager::LoadSynchronous(const StringID& assetId)
+		Asset* AssetManager::LoadSynchronous(const StringID& assetId)
 		{
 			assert(loadedAssets.find(assetId.Hash()) == loadedAssets.end());
 			assert(assetMetadata.find(assetId.Hash()) != assetMetadata.end());
 			auto& metadata = assetMetadata.at(assetId.Hash());
 			
+			Asset* asset = nullptr;
 			ifstream file;
 			OpenFile(file, metadata.resourceFile.ToString());
 			{
 				InputStreamHelper helper(file);
-				LoadAsset(helper, assetId, metadata.offset);
+				asset = LoadAsset(helper, assetId, metadata.offset);
 			}
 			file.close();
+			return asset;
 		}
 
 		void AssetManager::UnloadSynchronous(const StringID& assetId)
@@ -83,7 +85,7 @@ namespace Viper
 			}
 		}
 
-		InputStreamHelper& AssetManager::GetAssetInputStream(StringID)
+		InputStreamHelper& AssetManager::GetAssetInputHelper(StringID)
 		{
 			// TODO: Lookup asset registry and find appropriate file / memory stream for read
 			istream stream(nullptr);
@@ -91,7 +93,7 @@ namespace Viper
 			return *helper;
 		}
 
-		OutputStreamHelper& AssetManager::GetAssetOutputStream(StringID)
+		OutputStreamHelper& AssetManager::GetAssetOutputHelper(StringID)
 		{
 			// TODO: Lookup asset registry and find appropriate file / memory stream for write
 			ostream stream(nullptr);
@@ -196,13 +198,15 @@ namespace Viper
 			}
 		}
 
-		void AssetManager::LoadAsset(InputStreamHelper& helper, StringID assetId, std::uint32_t offset)
+		Asset* AssetManager::LoadAsset(InputStreamHelper& helper, StringID assetId, std::uint32_t offset)
 		{
 			helper.Stream().seekg(offset, ios_base::beg);
 			uint8_t temp;
 			helper >> temp;
 			AssetType assetType = static_cast<AssetType>(temp);
-			loadedAssets.insert({ assetId.Hash(), Constructors.at(assetType)(assetId) });
+			auto asset = Constructors.at(assetType)(assetId);
+			loadedAssets.insert({ assetId.Hash(), asset });
+			return asset;
 		}
 	}
 }

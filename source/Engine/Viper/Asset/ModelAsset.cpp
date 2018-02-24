@@ -62,16 +62,7 @@ namespace Viper
 			{
 				inputHelper >> tempString;
 				inputHelper >> isPbr;
-				MaterialAsset* material;
-				if (isPbr)
-				{
-					material = new PbrMaterialAsset(StringID(tempString));
-				}
-				else
-				{
-					material = new NonPbrMaterialAsset(StringID(tempString));
-				}
-				material->Load();
+				auto material = static_cast<MaterialAsset*>(assetManager.LoadSynchronous(StringID(tempString)));
 				data.materials.push_back(material);
 			}
 
@@ -82,8 +73,7 @@ namespace Viper
 			{
 				inputHelper >> tempString;
 				inputHelper >> materialIndex;
-				auto mesh = new MeshAsset(StringID(tempString));
-				mesh->Load();
+				auto mesh = static_cast<MeshAsset*>(assetManager.LoadSynchronous(StringID(tempString)));
 				data.meshes.push_back(mesh);
 				data.meshMaterialMap.insert({ i, materialIndex });
 			}

@@ -30,8 +30,8 @@ namespace Viper
 		protected:
 			virtual const MaterialData& BaseData() const = 0;
 
-			static TextureAsset* LoadTextureHelper(InputStreamHelper& helper);
-			static void SaveTextureHelper(TextureAsset* textureAsset, OutputStreamHelper& helper);
+			TextureAsset* LoadTextureHelper(InputStreamHelper& helper);
+			void SaveTextureHelper(TextureAsset* textureAsset, OutputStreamHelper& helper) const;
 		};
 
 #define IS_TEXTURE_EQUAL(texture1, texture2)	((texture1 == texture2) ||      \
