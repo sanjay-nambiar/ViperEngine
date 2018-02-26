@@ -13,7 +13,8 @@ namespace Viper
 			PbrMaterial,
 			Model,
 			Scene,
-			Data
+			Data,
+			AssetTypes
 		};
 	}
 }

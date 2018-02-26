@@ -39,9 +39,15 @@
     <ClInclude Include="TextureProcessor.h" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Thirdparty\gason\gason.vcxproj">
+      <Project>{7f6c3703-e7b8-4576-907c-b7c31bf44f1b}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\..\Viper\Viper.vcxproj">
       <Project>{fb32e549-5006-4bde-85c3-425d3360af51}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="GenerateAssetRegistry.py" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{A178C969-D639-489D-9A19-CD24C2930F9F}</ProjectGuid>
@@ -122,7 +128,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>false</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\source\Engine\Viper;$(SolutionDir)..\source\Thirdparty\glm;$(SolutionDir)..\thirdparty\assimp\include;$(SolutionDir)..\source\Thirdparty\stb</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\source\Engine\Viper;$(SolutionDir)..\source\Thirdparty\glm;$(SolutionDir)..\source\Thirdparty\stb;$(SolutionDir)..\source\Thirdparty\gason;$(SolutionDir)..\thirdparty\assimp\include</AdditionalIncludeDirectories>
       <TreatWarningAsError>false</TreatWarningAsError>
       <PrecompiledHeaderFile>Pch.h</PrecompiledHeaderFile>
       <DisableSpecificWarnings>4201;4505;4127;4996</DisableSpecificWarnings>
@@ -135,7 +141,7 @@
     </Link>
     <PostBuildEvent>
       <Command>xcopy "$(SolutionDir)..\thirdparty\assimp\lib\$(Platform)\$(Configuration)\*.dll" "$(OutDir)" /I /R /Y
-</Command>
+xcopy "$(ProjectDir)*.py" "$(OutDir)" /I /R /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -145,7 +151,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>false</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\source\Engine\Viper;$(SolutionDir)..\source\Thirdparty\glm;$(SolutionDir)..\thirdparty\assimp\include;$(SolutionDir)..\source\Thirdparty\stb</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\source\Engine\Viper;$(SolutionDir)..\source\Thirdparty\glm;$(SolutionDir)..\source\Thirdparty\stb;$(SolutionDir)..\source\Thirdparty\gason;$(SolutionDir)..\thirdparty\assimp\include</AdditionalIncludeDirectories>
       <TreatWarningAsError>false</TreatWarningAsError>
       <PrecompiledHeaderFile>Pch.h</PrecompiledHeaderFile>
       <DisableSpecificWarnings>4201;4505;4127;4996</DisableSpecificWarnings>
@@ -158,7 +164,7 @@
     </Link>
     <PostBuildEvent>
       <Command>xcopy "$(SolutionDir)..\thirdparty\assimp\lib\$(Platform)\$(Configuration)\*.dll" "$(OutDir)" /I /R /Y
-</Command>
+xcopy "$(ProjectDir)*.py" "$(OutDir)" /I /R /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -170,7 +176,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>false</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\source\Engine\Viper;$(SolutionDir)..\source\Thirdparty\glm;$(SolutionDir)..\thirdparty\assimp\include;$(SolutionDir)..\source\Thirdparty\stb</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\source\Engine\Viper;$(SolutionDir)..\source\Thirdparty\glm;$(SolutionDir)..\source\Thirdparty\stb;$(SolutionDir)..\source\Thirdparty\gason;$(SolutionDir)..\thirdparty\assimp\include</AdditionalIncludeDirectories>
       <TreatWarningAsError>false</TreatWarningAsError>
       <PrecompiledHeaderFile>Pch.h</PrecompiledHeaderFile>
       <DisableSpecificWarnings>4201;4505;4127;4996</DisableSpecificWarnings>
@@ -185,7 +191,7 @@
     </Link>
     <PostBuildEvent>
       <Command>xcopy "$(SolutionDir)..\thirdparty\assimp\lib\$(Platform)\$(Configuration)\*.dll" "$(OutDir)" /I /R /Y
-</Command>
+xcopy "$(ProjectDir)*.py" "$(OutDir)" /I /R /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -197,7 +203,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>false</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\source\Engine\Viper;$(SolutionDir)..\source\Thirdparty\glm;$(SolutionDir)..\thirdparty\assimp\include;$(SolutionDir)..\source\Thirdparty\stb</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\source\Engine\Viper;$(SolutionDir)..\source\Thirdparty\glm;$(SolutionDir)..\source\Thirdparty\stb;$(SolutionDir)..\source\Thirdparty\gason;$(SolutionDir)..\thirdparty\assimp\include</AdditionalIncludeDirectories>
       <TreatWarningAsError>false</TreatWarningAsError>
       <PrecompiledHeaderFile>Pch.h</PrecompiledHeaderFile>
       <DisableSpecificWarnings>4201;4505;4127;4996</DisableSpecificWarnings>
@@ -212,7 +218,7 @@
     </Link>
     <PostBuildEvent>
       <Command>xcopy "$(SolutionDir)..\thirdparty\assimp\lib\$(Platform)\$(Configuration)\*.dll" "$(OutDir)" /I /R /Y
-</Command>
+xcopy "$(ProjectDir)*.py" "$(OutDir)" /I /R /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

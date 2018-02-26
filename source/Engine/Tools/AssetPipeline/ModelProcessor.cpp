@@ -10,7 +10,8 @@ namespace ModelPipeline
 {
 	ModelAsset* ModelProcessor::LoadModel(const string& filename, bool flipUVs)
 	{
-		auto modelAsset = new ModelAsset(filename);
+		auto modelName = Utility::GetFilenameWithoutExtension(filename);
+		auto modelAsset = new ModelAsset(modelName);
 		auto& modelData = modelAsset->Data();
 		Importer importer;
 		uint32_t flags = aiProcess_Triangulate | aiProcess_JoinIdenticalVertices | aiProcess_SortByPType | aiProcess_FlipWindingOrder | aiProcess_CalcTangentSpace;
@@ -26,13 +27,11 @@ namespace ModelPipeline
 			throw GameException(importer.GetErrorString());
 		}
 
-		auto modelName = Utility::GetFilenameWithoutExtension(filename);
 		if (scene->HasMaterials())
 		{
 			for (uint32_t i = 0; i < scene->mNumMaterials; i++)
 			{
-				auto materialAsset = MaterialProcessor::LoadMaterial(*(scene->mMaterials[i]), modelName + "-" 
-					+ to_string(modelData.materials.size()) + ".vmtl");
+				auto materialAsset = MaterialProcessor::LoadMaterial(*(scene->mMaterials[i]), modelName + "-" + to_string(modelData.materials.size()));
 				if (materialAsset != nullptr)
 				{
 					modelData.materials.push_back(materialAsset);
@@ -45,7 +44,7 @@ namespace ModelPipeline
 			for (uint32_t i = 0; i < scene->mNumMeshes; i++)
 			{
 				auto& assimpMesh = *(scene->mMeshes[i]);
-				auto meshAsset = MeshProcessor::LoadMesh(assimpMesh, modelName + "-" + to_string(i) + ".vmsh");
+				auto meshAsset = MeshProcessor::LoadMesh(assimpMesh, modelName + "-" + to_string(i));
 				modelData.meshes.push_back(meshAsset);
 				modelData.meshMaterialMap.insert({ i, assimpMesh.mMaterialIndex });
 			}

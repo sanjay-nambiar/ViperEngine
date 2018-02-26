@@ -6,7 +6,11 @@ namespace Viper
 {
 	namespace Assets
 	{
-		unordered_map<AssetType, AssetConstructor> AssetManager::Constructors = {};
+		unordered_map<AssetType, AssetConstructor>& AssetManager::Constructors()
+		{
+			static unordered_map<AssetType, AssetConstructor> constructors(static_cast<uint32_t>(AssetType::AssetTypes));
+			return constructors;
+		}
 
 		AssetManager::AssetManager() :
 			Service(ServiceType::AssetManager)
@@ -204,7 +208,7 @@ namespace Viper
 			uint8_t temp;
 			helper >> temp;
 			AssetType assetType = static_cast<AssetType>(temp);
-			auto asset = Constructors.at(assetType)(assetId);
+			auto asset = Constructors().at(assetType)(assetId);
 			loadedAssets.insert({ assetId.Hash(), asset });
 			return asset;
 		}

@@ -36,7 +36,7 @@ namespace Viper
 
 		void Asset::RegisterAssetType(AssetType type, const AssetConstructor& constructor)
 		{
-			AssetManager::Constructors[type] = constructor;
+			AssetManager::Constructors()[type] = constructor;
 		}
 	}
 }

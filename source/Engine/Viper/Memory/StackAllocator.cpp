@@ -11,7 +11,7 @@ namespace Viper
 			memoryBottom = static_cast<Marker>(malloc(totalBytes));
 			if (memoryBottom == nullptr)
 			{
-				throw std::runtime_error("Out of memory during StackAllocator initialization");
+				throw GameException("Out of memory during StackAllocator initialization");
 			}
 			memoryTop = memoryBottom + totalBytes;
 			left = memoryBottom;

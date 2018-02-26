@@ -1,6 +1,8 @@
 #include "ShaderCompiler.h"
 #include <fstream>
+#include "Core/GameException.h"
 #include "Graphics/Shader.h"
+
 
 #define INFO_LOG_LENGTH 512
 
@@ -33,7 +35,7 @@ namespace Viper
 			if (!success)
 			{
 				glGetShaderInfoLog(shaderId, INFO_LOG_LENGTH, nullptr, infoLog);
-				throw std::runtime_error(infoLog);
+				throw GameException(infoLog);
 			}
 			return {shaderId, shaderType};
 		}
@@ -44,7 +46,7 @@ namespace Viper
 			std::ifstream file(filename);
 			if (!file.is_open())
 			{
-				throw std::runtime_error("Unable to locate shader file");
+				throw GameException("Unable to locate shader file");
 			}
 			std::string shaderSource((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
 			file.close();
@@ -70,7 +72,7 @@ namespace Viper
 			if (!success)
 			{
 				glGetProgramInfoLog(shaderProgram, INFO_LOG_LENGTH, nullptr, infoLog);
-				throw std::runtime_error(infoLog);
+				throw GameException(infoLog);
 			}
 			return shaderProgram;
 		}

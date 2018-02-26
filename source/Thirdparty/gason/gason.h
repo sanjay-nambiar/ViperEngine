@@ -90,6 +90,9 @@ inline JsonIterator begin(JsonValue& o) {
     return JsonIterator{o.toNode()};
 }
 
+inline JsonIterator end(JsonValue&) {
+	return JsonIterator{ nullptr };
+}
 
 #define JSON_ERRNO_MAP(XX)                           \
     XX(OK, "ok")                                     \

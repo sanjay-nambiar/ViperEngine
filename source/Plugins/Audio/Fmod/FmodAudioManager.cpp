@@ -3,7 +3,7 @@
 #include <cassert>
 #include "FmodImplementation.h"
 #include "Memory/MemoryAllocator.h"
-
+#include "Core/GameException.h"
 
 #define MAX_EVENT_PATH_LENGTH 100
 #define MAX_EVENTS_PER_GROUP 50
@@ -25,7 +25,7 @@ namespace Viper
 			new (implementation) FmodImplementation(maxChannels);
 			if (implementation == nullptr)
 			{
-				throw runtime_error("Out of memory while creating FMOD implementation");
+				throw GameException("Out of memory while creating FMOD implementation");
 			}
 		}
 

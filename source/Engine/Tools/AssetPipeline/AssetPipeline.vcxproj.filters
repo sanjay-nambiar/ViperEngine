@@ -15,4 +15,7 @@
     <ClInclude Include="MaterialProcessor.h" />
     <ClInclude Include="TextureProcessor.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="GenerateAssetRegistry.py" />
+  </ItemGroup>
 </Project>

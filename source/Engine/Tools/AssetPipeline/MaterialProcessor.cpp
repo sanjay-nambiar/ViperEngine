@@ -48,7 +48,8 @@ namespace ModelPipeline
 		material.Get(AI_MATKEY_SHININESS, shininess);
 		materialData.specularPower = shininess;
 
-		for (TextureType textureType = static_cast<TextureType>(0); textureType < TextureType::Invalid; textureType = static_cast<TextureType>(static_cast<int>(textureType) + 1))
+		for (TextureType textureType = static_cast<TextureType>(0); textureType < TextureType::Invalid;
+			textureType = static_cast<TextureType>(static_cast<int>(textureType) + 1))
 		{
 			aiTextureType mappedTextureType = static_cast<aiTextureType>(sTextureTypeMappings[textureType]);
 			uint32_t textureCount = material.GetTextureCount(mappedTextureType);

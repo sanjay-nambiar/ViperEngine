@@ -52,7 +52,7 @@ namespace Viper
 			std::unordered_map<std::uint32_t, std::vector<StringID>> fileMetadata;
 			std::unordered_map<std::uint32_t, Asset*> loadedAssets;
 
-			static std::unordered_map<AssetType, AssetConstructor> Constructors;
+			static std::unordered_map<AssetType, AssetConstructor>& Constructors();
 
 			friend class Asset;
 		};

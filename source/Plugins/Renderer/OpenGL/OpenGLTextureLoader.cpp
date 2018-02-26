@@ -1,6 +1,7 @@
 #include "glad/glad.h"
 #include "OpenGLTextureLoader.h"
 #include "Asset/TextureAsset.h"
+#include "Core/GameException.h"
 
 using namespace std;
 
@@ -28,7 +29,7 @@ namespace Viper
 			auto& textureData = asset.Data();
 			if (textureData.image.data == nullptr)
 			{
-				throw runtime_error(string("Unable to load texture file ") + textureFile);
+				throw GameException(string("Unable to load texture file ") + textureFile);
 			}
 			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, textureData.width, textureData.height, 0, GL_RGB, GL_UNSIGNED_BYTE, textureData.image.data);
 
