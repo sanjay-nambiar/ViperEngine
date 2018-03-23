@@ -2,16 +2,28 @@
 
 #include <string>
 #include "Asset/ModelAsset.h"
+#include "AssetProcessor.h"
+#include "Core/Types.h"
 
 struct aiNode;
 
-namespace ModelPipeline
+namespace AssetPipeline
 {
+	class MeshProcessor;
+	class MaterialProcessor;
+
     class ModelProcessor
     {
     public:
-		ModelProcessor() = delete;
+		ModelProcessor(AssetProcessor& assetProcessor, MeshProcessor& meshProcessor, MaterialProcessor& materialProcessor);
+		ModelProcessor(const ModelProcessor&) = delete;
+		ModelProcessor(ModelProcessor&&) = delete;
 
-		static Viper::Assets::ModelAsset* LoadModel(const std::string& filename, bool flipUVs = false);
+		Viper::Assets::ModelAsset* LoadModel(const Resource& resource, std::uint32_t index = 0, bool flipUVs = false);
+
+	private:
+		AssetProcessor& assetProcessor;
+		MeshProcessor& meshProcessor;
+		MaterialProcessor& materialProcessor;
     };
 }

@@ -5,10 +5,12 @@
 #include "Asset/NonPbrMaterialAsset.h"
 #include "Asset/PbrMaterialAsset.h"
 #include "Asset/TextureAsset.h"
+#include "AssetProcessor.h"
+#include "Core/Types.h"
 
 struct aiMaterial;
 
-namespace ModelPipeline
+namespace AssetPipeline
 {
 	enum class TextureType
 	{
@@ -25,16 +27,24 @@ namespace ModelPipeline
 		Invalid
 	};
 
+	class TextureProcessor;
+
     class MaterialProcessor
     {
     public:
-		MaterialProcessor() = delete;
+		MaterialProcessor(AssetProcessor& processor, TextureProcessor& textureProcessor);
+		MaterialProcessor(const MaterialProcessor&) = delete;
+		MaterialProcessor(MaterialProcessor&&) = delete;
 
-		static Viper::Assets::MaterialAsset* LoadMaterial(aiMaterial& material, const std::string& assetFullName);
+		Viper::Assets::MaterialAsset* LoadMaterial(const Resource& resource, aiMaterial& material, std::uint32_t index = 0);
 	private:
-		static Viper::Assets::MaterialAsset* LoadPbrMaterial(aiMaterial& material, const std::string& assetFullName);
-		static Viper::Assets::MaterialAsset* LoadNonPbrMaterial(aiMaterial& material, const std::string& assetFullName);
-        static void InitializeTextureTypeMappings();
+		Viper::Assets::MaterialAsset* LoadPbrMaterial(const Resource& resource, const Viper::StringID& assetId, aiMaterial& material);
+		Viper::Assets::MaterialAsset* LoadNonPbrMaterial(const Resource& resource, const  Viper::StringID& assetId, aiMaterial& material);
+        
+		AssetProcessor& assetProcessor;
+		TextureProcessor& textureProcessor;
+		
+		static void InitializeTextureTypeMappings();
         static std::unordered_map<TextureType, std::uint32_t> sTextureTypeMappings;
     };
 }

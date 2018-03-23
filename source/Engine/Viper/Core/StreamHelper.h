@@ -3,6 +3,7 @@
 #include <iostream>
 #include <string>
 #include "glm/glm.hpp"
+#include "Core/StringID.h"
 #include "Core/Types.h"
 
 namespace Viper

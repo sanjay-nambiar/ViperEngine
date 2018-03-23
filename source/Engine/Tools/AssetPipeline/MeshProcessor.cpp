@@ -5,11 +5,24 @@ using namespace glm;
 using namespace Viper;
 using namespace Viper::Assets;
 
-namespace ModelPipeline
+namespace AssetPipeline
 {
-	MeshAsset* MeshProcessor::LoadMesh(aiMesh& mesh, const string& assetFullName)
+	MeshProcessor::MeshProcessor(AssetProcessor& assetProcessor) :
+		assetProcessor(assetProcessor)
 	{
-		auto meshAsset = new MeshAsset(StringID(assetFullName));
+	}
+
+	MeshAsset* MeshProcessor::LoadMesh(const Resource& resource, aiMesh& mesh, uint32_t index)
+	{
+		auto assetId = StringID(resource.packageName + ":mesh." + to_string(index));
+		Asset* asset = assetProcessor.GetLoadedAsset(assetId);
+		if (asset != nullptr)
+		{
+			return static_cast<MeshAsset*>(asset);
+		}
+
+		auto meshAsset = new MeshAsset(assetId);
+		assetProcessor.RegisterOffset(*meshAsset, resource.packageName);
 		auto& meshData = meshAsset->Data();
 
 		// Vertices

@@ -4,6 +4,7 @@
 #include <cstdint>
 #include <cstdlib>
 #include <fstream>
+#include <functional>
 #include <iostream>
 #include <memory>
 #include <string>
@@ -28,6 +29,7 @@
 
 // Engine
 #include "Asset/AssetManager.h"
+#include "Asset/AssetRegistry.h"
 #include "Asset/ModelAsset.h"
 #include "Asset/MeshAsset.h"
 #include "Asset/MaterialAsset.h"
@@ -41,6 +43,7 @@
 #include "Memory/MemoryAllocator.h"
 
  // Local
+#include "AssetProcessor.h"
 #include "ModelProcessor.h"
 #include "MeshProcessor.h"
 #include "MaterialProcessor.h"

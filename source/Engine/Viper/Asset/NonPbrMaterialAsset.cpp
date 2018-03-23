@@ -59,12 +59,19 @@ namespace Viper
 			inputHelper >> data.diffuse;
 			inputHelper >> data.specular;
 			inputHelper >> data.specularPower;
-			data.normalMap = LoadTextureHelper(inputHelper);
-			data.ambientMap = LoadTextureHelper(inputHelper);
-			data.diffuseMap = LoadTextureHelper(inputHelper);
-			data.specularMap = LoadTextureHelper(inputHelper);
-			data.specularPowerMap = LoadTextureHelper(inputHelper);
-			data.opacityMap = LoadTextureHelper(inputHelper);
+			StringID normalMapId = LoadTextureMetaHelper(inputHelper);
+			StringID ambientMapId = LoadTextureMetaHelper(inputHelper);
+			StringID diffuseMapId = LoadTextureMetaHelper(inputHelper);
+			StringID specularMapId = LoadTextureMetaHelper(inputHelper);
+			StringID specularPowerMapId = LoadTextureMetaHelper(inputHelper);
+			StringID opacityMapId = LoadTextureMetaHelper(inputHelper);
+			StringID emptyId;
+			if (normalMapId != emptyId) data.normalMap = static_cast<TextureAsset*>(assetManager.LoadSynchronous(normalMapId));
+			if (ambientMapId != emptyId) data.ambientMap = static_cast<TextureAsset*>(assetManager.LoadSynchronous(normalMapId));
+			if (diffuseMapId != emptyId) data.diffuseMap = static_cast<TextureAsset*>(assetManager.LoadSynchronous(normalMapId));
+			if (specularMapId != emptyId) data.specularMap = static_cast<TextureAsset*>(assetManager.LoadSynchronous(normalMapId));
+			if (specularPowerMapId != emptyId) data.specularPowerMap = static_cast<TextureAsset*>(assetManager.LoadSynchronous(normalMapId));
+			if (opacityMapId != emptyId) data.opacityMap = static_cast<TextureAsset*>(assetManager.LoadSynchronous(normalMapId));
 		}
 
 		void NonPbrMaterialAsset::SaveTo(OutputStreamHelper& outputHelper) const
@@ -74,12 +81,18 @@ namespace Viper
 			outputHelper << data.diffuse;
 			outputHelper << data.specular;
 			outputHelper << data.specularPower;
-			SaveTextureHelper(data.normalMap, outputHelper);
-			SaveTextureHelper(data.ambientMap, outputHelper);
-			SaveTextureHelper(data.diffuseMap, outputHelper);
-			SaveTextureHelper(data.specularMap, outputHelper);
-			SaveTextureHelper(data.specularPowerMap, outputHelper);
-			SaveTextureHelper(data.opacityMap, outputHelper);
+			SaveTextureMetaHelper(data.normalMap, outputHelper);
+			SaveTextureMetaHelper(data.ambientMap, outputHelper);
+			SaveTextureMetaHelper(data.diffuseMap, outputHelper);
+			SaveTextureMetaHelper(data.specularMap, outputHelper);
+			SaveTextureMetaHelper(data.specularPowerMap, outputHelper);
+			SaveTextureMetaHelper(data.opacityMap, outputHelper);
+			if (data.normalMap) data.normalMap->Save();
+			if (data.ambientMap) data.ambientMap->Save();
+			if (data.diffuseMap) data.diffuseMap->Save();
+			if (data.specularMap) data.specularMap->Save();
+			if (data.specularPowerMap) data.specularPowerMap->Save();
+			if (data.opacityMap) data.opacityMap->Save();
 		}
 	}
 }

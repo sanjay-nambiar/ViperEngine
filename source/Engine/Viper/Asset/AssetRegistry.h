@@ -12,27 +12,38 @@ namespace Viper
 		class AssetRegistry
 		{
 		public:
-			struct AssetOffsetData
+			struct PackageMeta;
+
+			struct AssetMeta
 			{
-				StringID assetName;
-				uint32_t fileOffset;
+				StringID assetId;
+				StringID packageId;
+				uint32_t indexInPackage;
+				uint32_t offset;
+
+				AssetMeta(const StringID& assetId);
 			};
 
-			struct FileData
+			struct PackageMeta
 			{
-				std::string filename;
-				std::vector<AssetOffsetData> assets;
-			};
-
-			struct RegistryFileData
-			{
+				StringID packageId;
 				std::vector<StringID> assets;
-				std::vector<FileData> assetFiles;
+
+				PackageMeta(const StringID& packageId, std::uint32_t assetCount = 0);
 			};
 
-			RegistryFileData& Data();
+			struct RegistryData
+			{
+				std::unordered_map<StringID, AssetMeta> assets;
+				std::unordered_map<StringID, PackageMeta> packages;
+				std::string contentDirectory;
+
+				static const std::string AssetExtension;
+			};
+
+			RegistryData& Data();
 		private:
-			RegistryFileData data;
+			RegistryData data;
 		};
 	}
 }

@@ -1,5 +1,4 @@
 #include "Viper.h"
-#include "StreamHelper.h"
 
 using namespace std;
 using namespace glm;
@@ -257,11 +256,6 @@ namespace Viper
 	template <typename T>
 	void InputStreamHelper::ReadObject(istream& stream, T& value)
 	{
-		/*value = 0;
-		for (uint32_t size = 0; size < sizeof(T); ++size)
-		{
-			value |= stream.get() << (8 * size);
-		}*/
 		stream.read(reinterpret_cast<char*>(&value), sizeof(T));
 	}
 

@@ -56,11 +56,17 @@ namespace Viper
 			inputHelper >> data.metallic;
 			inputHelper >> data.roughness;
 			inputHelper >> data.ao;
-			data.normalMap = LoadTextureHelper(inputHelper);
-			data.albedoMap = LoadTextureHelper(inputHelper);
-			data.metallicMap = LoadTextureHelper(inputHelper);
-			data.roughnessMap = LoadTextureHelper(inputHelper);
-			data.aoMap = LoadTextureHelper(inputHelper);
+			StringID normalMapId = LoadTextureMetaHelper(inputHelper);
+			StringID albedoMapId = LoadTextureMetaHelper(inputHelper);
+			StringID metallicMapId = LoadTextureMetaHelper(inputHelper);
+			StringID roughnessMapId = LoadTextureMetaHelper(inputHelper);
+			StringID aoMapId = LoadTextureMetaHelper(inputHelper);
+			StringID emptyId;
+			if (normalMapId != emptyId) data.normalMap = static_cast<TextureAsset*>(assetManager.LoadSynchronous(normalMapId));
+			if (albedoMapId != emptyId) data.albedoMap = static_cast<TextureAsset*>(assetManager.LoadSynchronous(normalMapId));
+			if (metallicMapId != emptyId) data.metallicMap = static_cast<TextureAsset*>(assetManager.LoadSynchronous(normalMapId));
+			if (roughnessMapId != emptyId) data.roughnessMap = static_cast<TextureAsset*>(assetManager.LoadSynchronous(normalMapId));
+			if (aoMapId != emptyId) data.aoMap = static_cast<TextureAsset*>(assetManager.LoadSynchronous(normalMapId));
 		}
 
 		void PbrMaterialAsset::SaveTo(OutputStreamHelper& outputHelper) const
@@ -70,11 +76,16 @@ namespace Viper
 			outputHelper << data.metallic;
 			outputHelper << data.roughness;
 			outputHelper << data.ao;
-			SaveTextureHelper(data.normalMap, outputHelper);
-			SaveTextureHelper(data.albedoMap, outputHelper);
-			SaveTextureHelper(data.metallicMap, outputHelper);
-			SaveTextureHelper(data.roughnessMap, outputHelper);
-			SaveTextureHelper(data.aoMap, outputHelper);
+			SaveTextureMetaHelper(data.normalMap, outputHelper);
+			SaveTextureMetaHelper(data.albedoMap, outputHelper);
+			SaveTextureMetaHelper(data.metallicMap, outputHelper);
+			SaveTextureMetaHelper(data.roughnessMap, outputHelper);
+			SaveTextureMetaHelper(data.aoMap, outputHelper);
+			if (data.normalMap) data.normalMap->Save();
+			if (data.albedoMap) data.albedoMap->Save();
+			if (data.metallicMap) data.metallicMap->Save();
+			if (data.roughnessMap) data.roughnessMap->Save();
+			if (data.aoMap) data.aoMap->Save();
 		}
 	}
 }

@@ -6,7 +6,7 @@ namespace  Viper
 {
 	namespace Memory
 	{
-		void* MemoryManager::Allocate(size_t elementSize, uint32_t count)
+		void* MemoryManager::AllocateInternal(size_t elementSize, uint32_t count)
 		{
 			assert(count > 0);
 			return static_cast<void*>(new uchar8_t*[elementSize * count]);

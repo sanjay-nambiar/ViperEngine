@@ -6,12 +6,24 @@ using namespace Assimp;
 using namespace Viper;
 using namespace Viper::Assets;
 
-namespace ModelPipeline
+namespace AssetPipeline
 {
-	ModelAsset* ModelProcessor::LoadModel(const string& filename, bool flipUVs)
+	ModelProcessor::ModelProcessor(AssetProcessor& assetProcessor, MeshProcessor& meshProcessor, MaterialProcessor& materialProcessor)
+		: assetProcessor(assetProcessor), meshProcessor(meshProcessor), materialProcessor(materialProcessor)
 	{
-		auto modelName = Utility::GetFilenameWithoutExtension(filename);
-		auto modelAsset = new ModelAsset(modelName);
+	}
+
+	ModelAsset* ModelProcessor::LoadModel(const Resource& resource, std::uint32_t index, bool flipUVs)
+	{
+		auto assetId = StringID(resource.packageName + ":model." + to_string(index));
+		Asset* asset = assetProcessor.GetLoadedAsset(assetId);
+		if (asset != nullptr)
+		{
+			return static_cast<ModelAsset*>(asset);
+		}
+
+		auto modelAsset = new ModelAsset(assetId);
+		assetProcessor.RegisterOffset(*modelAsset, resource.packageName);
 		auto& modelData = modelAsset->Data();
 		Importer importer;
 		uint32_t flags = aiProcess_Triangulate | aiProcess_JoinIdenticalVertices | aiProcess_SortByPType | aiProcess_FlipWindingOrder | aiProcess_CalcTangentSpace;
@@ -21,20 +33,25 @@ namespace ModelPipeline
 			flags |= aiProcess_FlipUVs;
 		}
 
-		const aiScene* scene = importer.ReadFile(filename, flags);
+		const aiScene* scene = importer.ReadFile(resource.resourceFile, flags);
 		if (scene == nullptr)
 		{
 			throw GameException(importer.GetErrorString());
 		}
 
+		uint32_t defaultMaterialIndex = scene->mNumMaterials;
 		if (scene->HasMaterials())
 		{
 			for (uint32_t i = 0; i < scene->mNumMaterials; i++)
 			{
-				auto materialAsset = MaterialProcessor::LoadMaterial(*(scene->mMaterials[i]), modelName + "-" + to_string(modelData.materials.size()));
+				auto materialAsset = materialProcessor.LoadMaterial(resource, *(scene->mMaterials[i]), i);
 				if (materialAsset != nullptr)
 				{
 					modelData.materials.push_back(materialAsset);
+				}
+				else
+				{
+					defaultMaterialIndex = i;
 				}
 			}
 		}
@@ -44,9 +61,16 @@ namespace ModelPipeline
 			for (uint32_t i = 0; i < scene->mNumMeshes; i++)
 			{
 				auto& assimpMesh = *(scene->mMeshes[i]);
-				auto meshAsset = MeshProcessor::LoadMesh(assimpMesh, modelName + "-" + to_string(i));
+				auto meshAsset = meshProcessor.LoadMesh(resource, assimpMesh, i);
 				modelData.meshes.push_back(meshAsset);
-				modelData.meshMaterialMap.insert({ i, assimpMesh.mMaterialIndex });
+				if (assimpMesh.mMaterialIndex > defaultMaterialIndex)
+				{
+					modelData.meshMaterialMap.insert({ i, assimpMesh.mMaterialIndex - 1 });
+				}
+				else
+				{
+					modelData.meshMaterialMap.insert({ i, assimpMesh.mMaterialIndex });
+				}
 			}
 		}
 		return modelAsset;

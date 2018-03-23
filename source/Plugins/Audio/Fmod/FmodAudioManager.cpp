@@ -21,7 +21,7 @@ namespace Viper
 		FmodAudioManager::FmodAudioManager(uint32_t maxChannels, MemoryAllocator& allocator)
 			: implementation(nullptr), allocator(allocator)
 		{
-			implementation = static_cast<FmodImplementation*>(allocator.Allocate(sizeof(FmodImplementation), 1));
+			implementation = allocator.Allocate<FmodImplementation>(1);
 			new (implementation) FmodImplementation(maxChannels);
 			if (implementation == nullptr)
 			{
@@ -68,8 +68,7 @@ namespace Viper
 			int32_t eventCount;
 			FmodImplementation::ErrorCheck(bank->getEventCount(&eventCount));
 			assert(eventCount > 0);
-			Studio::EventDescription** eventDescriptions =
-				static_cast<Studio::EventDescription**>(allocator.Allocate(sizeof(Studio::EventDescription*), eventCount));
+			auto eventDescriptions = allocator.Allocate<Studio::EventDescription*>(eventCount);
 			FmodImplementation::ErrorCheck(bank->getEventList(eventDescriptions, eventCount, &eventCount));
 			for (int32_t i = 0; i < eventCount; i++)
 			{
@@ -94,8 +93,7 @@ namespace Viper
 			int32_t eventCount;
 			FmodImplementation::ErrorCheck(foundIt->second->getEventCount(&eventCount));
 			assert(eventCount > 0);
-			Studio::EventDescription** eventDescriptions =
-				static_cast<Studio::EventDescription**>(allocator.Allocate(sizeof(Studio::EventDescription*), eventCount));
+			auto eventDescriptions = allocator.Allocate<Studio::EventDescription*>(eventCount);
 			FmodImplementation::ErrorCheck(foundIt->second->getEventList(eventDescriptions, eventCount, &eventCount));
 			for (int32_t i = 0; i < eventCount; i++)
 			{

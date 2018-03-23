@@ -10,6 +10,7 @@
 #include "Core/Service.h"
 #include "Core/StreamHelper.h"
 #include "Core/Types.h"
+#include "Memory/MemoryAllocator.h"
 
 namespace Viper
 {
@@ -20,7 +21,7 @@ namespace Viper
 		class AssetManager final : public Service
 		{
 		public:
-			AssetManager();
+			AssetManager(Memory::MemoryAllocator& allocator);
 			~AssetManager() = default;
 
 			void Initialize(const std::string& assetRegistryFile);
@@ -28,29 +29,23 @@ namespace Viper
 
 			Asset* LoadSynchronous(const StringID& assetFullName);
 			void UnloadSynchronous(const StringID& assetFullName);
+			void SaveSynchronous(const Asset& asset);
 
 			void LoadAll();
 			void UnloadAll();
+
+			AssetRegistry& Registry();
 		private:
-			struct OffsetData
-			{
-				StringID resourceFile;
-				std::uint32_t offset;
-			};
+			void ReadAssetRegistry(InputStreamHelper& helper);
+			void SaveAssetRegistry(OutputStreamHelper& helper);
 
-			InputStreamHelper& GetAssetInputHelper(StringID assetFullname);
-			OutputStreamHelper& GetAssetOutputHelper(StringID assetFullname);
+			void OpenInputFile(std::ifstream& file, const std::string& filename);
+			void OpenOutputFile(std::ofstream& file, const std::string& filename);
+			Asset* LoadAsset(InputStreamHelper& helper, const AssetRegistry::AssetMeta& assetMeta);
 
-			static void ReadAssetRegistry(AssetRegistry& registry, InputStreamHelper& helper);
-			static void SaveAssetRegistry(AssetRegistry& registry, OutputStreamHelper& helper);
-
-			void LoadRegistryData(AssetRegistry& registry);
-			void OpenFile(std::ifstream& file, const std::string& filename);
-			Asset* LoadAsset(InputStreamHelper& helper, StringID assetId, std::uint32_t offset);
-
-			std::unordered_map<std::uint32_t, OffsetData> assetMetadata;
-			std::unordered_map<std::uint32_t, std::vector<StringID>> fileMetadata;
-			std::unordered_map<std::uint32_t, Asset*> loadedAssets;
+			Memory::MemoryAllocator& allocator;
+			AssetRegistry registry;
+			std::unordered_map<StringID, Asset*> loadedAssets;
 
 			static std::unordered_map<AssetType, AssetConstructor>& Constructors();
 

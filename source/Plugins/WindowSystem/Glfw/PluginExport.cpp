@@ -13,13 +13,13 @@ void InitializeModule(Viper::ServiceLocator& serviceLocator, const std::unordere
 {
 	auto& allocator = serviceLocator.Get<MemoryAllocator>();
 
-	void* memBlock = allocator.Allocate(sizeof(Window::GlfwWindowManager), 1);
-	assert(memBlock != nullptr);
-	WindowManager* windowManager = new(memBlock) Window::GlfwWindowManager();
+	auto memBlock1 = allocator.Allocate<Window::GlfwWindowManager>(1);
+	assert(memBlock1 != nullptr);
+	WindowManager* windowManager = new(memBlock1) Window::GlfwWindowManager();
 	serviceLocator.Provide(*windowManager);
 
-	memBlock = allocator.Allocate(sizeof(Input::GlfwInputManager), 1);
-	assert(memBlock != nullptr);
-	InputManager* inputManager = new(memBlock) Input::GlfwInputManager();
+	auto memBlock2 = allocator.Allocate<Input::GlfwInputManager>(1);
+	assert(memBlock2 != nullptr);
+	InputManager* inputManager = new(memBlock2) Input::GlfwInputManager();
 	serviceLocator.Provide(*inputManager);
 }

@@ -1,15 +1,26 @@
 #include "Pch.h"
+#include <cstdio>
+#include <iostream>
+#include <memory>
+#include <stdexcept>
+#include <string>
+#include <array>
 
 using namespace std;
 using namespace Viper;
 using namespace Viper::Assets;
-using namespace TexturePipeline;
+using namespace AssetPipeline;
 
-namespace ModelPipeline
+namespace AssetPipeline
 {
 	unordered_map<TextureType, uint32_t> MaterialProcessor::sTextureTypeMappings;
 
-	MaterialAsset* MaterialProcessor::LoadMaterial(aiMaterial& material, const string& assetFullName)
+	MaterialProcessor::MaterialProcessor(AssetProcessor& processor, TextureProcessor& textureProcessor)
+		: assetProcessor(processor), textureProcessor(textureProcessor)
+	{
+	}
+
+	MaterialAsset* MaterialProcessor::LoadMaterial(const Resource& resource, aiMaterial& material, std::uint32_t index)
 	{
 		// Ignore default material
 		aiString name;
@@ -19,17 +30,27 @@ namespace ModelPipeline
 			return nullptr;
 		}
 		InitializeTextureTypeMappings();
-		return LoadNonPbrMaterial(material, assetFullName);
+
+		auto assetId = StringID(resource.packageName + ":material." + to_string(index));
+		Asset* asset = assetProcessor.GetLoadedAsset(assetId);
+		if (asset != nullptr)
+		{
+			return static_cast<MaterialAsset*>(asset);
+		}
+
+		auto materialAsset = LoadNonPbrMaterial(resource, assetId, material);
+		assetProcessor.RegisterOffset(*materialAsset, resource.packageName);
+		return materialAsset;
 	}
 
-	MaterialAsset* MaterialProcessor::LoadPbrMaterial(aiMaterial&, const string& assetFullName)
+	MaterialAsset* MaterialProcessor::LoadPbrMaterial(const Resource&, const StringID& assetId, aiMaterial&)
 	{
-		return new PbrMaterialAsset(StringID(assetFullName));
+		return new PbrMaterialAsset(assetId);
 	}
 
-	MaterialAsset* MaterialProcessor::LoadNonPbrMaterial(aiMaterial& material, const string& assetFullName)
+	MaterialAsset* MaterialProcessor::LoadNonPbrMaterial(const Resource& resource, const StringID& assetId, aiMaterial& material)
 	{
-		auto materialAsset = new NonPbrMaterialAsset(StringID(assetFullName));
+		auto materialAsset = new NonPbrMaterialAsset(assetId);
 		auto& materialData = materialAsset->Data();
 
 		aiColor3D color(0.0f, 0.0f, 0.0f);
@@ -48,6 +69,7 @@ namespace ModelPipeline
 		material.Get(AI_MATKEY_SHININESS, shininess);
 		materialData.specularPower = shininess;
 
+		
 		for (TextureType textureType = static_cast<TextureType>(0); textureType < TextureType::Invalid;
 			textureType = static_cast<TextureType>(static_cast<int>(textureType) + 1))
 		{
@@ -56,10 +78,13 @@ namespace ModelPipeline
 			if (textureCount > 0)
 			{
 				assert(textureCount == 1);
-				aiString path;
-				if (material.GetTexture(mappedTextureType, 0, &path) == AI_SUCCESS)
-				{
-					auto texture = TextureProcessor::LoadTexture(path.C_Str());
+				aiString aiPath;
+				if (material.GetTexture(mappedTextureType, 0, &aiPath) == AI_SUCCESS)
+				{		
+					Resource textureResource = resource;
+					assetProcessor.GetResource(textureResource, aiPath.C_Str(), resource.resourceDir);
+
+					auto texture = textureProcessor.LoadTexture(textureResource);
 					switch (textureType)
 					{
 					case TextureType::Diffuse:

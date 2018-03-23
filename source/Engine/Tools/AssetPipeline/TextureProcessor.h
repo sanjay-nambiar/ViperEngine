@@ -1,14 +1,19 @@
 #pragma once
 
 #include "Asset/TextureAsset.h"
+#include "AssetProcessor.h"
 
-namespace TexturePipeline
+namespace AssetPipeline
 {
 	class TextureProcessor
 	{
 	public:
-		TextureProcessor() = delete;
+		TextureProcessor(AssetProcessor& assetProcessor);
+		TextureProcessor(const TextureProcessor&) = delete;
+		TextureProcessor(TextureProcessor&&) = delete;
 
-		static Viper::Assets::TextureAsset* LoadTexture(const std::string& filename);
+		Viper::Assets::TextureAsset* LoadTexture(const Resource& resource, std::uint32_t index = 0);
+	private:
+		AssetProcessor& assetProcessor;
 	};
 }

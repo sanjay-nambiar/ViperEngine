@@ -1,17 +1,24 @@
 #pragma once
 
 #include <string>
+#include "AssetProcessor.h"
 #include "Asset/MeshAsset.h"
+#include "Core/Types.h"
 
 struct aiMesh;
 
-namespace ModelPipeline
+namespace AssetPipeline
 {
     class MeshProcessor
     {
     public:
-		MeshProcessor() = delete;
+		MeshProcessor(AssetProcessor& assetProcessor);
+		MeshProcessor(const MeshProcessor&) = delete;
+		MeshProcessor(MeshProcessor&&) = delete;
 
-		static Viper::Assets::MeshAsset* LoadMesh(aiMesh& mesh, const std::string& assetFullName);
+		Viper::Assets::MeshAsset* LoadMesh(const Resource& resource, aiMesh& mesh, std::uint32_t index = 0);
+
+	private:
+		AssetProcessor & assetProcessor;
     };
 }

@@ -21,7 +21,7 @@ namespace Viper
 			Asset(const StringID& assetFullName, AssetType type = AssetType::Invalid);
 			virtual ~Asset() = default;
 
-			const StringID& AssetFullName() const;
+			const StringID& AssetId() const;
 			AssetType Type() const;
 
 			void Load();
@@ -30,11 +30,13 @@ namespace Viper
 			virtual void LoadFrom(InputStreamHelper& inputHelper) = 0;
 			virtual void SaveTo(OutputStreamHelper& outputHelper) const = 0;
 
-			StringID assetFullName;
+			StringID assetId;
 			AssetType type;
 
 			AssetManager& assetManager;
 			static void RegisterAssetType(AssetType type, const AssetConstructor& constructor);
+
+			friend class AssetManager;
 		};
 
 #define ASSET_DECLARATION(AssetClass)					\
@@ -55,4 +57,7 @@ namespace Viper
 		}																						\
 		AssetClass::AssetClass(const StringID& name) : ParentClass(name, AssetTypeEnum) {}
 	}
+
+	OutputStreamHelper& operator<<(OutputStreamHelper& helper, const Assets::AssetType& value);
+	InputStreamHelper& operator>>(InputStreamHelper& helper, Assets::AssetType& value);
 }

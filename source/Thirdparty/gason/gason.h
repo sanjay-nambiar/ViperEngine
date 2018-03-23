@@ -79,11 +79,6 @@ struct JsonIterator {
     JsonNode *operator->() const {
         return p;
     }
-
-	static JsonIterator end()
-	{
-		return JsonIterator{ nullptr };
-	}
 };
 
 inline JsonIterator begin(JsonValue& o) {

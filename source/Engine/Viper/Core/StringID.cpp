@@ -15,10 +15,17 @@ namespace Viper
 
 	using namespace StringID_Private;
 
-	StringID::StringID(uint32_t hash) :
-		hash(hash)
+	StringID::StringID() :
+		StringID("")
 	{
-		assert(HashToStringLookup().find(hash) != HashToStringLookup().end());
+	}
+
+	StringID::StringID(uint32_t hash) :
+		hash(hash),
+#if _DEBUG
+		stringVal(&HashToStringLookup()[hash])
+#endif
+	{
 	}
 	
 	StringID::StringID(const std::string& literal) :
@@ -26,16 +33,22 @@ namespace Viper
 	{
 		assert(HashToStringLookup().find(hash) == HashToStringLookup().end() || HashToStringLookup()[hash] == literal);
 		HashToStringLookup()[hash] = literal;
+#if _DEBUG
+		stringVal = &HashToStringLookup()[hash];
+#endif
 	}
 
 	StringID::StringID(const StringID& rhs) :
-		hash(rhs.hash)
+		StringID(rhs.hash)
 	{
 	}
 
 	StringID& StringID::operator=(const StringID& rhs)
 	{
 		hash = rhs.hash;
+#if _DEBUG
+		stringVal = rhs.stringVal;
+#endif
 		return *this;
 	}
 
@@ -57,5 +70,18 @@ namespace Viper
 	bool StringID::operator!=(const StringID& other) const
 	{
 		return (hash != other.hash);
+	}
+
+	OutputStreamHelper& operator<<(OutputStreamHelper& helper, const StringID& value)
+	{
+		return helper << value.Hash();
+	}
+
+	InputStreamHelper& operator>>(InputStreamHelper& helper, StringID& value)
+	{
+		uint32_t hash;
+		helper >> hash;
+		value = hash;
+		return helper;
 	}
 }

@@ -21,29 +21,26 @@ namespace Viper
 			return BaseData().isPbr;
 		}
 
-		TextureAsset* MaterialAsset::LoadTextureHelper(InputStreamHelper& helper)
+		StringID MaterialAsset::LoadTextureMetaHelper(InputStreamHelper& helper)
 		{
 			bool tempBool;
-			string tempString;
+			StringID textureId;
 			helper >> tempBool;
 			if (tempBool)
 			{
-				helper >> tempString;
-				return static_cast<TextureAsset*>(assetManager.LoadSynchronous(StringID(tempString)));
+				helper >> textureId;
 			}
-			return nullptr;
+			return textureId;
 		}
 
-		void MaterialAsset::SaveTextureHelper(TextureAsset* textureAsset, OutputStreamHelper& helper) const
+		bool MaterialAsset::SaveTextureMetaHelper(TextureAsset* textureAsset, OutputStreamHelper& helper) const
 		{
 			helper << (textureAsset != nullptr);
 			if (textureAsset != nullptr)
 			{
-				const auto& textureFileName = textureAsset->AssetFullName().ToString();
-				auto rawFilename = Utility::GetFilenameWithoutExtension(textureFileName);
-				textureAsset->Save();
-				helper << rawFilename;
+				helper << textureAsset->AssetId();
 			}
+			return (textureAsset != nullptr);
 		}
 	}
 }

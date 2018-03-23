@@ -60,12 +60,12 @@ namespace Viper
 				throw GameException(string(jsonStrError(status)) + " " + to_string(static_cast<size_t>(endptr - configJson.c_str())));
 			}
 
-			for (auto sectionIt = begin(jsonObject); sectionIt != JsonIterator::end(); ++sectionIt)
+			for (const auto& sectionIt : jsonObject)
 			{
 				auto& section = sectionIt->value;
 				assert(section.getTag() == JSON_OBJECT);
 				string sectionName(sectionIt->key);
-				for (auto paramsIt = begin(section); paramsIt != JsonIterator::end(); ++paramsIt)
+				for (const auto& paramsIt : section)
 				{
 					auto& param = paramsIt->value;
 					assert(param.getTag() == JSON_STRING);

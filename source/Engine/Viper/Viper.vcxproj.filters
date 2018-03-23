@@ -388,5 +388,11 @@
     <None Include="Core\ServiceLocator.inl">
       <Filter>Core</Filter>
     </None>
+    <None Include="Memory\MemoryAllocator.inl">
+      <Filter>Memory</Filter>
+    </None>
+    <None Include="Core\StringID.inl">
+      <Filter>Core</Filter>
+    </None>
   </ItemGroup>
 </Project>

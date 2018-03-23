@@ -12,20 +12,18 @@ namespace Viper
 			return constructors;
 		}
 
-		AssetManager::AssetManager() :
-			Service(ServiceType::AssetManager)
+		AssetManager::AssetManager(Memory::MemoryAllocator& allocator) :
+			Service(ServiceType::AssetManager), allocator(allocator)
 		{
 		}
 
 		void AssetManager::Initialize(const std::string& registryFileName)
 		{
 			ifstream assetRegistryFile;
-			OpenFile(assetRegistryFile, registryFileName);
+			OpenInputFile(assetRegistryFile, registryFileName);
 			{
 				InputStreamHelper helper(assetRegistryFile);
-				AssetRegistry registry;
-				ReadAssetRegistry(registry, helper);
-				LoadRegistryData(registry);
+				ReadAssetRegistry(helper);
 			}
 			assetRegistryFile.close();
 		}
@@ -37,18 +35,26 @@ namespace Viper
 
 		Asset* AssetManager::LoadSynchronous(const StringID& assetId)
 		{
-			assert(loadedAssets.find(assetId.Hash()) == loadedAssets.end());
-			assert(assetMetadata.find(assetId.Hash()) != assetMetadata.end());
-			auto& metadata = assetMetadata.at(assetId.Hash());
-			
 			Asset* asset = nullptr;
-			ifstream file;
-			OpenFile(file, metadata.resourceFile.ToString());
+			auto preloadedAsset = loadedAssets.find(assetId);
+			if (preloadedAsset != loadedAssets.end())
 			{
-				InputStreamHelper helper(file);
-				asset = LoadAsset(helper, assetId, metadata.offset);
+				asset = preloadedAsset->second;
 			}
-			file.close();
+			else
+			{
+				auto& registryData = registry.Data();
+				auto& assetsMap = registryData.assets;
+				assert(assetsMap.find(assetId) != assetsMap.end());
+				auto& assetMeta = assetsMap.at(assetId.Hash());
+
+				ifstream file;
+				OpenInputFile(file, registryData.contentDirectory + assetMeta.packageId.ToString());
+				{
+					InputStreamHelper helper(file);
+					asset = LoadAsset(helper, assetMeta);
+				}
+			}
 			return asset;
 		}
 
@@ -60,23 +66,34 @@ namespace Viper
 			delete asset;
 		}
 
+		void AssetManager::SaveSynchronous(const Asset& asset)
+		{
+			auto& registryData = registry.Data();
+			auto assetMeta = registryData.assets.at(asset.AssetId());
+			auto& packageId = assetMeta.packageId;
+			ofstream file;
+			OpenOutputFile(file, registryData.contentDirectory + packageId.ToString());
+			OutputStreamHelper helper(file);
+			helper << asset.Type();
+			asset.SaveTo(helper);
+		}
+
 		void AssetManager::LoadAll()
 		{
-			for (auto& assetsEntry : fileMetadata)
+			auto& registryData = registry.Data();
+			for (auto& packageEntry : registryData.packages)
 			{
-				auto& filename = StringID(assetsEntry.first).ToString();
+				auto& package = packageEntry.second;
 				ifstream file;
-				OpenFile(file, filename);
+				OpenInputFile(file, registryData.contentDirectory + package.packageId.ToString());
 				{
 					InputStreamHelper helper(file);
-					auto& assets = assetsEntry.second;
-					for (auto& assetId : assets)
+					for (auto& assetId : package.assets)
 					{
-						auto& metadata = assetMetadata.at(assetId.Hash());
-						LoadAsset(helper, assetId, metadata.offset);
+						auto& assetMeta = registryData.assets.at(assetId);
+						LoadAsset(helper, assetMeta);
 					}
 				}
-				file.close();
 			}
 		}
 
@@ -89,26 +106,15 @@ namespace Viper
 			}
 		}
 
-		InputStreamHelper& AssetManager::GetAssetInputHelper(StringID)
+		AssetRegistry& AssetManager::Registry()
 		{
-			// TODO: Lookup asset registry and find appropriate file / memory stream for read
-			istream stream(nullptr);
-			InputStreamHelper* helper = new InputStreamHelper(stream);
-			return *helper;
+			return registry;
 		}
 
-		OutputStreamHelper& AssetManager::GetAssetOutputHelper(StringID)
-		{
-			// TODO: Lookup asset registry and find appropriate file / memory stream for write
-			ostream stream(nullptr);
-			OutputStreamHelper* helper = new OutputStreamHelper(stream);
-			return *helper;
-		}
-
-		void AssetManager::ReadAssetRegistry(AssetRegistry& registry, InputStreamHelper& helper)
+		void AssetManager::ReadAssetRegistry(InputStreamHelper& helper)
 		{
 			auto& registryData = registry.Data();
-			// Reads asset names
+			// Read asset metadata
 			{
 				uint32_t assetsCount;
 				helper >> assetsCount;
@@ -117,99 +123,100 @@ namespace Viper
 				for (uint32_t i = 0; i < assetsCount; ++i)
 				{
 					helper >> tempName;
-					registryData.assets.push_back(StringID(tempName));
+					StringID assetId(tempName);
+					registryData.assets.insert({ assetId, AssetRegistry::AssetMeta(assetId) });
 				}
 			}
-			// Reads asset file names and offset info
+			// Read package metadata
 			{
-				uint32_t filesCount;
-				helper >> filesCount;
+				uint32_t packagesCount;
+				helper >> packagesCount;
 
-				uint32_t assetID;
+				StringID assetId(0);
 				uint32_t assetOffset;
-
-				registryData.assetFiles.reserve(filesCount);
-				for (uint32_t i = 0; i < filesCount; ++i)
+				registryData.packages.reserve(packagesCount);
+				std::string tempString;
+				for (uint32_t i = 0; i < packagesCount; ++i)
 				{
-					AssetRegistry::FileData fileData;
-					helper >> fileData.filename;
+					helper >> tempString;
+					StringID tempId(tempString);
+					registryData.packages.insert({ tempId, AssetRegistry::PackageMeta(tempId) });
+					auto& packageMeta = registryData.packages.at(tempId);
 
 					uint32_t assetCount;
 					helper >> assetCount;
-					fileData.assets.reserve(assetCount);
+					packageMeta.assets.reserve(assetCount);
 					for (uint32_t j = 0; j < assetCount; ++i)
 					{
-						helper >> assetID;
+						helper >> assetId;
 						helper >> assetOffset;
-						AssetRegistry::AssetOffsetData offsetData{ StringID(assetID), assetOffset };
-						fileData.assets.push_back(offsetData);
+						auto& assetMeta = registryData.assets.at(assetId);
+						assetMeta.offset = assetOffset;
+						assetMeta.packageId = packageMeta.packageId;
+						assetMeta.indexInPackage = static_cast<uint32_t>(packageMeta.assets.size());
+						packageMeta.assets.push_back(assetMeta.assetId);
 					}
-					registryData.assetFiles.push_back(fileData);
 				}
 			}
 		}
 
-		void AssetManager::SaveAssetRegistry(AssetRegistry& registry, OutputStreamHelper& helper)
+		void AssetManager::SaveAssetRegistry(OutputStreamHelper& helper)
 		{
 			auto& registryData = registry.Data();
-			// Write asset names
+			// Write asset Ids
 			{
 				helper << static_cast<uint32_t>(registryData.assets.size());
-				for (auto& asset : registryData.assets)
+				for (auto& assetEntry : registryData.assets)
 				{
-					helper << asset.ToString();
+					// write string and not ID
+					helper << assetEntry.first.ToString();
 				}
 			}
-			// Write asset file names and offset info
+			// Write package names and offset info
 			{
-				helper << static_cast<uint32_t>(registryData.assetFiles.size());
-				for (auto& fileData : registryData.assetFiles)
+				helper << static_cast<uint32_t>(registryData.packages.size());
+				for (auto& packageEntry : registryData.packages)
 				{
-					helper << fileData.filename;
-					helper << static_cast<uint32_t>(fileData.assets.size());
-					for (auto& offsetData : fileData.assets)
+					auto& package = packageEntry.second;
+					// write string and not ID
+					helper << package.packageId.ToString();
+					helper << static_cast<uint32_t>(package.assets.size());
+					for (auto& assetId : package.assets)
 					{
-						helper << offsetData.assetName.Hash();
-						helper << offsetData.fileOffset;
+						auto& asset = registryData.assets.at(assetId);
+						helper << assetId;
+						helper << asset.offset;
 					}
 				}
 			}
 		}
 
-		void AssetManager::LoadRegistryData(AssetRegistry& registry)
+		void AssetManager::OpenInputFile(ifstream& file, const std::string& filename)
 		{
-			for (auto& fileData : registry.Data().assetFiles)
-			{
-				StringID filename(fileData.filename);
-				fileMetadata.insert({ filename.Hash(), vector<StringID>()});
-				auto& fileAssets = fileMetadata.at(filename.Hash());
-				fileAssets.reserve(fileData.assets.size());
-				for (auto& assetData : fileData.assets)
-				{
-					OffsetData data = { assetData.assetName, assetData.fileOffset };
-					assetMetadata.insert({ StringID(fileData.filename).Hash(), data });
-					fileAssets.push_back(assetData.assetName);
-				}
-			}
-		}
-
-		void AssetManager::OpenFile(ifstream& file, const std::string& filename)
-		{
-			file.open(filename, ios::binary);
+			file.open(filename, ios::binary | ios::in);
 			if (!file.is_open())
 			{
-				throw GameException("Unable to load file : " + filename);
+				throw GameException("Unable to open file : " + filename);
 			}
 		}
 
-		Asset* AssetManager::LoadAsset(InputStreamHelper& helper, StringID assetId, std::uint32_t offset)
+		void AssetManager::OpenOutputFile(ofstream& file, const std::string& filename)
 		{
-			helper.Stream().seekg(offset, ios_base::beg);
-			uint8_t temp;
-			helper >> temp;
-			AssetType assetType = static_cast<AssetType>(temp);
-			auto asset = Constructors().at(assetType)(assetId);
-			loadedAssets.insert({ assetId.Hash(), asset });
+			file.open(filename, ios::binary | ios::out);
+			if (!file.is_open())
+			{
+				throw GameException("Unable to open file : " + filename);
+			}
+		}
+
+		Asset* AssetManager::LoadAsset(InputStreamHelper& helper, const AssetRegistry::AssetMeta& assetMeta)
+		{
+			helper.Stream().seekg(assetMeta.offset, ios_base::beg);
+			AssetType assetType;
+			helper >> assetType;
+			auto asset = Constructors().at(assetType)(assetMeta.assetId);
+			loadedAssets.insert({ assetMeta.assetId.Hash(), asset });
+			asset->LoadFrom(helper);
 			return asset;
 		}
 	}

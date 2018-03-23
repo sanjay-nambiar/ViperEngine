@@ -52,53 +52,75 @@ namespace Viper
 
 		void ModelAsset::LoadFrom(InputStreamHelper& inputHelper)
 		{
-			// Load materials
+			// Load materials meta
 			uint32_t materialCount;
-			bool isPbr;
-			string tempString;
+			StringID materialId;
+			vector<StringID> materialIds;
 			inputHelper >> materialCount;
 			data.materials.reserve(materialCount);
 			for (uint32_t i = 0; i < materialCount; ++i)
 			{
-				inputHelper >> tempString;
-				inputHelper >> isPbr;
-				auto material = static_cast<MaterialAsset*>(assetManager.LoadSynchronous(StringID(tempString)));
-				data.materials.push_back(material);
+				inputHelper >> materialId;
+				materialIds.push_back(materialId);
 			}
 
+			// Load meshes meta
 			uint32_t meshCount, materialIndex;
+			StringID meshId;
+			vector<StringID> meshIds;
 			inputHelper >> meshCount;
 			data.meshes.reserve(meshCount);
 			for (uint32_t i = 0; i < meshCount; ++i)
 			{
-				inputHelper >> tempString;
+				inputHelper >> meshId;
 				inputHelper >> materialIndex;
-				auto mesh = static_cast<MeshAsset*>(assetManager.LoadSynchronous(StringID(tempString)));
-				data.meshes.push_back(mesh);
 				data.meshMaterialMap.insert({ i, materialIndex });
+			}
+
+			// Load material data
+			for (auto& id : materialIds)
+			{
+				auto material = static_cast<MaterialAsset*>(assetManager.LoadSynchronous(id));
+				data.materials.push_back(material);
+			}
+
+			// Load mesh data
+			for (auto& id : meshIds)
+			{
+				auto mesh = static_cast<MeshAsset*>(assetManager.LoadSynchronous(id));
+				data.meshes.push_back(mesh);
 			}
 		}
 
 		void ModelAsset::SaveTo(OutputStreamHelper& outputHelper) const
 		{
-			// Serialize materials
+			// Serialize material meta
 			outputHelper << static_cast<uint32_t>(data.materials.size());
 			for (auto& material : data.materials)
 			{
-				outputHelper << material->AssetFullName().ToString();
-				outputHelper << material->IsPbr();
-				material->Save();
+				outputHelper << material->AssetId();
 			}
 
-			// Serialize meshes
+			// Serialize meshes meta
 			outputHelper << static_cast<uint32_t>(data.meshes.size());
 			uint32_t index = 0;
 			for (auto& mesh : data.meshes)
 			{
-				outputHelper << mesh->AssetFullName().ToString();
-				mesh->Save();
+				outputHelper << mesh->AssetId();
 				outputHelper << data.meshMaterialMap.at(index);
 				++index;
+			}
+
+			// Serialize material data
+			for (auto& material : data.materials)
+			{
+				material->Save();
+			}
+
+			// Serialize mesh data
+			for (auto& mesh : data.meshes)
+			{
+				mesh->Save();
 			}
 		}
 	}

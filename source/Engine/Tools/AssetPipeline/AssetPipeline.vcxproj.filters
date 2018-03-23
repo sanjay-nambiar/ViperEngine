@@ -7,6 +7,7 @@
     <ClCompile Include="Pch.cpp" />
     <ClCompile Include="MaterialProcessor.cpp" />
     <ClCompile Include="TextureProcessor.cpp" />
+    <ClCompile Include="AssetProcessor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MeshProcessor.h" />
@@ -14,8 +15,16 @@
     <ClInclude Include="Pch.h" />
     <ClInclude Include="MaterialProcessor.h" />
     <ClInclude Include="TextureProcessor.h" />
+    <ClInclude Include="AssetProcessor.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="GenerateAssetRegistry.py" />
+    <Filter Include="Scripts">
+      <UniqueIdentifier>{4aaeee81-12c8-44f7-87aa-ed1427d876c5}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="AssetRegistryHelper.py">
+      <Filter>Scripts</Filter>
+    </None>
   </ItemGroup>
 </Project>
