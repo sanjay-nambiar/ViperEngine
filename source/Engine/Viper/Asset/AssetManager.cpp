@@ -49,7 +49,7 @@ namespace Viper
 				auto& assetMeta = assetsMap.at(assetId.Hash());
 
 				ifstream file;
-				OpenInputFile(file, registryData.contentDirectory + assetMeta.packageId.ToString());
+				OpenInputFile(file, registryData.contentDirectory + assetMeta.packageId.ToString() + AssetRegistry::RegistryData::AssetExtension);
 				{
 					InputStreamHelper helper(file);
 					asset = LoadAsset(helper, assetMeta);
@@ -72,7 +72,7 @@ namespace Viper
 			auto assetMeta = registryData.assets.at(asset.AssetId());
 			auto& packageId = assetMeta.packageId;
 			ofstream file;
-			OpenOutputFile(file, registryData.contentDirectory + packageId.ToString());
+			OpenOutputFile(file, registryData.contentDirectory + packageId.ToString() + AssetRegistry::RegistryData::AssetExtension);
 			OutputStreamHelper helper(file);
 			helper << asset.Type();
 			asset.SaveTo(helper);
@@ -85,7 +85,7 @@ namespace Viper
 			{
 				auto& package = packageEntry.second;
 				ifstream file;
-				OpenInputFile(file, registryData.contentDirectory + package.packageId.ToString());
+				OpenInputFile(file, registryData.contentDirectory + package.packageId.ToString() + AssetRegistry::RegistryData::AssetExtension);
 				{
 					InputStreamHelper helper(file);
 					for (auto& assetId : package.assets)

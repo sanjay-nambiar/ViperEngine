@@ -141,8 +141,9 @@ namespace AssetPipeline
 			registryData.assets.insert({ assetId, AssetRegistry::AssetMeta(assetId) });
 			auto& assetMeta = registryData.assets.at(assetId);
 
-			StringID tempPackageId(tempDirectory + to_string(assetId.Hash()) + AssetRegistry::RegistryData::AssetExtension);
+			StringID tempPackageId(tempDirectory + to_string(assetId.Hash()));
 			registryData.packages.insert({ tempPackageId, AssetRegistry::PackageMeta(tempPackageId) });
+			tempPackageIds.push_back(tempPackageId);
 			auto& packageMeta = registryData.packages.at(tempPackageId);
 			packageMeta.assets.push_back(assetId);
 			assetMeta.packageId = tempPackageId;
@@ -169,6 +170,46 @@ namespace AssetPipeline
 		saveResources(models, [&](const Resource& resource) {
 			return modelProcessor->LoadModel(resource);
 		});
+
+		auto& registryData = assetManager->Registry().Data();
+		for (auto& assetMetaEntry : registryData.assets)
+		{
+			auto& assetMeta = assetMetaEntry.second;
+
+			ifstream src;
+			const string srcFile = registryData.contentDirectory + assetMeta.packageId.ToString() + AssetRegistry::RegistryData::AssetExtension;
+			src.open(srcFile, ios::binary);
+			if (!src.is_open())
+			{
+				throw GameException("Unable to open file : " + srcFile);
+			}
+
+			ofstream dest;
+			auto& packageId = assetPackageMap.at(assetMeta.assetId);
+			const string destFile = registryData.contentDirectory + packageId.ToString() + AssetRegistry::RegistryData::AssetExtension;
+			dest.open(destFile, ios::binary | ios::ate | ios::app);
+			if (!dest.is_open())
+			{
+				src.close();
+				throw GameException("Unable to open file : " + destFile);
+			}
+
+			assetMeta.packageId = packageId;
+			assetMeta.offset = static_cast<uint32_t>(dest.tellp());
+			if (registryData.packages.find(packageId) == registryData.packages.end())
+			{
+				registryData.packages.insert({ packageId, AssetRegistry::PackageMeta(packageId) });
+			}
+			auto& packageMeta = registryData.packages.at(packageId);
+			assetMeta.indexInPackage = static_cast<uint32_t>(packageMeta.assets.size());
+			packageMeta.assets.push_back(assetMeta.assetId);
+			dest << src.rdbuf();
+		}
+
+		for (auto& tempPackageId : tempPackageIds)
+		{
+			registryData.packages.erase(tempPackageId);
+		}
 	}
 
 	void AssetProcessor::CreateRegistry()

@@ -46,6 +46,7 @@ namespace AssetPipeline
 		std::vector<Resource> models;
 		std::vector<Resource> textures;
 		std::unordered_map<Viper::StringID, Viper::StringID> assetPackageMap;
+		std::vector<Viper::StringID> tempPackageIds;
 		std::unordered_map<Viper::StringID, Viper::Assets::Asset*> loadedAssets;
 
 		ModelProcessor* modelProcessor;
