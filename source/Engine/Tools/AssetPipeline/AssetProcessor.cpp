@@ -177,7 +177,7 @@ namespace AssetPipeline
 			auto& assetMeta = assetMetaEntry.second;
 
 			ifstream src;
-			const string srcFile = registryData.contentDirectory + assetMeta.packageId.ToString() + AssetRegistry::RegistryData::AssetExtension;
+			const string srcFile = registryData.contentDirectory + assetMeta.packageId.ToString() + AssetRegistry::AssetExtension;
 			src.open(srcFile, ios::binary);
 			if (!src.is_open())
 			{
@@ -186,7 +186,7 @@ namespace AssetPipeline
 
 			ofstream dest;
 			auto& packageId = assetPackageMap.at(assetMeta.assetId);
-			const string destFile = registryData.contentDirectory + packageId.ToString() + AssetRegistry::RegistryData::AssetExtension;
+			const string destFile = registryData.contentDirectory + packageId.ToString() + AssetRegistry::AssetExtension;
 			dest.open(destFile, ios::binary | ios::ate | ios::app);
 			if (!dest.is_open())
 			{
@@ -210,6 +210,7 @@ namespace AssetPipeline
 		{
 			registryData.packages.erase(tempPackageId);
 		}
+		assetManager->Registry().Save();
 	}
 
 	void AssetProcessor::CreateRegistry()
@@ -233,7 +234,7 @@ namespace AssetPipeline
 	void AssetProcessor::GetResource(Resource& resource, const string& path, const string& base)
 	{
 		string command = "python AssetRegistryHelper.py relative \"" + path + "\" \"" + base + "\" \"" + resourcesDirectory +
-			"\" \"" + contentDirectory + "\"";
+			"\" \"" + contentDirectory;
 		uint32_t exitCode = system(command.c_str());
 		if (exitCode)
 		{

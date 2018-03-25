@@ -37,11 +37,14 @@ namespace Viper
 				std::unordered_map<StringID, AssetMeta> assets;
 				std::unordered_map<StringID, PackageMeta> packages;
 				std::string contentDirectory;
-
-				static const std::string AssetExtension;
 			};
 
 			RegistryData& Data();
+			void Load(const std::string& contentDirectory);
+			void Save();
+
+			static const std::string AssetExtension;
+			static const std::string AssetRegistryFile;
 		private:
 			RegistryData data;
 		};

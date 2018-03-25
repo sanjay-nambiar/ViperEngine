@@ -60,12 +60,13 @@ def parse_commandline_args():
 ################### Commands ############################
 
 def generate_asset_list(content, resources):
+    content = content + os.path.sep
     asset_list = {'count': 0}
     textures = []
     models = []
     for root, subdirs, files in os.walk(resources):
         for filename in [f for f in files if check_format_support(f)]:
-            relative_path = root[len(resources):]
+            relative_path = root[len(resources + os.path.sep):]
             source_file = os.path.join(root, filename)
             split = os.path.splitext(filename)
             # get resource details 
@@ -87,8 +88,8 @@ def generate_asset_list(content, resources):
     asset_list['textures'] = textures
     asset_list['models'] = models
     asset_list['count'] = len(textures) + len(models)
-    asset_list['contentDirectoryPath'] = content
-    asset_list['contentDirectory'] = os.path.basename(content)
+    asset_list['contentDirectoryPath'] = os.path.abspath(content)
+    asset_list['contentDirectory'] = os.path.dirname(content) + os.path.sep
     asset_list['tempDirectory'] = os.path.sep + TEMP_DIRECTORY + os.path.sep
     mkdir_recursive(os.path.join(content, TEMP_DIRECTORY))
     with open(LIST_FILE, 'w') as out_file:
