@@ -16,9 +16,11 @@ namespace AssetPipeline
 	TextureAsset* TextureProcessor::LoadTexture(const Resource& resource, uint32_t index)
 	{
 		StringID assetId = StringID(resource.packageName + ":texture." + to_string(index));
+		cout << "Loading texture : " << assetId.ToString() << " ... ";
 		Asset* asset = assetProcessor.GetLoadedAsset(assetId);
 		if (asset != nullptr)
 		{
+			cout << "(cache retrieve) ... DONE" << endl;
 			return static_cast<TextureAsset*>(asset);
 		}
 
@@ -39,6 +41,7 @@ namespace AssetPipeline
 		textureData.width = static_cast<uint32_t>(w);
 		textureData.height = static_cast<uint32_t>(h);
 		textureData.channels = static_cast<uint32_t>(ch);
+		cout << "DONE" << endl;
 		return textureAsset;
 	}
 }

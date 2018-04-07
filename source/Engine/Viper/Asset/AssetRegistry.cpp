@@ -67,7 +67,7 @@ namespace Viper
 			}
 		}
 
-		void AssetRegistry::Save()
+		void AssetRegistry::Save(bool isDebug)
 		{
 			const string filename = data.contentDirectory + AssetRegistryFile;
 			ofstream file(filename, ios::binary);
@@ -91,6 +91,53 @@ namespace Viper
 					helper << asset.offset;
 				}
 			}
+			if (isDebug)
+			{
+				SaveDebug();
+			}
+		}
+
+		void AssetRegistry::SaveDebug()
+		{
+			const string filename = data.contentDirectory + AssetRegistryFile + ".debug";
+			ofstream file(filename);
+			if (!file)
+			{
+				throw GameException("Unable to save file: " + filename);
+			}
+
+			string prefix = "\t";
+			file << "{" << endl;
+			file << prefix << "\"content\": \"" << data.contentDirectory << "\"," << endl;
+			file << prefix << "\"packageCount\": " << data.packages.size() << "," << endl;
+			file << prefix << "\"packages\": [" << endl;
+			prefix = "\t\t";
+			for (auto& packageEntry : data.packages)
+			{
+				auto& package = packageEntry.second;
+				file << prefix << "{" << endl;
+				prefix = "\t\t\t";
+				file << prefix << "\"name\": \"" << packageEntry.first.ToString() << "\"," << endl;
+				file << prefix << "\"assetCount\": " << package.assets.size() << "," << endl;
+				file << prefix << "\"assets\": [" << endl;
+				prefix = "\t\t\t\t";
+				for (auto& assetId : package.assets)
+				{
+					auto& asset = data.assets.at(assetId);
+					file << prefix << "{" << endl;
+					prefix = "\t\t\t\t\t";
+					file << prefix << "\"name\": \"" << assetId.ToString() << "\"," << endl;
+					file << prefix << "\"index\": " << asset.indexInPackage << "," << endl;
+					file << prefix << "\"offset\": " << asset.offset << "," << endl;
+					prefix = "\t\t\t\t";
+					file << prefix << "}," << endl;
+				}
+				prefix = "\t\t";
+				file << prefix << "}," << endl;
+			}
+			prefix = "\t";
+			file << prefix << "]" << endl;
+			file << "}";
 		}
 	}
 }

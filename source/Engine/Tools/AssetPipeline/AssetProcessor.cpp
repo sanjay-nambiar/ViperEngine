@@ -35,6 +35,7 @@ namespace AssetPipeline
 
 	void AssetProcessor::LoadAssetList(const string& assetsDir, const string& contentDir)
 	{
+		cout << "Generating asset list : " << LIST_FILE << " ... ";
 		resourcesDirectory = assetsDir;
 		string command = "python AssetRegistryHelper.py registry " + assetsDir + " " + contentDir;
 		uint32_t exitCode = system(command.c_str());
@@ -42,6 +43,7 @@ namespace AssetPipeline
 		{
 			throw GameException("Error running list file generator script.");
 		}
+		cout << "DONE" << endl;
 
 		ifstream file;
 		file.open(LIST_FILE);
@@ -50,6 +52,7 @@ namespace AssetPipeline
 			throw GameException("Unable to read assets list file: " + string(LIST_FILE));
 		}
 
+		cout << "Parsing list file..." << endl;
 		string assetsJson((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
 		char *endptr;
 		JsonValue jsonObject;
@@ -62,6 +65,7 @@ namespace AssetPipeline
 
 		auto readResourceDetails = [&](JsonNode* registryIt, vector<Resource>& resourceDetails)
 		{
+			cout << "Reading resource details..." << endl;
 			assert(registryIt->value.getTag() == JSON_ARRAY);
 			auto& resources = registryIt->value;
 			for (auto resourcesIt : resources)
@@ -92,7 +96,9 @@ namespace AssetPipeline
 					}
 				}
 				resourceDetails.push_back(resource);
+				cout << "Resource detail read for : " << resource.resourceFile << endl;
 			}
+			cout << "Resource details read." << endl;
 		};
 
 		uint32_t resourceCount = 0;
@@ -128,6 +134,7 @@ namespace AssetPipeline
 			}
 		}
 		assert(resourceCount == textures.size() + models.size());
+		cout << "Parsing complete." << endl;
 		CreateRegistry();
 	}
 
@@ -151,31 +158,52 @@ namespace AssetPipeline
 		}
 	}
 
-	void AssetProcessor::SaveAssets()
+	void AssetProcessor::Cleanup(const string& contentDir)
+	{
+		cout << "Cleaning up temporary files...";
+		string command = "python AssetRegistryHelper.py cleanup " + contentDir;
+		uint32_t exitCode = system(command.c_str());
+		if (exitCode)
+		{
+			throw GameException("Error running cleanup script.");
+		}
+		cout << "DONE" << endl;
+	}
+
+	void AssetProcessor::SaveAssets(bool isDebug)
 	{
 		auto saveResources = [&](vector<Resource> resources, function<Asset*(const Resource&)> loadFunction)
 		{
 			for (auto& resource : resources)
 			{
+				cout << "Loading asset data from resource. Resource file : " << resource.resourceFile << ", Package : " << resource.packageName << endl;
 				Asset* asset = loadFunction(resource);
+				cout << "Load complete." << endl;
 				if (asset != nullptr)
 				{
+					cout << "Saving asset : " << asset->AssetId().ToString() << " ... ";
 					asset->Save();
+					cout << "DONE" << endl;
 				}
 			}
 		};
+		cout << "Load and save textures..." << endl;
 		saveResources(textures, [&](const Resource& resource) {
 			return textureProcessor->LoadTexture(resource);
 		});
+		cout << "Textures saved." << endl;
+		cout << "Load and save models..." << endl;
 		saveResources(models, [&](const Resource& resource) {
 			return modelProcessor->LoadModel(resource);
 		});
+		cout << "Models saved." << endl;
 
 		auto& registryData = assetManager->Registry().Data();
+		cout << "Updating registry data and saving assets to correct files..." << endl;
 		for (auto& assetMetaEntry : registryData.assets)
 		{
 			auto& assetMeta = assetMetaEntry.second;
-
+			cout << "Finalize registry data for : " << assetMeta.assetId.ToString() << " ... ";
 			ifstream src;
 			const string srcFile = registryData.contentDirectory + assetMeta.packageId.ToString() + AssetRegistry::AssetExtension;
 			src.open(srcFile, ios::binary);
@@ -204,17 +232,22 @@ namespace AssetPipeline
 			assetMeta.indexInPackage = static_cast<uint32_t>(packageMeta.assets.size());
 			packageMeta.assets.push_back(assetMeta.assetId);
 			dest << src.rdbuf();
+			cout << "DONE" << endl;
 		}
 
 		for (auto& tempPackageId : tempPackageIds)
 		{
 			registryData.packages.erase(tempPackageId);
 		}
-		assetManager->Registry().Save();
+		cout << "Registry data updated. Assets finalized." << endl;
+		cout << "Saving registry data...";
+		assetManager->Registry().Save(isDebug);
+		cout << "DONE" << endl;
 	}
 
 	void AssetProcessor::CreateRegistry()
 	{
+		cout << "Creating base registry object...";
 		auto& registryData = assetManager->Registry().Data();
 		registryData.contentDirectory = contentDirectory;
 		registryData.packages.reserve(textures.size() + models.size());
@@ -229,6 +262,7 @@ namespace AssetPipeline
 		};
 		addResourceEntries(textures);
 		addResourceEntries(models);
+		cout << "DONE" << endl;
 	}
 
 	void AssetProcessor::GetResource(Resource& resource, const string& path, const string& base)

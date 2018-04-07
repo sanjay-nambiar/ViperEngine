@@ -3,6 +3,7 @@
 import argparse
 import json
 import os
+import shutil
 import sys
 
 
@@ -34,7 +35,11 @@ TEMP_FILE_NAME = '.tempFile'
 ################### Main ############################
 
 def main():
-    commands = {'registry': generate_asset_list, 'relative': relative_path_to_resource}
+    commands = {
+        'registry': generate_asset_list,
+        'relative': relative_path_to_resource,
+        'cleanup' : cleanup_temporaries
+    }
     options = vars(parse_commandline_args())
     command = options['command']
     options.pop('command')
@@ -54,6 +59,9 @@ def parse_commandline_args():
     parser_relative.add_argument('base', help='Base of the relative path')
     parser_relative.add_argument('resources', help='Resources directory path')
     parser_relative.add_argument('content', help='Content directory path')
+    # cleanup command sub parser
+    parser_cleanup = sub_parsers.add_parser('cleanup', help='Cleanup temporary files and directories')
+    parser_cleanup.add_argument('content', help='Content directory path')
     return parser.parse_args()
 
 
@@ -107,6 +115,12 @@ def relative_path_to_resource(path, base, content, resources):
             'resourceFile': resourceFile
         }
         temp_file.write(json.dumps(resource, indent=4, sort_keys=True))
+
+
+def cleanup_temporaries(content):
+    shutil.rmtree(os.path.join(content, TEMP_DIRECTORY))
+    os.remove(TEMP_FILE_NAME)
+    os.remove(LIST_FILE)
 
 
 ################### Helper methods ############################

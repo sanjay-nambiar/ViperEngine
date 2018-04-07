@@ -30,7 +30,8 @@ namespace AssetPipeline
 		~AssetProcessor();
 		void LoadAssetList(const std::string& assetsDir, const std::string& contentDir);
 		void RegisterOffset(Viper::Assets::Asset& asset, const Viper::StringID& packageId);
-		void SaveAssets();
+		void Cleanup(const std::string& contentDir);
+		void SaveAssets(bool isDebug = false);
 		void GetResource(Resource& resource, const std::string& relativePath, const std::string& relativeTo);
 		Viper::Assets::Asset* GetLoadedAsset(const Viper::StringID& assetId);
 	private:

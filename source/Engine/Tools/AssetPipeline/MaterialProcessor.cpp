@@ -32,14 +32,17 @@ namespace AssetPipeline
 		InitializeTextureTypeMappings();
 
 		auto assetId = StringID(resource.packageName + ":material." + to_string(index));
+		cout << "Loading material : " << assetId.ToString() << " ... " << endl;
 		Asset* asset = assetProcessor.GetLoadedAsset(assetId);
 		if (asset != nullptr)
 		{
+			cout << "(cache retrieve) ... DONE" << endl;
 			return static_cast<MaterialAsset*>(asset);
 		}
 
 		auto materialAsset = LoadNonPbrMaterial(resource, assetId, material);
 		assetProcessor.RegisterOffset(*materialAsset, resource.packageName);
+		cout << "Loaded : " << assetId.ToString() << endl;
 		return materialAsset;
 	}
 

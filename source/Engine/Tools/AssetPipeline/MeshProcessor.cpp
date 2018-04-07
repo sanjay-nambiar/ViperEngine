@@ -15,9 +15,11 @@ namespace AssetPipeline
 	MeshAsset* MeshProcessor::LoadMesh(const Resource& resource, aiMesh& mesh, uint32_t index)
 	{
 		auto assetId = StringID(resource.packageName + ":mesh." + to_string(index));
+		cout << "Loading mesh : " << assetId.ToString() << " ... ";
 		Asset* asset = assetProcessor.GetLoadedAsset(assetId);
 		if (asset != nullptr)
 		{
+			cout << "(cache retrieve) ... DONE" << endl;
 			return static_cast<MeshAsset*>(asset);
 		}
 
@@ -91,7 +93,7 @@ namespace AssetPipeline
 				meshData.biNormals.push_back(vec3(biTangent.x, biTangent.y, biTangent.z));
 			}
 		}
-
+		cout << "DONE" << endl;
 		return meshAsset;
 	}
 }

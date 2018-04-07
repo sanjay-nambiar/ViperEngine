@@ -16,9 +16,11 @@ namespace AssetPipeline
 	ModelAsset* ModelProcessor::LoadModel(const Resource& resource, std::uint32_t index, bool flipUVs)
 	{
 		auto assetId = StringID(resource.packageName + ":model." + to_string(index));
+		cout << "Loading model : " << assetId.ToString() << " ... " << endl;
 		Asset* asset = assetProcessor.GetLoadedAsset(assetId);
 		if (asset != nullptr)
 		{
+			cout << "(cache retrieve) ... DONE" << endl;
 			return static_cast<ModelAsset*>(asset);
 		}
 
@@ -73,6 +75,7 @@ namespace AssetPipeline
 				}
 			}
 		}
+		cout << "Loaded model : " << assetId.ToString() << endl;
 		return modelAsset;
 	}
 }

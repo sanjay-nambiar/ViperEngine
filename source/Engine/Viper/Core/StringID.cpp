@@ -21,9 +21,9 @@ namespace Viper
 	}
 
 	StringID::StringID(uint32_t hash) :
-		hash(hash),
+		hash(hash)
 #if _DEBUG
-		stringVal(&HashToStringLookup()[hash])
+		,stringVal(&HashToStringLookup()[hash])
 #endif
 	{
 	}

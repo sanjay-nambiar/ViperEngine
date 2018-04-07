@@ -41,11 +41,13 @@ namespace Viper
 
 			RegistryData& Data();
 			void Load(const std::string& contentDirectory);
-			void Save();
+			void Save(bool isDebug = false);
 
 			static const std::string AssetExtension;
 			static const std::string AssetRegistryFile;
 		private:
+			void SaveDebug();
+
 			RegistryData data;
 		};
 	}
