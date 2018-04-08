@@ -25,7 +25,7 @@ namespace AssetPipeline
 		}
 
 		auto textureAsset = new TextureAsset(assetId);
-		assetProcessor.RegisterOffset(*textureAsset, resource.packageName);
+		assetProcessor.RegisterOffset(*textureAsset, resource.packageName, resource.packageFile);
 		auto& textureData = textureAsset->Data();
 
 		int w, h, ch;

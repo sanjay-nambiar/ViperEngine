@@ -24,7 +24,7 @@ namespace AssetPipeline
 		}
 
 		auto meshAsset = new MeshAsset(assetId);
-		assetProcessor.RegisterOffset(*meshAsset, resource.packageName);
+		assetProcessor.RegisterOffset(*meshAsset, resource.packageName, resource.packageFile);
 		auto& meshData = meshAsset->Data();
 
 		// Vertices

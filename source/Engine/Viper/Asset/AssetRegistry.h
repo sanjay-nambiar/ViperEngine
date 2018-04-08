@@ -27,9 +27,10 @@ namespace Viper
 			struct PackageMeta
 			{
 				StringID packageId;
+				StringID packageFile;
 				std::vector<StringID> assets;
 
-				PackageMeta(const StringID& packageId, std::uint32_t assetCount = 0);
+				PackageMeta(const StringID& packageId, const StringID& packageFile, std::uint32_t assetCount = 0);
 			};
 
 			struct RegistryData

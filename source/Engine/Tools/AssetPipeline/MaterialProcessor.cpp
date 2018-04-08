@@ -41,7 +41,7 @@ namespace AssetPipeline
 		}
 
 		auto materialAsset = LoadNonPbrMaterial(resource, assetId, material);
-		assetProcessor.RegisterOffset(*materialAsset, resource.packageName);
+		assetProcessor.RegisterOffset(*materialAsset, resource.packageName, resource.packageFile);
 		cout << "Loaded : " << assetId.ToString() << endl;
 		return materialAsset;
 	}
@@ -83,8 +83,12 @@ namespace AssetPipeline
 				assert(textureCount == 1);
 				aiString aiPath;
 				if (material.GetTexture(mappedTextureType, 0, &aiPath) == AI_SUCCESS)
-				{		
+				{
 					Resource textureResource = resource;
+					if (textureResource.packageFile != resource.packageFile)
+					{
+						cout << "What!!" << endl;
+					}
 					assetProcessor.GetResource(textureResource, aiPath.C_Str(), resource.resourceDir);
 
 					auto texture = textureProcessor.LoadTexture(textureResource);

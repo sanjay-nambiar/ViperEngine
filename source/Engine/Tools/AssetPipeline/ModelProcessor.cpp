@@ -25,7 +25,7 @@ namespace AssetPipeline
 		}
 
 		auto modelAsset = new ModelAsset(assetId);
-		assetProcessor.RegisterOffset(*modelAsset, resource.packageName);
+		assetProcessor.RegisterOffset(*modelAsset, resource.packageName, resource.packageFile);
 		auto& modelData = modelAsset->Data();
 		Importer importer;
 		uint32_t flags = aiProcess_Triangulate | aiProcess_JoinIdenticalVertices | aiProcess_SortByPType | aiProcess_FlipWindingOrder | aiProcess_CalcTangentSpace;

@@ -10,7 +10,8 @@ using namespace Viper::Memory;
 
 namespace AssetPipeline
 {
-	AssetProcessor::AssetProcessor()
+	AssetProcessor::AssetProcessor() :
+		isPackagedMode(false)
 	{
 		ServiceLocator::CreateInstance(allocator);
 		serviceLocator = &ServiceLocator::GetInstance();
@@ -33,18 +34,26 @@ namespace AssetPipeline
 		allocator.Free(textureProcessor);
 	}
 
-	void AssetProcessor::LoadAssetList(const string& assetsDir, const string& contentDir)
+	void AssetProcessor::GenerateAssetList(const string& assetsDir, const string& contentDir, bool isPackaged)
 	{
 		cout << "Generating asset list : " << LIST_FILE << " ... ";
 		resourcesDirectory = assetsDir;
 		string command = "python AssetRegistryHelper.py registry " + assetsDir + " " + contentDir;
+		if (isPackaged)
+		{
+			command += " --packaged";
+		}
 		uint32_t exitCode = system(command.c_str());
 		if (exitCode)
 		{
 			throw GameException("Error running list file generator script.");
 		}
 		cout << "DONE" << endl;
+		isPackagedMode = isPackaged;
+	}
 
+	void AssetProcessor::LoadAssetList()
+	{
 		ifstream file;
 		file.open(LIST_FILE);
 		if (!file.is_open())
@@ -78,6 +87,11 @@ namespace AssetPipeline
 					{
 						assert(resourceInfoIt->value.getTag() == JSON_STRING);
 						resource.packageName = string(resourceInfoIt->value.toString());
+					}
+					else if (string(resourceInfoIt->key) == string("packageFile"))
+					{
+						assert(resourceInfoIt->value.getTag() == JSON_STRING);
+						resource.packageFile = string(resourceInfoIt->value.toString());
 					}
 					else if (string(resourceInfoIt->key) == string("packageDir"))
 					{
@@ -138,18 +152,21 @@ namespace AssetPipeline
 		CreateRegistry();
 	}
 
-	void AssetProcessor::RegisterOffset(Asset& asset, const StringID& packageId)
+	void AssetProcessor::RegisterOffset(Asset& asset, const StringID& packageId, const StringID& packageFile)
 	{
 		auto& registryData = assetManager->Registry().Data();
 		auto& assetId = asset.AssetId();
+		if (packageId == packageFile)
+		{
+			cout << "culprit" << endl;
+		}
 		if (registryData.assets.find(assetId) == registryData.assets.end())
 		{
-			assetPackageMap.insert({ assetId, packageId });
+			assetPackageMap.insert({ assetId, { packageId, packageFile } });
 			registryData.assets.insert({ assetId, AssetRegistry::AssetMeta(assetId) });
 			auto& assetMeta = registryData.assets.at(assetId);
-
 			StringID tempPackageId(tempDirectory + to_string(assetId.Hash()));
-			registryData.packages.insert({ tempPackageId, AssetRegistry::PackageMeta(tempPackageId) });
+			registryData.packages.insert({ tempPackageId, AssetRegistry::PackageMeta(tempPackageId, tempPackageId) });
 			tempPackageIds.push_back(tempPackageId);
 			auto& packageMeta = registryData.packages.at(tempPackageId);
 			packageMeta.assets.push_back(assetId);
@@ -213,8 +230,10 @@ namespace AssetPipeline
 			}
 
 			ofstream dest;
-			auto& packageId = assetPackageMap.at(assetMeta.assetId);
-			const string destFile = registryData.contentDirectory + packageId.ToString() + AssetRegistry::AssetExtension;
+			auto& packageInfo = assetPackageMap.at(assetMeta.assetId);
+			auto& packageId = packageInfo.first;
+			auto& packageFile = packageInfo.second;
+			const string destFile = registryData.contentDirectory + packageFile.ToString() + AssetRegistry::AssetExtension;
 			dest.open(destFile, ios::binary | ios::ate | ios::app);
 			if (!dest.is_open())
 			{
@@ -226,7 +245,7 @@ namespace AssetPipeline
 			assetMeta.offset = static_cast<uint32_t>(dest.tellp());
 			if (registryData.packages.find(packageId) == registryData.packages.end())
 			{
-				registryData.packages.insert({ packageId, AssetRegistry::PackageMeta(packageId) });
+				registryData.packages.insert({ packageId, AssetRegistry::PackageMeta(packageId, packageFile) });
 			}
 			auto& packageMeta = registryData.packages.at(packageId);
 			assetMeta.indexInPackage = static_cast<uint32_t>(packageMeta.assets.size());
@@ -257,7 +276,8 @@ namespace AssetPipeline
 			for (auto& resource : resources)
 			{
 				StringID packageId(resource.packageName);
-				registryData.packages.insert({ packageId, AssetRegistry::PackageMeta(packageId) });
+				StringID packageFile(resource.packageFile);
+				registryData.packages.insert({ packageId, AssetRegistry::PackageMeta(packageId, packageFile) });
 			}
 		};
 		addResourceEntries(textures);
@@ -269,6 +289,10 @@ namespace AssetPipeline
 	{
 		string command = "python AssetRegistryHelper.py relative \"" + path + "\" \"" + base + "\" \"" + resourcesDirectory +
 			"\" \"" + contentDirectory;
+		if (isPackagedMode)
+		{
+			command += " --packaged";
+		}
 		uint32_t exitCode = system(command.c_str());
 		if (exitCode)
 		{
@@ -298,6 +322,11 @@ namespace AssetPipeline
 			{
 				assert(resourceInfoIt->value.getTag() == JSON_STRING);
 				resource.packageName = string(resourceInfoIt->value.toString());
+			}
+			else if (string(resourceInfoIt->key) == string("packageFile"))
+			{
+				assert(resourceInfoIt->value.getTag() == JSON_STRING);
+				resource.packageFile = string(resourceInfoIt->value.toString());
 			}
 			else if (string(resourceInfoIt->key) == string("packageDir"))
 			{

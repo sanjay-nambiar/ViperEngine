@@ -15,8 +15,8 @@ namespace Viper
 		{
 		}
 
-		AssetRegistry::PackageMeta::PackageMeta(const StringID& packageId, uint32_t assetCount) :
-			packageId(packageId)
+		AssetRegistry::PackageMeta::PackageMeta(const StringID& packageId, const StringID& packageFile, uint32_t assetCount) :
+			packageId(packageId), packageFile(packageFile)
 		{
 			if (assetCount > 0)
 			{
@@ -50,7 +50,9 @@ namespace Viper
 			{
 				string packageId;
 				helper >> packageId;
-				PackageMeta package(packageId);
+				string packageFile;
+				helper >> packageFile;
+				PackageMeta package(packageId, packageFile);
 				uint32_t assetsCount;
 				helper >> assetsCount;
 				package.assets.reserve(assetsCount);
@@ -117,7 +119,8 @@ namespace Viper
 				auto& package = packageEntry.second;
 				file << prefix << "{" << endl;
 				prefix = "\t\t\t";
-				file << prefix << "\"name\": \"" << packageEntry.first.ToString() << "\"," << endl;
+				file << prefix << "\"name\": \"" << package.packageId.ToString() << "\"," << endl;
+				file << prefix << "\"file\": \"" << package.packageFile.ToString() << "\"," << endl;
 				file << prefix << "\"assetCount\": " << package.assets.size() << "," << endl;
 				file << prefix << "\"assets\": [" << endl;
 				prefix = "\t\t\t\t";

@@ -139,9 +139,11 @@ namespace Viper
 				for (uint32_t i = 0; i < packagesCount; ++i)
 				{
 					helper >> tempString;
-					StringID tempId(tempString);
-					registryData.packages.insert({ tempId, AssetRegistry::PackageMeta(tempId) });
-					auto& packageMeta = registryData.packages.at(tempId);
+					StringID packageId(tempString);
+					helper >> tempString;
+					StringID packageFile(tempString);
+					registryData.packages.insert({ packageId, AssetRegistry::PackageMeta(packageId, packageFile) });
+					auto& packageMeta = registryData.packages.at(packageId);
 
 					uint32_t assetCount;
 					helper >> assetCount;
@@ -180,6 +182,7 @@ namespace Viper
 					auto& package = packageEntry.second;
 					// write string and not ID
 					helper << package.packageId.ToString();
+					helper << package.packageFile.ToString();
 					helper << static_cast<uint32_t>(package.assets.size());
 					for (auto& assetId : package.assets)
 					{
