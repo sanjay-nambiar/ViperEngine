@@ -24,7 +24,7 @@ namespace Viper
 			AssetManager(Memory::MemoryAllocator& allocator);
 			~AssetManager() = default;
 
-			void Initialize(const std::string& assetRegistryFile);
+			void Initialize(const std::string& contentDirectory = DefaultContentDirectory, const std::string& registryFileName = DefaultRegistryFile);
 			void Shutdown();
 
 			Asset* LoadSynchronous(const StringID& assetFullName);
@@ -35,9 +35,12 @@ namespace Viper
 			void UnloadAll();
 
 			AssetRegistry& Registry();
+			const std::unordered_map<StringID, Asset*>& LoadedAssets();
+
+			static const std::string DefaultContentDirectory;
+			static const std::string DefaultRegistryFile;
+			static const std::string DefaultAssetExtension;
 		private:
-			void ReadAssetRegistry(InputStreamHelper& helper);
-			void SaveAssetRegistry(OutputStreamHelper& helper);
 
 			void OpenInputFile(std::ifstream& file, const std::string& filename);
 			void OpenOutputFile(std::ofstream& file, const std::string& filename);

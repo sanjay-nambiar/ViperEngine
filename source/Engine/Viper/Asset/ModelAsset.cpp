@@ -9,38 +9,43 @@ namespace Viper
 	{
 		ASSET_DEFINITION(ModelAsset, Asset, AssetType::Model)
 
-		bool ModelAsset::operator==(const ModelAsset& rhs) const
+		bool ModelAsset::operator==(const Asset& rhs) const
 		{
-			if (data.meshes.size() != rhs.data.meshes.size())
+			if (type != rhs.Type())
+			{
+				return false;
+			}
+			const auto& rhsModel = static_cast<const ModelAsset&>(rhs);
+			if (data.meshes.size() != rhsModel.data.meshes.size())
 			{
 				return false;
 			}
 			for (uint32_t index = 0; index < data.meshes.size(); ++index)
 			{
-				if (*data.meshes[index] != *rhs.data.meshes[index])
+				if (*data.meshes[index] != *rhsModel.data.meshes[index])
 				{
 					return false;
 				}
 			}
-			if (data.materials.size() != rhs.data.materials.size())
+			if (data.materials.size() != rhsModel.data.materials.size())
 			{
 				return false;
 			}
 			for (uint32_t index = 0; index < data.materials.size(); ++index)
 			{
-				if (*data.materials[index] != *rhs.data.materials[index])
+				if (*data.materials[index] != *rhsModel.data.materials[index])
 				{
 					return false;
 				}
 			}
-			if (data.meshMaterialMap != rhs.data.meshMaterialMap)
+			if (data.meshMaterialMap != rhsModel.data.meshMaterialMap)
 			{
 				return false;
 			}
 			return true;
 		}
 
-		bool ModelAsset::operator!=(const ModelAsset& rhs) const
+		bool ModelAsset::operator!=(const Asset& rhs) const
 		{
 			return !(*this == rhs);
 		}

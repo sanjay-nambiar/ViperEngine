@@ -32,8 +32,8 @@ namespace Viper
 
 			NonPbrMaterialData& Data();
 
-			bool operator==(const MaterialAsset& rhs) const override;
-			bool operator!=(const MaterialAsset& rhs) const override;
+			bool operator==(const Asset& rhs) const override;
+			bool operator!=(const Asset& rhs) const override;
 		protected:
 			virtual const MaterialData& BaseData() const override;
 		private:

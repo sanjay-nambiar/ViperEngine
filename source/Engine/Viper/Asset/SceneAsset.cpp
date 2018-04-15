@@ -16,5 +16,15 @@ namespace Viper
 		void SceneAsset::SaveTo(OutputStreamHelper&) const
 		{
 		}
+
+		bool SceneAsset::operator==(const Asset&) const
+		{
+			return true;
+		}
+
+		bool SceneAsset::operator!=(const Asset& rhs) const
+		{
+			return !(*this == rhs);
+		}
 	}
 }

@@ -10,15 +10,20 @@ namespace Viper
 	{
 		ASSET_DEFINITION(MeshAsset, Asset, AssetType::Mesh)
 
-		bool MeshAsset::operator==(const MeshAsset& rhs) const
+		bool MeshAsset::operator==(const Asset& rhs) const
 		{
-			return ((data.vertices == rhs.data.vertices) && (data.normals == rhs.data.normals) &&
-				(data.tangents == rhs.data.tangents) && (data.biNormals == rhs.data.biNormals) &&
-				(data.textureCoordinates == rhs.data.textureCoordinates) && (data.vertexColors == rhs.data.vertexColors) &&
-				(data.indices == rhs.data.indices));
+			if (type != rhs.Type())
+			{
+				return false;
+			}
+			const auto& rhsMesh = static_cast<const MeshAsset&>(rhs);
+			return ((data.vertices == rhsMesh.data.vertices) && (data.normals == rhsMesh.data.normals) &&
+				(data.tangents == rhsMesh.data.tangents) && (data.biNormals == rhsMesh.data.biNormals) &&
+				(data.textureCoordinates == rhsMesh.data.textureCoordinates) && (data.vertexColors == rhsMesh.data.vertexColors) &&
+				(data.indices == rhsMesh.data.indices));
 		}
 
-		bool MeshAsset::operator!=(const MeshAsset& rhs) const
+		bool MeshAsset::operator!=(const Asset& rhs) const
 		{
 			return !(*this == rhs);
 		}

@@ -24,9 +24,6 @@ namespace Viper
 			~MaterialAsset() = default;
 
 			bool IsPbr() const;
-
-			virtual bool operator==(const MaterialAsset& rhs) const = 0;
-			virtual bool operator!=(const MaterialAsset& rhs) const = 0;
 		protected:
 			virtual const MaterialData& BaseData() const = 0;
 

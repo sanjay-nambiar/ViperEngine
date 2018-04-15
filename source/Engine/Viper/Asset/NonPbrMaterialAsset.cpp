@@ -22,13 +22,13 @@ namespace Viper
 			return data;
 		}
 
-		bool NonPbrMaterialAsset::operator==(const MaterialAsset& rhs) const
+		bool NonPbrMaterialAsset::operator==(const Asset& rhs) const
 		{
-			if (rhs.IsPbr())
+			if (type != rhs.Type())
 			{
 				return false;
 			}
-			auto& rhsMaterial = static_cast<const NonPbrMaterialAsset&>(rhs);
+			const auto& rhsMaterial = static_cast<const NonPbrMaterialAsset&>(rhs);
 			return ((data.ambient == rhsMaterial.data.ambient) &&
 				(data.diffuse == rhsMaterial.data.diffuse) &&
 				(data.specular == rhsMaterial.data.specular) &&
@@ -41,7 +41,7 @@ namespace Viper
 				IS_TEXTURE_EQUAL(data.opacityMap, rhsMaterial.data.opacityMap));
 		}
 
-		bool NonPbrMaterialAsset::operator!=(const MaterialAsset& rhs) const
+		bool NonPbrMaterialAsset::operator!=(const Asset& rhs) const
 		{
 			return !(*this == rhs);
 		}
@@ -67,11 +67,11 @@ namespace Viper
 			StringID opacityMapId = LoadTextureMetaHelper(inputHelper);
 			StringID emptyId;
 			if (normalMapId != emptyId) data.normalMap = static_cast<TextureAsset*>(assetManager.LoadSynchronous(normalMapId));
-			if (ambientMapId != emptyId) data.ambientMap = static_cast<TextureAsset*>(assetManager.LoadSynchronous(normalMapId));
-			if (diffuseMapId != emptyId) data.diffuseMap = static_cast<TextureAsset*>(assetManager.LoadSynchronous(normalMapId));
-			if (specularMapId != emptyId) data.specularMap = static_cast<TextureAsset*>(assetManager.LoadSynchronous(normalMapId));
-			if (specularPowerMapId != emptyId) data.specularPowerMap = static_cast<TextureAsset*>(assetManager.LoadSynchronous(normalMapId));
-			if (opacityMapId != emptyId) data.opacityMap = static_cast<TextureAsset*>(assetManager.LoadSynchronous(normalMapId));
+			if (ambientMapId != emptyId) data.ambientMap = static_cast<TextureAsset*>(assetManager.LoadSynchronous(ambientMapId));
+			if (diffuseMapId != emptyId) data.diffuseMap = static_cast<TextureAsset*>(assetManager.LoadSynchronous(diffuseMapId));
+			if (specularMapId != emptyId) data.specularMap = static_cast<TextureAsset*>(assetManager.LoadSynchronous(specularMapId));
+			if (specularPowerMapId != emptyId) data.specularPowerMap = static_cast<TextureAsset*>(assetManager.LoadSynchronous(specularPowerMapId));
+			if (opacityMapId != emptyId) data.opacityMap = static_cast<TextureAsset*>(assetManager.LoadSynchronous(opacityMapId));
 		}
 
 		void NonPbrMaterialAsset::SaveTo(OutputStreamHelper& outputHelper) const

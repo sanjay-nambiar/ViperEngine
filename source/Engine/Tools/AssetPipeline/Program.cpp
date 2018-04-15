@@ -4,13 +4,13 @@ using namespace std;
 using namespace Viper;
 using namespace AssetPipeline;
 
-
 struct ProgramArgs
 {
 	string resourceDir;
 	string contentDir;
 	bool isDebug;
 	bool isPackaged;
+	bool shouldValidate;
 	bool isParseSuccess;
 };
 
@@ -42,6 +42,10 @@ int main(int argc, char* argv[])
 		{
 			processor.Cleanup(args.contentDir);
 		}
+		if (args.shouldValidate)
+		{
+			processor.ValidateRegistryAndAssets();
+		}
 		cout << "Tool run complete." << endl;
 	}
 	catch (GameException ex)
@@ -61,7 +65,7 @@ int PrintUsage(const string& executableName)
 ProgramArgs ParseArgs(uint32_t argc, char* argv[])
 {
 	ProgramArgs args = {"", "", false, false, false};
-	if (argc < 3 || argc > 5)
+	if (argc < 3 || argc > 6)
 	{
 		return args;
 	}
@@ -78,6 +82,10 @@ ProgramArgs ParseArgs(uint32_t argc, char* argv[])
 		else if (arg == "-packaged")
 		{
 			args.isPackaged = true;
+		}
+		else if (arg == "-validate")
+		{
+			args.shouldValidate = true;
 		}
 	}
 

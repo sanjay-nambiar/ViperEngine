@@ -7,8 +7,20 @@ namespace Viper
 {
 	namespace Assets
 	{
-		const string AssetRegistry::AssetExtension = ".vasset";
-		const string AssetRegistry::AssetRegistryFile = "AssetRegistry.bin";
+		bool AssetRegistry::AssetMeta::operator==(const AssetRegistry::AssetMeta& rhs) const
+		{
+			return (assetId == rhs.assetId) && (packageId == rhs.packageId) && (indexInPackage == rhs.indexInPackage) && (offset == rhs.offset);
+		}
+
+		bool AssetRegistry::PackageMeta::operator==(const AssetRegistry::PackageMeta& rhs) const
+		{
+			return (packageId == rhs.packageId) && (packageFile == rhs.packageFile) && (assets == rhs.assets);
+		}
+
+		bool AssetRegistry::RegistryData::operator==(const RegistryData& rhs) const
+		{
+			return (assets == rhs.assets) && (packages == rhs.packages) && (contentDirectory == rhs.contentDirectory);
+		}
 
 		AssetRegistry::AssetMeta::AssetMeta(const StringID& assetId) :
 			assetId(assetId), packageId(0), indexInPackage(0), offset(0)
@@ -29,10 +41,40 @@ namespace Viper
 			return data;
 		}
 
-		void AssetRegistry::Load(const string& contentDirectoryRelative)
+		void AssetRegistry::Save(bool isDebug)
 		{
-			data.contentDirectory = contentDirectoryRelative;
-			const string filename = data.contentDirectory + AssetRegistryFile;
+			const string filename = data.contentDirectory + data.registryFileName;
+			ofstream file(filename, ios::binary);
+			if (!file)
+			{
+				throw GameException("Unable to save file: " + filename);
+			}
+			OutputStreamHelper helper(file);
+			helper << data.contentDirectory;
+			helper << static_cast<uint32_t>(data.packages.size());
+			for (auto& packageEntry : data.packages)
+			{
+				auto& package = packageEntry.second;
+				helper << package.packageId.ToString();
+				helper << package.packageFile.ToString();
+				helper << static_cast<uint32_t>(package.assets.size());
+				for (auto& assetId : package.assets)
+				{
+					auto& asset = data.assets.at(assetId);
+					helper << assetId.ToString();
+					helper << asset.indexInPackage;
+					helper << asset.offset;
+				}
+			}
+			if (isDebug)
+			{
+				SaveDebug();
+			}
+		}
+
+		void AssetRegistry::Load()
+		{
+			const string filename = data.contentDirectory + data.registryFileName;
 			ifstream file(filename, ios::binary);
 			if (!file)
 			{
@@ -56,7 +98,7 @@ namespace Viper
 				uint32_t assetsCount;
 				helper >> assetsCount;
 				package.assets.reserve(assetsCount);
-				for (uint32_t assetIndex = 0; assetIndex < packagesCount; ++assetIndex)
+				for (uint32_t assetIndex = 0; assetIndex < assetsCount; ++assetIndex)
 				{
 					string assetId;
 					helper >> assetId;
@@ -65,43 +107,15 @@ namespace Viper
 					helper >> asset.offset;
 					asset.packageId = package.packageId;
 					package.assets.push_back(asset.assetId);
+					data.assets.insert({ asset.assetId, asset });
 				}
-			}
-		}
-
-		void AssetRegistry::Save(bool isDebug)
-		{
-			const string filename = data.contentDirectory + AssetRegistryFile;
-			ofstream file(filename, ios::binary);
-			if (!file)
-			{
-				throw GameException("Unable to save file: " + filename);
-			}
-			OutputStreamHelper helper(file);
-			helper << data.contentDirectory;
-			helper << static_cast<uint32_t>(data.packages.size());
-			for (auto& packageEntry : data.packages)
-			{
-				auto& package = packageEntry.second;
-				helper << packageEntry.first.ToString();
-				helper << static_cast<uint32_t>(package.assets.size());
-				for (auto& assetId : package.assets)
-				{
-					auto& asset = data.assets.at(assetId);
-					helper << assetId.ToString();
-					helper << asset.indexInPackage;
-					helper << asset.offset;
-				}
-			}
-			if (isDebug)
-			{
-				SaveDebug();
+				data.packages.insert({ package.packageId, package });
 			}
 		}
 
 		void AssetRegistry::SaveDebug()
 		{
-			const string filename = data.contentDirectory + AssetRegistryFile + ".debug";
+			const string filename = data.contentDirectory + data.registryFileName + ".debug";
 			ofstream file(filename);
 			if (!file)
 			{

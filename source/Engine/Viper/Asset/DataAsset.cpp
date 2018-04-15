@@ -13,5 +13,15 @@ namespace Viper
 		void DataAsset::SaveTo(OutputStreamHelper&) const
 		{
 		}
+
+		bool DataAsset::operator==(const Asset&) const
+		{
+			return true;
+		}
+
+		bool DataAsset::operator!=(const Asset& rhs) const
+		{
+			return !(*this == rhs);
+		}
 	}
 }

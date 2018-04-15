@@ -156,10 +156,6 @@ namespace AssetPipeline
 	{
 		auto& registryData = assetManager->Registry().Data();
 		auto& assetId = asset.AssetId();
-		if (packageId == packageFile)
-		{
-			cout << "culprit" << endl;
-		}
 		if (registryData.assets.find(assetId) == registryData.assets.end())
 		{
 			assetPackageMap.insert({ assetId, { packageId, packageFile } });
@@ -177,7 +173,7 @@ namespace AssetPipeline
 
 	void AssetProcessor::Cleanup(const string& contentDir)
 	{
-		cout << "Cleaning up temporary files...";
+		cout << "Cleaning up temporary files... ";
 		string command = "python AssetRegistryHelper.py cleanup " + contentDir;
 		uint32_t exitCode = system(command.c_str());
 		if (exitCode)
@@ -222,7 +218,7 @@ namespace AssetPipeline
 			auto& assetMeta = assetMetaEntry.second;
 			cout << "Finalize registry data for : " << assetMeta.assetId.ToString() << " ... ";
 			ifstream src;
-			const string srcFile = registryData.contentDirectory + assetMeta.packageId.ToString() + AssetRegistry::AssetExtension;
+			const string srcFile = registryData.contentDirectory + assetMeta.packageId.ToString() + AssetManager::DefaultAssetExtension;
 			src.open(srcFile, ios::binary);
 			if (!src.is_open())
 			{
@@ -233,7 +229,7 @@ namespace AssetPipeline
 			auto& packageInfo = assetPackageMap.at(assetMeta.assetId);
 			auto& packageId = packageInfo.first;
 			auto& packageFile = packageInfo.second;
-			const string destFile = registryData.contentDirectory + packageFile.ToString() + AssetRegistry::AssetExtension;
+			const string destFile = registryData.contentDirectory + packageFile.ToString() + AssetManager::DefaultAssetExtension;
 			dest.open(destFile, ios::binary | ios::ate | ios::app);
 			if (!dest.is_open())
 			{
@@ -242,7 +238,7 @@ namespace AssetPipeline
 			}
 
 			assetMeta.packageId = packageId;
-			assetMeta.offset = static_cast<uint32_t>(dest.tellp());
+			assetMeta.offset = static_cast<uint64_t>(dest.tellp());
 			if (registryData.packages.find(packageId) == registryData.packages.end())
 			{
 				registryData.packages.insert({ packageId, AssetRegistry::PackageMeta(packageId, packageFile) });
@@ -259,7 +255,7 @@ namespace AssetPipeline
 			registryData.packages.erase(tempPackageId);
 		}
 		cout << "Registry data updated. Assets finalized." << endl;
-		cout << "Saving registry data...";
+		cout << "Saving registry data... ";
 		assetManager->Registry().Save(isDebug);
 		cout << "DONE" << endl;
 	}
@@ -269,8 +265,9 @@ namespace AssetPipeline
 		cout << "Creating base registry object...";
 		auto& registryData = assetManager->Registry().Data();
 		registryData.contentDirectory = contentDirectory;
+		registryData.registryFileName = AssetManager::DefaultRegistryFile;
 		registryData.packages.reserve(textures.size() + models.size());
-		
+
 		auto addResourceEntries = [&](vector<Resource> resources)
 		{
 			for (auto& resource : resources)
@@ -354,5 +351,61 @@ namespace AssetPipeline
 			asset = loadedAssets.at(assetId);
 		}
 		return asset;
+	}
+
+	void AssetProcessor::ValidateRegistryAndAssets()
+	{
+		cout << "Validating registry and assets..." << endl;
+		// Create new assetmanager for validation purpose
+		auto& assetManagerValidator = *(new (allocator.Allocate<AssetManager>()) AssetManager(allocator));
+		serviceLocator->Provide(assetManagerValidator);
+		auto& validatorRegistry = assetManagerValidator.Registry();
+		auto& validatorRegistryData = validatorRegistry.Data();
+		validatorRegistryData.contentDirectory = AssetManager::DefaultContentDirectory;
+		validatorRegistryData.registryFileName = AssetManager::DefaultRegistryFile;
+		
+		// validate
+		validatorRegistry.Load();
+		auto& registryData = assetManager->Registry().Data();
+		cout << "Registry data validated." << endl;
+		bool validationSuccess = (registryData == validatorRegistryData);
+		if (validationSuccess)
+		{
+			cout << "Loading all assets..." << endl;
+			assetManager->LoadAll();
+			assetManagerValidator.LoadAll();
+			auto& assetManagerLoadedAssets = assetManager->LoadedAssets();
+			for (auto& entry : assetManagerValidator.LoadedAssets())
+			{
+				auto& assetId = entry.first;
+				auto& asset = entry.second;
+				assert(assetManagerLoadedAssets.find(assetId) != assetManagerLoadedAssets.end());
+				auto& oldAsset = assetManagerLoadedAssets.at(assetId);
+				cout << "Validating asset: " << assetId.ToString() << " ... ";
+				bool assetValid = (*asset == *oldAsset);
+				validationSuccess &= assetValid;
+				if (assetValid)
+				{
+					cout << "DONE" << endl;
+				}
+				else
+				{
+					cout << "ERROR" << endl;
+				}
+			}
+
+			if (validationSuccess)
+			{
+				cout << "Asset data validation successful." << endl;
+			}
+			else
+			{
+				cout << "Asset data validation failed." << endl;
+			}
+		}
+		else
+		{
+			cout << "Asset registry data mismatch during validation." << endl;
+		}
 	}
 }

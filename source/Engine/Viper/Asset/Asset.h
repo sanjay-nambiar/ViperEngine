@@ -24,6 +24,9 @@ namespace Viper
 			const StringID& AssetId() const;
 			AssetType Type() const;
 
+			virtual bool operator==(const Asset& rhs) const = 0;
+			virtual bool operator!=(const Asset& rhs) const = 0;
+
 			void Load();
 			void Save();
 		protected:

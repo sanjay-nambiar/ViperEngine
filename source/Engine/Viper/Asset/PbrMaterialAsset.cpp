@@ -21,13 +21,13 @@ namespace Viper
 			return data;
 		}
 
-		bool PbrMaterialAsset::operator==(const MaterialAsset& rhs) const
+		bool PbrMaterialAsset::operator==(const Asset& rhs) const
 		{
-			if (!rhs.IsPbr())
+			if (type != rhs.Type())
 			{
 				return false;
 			}
-			auto& rhsMaterial = static_cast<const PbrMaterialAsset&>(rhs);
+			const auto& rhsMaterial = static_cast<const PbrMaterialAsset&>(rhs);
 			return ((data.albedo == rhsMaterial.data.albedo) &&
 				(data.metallic == rhsMaterial.data.metallic) &&
 				(data.roughness == rhsMaterial.data.roughness) &&
@@ -39,7 +39,7 @@ namespace Viper
 				IS_TEXTURE_EQUAL(data.aoMap, rhsMaterial.data.aoMap));
 		}
 
-		bool PbrMaterialAsset::operator!=(const MaterialAsset& rhs) const
+		bool PbrMaterialAsset::operator!=(const Asset& rhs) const
 		{
 			return !(*this == rhs);
 		}

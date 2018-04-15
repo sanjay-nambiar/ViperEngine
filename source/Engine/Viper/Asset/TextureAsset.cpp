@@ -23,10 +23,15 @@ namespace Viper
 			}
 		}
 
-		bool TextureAsset::operator==(const TextureAsset& rhs) const
+		bool TextureAsset::operator==(const Asset& rhs) const
 		{
-			if ((data.width != rhs.data.width) || (data.height != rhs.data.height) ||
-				(data.channels != rhs.data.channels) || (data.isHdr != rhs.data.isHdr))
+			if (type != rhs.Type())
+			{
+				return false;
+			}
+			const auto& rhsTexture = static_cast<const TextureAsset&>(rhs);
+			if ((data.width != rhsTexture.data.width) || (data.height != rhsTexture.data.height) ||
+				(data.channels != rhsTexture.data.channels) || (data.isHdr != rhsTexture.data.isHdr))
 			{
 				return false;
 			}
@@ -39,7 +44,7 @@ namespace Viper
 
 			for (uint32_t i = 0; i < totalComponents; ++i)
 			{
-				if (data.image.data[i] != rhs.data.image.data[i])
+				if (data.image.data[i] != rhsTexture.data.image.data[i])
 				{
 					return false;
 				}
@@ -47,7 +52,7 @@ namespace Viper
 			return true;
 		}
 
-		bool TextureAsset::operator!=(const TextureAsset& rhs) const
+		bool TextureAsset::operator!=(const Asset& rhs) const
 		{
 			return !(*this == rhs);
 		}

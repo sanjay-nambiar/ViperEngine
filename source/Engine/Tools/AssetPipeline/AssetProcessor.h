@@ -36,6 +36,7 @@ namespace AssetPipeline
 		void SaveAssets(bool isDebug);
 		void GetResource(Resource& resource, const std::string& relativePath, const std::string& relativeTo);
 		Viper::Assets::Asset* GetLoadedAsset(const Viper::StringID& assetId);
+		void ValidateRegistryAndAssets();
 	private:
 		void CreateRegistry();
 

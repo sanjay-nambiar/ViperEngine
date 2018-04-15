@@ -19,9 +19,10 @@ namespace Viper
 				StringID assetId;
 				StringID packageId;
 				uint32_t indexInPackage;
-				uint32_t offset;
+				uint64_t offset;
 
 				AssetMeta(const StringID& assetId);
+				bool operator==(const AssetMeta& rhs) const;
 			};
 
 			struct PackageMeta
@@ -31,6 +32,7 @@ namespace Viper
 				std::vector<StringID> assets;
 
 				PackageMeta(const StringID& packageId, const StringID& packageFile, std::uint32_t assetCount = 0);
+				bool operator==(const PackageMeta& rhs) const;
 			};
 
 			struct RegistryData
@@ -38,14 +40,14 @@ namespace Viper
 				std::unordered_map<StringID, AssetMeta> assets;
 				std::unordered_map<StringID, PackageMeta> packages;
 				std::string contentDirectory;
+				std::string registryFileName;
+
+				bool operator==(const RegistryData& rhs) const;
 			};
 
 			RegistryData& Data();
-			void Load(const std::string& contentDirectory);
 			void Save(bool isDebug = false);
-
-			static const std::string AssetExtension;
-			static const std::string AssetRegistryFile;
+			void Load();
 		private:
 			void SaveDebug();
 

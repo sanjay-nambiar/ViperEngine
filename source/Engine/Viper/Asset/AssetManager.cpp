@@ -6,6 +6,10 @@ namespace Viper
 {
 	namespace Assets
 	{
+		const string AssetManager::DefaultAssetExtension = ".vasset";
+		const string AssetManager::DefaultContentDirectory = "Content\\";
+		const string AssetManager::DefaultRegistryFile = "AssetRegistry.bin";
+
 		unordered_map<AssetType, AssetConstructor>& AssetManager::Constructors()
 		{
 			static unordered_map<AssetType, AssetConstructor> constructors(static_cast<uint32_t>(AssetType::AssetTypes));
@@ -17,15 +21,12 @@ namespace Viper
 		{
 		}
 
-		void AssetManager::Initialize(const std::string& registryFileName)
+		void AssetManager::Initialize(const string& contentDirectory, const string& registryFileName)
 		{
 			ifstream assetRegistryFile;
-			OpenInputFile(assetRegistryFile, registryFileName);
-			{
-				InputStreamHelper helper(assetRegistryFile);
-				ReadAssetRegistry(helper);
-			}
-			assetRegistryFile.close();
+			registry.Data().contentDirectory = contentDirectory;
+			registry.Data().registryFileName = registryFileName;
+			registry.Load();
 		}
 
 		void AssetManager::Shutdown()
@@ -47,9 +48,10 @@ namespace Viper
 				auto& assetsMap = registryData.assets;
 				assert(assetsMap.find(assetId) != assetsMap.end());
 				auto& assetMeta = assetsMap.at(assetId.Hash());
+				auto& package = registryData.packages.at(assetMeta.packageId);
 
 				ifstream file;
-				OpenInputFile(file, registryData.contentDirectory + assetMeta.packageId.ToString() + AssetRegistry::AssetExtension);
+				OpenInputFile(file, registryData.contentDirectory + package.packageFile.ToString() + DefaultAssetExtension);
 				{
 					InputStreamHelper helper(file);
 					asset = LoadAsset(helper, assetMeta);
@@ -70,9 +72,9 @@ namespace Viper
 		{
 			auto& registryData = registry.Data();
 			auto assetMeta = registryData.assets.at(asset.AssetId());
-			auto& packageId = assetMeta.packageId;
+			auto& package = registryData.packages.at(assetMeta.packageId);
 			ofstream file;
-			OpenOutputFile(file, registryData.contentDirectory + packageId.ToString() + AssetRegistry::AssetExtension);
+			OpenOutputFile(file, registryData.contentDirectory + package.packageFile.ToString() + DefaultAssetExtension);
 			OutputStreamHelper helper(file);
 			helper << asset.Type();
 			asset.SaveTo(helper);
@@ -85,7 +87,7 @@ namespace Viper
 			{
 				auto& package = packageEntry.second;
 				ifstream file;
-				OpenInputFile(file, registryData.contentDirectory + package.packageId.ToString() + AssetRegistry::AssetExtension);
+				OpenInputFile(file, registryData.contentDirectory + package.packageFile.ToString() + DefaultAssetExtension);
 				{
 					InputStreamHelper helper(file);
 					for (auto& assetId : package.assets)
@@ -111,87 +113,9 @@ namespace Viper
 			return registry;
 		}
 
-		void AssetManager::ReadAssetRegistry(InputStreamHelper& helper)
+		const unordered_map<StringID, Asset*>& AssetManager::LoadedAssets()
 		{
-			auto& registryData = registry.Data();
-			// Read asset metadata
-			{
-				uint32_t assetsCount;
-				helper >> assetsCount;
-				string tempName;
-				registryData.assets.reserve(assetsCount);
-				for (uint32_t i = 0; i < assetsCount; ++i)
-				{
-					helper >> tempName;
-					StringID assetId(tempName);
-					registryData.assets.insert({ assetId, AssetRegistry::AssetMeta(assetId) });
-				}
-			}
-			// Read package metadata
-			{
-				uint32_t packagesCount;
-				helper >> packagesCount;
-
-				StringID assetId(0);
-				uint32_t assetOffset;
-				registryData.packages.reserve(packagesCount);
-				std::string tempString;
-				for (uint32_t i = 0; i < packagesCount; ++i)
-				{
-					helper >> tempString;
-					StringID packageId(tempString);
-					helper >> tempString;
-					StringID packageFile(tempString);
-					registryData.packages.insert({ packageId, AssetRegistry::PackageMeta(packageId, packageFile) });
-					auto& packageMeta = registryData.packages.at(packageId);
-
-					uint32_t assetCount;
-					helper >> assetCount;
-					packageMeta.assets.reserve(assetCount);
-					for (uint32_t j = 0; j < assetCount; ++i)
-					{
-						helper >> assetId;
-						helper >> assetOffset;
-						auto& assetMeta = registryData.assets.at(assetId);
-						assetMeta.offset = assetOffset;
-						assetMeta.packageId = packageMeta.packageId;
-						assetMeta.indexInPackage = static_cast<uint32_t>(packageMeta.assets.size());
-						packageMeta.assets.push_back(assetMeta.assetId);
-					}
-				}
-			}
-		}
-
-		void AssetManager::SaveAssetRegistry(OutputStreamHelper& helper)
-		{
-			auto& registryData = registry.Data();
-			// Write asset Ids
-			{
-				helper << static_cast<uint32_t>(registryData.assets.size());
-				for (auto& assetEntry : registryData.assets)
-				{
-					// write string and not ID
-					helper << assetEntry.first.ToString();
-				}
-			}
-			// Write package names and offset info
-			{
-				helper << static_cast<uint32_t>(registryData.packages.size());
-				for (auto& packageEntry : registryData.packages)
-				{
-					auto& package = packageEntry.second;
-					// write string and not ID
-					helper << package.packageId.ToString();
-					helper << package.packageFile.ToString();
-					helper << static_cast<uint32_t>(package.assets.size());
-					for (auto& assetId : package.assets)
-					{
-						auto& asset = registryData.assets.at(assetId);
-						helper << assetId;
-						helper << asset.offset;
-					}
-				}
-			}
+			return loadedAssets;
 		}
 
 		void AssetManager::OpenInputFile(ifstream& file, const std::string& filename)
@@ -214,6 +138,10 @@ namespace Viper
 
 		Asset* AssetManager::LoadAsset(InputStreamHelper& helper, const AssetRegistry::AssetMeta& assetMeta)
 		{
+			if (loadedAssets.find(assetMeta.assetId) != loadedAssets.end())
+			{
+				return loadedAssets.at(assetMeta.assetId);
+			}
 			helper.Stream().seekg(assetMeta.offset, ios_base::beg);
 			AssetType assetType;
 			helper >> assetType;

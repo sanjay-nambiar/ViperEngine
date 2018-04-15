@@ -30,8 +30,8 @@ namespace Viper
 
 			MeshData& Data();
 
-			bool operator==(const MeshAsset& rhs) const;
-			bool operator!=(const MeshAsset& rhs) const;
+			bool operator==(const Asset& rhs) const;
+			bool operator!=(const Asset& rhs) const;
 		private:
 			void LoadFrom(InputStreamHelper& inputHelper) override;
 			void SaveTo(OutputStreamHelper& outputHelper) const override;
