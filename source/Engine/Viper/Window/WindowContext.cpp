@@ -3,8 +3,11 @@
 
 namespace Viper
 {
-	WindowContext::WindowContext() :
-		x(0), y(0), width(0), height(0)
+	namespace Window
 	{
+		WindowContext::WindowContext() :
+			x(0), y(0), width(0), height(0)
+		{
+		}
 	}
 }

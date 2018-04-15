@@ -12,6 +12,9 @@ namespace Viper
 	}
 
 	template<>
+	Assets::AssetManager& ServiceLocator::Get<Assets::AssetManager>();
+
+	template<>
 	Audio::AudioManager& ServiceLocator::Get<Audio::AudioManager>();
 
 	template<>

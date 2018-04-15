@@ -9,4 +9,9 @@ namespace Viper
 		exception(message)
 	{
 	}
+
+	GameException::GameException(const std::string& message) :
+		exception(message.c_str())
+	{
+	}
 }

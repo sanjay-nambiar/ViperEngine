@@ -329,7 +329,7 @@ void InitializeModule(ServiceLocator& serviceLocator, const unordered_map<string
 	uint32_t height = atoi(configAttributes.at(HEIGHT_ATTRIBUTE).c_str());
 
 	auto& allocator = serviceLocator.Get<MemoryAllocator>();
-	void* memBlock = allocator.Allocate(sizeof(BobsledBattle), 1);
+	auto memBlock = allocator.Allocate<BobsledBattle>(1);
 	assert(memBlock != nullptr);
 	BobsledBattle* battle = new(memBlock) BobsledBattle(serviceLocator, width, height, configAttributes.at(TITLE_ATTRIBUTE));
 	serviceLocator.Provide(*battle);

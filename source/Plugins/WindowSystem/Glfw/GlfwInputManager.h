@@ -16,7 +16,7 @@ namespace Viper
 			GlfwInputManager();
 			~GlfwInputManager() = default;
 
-			void Initialize(const WindowContext& windowContext) override;
+			void Initialize(const Window::WindowContext& windowContext) override;
 			void Update() override;
 			void Shutdown() override;
 

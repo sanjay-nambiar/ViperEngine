@@ -3,7 +3,7 @@
 #include "Memory/MemoryAllocator.h"
 #include "Core/Types.h"
 
-namespace  Viper
+namespace Viper
 {
 	namespace Memory
 	{
@@ -17,19 +17,14 @@ namespace  Viper
 			MemoryManager() = default;
 			~MemoryManager() = default;
 
-			/** Allocate memory
-			* A total of (elementSize * count) bytes of memory is allocated.
-			* @param elementSize The size of a single element in memory
-			* @param count The number of elements to allocate
-			* @return A pointer to the base of the allocated memory
-			*/
-			void* Allocate(size_t elementSize, uint32_t count) override;
-
 			/** Free allocated memory
 			* Free a block of memory previously allocated by the memory manager
 			* @param pointer The base pointer to the memory to be freed
 			*/
 			void Free(void* pointer) override;
+
+		protected:
+			void* AllocateInternal(size_t elementSize, uint32_t count) override;
 		};
 	}
 }

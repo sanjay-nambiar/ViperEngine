@@ -2,6 +2,7 @@
 #include <string>
 #include "glm/glm.hpp"
 #include "glm/gtc/type_ptr.hpp"
+#include "Core/GameException.h"
 #include "Gameplay/Actor.h"
 #include "Graphics/Mesh.h"
 #include "Graphics/Shader.h"
@@ -12,6 +13,8 @@ using namespace std;
 
 namespace Viper
 {
+	using namespace Window;
+
 	namespace Graphics
 	{
 
@@ -95,7 +98,7 @@ namespace Viper
 		{
 			if (!gladLoadGL())
 			{
-				throw std::runtime_error("Unable to initialize OpenGL");
+				throw GameException("Unable to initialize OpenGL");
 			}
 			glEnable(GL_DEPTH_TEST);
 		}

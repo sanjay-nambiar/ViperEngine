@@ -1,25 +1,38 @@
 #pragma once
 
-#include <utility>
+#include <unordered_map>
 #include <vector>
 #include "Asset.h"
 
 namespace Viper
 {
-	namespace Asset
+	namespace Assets
 	{
 		class MeshAsset;
 		class MaterialAsset;
 
+		struct ModelData
+		{
+			std::vector<MeshAsset*> meshes;
+			std::vector<MaterialAsset*> materials;
+			std::unordered_map<uint32_t, uint32_t> meshMaterialMap;
+		};
+
 		class ModelAsset : public Asset
 		{
 		public:
-			ModelAsset(const StringID& assetFullName);
+			ASSET_DECLARATION(ModelAsset)
 			~ModelAsset() = default;
 
-			const std::vector<std::pair<const MeshAsset*, const MaterialAsset*>>& Meshes() const;
+			ModelData& Data();
+
+			bool operator==(const Asset& rhs) const;
+			bool operator!=(const Asset& rhs) const;
 		private:
-			std::vector<std::pair<const MeshAsset*, const MaterialAsset*>> meshes;
+			void LoadFrom(InputStreamHelper& inputHelper) override;
+			void SaveTo(OutputStreamHelper& outputHelper) const override;
+
+			ModelData data;
 		};
 	}
 }

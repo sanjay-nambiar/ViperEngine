@@ -4,49 +4,107 @@ using namespace std;
 
 namespace Viper
 {
-	namespace Asset
+	using namespace Memory;
+
+	namespace Assets
 	{
-		TextureAsset::TextureAsset(const StringID& assetFullName) :
-			Asset(assetFullName), image({ nullptr }), width(0), height(0), channels(0)
+		TextureData::TextureData() :
+			width(0), height(0), channels(0), isHdr(false), image({ nullptr })
 		{
-			const auto& filePath = assetFullName.ToString();
-			int w, h, ch;
-			if (stbi_is_hdr(filePath.c_str()) == 0)
+		}
+
+		ASSET_DEFINITION(TextureAsset, Asset, AssetType::Texture)
+
+		TextureAsset::~TextureAsset()
+		{
+			if (data.image.data != nullptr)
 			{
-				image.data = static_cast<uint8_t*>(stbi_load(filePath.c_str(), &w, &h, &ch, 0));
+				delete[] data.image.data;
+			}
+		}
+
+		bool TextureAsset::operator==(const Asset& rhs) const
+		{
+			if (type != rhs.Type())
+			{
+				return false;
+			}
+			const auto& rhsTexture = static_cast<const TextureAsset&>(rhs);
+			if ((data.width != rhsTexture.data.width) || (data.height != rhsTexture.data.height) ||
+				(data.channels != rhsTexture.data.channels) || (data.isHdr != rhsTexture.data.isHdr))
+			{
+				return false;
+			}
+
+			uint32_t totalComponents = data.channels * data.width * data.height;
+			if (data.isHdr)
+			{
+				totalComponents *= sizeof(float32_t);
+			}
+
+			for (uint32_t i = 0; i < totalComponents; ++i)
+			{
+				if (data.image.data[i] != rhsTexture.data.image.data[i])
+				{
+					return false;
+				}
+			}
+			return true;
+		}
+
+		bool TextureAsset::operator!=(const Asset& rhs) const
+		{
+			return !(*this == rhs);
+		}
+
+		TextureData& TextureAsset::Data()
+		{
+			return data;
+		}
+
+		void TextureAsset::LoadFrom(InputStreamHelper& inputHelper)
+		{
+			inputHelper >> data.width;
+			inputHelper >> data.height;
+			inputHelper >> data.channels;
+			inputHelper >> data.isHdr;
+			if (data.image.data != nullptr)
+			{
+				delete[] data.image.data;
+			}
+
+			auto& inputStream = inputHelper.Stream();
+			if (data.isHdr)
+			{
+				data.image.hdrData = new float32_t[data.channels * data.width * data.height];
+				auto buffer = const_cast<char8_t*>(reinterpret_cast<const char8_t*>(data.image.hdrData));
+				inputStream.read(buffer, data.channels * data.width * data.height * sizeof(float32_t));
 			}
 			else
 			{
-				image.hdrData = stbi_loadf(filePath.c_str(), &w, &h, &ch, 0);
+				data.image.data = new uchar8_t[data.channels * data.width * data.height];
+				auto buffer = const_cast<char8_t*>(reinterpret_cast<const char8_t*>(data.image.data));
+				inputStream.read(buffer, data.channels * data.width * data.height * sizeof(uchar8_t));
 			}
-			width = static_cast<uint32_t>(w);
-			height = static_cast<uint32_t>(h);
-			channels = static_cast<uint32_t>(ch);
 		}
 
-		uint32_t TextureAsset::Width() const
+		void TextureAsset::SaveTo(OutputStreamHelper& outputHelper) const
 		{
-			return width;
-		}
-
-		uint32_t TextureAsset::Height() const
-		{
-			return height;
-		}
-
-		uint32_t TextureAsset::Channels() const
-		{
-			return channels;
-		}
-
-		const uint8_t* TextureAsset::Data() const
-		{
-			return image.data;
-		}
-
-		const float32_t* TextureAsset::HdrData() const
-		{
-			return image.hdrData;
+			outputHelper << data.width;
+			outputHelper << data.height;
+			outputHelper << data.channels;
+			outputHelper << data.isHdr;
+			auto& ouputStream = outputHelper.Stream();
+			if (data.isHdr)
+			{
+				ouputStream.write(reinterpret_cast<const char8_t*>(data.image.hdrData),
+					data.channels * data.width * data.height * sizeof(float32_t));
+			}
+			else
+			{
+				ouputStream.write(reinterpret_cast<const char8_t*>(data.image.data),
+					data.channels * data.width * data.height * sizeof(uchar8_t));
+			}
 		}
 	}
 }

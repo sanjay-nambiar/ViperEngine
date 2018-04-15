@@ -7,7 +7,7 @@
 
 namespace Viper
 {
-	namespace Core
+	namespace Platform
 	{
 		class ModuleLoader final: public Singleton<ModuleLoader>
 		{

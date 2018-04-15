@@ -6,51 +6,133 @@ using namespace glm;
 
 namespace Viper
 {
-	namespace Asset
+	namespace Assets
 	{
-		MeshAsset::MeshAsset(const StringID& assetFullName) :
-			Asset(assetFullName, AssetType::Mesh)
+		ASSET_DEFINITION(MeshAsset, Asset, AssetType::Mesh)
+
+		bool MeshAsset::operator==(const Asset& rhs) const
 		{
+			if (type != rhs.Type())
+			{
+				return false;
+			}
+			const auto& rhsMesh = static_cast<const MeshAsset&>(rhs);
+			return ((data.vertices == rhsMesh.data.vertices) && (data.normals == rhsMesh.data.normals) &&
+				(data.tangents == rhsMesh.data.tangents) && (data.biNormals == rhsMesh.data.biNormals) &&
+				(data.textureCoordinates == rhsMesh.data.textureCoordinates) && (data.vertexColors == rhsMesh.data.vertexColors) &&
+				(data.indices == rhsMesh.data.indices));
 		}
 
-		const vector<vec3>& MeshAsset::Vertices() const
+		bool MeshAsset::operator!=(const Asset& rhs) const
 		{
-			return vertices;
+			return !(*this == rhs);
 		}
 
-		const vector<vec3>& MeshAsset::Normals() const
+		MeshData& MeshAsset::Data()
 		{
-			return normals;
+			return data;
 		}
 
-		const vector<vec3>& MeshAsset::Tangents() const
+		void MeshAsset::LoadFrom(InputStreamHelper& inputHelper)
 		{
-			return tangents;
+			uint32_t tempCount, temp;
+			glm::vec3 tempVec3;
+			glm::vec4 tempVec4;
+
+			inputHelper >> tempCount;
+			data.vertices.reserve(tempCount);
+			for (uint32_t i = 0; i < tempCount; ++i)
+			{
+				inputHelper >> tempVec3;
+				data.vertices.push_back(tempVec3);
+			}
+			inputHelper >> tempCount;
+			data.normals.reserve(tempCount);
+			for (uint32_t i = 0; i < tempCount; ++i)
+			{
+				inputHelper >> tempVec3;
+				data.normals.push_back(tempVec3);
+			}
+			inputHelper >> tempCount;
+			data.tangents.reserve(tempCount);
+			for (uint32_t i = 0; i < tempCount; ++i)
+			{
+				inputHelper >> tempVec3;
+				data.tangents.push_back(tempVec3);
+			}
+			inputHelper >> tempCount;
+			data.biNormals.reserve(tempCount);
+			for (uint32_t i = 0; i < tempCount; ++i)
+			{
+				inputHelper >> tempVec3;
+				data.biNormals.push_back(tempVec3);
+			}
+			inputHelper >> tempCount;
+			data.textureCoordinates.reserve(tempCount);
+			for (uint32_t i = 0; i < tempCount; ++i)
+			{
+				inputHelper >> tempVec3;
+				data.textureCoordinates.push_back(tempVec3);
+			}
+			inputHelper >> tempCount;
+			data.vertexColors.reserve(tempCount);
+			for (uint32_t i = 0; i < tempCount; ++i)
+			{
+				inputHelper >> tempVec4;
+				data.vertexColors.push_back(tempVec4);
+			}
+
+			inputHelper >> data.faceCount;
+
+			inputHelper >> tempCount;
+			data.indices.reserve(tempCount);
+			for (uint32_t i = 0; i < tempCount; ++i)
+			{
+				inputHelper >> temp;
+				data.indices.push_back(temp);
+			}
 		}
 
-		const vector<vec3>& MeshAsset::BiNormals() const
+		void MeshAsset::SaveTo(OutputStreamHelper& outputHelper) const
 		{
-			return biNormals;
-		}
-		
-		const vector<vec2>& MeshAsset::TextureCoordinates() const
-		{
-			return textureCoordinates;
-		}
-		
-		const vector<vec4>& MeshAsset::VertexColors() const
-		{
-			return vertexColors;
-		}
-		
-		const uint32_t MeshAsset::FaceCount() const
-		{
-			return faceCount;
-		}
-		
-		const vector<uint32_t>& MeshAsset::Indices() const
-		{
-			return indices;
+			outputHelper << static_cast<uint32_t>(data.vertices.size());
+			for (auto& vertex : data.vertices)
+			{
+				outputHelper << vertex;
+			}
+			outputHelper << static_cast<uint32_t>(data.normals.size());
+			for (auto& normal : data.normals)
+			{
+				outputHelper << normal;
+			}
+			outputHelper << static_cast<uint32_t>(data.tangents.size());
+			for (auto& tangent : data.tangents)
+			{
+				outputHelper << tangent;
+			}
+			outputHelper << static_cast<uint32_t>(data.biNormals.size());
+			for (auto& biNormal : data.biNormals)
+			{
+				outputHelper << biNormal;
+			}
+			outputHelper << static_cast<uint32_t>(data.textureCoordinates.size());
+			for (auto& textureCoordinate : data.textureCoordinates)
+			{
+				outputHelper << textureCoordinate;
+			}
+			outputHelper << static_cast<uint32_t>(data.vertexColors.size());
+			for (auto& vertexColor : data.vertexColors)
+			{
+				outputHelper << vertexColor;
+			}
+
+			outputHelper << data.faceCount;
+
+			outputHelper << static_cast<uint32_t>(data.indices.size());
+			for (auto& indice : data.indices)
+			{
+				outputHelper << indice;
+			}
 		}
 	}
 }

@@ -6,6 +6,8 @@
 
 namespace Viper
 {
+	using namespace Window;
+
 	namespace Input
 	{
 		GlfwInputManager::GlfwInputManager() :
@@ -16,7 +18,7 @@ namespace Viper
 
 		void GlfwInputManager::Initialize(const WindowContext& windowContext)
 		{
-			context = static_cast<const Window::GlfwWindowContext&>(windowContext);
+			context = static_cast<const GlfwWindowContext&>(windowContext);
 			assert(context.window != nullptr);
 			ActiveInputManager = this;
 			glfwSetKeyCallback(context.window, KeyCallback);

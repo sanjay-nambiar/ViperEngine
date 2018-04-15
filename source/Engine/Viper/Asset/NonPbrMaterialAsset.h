@@ -6,33 +6,41 @@
 
 namespace Viper
 {
-	namespace Asset
+	namespace Assets
 	{
-		class NonPbrMaterialAsset : public MaterialAsset
+		struct NonPbrMaterialData final : MaterialData
 		{
-		public:
-			NonPbrMaterialAsset(const StringID& assetFullName);
-			~NonPbrMaterialAsset() = default;
-
-			const glm::vec3& Ambient() const;
-			const glm::vec3& Diffuse() const;
-			const glm::vec3& Specular() const;
-			float32_t SpecularPower() const;
-			const TextureAsset* AmbientMap() const;
-			const TextureAsset* DiffuseMap() const;
-			const TextureAsset* SpecularMap() const;
-			const TextureAsset* SpecularPowerMap() const;
-			const TextureAsset* OpacityMap() const;
-		private:
 			glm::vec3 ambient;
 			glm::vec3 diffuse;
 			glm::vec3 specular;
 			float32_t specularPower;
-			const TextureAsset* ambientMap;
-			const TextureAsset* diffuseMap;
-			const TextureAsset* specularMap;
-			const TextureAsset* specularPowerMap;
-			const TextureAsset* opacityMap;
+			TextureAsset* ambientMap;
+			TextureAsset* diffuseMap;
+			TextureAsset* specularMap;
+			TextureAsset* specularPowerMap;
+			TextureAsset* opacityMap;
+
+			NonPbrMaterialData();
+			~NonPbrMaterialData() = default;
+		};
+
+		class NonPbrMaterialAsset : public MaterialAsset
+		{
+		public:
+			ASSET_DECLARATION(NonPbrMaterialAsset)
+			~NonPbrMaterialAsset() = default;
+
+			NonPbrMaterialData& Data();
+
+			bool operator==(const Asset& rhs) const override;
+			bool operator!=(const Asset& rhs) const override;
+		protected:
+			virtual const MaterialData& BaseData() const override;
+		private:
+			void LoadFrom(InputStreamHelper& inputHelper) override;
+			void SaveTo(OutputStreamHelper& outputHelper) const override;
+
+			NonPbrMaterialData data;
 		};
 	}
 }

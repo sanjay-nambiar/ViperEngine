@@ -5,31 +5,40 @@
 
 namespace Viper
 {
-	namespace Asset
+	namespace Assets
 	{
-		class PbrMaterialAsset : public MaterialAsset
+		struct PbrMaterialData final : public MaterialData
 		{
-		public:
-			PbrMaterialAsset(const StringID& assetFullName);
-			~PbrMaterialAsset() = default;
-
-			const glm::vec3& Albedo() const;
-			float32_t Metallic() const;
-			float32_t Roughness() const;
-			float32_t AmbientOcclusion() const;
-			const TextureAsset* AlbedoMap() const;
-			const TextureAsset* MetallicMap() const;
-			const TextureAsset* RoughnessMap() const;
-			const TextureAsset* AmbientOcclusionMap() const;
-		private:
 			glm::vec3 albedo;
 			float32_t metallic;
 			float32_t roughness;
 			float32_t ao;
-			const TextureAsset* albedoMap;
-			const TextureAsset* metallicMap;
-			const TextureAsset* roughnessMap;
-			const TextureAsset* aoMap;
+			TextureAsset* albedoMap;
+			TextureAsset* metallicMap;
+			TextureAsset* roughnessMap;
+			TextureAsset* aoMap;
+
+			PbrMaterialData();
+			~PbrMaterialData() = default;
+		};
+
+		class PbrMaterialAsset : public MaterialAsset
+		{
+		public:
+			ASSET_DECLARATION(PbrMaterialAsset)
+			~PbrMaterialAsset() = default;
+
+			PbrMaterialData& Data();
+
+			bool operator==(const Asset& rhs) const override;
+			bool operator!=(const Asset& rhs) const override;
+		protected:
+			const MaterialData& BaseData() const override;
+		private:
+			void LoadFrom(InputStreamHelper& inputHelper) override;
+			void SaveTo(OutputStreamHelper& outputHelper) const override;
+
+			PbrMaterialData data;
 		};
 	}
 }

@@ -1,7 +1,10 @@
 #pragma once
 
 #include <iostream>
+#include <string>
 #include "glm/glm.hpp"
+#include "Core/StringID.h"
+#include "Core/Types.h"
 
 namespace Viper
 {
@@ -14,12 +17,19 @@ namespace Viper
 
 		std::ostream& Stream();
 
+		OutputStreamHelper& operator<<(int8_t value);
+		OutputStreamHelper& operator<<(int16_t value);
 		OutputStreamHelper& operator<<(int32_t value);
 		OutputStreamHelper& operator<<(int64_t value);
+		OutputStreamHelper& operator<<(uint8_t value);
+		OutputStreamHelper& operator<<(uint16_t value);
 		OutputStreamHelper& operator<<(uint32_t value);
 		OutputStreamHelper& operator<<(uint64_t value);
 		OutputStreamHelper& operator<<(float32_t value);
 		OutputStreamHelper& operator<<(const std::string& value);
+		OutputStreamHelper& operator<<(const glm::vec2& value);
+		OutputStreamHelper& operator<<(const glm::vec3& value);
+		OutputStreamHelper& operator<<(const glm::vec4& value);
 		OutputStreamHelper& operator<<(const glm::mat4& value);
 		OutputStreamHelper& operator<<(bool value);
 		
@@ -39,12 +49,19 @@ namespace Viper
 
 		std::istream& Stream();
 
+		InputStreamHelper& operator>>(int8_t& value);
+		InputStreamHelper& operator>>(int16_t& value);
 		InputStreamHelper& operator>>(int32_t& value);
 		InputStreamHelper& operator>>(int64_t& value);
+		InputStreamHelper& operator>>(uint8_t& value);
+		InputStreamHelper& operator>>(uint16_t& value);
 		InputStreamHelper& operator>>(uint32_t& value);
 		InputStreamHelper& operator>>(uint64_t& value);
 		InputStreamHelper& operator>>(float32_t& value);
 		InputStreamHelper& operator>>(std::string& value);
+		InputStreamHelper& operator>>(glm::vec2& value);
+		InputStreamHelper& operator>>(glm::vec3& value);
+		InputStreamHelper& operator>>(glm::vec4& value);
 		InputStreamHelper& operator>>(glm::mat4& value);
 		InputStreamHelper& operator>>(bool& value);
 		

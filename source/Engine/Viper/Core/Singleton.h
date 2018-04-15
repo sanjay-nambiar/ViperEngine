@@ -38,7 +38,7 @@ namespace Viper
 		{
 			assert(sInstance == nullptr);
 			allocator = &allocatorRef;
-			void* memBlock = allocator->Allocate(sizeof(T), 1);
+			void* memBlock = allocator->Allocate<T>(1);
 			assert(memBlock != nullptr);
 			sInstance = new(memBlock) T();
 		}

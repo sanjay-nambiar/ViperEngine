@@ -39,18 +39,18 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "glm", "..\source\Thirdparty
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "stb", "..\source\Thirdparty\stb\stb.vcxitems", "{E912CEC2-B84D-486E-865E-1270F16B22FE}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AssetPipeline", "..\source\Engine\Tools\AssetPipeline\AssetPipeline.vcxproj", "{A178C969-D639-489D-9A19-CD24C2930F9F}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		..\source\Thirdparty\glm\glm.vcxitems*{14e0f32c-0008-4009-bef1-54c120578187}*SharedItemsImports = 4
 		..\source\Thirdparty\glm\glm.vcxitems*{8d7263a2-5ebf-44d7-acea-bce9c7dfcb30}*SharedItemsImports = 4
+		..\source\Thirdparty\stb\stb.vcxitems*{a178c969-d639-489d-9a19-cd24c2930f9f}*SharedItemsImports = 4
 		..\source\Thirdparty\glm\glm.vcxitems*{a7b577de-e9de-418a-85ea-831991359af5}*SharedItemsImports = 4
-		..\source\Thirdparty\stb\stb.vcxitems*{a7b577de-e9de-418a-85ea-831991359af5}*SharedItemsImports = 4
 		..\source\Thirdparty\glm\glm.vcxitems*{a996f1ac-e71b-4507-bd64-9d5914bee7df}*SharedItemsImports = 9
 		..\source\Thirdparty\glm\glm.vcxitems*{b27a41b0-59ca-4f99-9cb7-bf14bef37b13}*SharedItemsImports = 4
-		..\source\Thirdparty\stb\stb.vcxitems*{b27a41b0-59ca-4f99-9cb7-bf14bef37b13}*SharedItemsImports = 4
 		..\source\Thirdparty\stb\stb.vcxitems*{e912cec2-b84d-486e-865e-1270f16b22fe}*SharedItemsImports = 9
 		..\source\Thirdparty\glm\glm.vcxitems*{fb32e549-5006-4bde-85c3-425d3360af51}*SharedItemsImports = 4
-		..\source\Thirdparty\stb\stb.vcxitems*{fb32e549-5006-4bde-85c3-425d3360af51}*SharedItemsImports = 4
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -123,6 +123,14 @@ Global
 		{667A42AA-ED36-4A98-A2AB-DE04AD25CC5A}.Release|x64.Build.0 = Release|x64
 		{667A42AA-ED36-4A98-A2AB-DE04AD25CC5A}.Release|x86.ActiveCfg = Release|Win32
 		{667A42AA-ED36-4A98-A2AB-DE04AD25CC5A}.Release|x86.Build.0 = Release|Win32
+		{A178C969-D639-489D-9A19-CD24C2930F9F}.Debug|x64.ActiveCfg = Debug|x64
+		{A178C969-D639-489D-9A19-CD24C2930F9F}.Debug|x64.Build.0 = Debug|x64
+		{A178C969-D639-489D-9A19-CD24C2930F9F}.Debug|x86.ActiveCfg = Debug|Win32
+		{A178C969-D639-489D-9A19-CD24C2930F9F}.Debug|x86.Build.0 = Debug|Win32
+		{A178C969-D639-489D-9A19-CD24C2930F9F}.Release|x64.ActiveCfg = Release|x64
+		{A178C969-D639-489D-9A19-CD24C2930F9F}.Release|x64.Build.0 = Release|x64
+		{A178C969-D639-489D-9A19-CD24C2930F9F}.Release|x86.ActiveCfg = Release|Win32
+		{A178C969-D639-489D-9A19-CD24C2930F9F}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -142,6 +150,7 @@ Global
 		{667A42AA-ED36-4A98-A2AB-DE04AD25CC5A} = {438A1F74-CE6F-49DD-A616-CBD997BEB866}
 		{A996F1AC-E71B-4507-BD64-9D5914BEE7DF} = {438A1F74-CE6F-49DD-A616-CBD997BEB866}
 		{E912CEC2-B84D-486E-865E-1270F16B22FE} = {438A1F74-CE6F-49DD-A616-CBD997BEB866}
+		{A178C969-D639-489D-9A19-CD24C2930F9F} = {D7AC8D41-5B1D-4B39-8365-FE4CE8963734}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B1267565-12EB-416E-AE28-CE692CC9063E}

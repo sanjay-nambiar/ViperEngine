@@ -2,6 +2,7 @@
 
 namespace Viper
 {
+	using namespace Assets;
 	using namespace Audio;
 	using namespace Gameplay;
 	using namespace Graphics;
@@ -11,13 +12,20 @@ namespace Viper
 	using namespace Window;
 
 	ServiceLocator::ServiceLocator() :
-		logger(nullptr), memoryAllocator(nullptr), audioManager(nullptr), windowManager(nullptr)
+		assetManager(nullptr), audioManager(nullptr), game(nullptr), rendererSystem(nullptr), textureLoader(nullptr),
+		inputManager(nullptr), logger(nullptr), memoryAllocator(nullptr), windowManager(nullptr)
 	{
 	}
 
 	void ServiceLocator::Provide(Service& service)
 	{
 		services.insert({ service.Type(), &service });
+	}
+
+	template<>
+	AssetManager& ServiceLocator::Get<AssetManager>()
+	{
+		return *(static_cast<AssetManager*>(services[ServiceType::AssetManager]));
 	}
 
 	template<>

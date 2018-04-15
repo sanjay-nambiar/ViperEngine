@@ -6,7 +6,7 @@ using namespace std;
 
 namespace Viper
 {
-	namespace Core
+	namespace Platform
 	{
 		ModuleLoader::~ModuleLoader()
 		{
@@ -46,7 +46,7 @@ namespace Viper
 			file.open(configFile);
 			if (!file.is_open())
 			{
-				throw runtime_error("Unable to read module config file: " + configFile);
+				throw GameException("Unable to read module config file: " + configFile);
 			}
 
 			string configJson((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
@@ -57,15 +57,15 @@ namespace Viper
 			int status = jsonParse(const_cast<char*>(configJson.c_str()), &endptr, &jsonObject, jsonAllocator);
 			if (status != JSON_OK)
 			{
-				throw runtime_error(string(jsonStrError(status)) + " " + to_string(static_cast<size_t>(endptr - configJson.c_str())));
+				throw GameException(string(jsonStrError(status)) + " " + to_string(static_cast<size_t>(endptr - configJson.c_str())));
 			}
 
-			for (auto sectionIt = begin(jsonObject); sectionIt != JsonIterator::end(); ++sectionIt)
+			for (const auto& sectionIt : jsonObject)
 			{
 				auto& section = sectionIt->value;
 				assert(section.getTag() == JSON_OBJECT);
 				string sectionName(sectionIt->key);
-				for (auto paramsIt = begin(section); paramsIt != JsonIterator::end(); ++paramsIt)
+				for (const auto& paramsIt : section)
 				{
 					auto& param = paramsIt->value;
 					assert(param.getTag() == JSON_STRING);

@@ -25,7 +25,7 @@ namespace Viper
 			~OpenGLRenderer() = default;
 
 			void Initialize() override;
-			void SetViewport(const WindowContext& windowContext) override;
+			void SetViewport(const Window::WindowContext& windowContext) override;
 
 			Shader LoadShaderSource(const std::string& shaderSource, ShaderType shaderType) override;
 			Shader LoadShaderFile(const std::string& shaderFile, ShaderType shaderType) override;

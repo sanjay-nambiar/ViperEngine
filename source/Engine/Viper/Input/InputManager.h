@@ -15,7 +15,7 @@ namespace Viper
 			InputManager();
 			virtual ~InputManager() = default;
 
-			virtual void Initialize(const WindowContext& windowContext) = 0;
+			virtual void Initialize(const Window::WindowContext& windowContext) = 0;
 			virtual void Update() = 0;
 			virtual void Shutdown() = 0;
 

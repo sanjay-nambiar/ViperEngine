@@ -1,13 +1,27 @@
 #include "Viper.h"
-#include "DataAsset.h"
 
 namespace Viper
 {
-	namespace Asset
+	namespace Assets
 	{
-		DataAsset::DataAsset(StringID& assetFullName) :
-			Asset(assetFullName, AssetType::Data)
+		ASSET_DEFINITION(DataAsset, Asset, AssetType::Data)
+
+		void DataAsset::LoadFrom(InputStreamHelper&)
 		{
+		}
+
+		void DataAsset::SaveTo(OutputStreamHelper&) const
+		{
+		}
+
+		bool DataAsset::operator==(const Asset&) const
+		{
+			return true;
+		}
+
+		bool DataAsset::operator!=(const Asset& rhs) const
+		{
+			return !(*this == rhs);
 		}
 	}
 }

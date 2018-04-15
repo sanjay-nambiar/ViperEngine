@@ -4,6 +4,7 @@
 #include <vector>
 #include "fmod_studio.hpp"
 #include "fmod_studio_common.h"
+#include "Core/GameException.h"
 
 using namespace FMOD;
 using namespace glm;
@@ -36,7 +37,7 @@ namespace Viper
 		{
 			if (result != FMOD_OK)
 			{
-				throw std::runtime_error("FMOD error: result = " + result);
+				throw GameException("FMOD error: result = " + result);
 			}
 		}
 

@@ -2,60 +2,97 @@
 #include "NonPbrMaterialAsset.h"
 
 using namespace glm;
+using namespace std;
 
 namespace Viper
 {
-	namespace Asset
+	namespace Assets
 	{
-		NonPbrMaterialAsset::NonPbrMaterialAsset(const StringID& assetFullName) :
-			MaterialAsset(assetFullName), ambientMap(nullptr), diffuseMap(nullptr),
-			specularMap(nullptr), specularPowerMap(nullptr), opacityMap(nullptr)
+		NonPbrMaterialData::NonPbrMaterialData() :
+			ambientMap(nullptr), diffuseMap(nullptr), specularMap(nullptr),
+			specularPowerMap(nullptr), opacityMap(nullptr)
 		{
+			isPbr = false;
 		}
 
-		const vec3& NonPbrMaterialAsset::Ambient() const
+		ASSET_DEFINITION(NonPbrMaterialAsset, MaterialAsset, AssetType::NonPbrMaterial)
+
+		NonPbrMaterialData& NonPbrMaterialAsset::Data()
 		{
-			return ambient;
+			return data;
 		}
 
-		const vec3& NonPbrMaterialAsset::Diffuse() const
+		bool NonPbrMaterialAsset::operator==(const Asset& rhs) const
 		{
-			return diffuse;
+			if (type != rhs.Type())
+			{
+				return false;
+			}
+			const auto& rhsMaterial = static_cast<const NonPbrMaterialAsset&>(rhs);
+			return ((data.ambient == rhsMaterial.data.ambient) &&
+				(data.diffuse == rhsMaterial.data.diffuse) &&
+				(data.specular == rhsMaterial.data.specular) &&
+				(data.specularPower == rhsMaterial.data.specularPower) &&
+				IS_TEXTURE_EQUAL(data.normalMap, rhsMaterial.data.normalMap) &&
+				IS_TEXTURE_EQUAL(data.ambientMap, rhsMaterial.data.ambientMap) &&
+				IS_TEXTURE_EQUAL(data.diffuseMap, rhsMaterial.data.diffuseMap) &&
+				IS_TEXTURE_EQUAL(data.specularMap, rhsMaterial.data.specularMap) &&
+				IS_TEXTURE_EQUAL(data.specularPowerMap, rhsMaterial.data.specularPowerMap) &&
+				IS_TEXTURE_EQUAL(data.opacityMap, rhsMaterial.data.opacityMap));
 		}
 
-		const vec3& NonPbrMaterialAsset::Specular() const
+		bool NonPbrMaterialAsset::operator!=(const Asset& rhs) const
 		{
-			return specular;
+			return !(*this == rhs);
 		}
 
-		float32_t NonPbrMaterialAsset::SpecularPower() const
+		const MaterialData& NonPbrMaterialAsset::BaseData() const
 		{
-			return specularPower;
+			auto baseData = static_cast<const MaterialData*>(&data);
+			return *baseData;
 		}
 
-		const TextureAsset* NonPbrMaterialAsset::AmbientMap() const
+		void NonPbrMaterialAsset::LoadFrom(InputStreamHelper& inputHelper)
 		{
-			return ambientMap;
+			inputHelper >> data.isPbr;
+			inputHelper >> data.ambient;
+			inputHelper >> data.diffuse;
+			inputHelper >> data.specular;
+			inputHelper >> data.specularPower;
+			StringID normalMapId = LoadTextureMetaHelper(inputHelper);
+			StringID ambientMapId = LoadTextureMetaHelper(inputHelper);
+			StringID diffuseMapId = LoadTextureMetaHelper(inputHelper);
+			StringID specularMapId = LoadTextureMetaHelper(inputHelper);
+			StringID specularPowerMapId = LoadTextureMetaHelper(inputHelper);
+			StringID opacityMapId = LoadTextureMetaHelper(inputHelper);
+			StringID emptyId;
+			if (normalMapId != emptyId) data.normalMap = static_cast<TextureAsset*>(assetManager.LoadSynchronous(normalMapId));
+			if (ambientMapId != emptyId) data.ambientMap = static_cast<TextureAsset*>(assetManager.LoadSynchronous(ambientMapId));
+			if (diffuseMapId != emptyId) data.diffuseMap = static_cast<TextureAsset*>(assetManager.LoadSynchronous(diffuseMapId));
+			if (specularMapId != emptyId) data.specularMap = static_cast<TextureAsset*>(assetManager.LoadSynchronous(specularMapId));
+			if (specularPowerMapId != emptyId) data.specularPowerMap = static_cast<TextureAsset*>(assetManager.LoadSynchronous(specularPowerMapId));
+			if (opacityMapId != emptyId) data.opacityMap = static_cast<TextureAsset*>(assetManager.LoadSynchronous(opacityMapId));
 		}
 
-		const TextureAsset* NonPbrMaterialAsset::DiffuseMap() const
+		void NonPbrMaterialAsset::SaveTo(OutputStreamHelper& outputHelper) const
 		{
-			return diffuseMap;
-		}
-
-		const TextureAsset* NonPbrMaterialAsset::SpecularMap() const
-		{
-			return specularMap;
-		}
-
-		const TextureAsset* NonPbrMaterialAsset::SpecularPowerMap() const
-		{
-			return specularPowerMap;
-		}
-
-		const TextureAsset* NonPbrMaterialAsset::OpacityMap() const
-		{
-			return opacityMap;
+			outputHelper << data.isPbr;
+			outputHelper << data.ambient;
+			outputHelper << data.diffuse;
+			outputHelper << data.specular;
+			outputHelper << data.specularPower;
+			SaveTextureMetaHelper(data.normalMap, outputHelper);
+			SaveTextureMetaHelper(data.ambientMap, outputHelper);
+			SaveTextureMetaHelper(data.diffuseMap, outputHelper);
+			SaveTextureMetaHelper(data.specularMap, outputHelper);
+			SaveTextureMetaHelper(data.specularPowerMap, outputHelper);
+			SaveTextureMetaHelper(data.opacityMap, outputHelper);
+			if (data.normalMap) data.normalMap->Save();
+			if (data.ambientMap) data.ambientMap->Save();
+			if (data.diffuseMap) data.diffuseMap->Save();
+			if (data.specularMap) data.specularMap->Save();
+			if (data.specularPowerMap) data.specularPowerMap->Save();
+			if (data.opacityMap) data.opacityMap->Save();
 		}
 	}
 }

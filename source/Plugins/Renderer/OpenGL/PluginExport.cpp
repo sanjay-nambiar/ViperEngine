@@ -12,12 +12,12 @@ void InitializeModule(ServiceLocator& serviceLocator, const unordered_map<string
 {
 	auto& allocator = serviceLocator.Get<MemoryAllocator>();
 
-	void* memBlock = allocator.Allocate(sizeof(OpenGLRenderer), 1);
+	auto memBlock = allocator.Allocate<OpenGLRenderer>(1);
 	assert(memBlock != nullptr);
 	OpenGLRenderer* rendererSystem = new(memBlock) OpenGLRenderer(serviceLocator);
 	serviceLocator.Provide(*rendererSystem);
 
-	void* memBlock2 = allocator.Allocate(sizeof(OpenGLTextureLoader), 1);
+	auto memBlock2 = allocator.Allocate<OpenGLTextureLoader>(1);
 	assert(memBlock2 != nullptr);
 	OpenGLTextureLoader* textureLoader = new(memBlock2) OpenGLTextureLoader();
 	serviceLocator.Provide(*textureLoader);

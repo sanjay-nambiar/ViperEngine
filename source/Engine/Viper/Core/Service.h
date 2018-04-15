@@ -5,6 +5,7 @@ namespace Viper
 	enum class ServiceType
 	{
 		AudioManager,
+		AssetManager,
 		Game,
 		InputManager,
 		Logger,
