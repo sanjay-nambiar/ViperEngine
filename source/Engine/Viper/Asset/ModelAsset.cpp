@@ -79,6 +79,7 @@ namespace Viper
 			{
 				inputHelper >> meshId;
 				inputHelper >> materialIndex;
+				meshIds.push_back(meshId);
 				data.meshMaterialMap.insert({ i, materialIndex });
 			}
 

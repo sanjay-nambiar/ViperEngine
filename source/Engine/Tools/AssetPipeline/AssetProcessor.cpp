@@ -372,15 +372,13 @@ namespace AssetPipeline
 		if (validationSuccess)
 		{
 			cout << "Loading all assets..." << endl;
-			assetManager->LoadAll();
 			assetManagerValidator.LoadAll();
-			auto& assetManagerLoadedAssets = assetManager->LoadedAssets();
 			for (auto& entry : assetManagerValidator.LoadedAssets())
 			{
 				auto& assetId = entry.first;
 				auto& asset = entry.second;
-				assert(assetManagerLoadedAssets.find(assetId) != assetManagerLoadedAssets.end());
-				auto& oldAsset = assetManagerLoadedAssets.at(assetId);
+				assert(loadedAssets.find(assetId) != loadedAssets.end());
+				auto& oldAsset = loadedAssets.at(assetId);
 				cout << "Validating asset: " << assetId.ToString() << " ... ";
 				bool assetValid = (*asset == *oldAsset);
 				validationSuccess &= assetValid;

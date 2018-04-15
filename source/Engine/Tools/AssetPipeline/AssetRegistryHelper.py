@@ -136,8 +136,10 @@ def relative_path_to_resource(path, base, content, resources, packaged):
 
 def cleanup_temporaries(content):
     shutil.rmtree(os.path.join(content, TEMP_DIRECTORY))
-    os.remove(TEMP_FILE_NAME)
-    os.remove(LIST_FILE)
+    if os.path.exists(TEMP_FILE_NAME):
+        os.remove(TEMP_FILE_NAME)
+    if os.path.exists(LIST_FILE):
+        os.remove(LIST_FILE)
 
 
 ################### Helper methods ############################
