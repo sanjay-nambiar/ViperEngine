@@ -45,10 +45,12 @@ namespace Viper
 
 		GpuTextureResource* VulkanRenderer::CreateTextureResource(const TextureDescription&)
 		{
+			return nullptr;
 		}
 
 		bool VulkanRenderer::FreeTextureResource(GpuTextureResource&)
 		{
+			return false;
 		}
 
 		void VulkanRenderer::LoadMesh(const Mesh&)

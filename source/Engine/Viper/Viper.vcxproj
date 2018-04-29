@@ -229,7 +229,6 @@
     <ClInclude Include="Graphics\RenderPrimitive.h" />
     <ClInclude Include="Graphics\Shader.h" />
     <ClInclude Include="Graphics\Texture.h" />
-    <ClInclude Include="Graphics\TextureLoader.h" />
     <ClInclude Include="Input\InputEnums.h" />
     <ClInclude Include="Input\InputManager.h" />
     <ClInclude Include="Logging\Logger.h" />
@@ -279,7 +278,6 @@
     <ClCompile Include="Graphics\RenderPrimitive.cpp" />
     <ClCompile Include="Graphics\Shader.cpp" />
     <ClCompile Include="Graphics\Texture.cpp" />
-    <ClCompile Include="Graphics\TextureLoader.cpp" />
     <ClCompile Include="Input\InputManager.cpp" />
     <ClCompile Include="Logging\Logger.cpp" />
     <ClCompile Include="Memory\MemoryAllocator.cpp" />

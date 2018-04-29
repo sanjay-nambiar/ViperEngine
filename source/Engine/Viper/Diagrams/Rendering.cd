@@ -14,13 +14,6 @@
       <FileName>Graphics\Shader.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Viper::Graphics::TextureLoader">
-    <Position X="8.5" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABQ=</HashCode>
-      <FileName>Graphics\TextureLoader.h</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="Viper::Graphics::RenderPrimitive">
     <Position X="10.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>

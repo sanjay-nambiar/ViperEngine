@@ -13,18 +13,12 @@
     <ClCompile Include="ShaderCompiler.cpp">
       <Filter>Plugin</Filter>
     </ClCompile>
-    <ClCompile Include="OpenGLTextureLoader.cpp">
-      <Filter>Plugin</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="OpenGLRenderer.h">
       <Filter>Plugin</Filter>
     </ClInclude>
     <ClInclude Include="ShaderCompiler.h">
-      <Filter>Plugin</Filter>
-    </ClInclude>
-    <ClInclude Include="OpenGLTextureLoader.h">
       <Filter>Plugin</Filter>
     </ClInclude>
   </ItemGroup>

@@ -220,13 +220,11 @@ xcopy "$(OutDir)$(TargetName).pdb" "$(SolutionDir)bin\Plugins\$(PlatformName)\$(
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="OpenGLRenderer.cpp" />
-    <ClCompile Include="OpenGLTextureLoader.cpp" />
     <ClCompile Include="PluginExport.cpp" />
     <ClCompile Include="ShaderCompiler.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="OpenGLRenderer.h" />
-    <ClInclude Include="OpenGLTextureLoader.h" />
     <ClInclude Include="ShaderCompiler.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -24,9 +24,6 @@ namespace Viper
 	Graphics::Renderer& ServiceLocator::Get<Graphics::Renderer>();
 
 	template<>
-	Graphics::TextureLoader& ServiceLocator::Get<Graphics::TextureLoader>();
-
-	template<>
 	Input::InputManager& ServiceLocator::Get<Input::InputManager>();
 
 	template<>

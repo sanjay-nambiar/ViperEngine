@@ -46,6 +46,7 @@ EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		..\source\Thirdparty\glm\glm.vcxitems*{14e0f32c-0008-4009-bef1-54c120578187}*SharedItemsImports = 4
+		..\source\Thirdparty\glm\glm.vcxitems*{5174ef5e-e45a-424a-b9dd-4a867ffa6a5b}*SharedItemsImports = 4
 		..\source\Thirdparty\glm\glm.vcxitems*{8d7263a2-5ebf-44d7-acea-bce9c7dfcb30}*SharedItemsImports = 4
 		..\source\Thirdparty\stb\stb.vcxitems*{a178c969-d639-489d-9a19-cd24c2930f9f}*SharedItemsImports = 4
 		..\source\Thirdparty\glm\glm.vcxitems*{a7b577de-e9de-418a-85ea-831991359af5}*SharedItemsImports = 4

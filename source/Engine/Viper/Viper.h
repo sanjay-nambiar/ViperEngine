@@ -59,7 +59,6 @@
 #include "Graphics/RenderPrimitive.h"
 #include "Graphics/Shader.h"
 #include "Graphics/Texture.h"
-#include "Graphics/TextureLoader.h"
 #include "Input/InputEnums.h"
 #include "Input/InputManager.h"
 #include "Logging/Logger.h"

@@ -1,5 +1,4 @@
 #include "Core/ServiceLocator.h"
-#include "OpenGLTextureLoader.h"
 #include "OpenGLRenderer.h"
 #include "Platform/ModuleExports.h"
 
@@ -16,9 +15,4 @@ void InitializeModule(ServiceLocator& serviceLocator, const unordered_map<string
 	assert(memBlock != nullptr);
 	OpenGLRenderer* rendererSystem = new(memBlock) OpenGLRenderer(serviceLocator);
 	serviceLocator.Provide(*rendererSystem);
-
-	auto memBlock2 = allocator.Allocate<OpenGLTextureLoader>(1);
-	assert(memBlock2 != nullptr);
-	OpenGLTextureLoader* textureLoader = new(memBlock2) OpenGLTextureLoader();
-	serviceLocator.Provide(*textureLoader);
 }

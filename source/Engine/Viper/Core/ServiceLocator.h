@@ -11,11 +11,7 @@ namespace Viper
 	namespace Audio { class AudioManager; }
 	namespace Assets { class AssetManager; }
 	namespace Gameplay { class Game; }
-	namespace Graphics
-	{
-		class Renderer;
-		class TextureLoader;
-	}
+	namespace Graphics { class Renderer; }
 	namespace Input { class InputManager; }
 	namespace Logging { class Logger;  }
 	namespace Memory { class MemoryAllocator; }
@@ -59,7 +55,6 @@ namespace Viper
 		Audio::AudioManager* audioManager;
 		Gameplay::Game* game;
 		Graphics::Renderer* rendererSystem;
-		Graphics::TextureLoader* textureLoader;
 		Input::InputManager* inputManager;
 		Logging::Logger* logger;
 		Memory::MemoryAllocator* memoryAllocator;

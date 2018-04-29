@@ -11,7 +11,6 @@ namespace Viper
 		Logger,
 		MemoryAllocator,
 		Renderer,
-		TextureLoader,
 		WindowManager
 	};
 

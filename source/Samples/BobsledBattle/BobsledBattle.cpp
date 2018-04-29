@@ -6,6 +6,7 @@
 #include "Core/ServiceLocator.h"
 #include "Gameplay/Actor.h"
 #include "Graphics/Mesh.h"
+#include "Graphics/Texture.h"
 #include "Platform/ModuleExports.h"
 #include "Platform/Platform.h"
 #include "BobsledBattle.h"
@@ -99,9 +100,9 @@ namespace Bobsled
 
 	void BobsledBattle::DefineCubeActors()
 	{
-		auto& loader = serviceLocator.Get<TextureLoader>();
-		Texture textureObj1 = loader.LoadTexture("Content/Textures/wall.jpg");
-		Texture textureObj2 = loader.LoadTexture("Content/Textures/decal.jpg");
+		// TODO: Fix this when renderer and framegraph starts working
+		Texture textureObj1(0, 0, 0);
+		Texture textureObj2(0, 0, 0);
 
 		auto& renderer = serviceLocator.Get<Renderer>();
 

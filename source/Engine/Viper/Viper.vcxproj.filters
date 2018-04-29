@@ -108,9 +108,6 @@
     <ClInclude Include="Memory\MemoryAllocator.h">
       <Filter>Memory</Filter>
     </ClInclude>
-    <ClInclude Include="Graphics\TextureLoader.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="Graphics\Mesh.h">
       <Filter>Graphics\Data</Filter>
     </ClInclude>
@@ -324,9 +321,6 @@
     </ClCompile>
     <ClCompile Include="Audio\AudioManager.cpp">
       <Filter>Audio</Filter>
-    </ClCompile>
-    <ClCompile Include="Graphics\TextureLoader.cpp">
-      <Filter>Graphics</Filter>
     </ClCompile>
     <ClCompile Include="Window\WindowManager.cpp">
       <Filter>Window</Filter>

@@ -12,8 +12,8 @@ namespace Viper
 	using namespace Window;
 
 	ServiceLocator::ServiceLocator() :
-		assetManager(nullptr), audioManager(nullptr), game(nullptr), rendererSystem(nullptr), textureLoader(nullptr),
-		inputManager(nullptr), logger(nullptr), memoryAllocator(nullptr), windowManager(nullptr)
+		assetManager(nullptr), audioManager(nullptr), game(nullptr), rendererSystem(nullptr), inputManager(nullptr),
+		logger(nullptr), memoryAllocator(nullptr), windowManager(nullptr)
 	{
 	}
 
@@ -44,12 +44,6 @@ namespace Viper
 	Renderer& ServiceLocator::Get<Renderer>()
 	{
 		return *(static_cast<Renderer*>(services[ServiceType::Renderer]));
-	}
-
-	template<>
-	TextureLoader& ServiceLocator::Get<TextureLoader>()
-	{
-		return *(static_cast<TextureLoader*>(services[ServiceType::TextureLoader]));
 	}
 
 	template<>
