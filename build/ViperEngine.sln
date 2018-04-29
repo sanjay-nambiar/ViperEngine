@@ -41,6 +41,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "stb", "..\source\Thirdparty
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AssetPipeline", "..\source\Engine\Tools\AssetPipeline\AssetPipeline.vcxproj", "{A178C969-D639-489D-9A19-CD24C2930F9F}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Vulkan", "..\source\Plugins\Renderer\Vulkan\Vulkan.vcxproj", "{5174EF5E-E45A-424A-B9DD-4A867FFA6A5B}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		..\source\Thirdparty\glm\glm.vcxitems*{14e0f32c-0008-4009-bef1-54c120578187}*SharedItemsImports = 4
@@ -131,6 +133,14 @@ Global
 		{A178C969-D639-489D-9A19-CD24C2930F9F}.Release|x64.Build.0 = Release|x64
 		{A178C969-D639-489D-9A19-CD24C2930F9F}.Release|x86.ActiveCfg = Release|Win32
 		{A178C969-D639-489D-9A19-CD24C2930F9F}.Release|x86.Build.0 = Release|Win32
+		{5174EF5E-E45A-424A-B9DD-4A867FFA6A5B}.Debug|x64.ActiveCfg = Debug|x64
+		{5174EF5E-E45A-424A-B9DD-4A867FFA6A5B}.Debug|x64.Build.0 = Debug|x64
+		{5174EF5E-E45A-424A-B9DD-4A867FFA6A5B}.Debug|x86.ActiveCfg = Debug|Win32
+		{5174EF5E-E45A-424A-B9DD-4A867FFA6A5B}.Debug|x86.Build.0 = Debug|Win32
+		{5174EF5E-E45A-424A-B9DD-4A867FFA6A5B}.Release|x64.ActiveCfg = Release|x64
+		{5174EF5E-E45A-424A-B9DD-4A867FFA6A5B}.Release|x64.Build.0 = Release|x64
+		{5174EF5E-E45A-424A-B9DD-4A867FFA6A5B}.Release|x86.ActiveCfg = Release|Win32
+		{5174EF5E-E45A-424A-B9DD-4A867FFA6A5B}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -151,6 +161,7 @@ Global
 		{A996F1AC-E71B-4507-BD64-9D5914BEE7DF} = {438A1F74-CE6F-49DD-A616-CBD997BEB866}
 		{E912CEC2-B84D-486E-865E-1270F16B22FE} = {438A1F74-CE6F-49DD-A616-CBD997BEB866}
 		{A178C969-D639-489D-9A19-CD24C2930F9F} = {D7AC8D41-5B1D-4B39-8365-FE4CE8963734}
+		{5174EF5E-E45A-424A-B9DD-4A867FFA6A5B} = {4EDCB181-CDC6-40F2-BC9F-26FDE2A32E30}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B1267565-12EB-416E-AE28-CE692CC9063E}
