@@ -7,6 +7,8 @@ namespace Viper
 {
 	namespace Graphics
 	{
+		class VulkanRendererPrivate;
+
 		class VulkanRenderer : public Renderer
 		{
 		public:
@@ -32,6 +34,7 @@ namespace Viper
 			void Shutdown() override;
 		private:
 			ServiceLocator& serviceLocator;
+			VulkanRendererPrivate* vulkanRendererPrivate;
 		};
 	}
 }

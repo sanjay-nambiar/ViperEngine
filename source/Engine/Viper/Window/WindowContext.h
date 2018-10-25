@@ -15,6 +15,8 @@ namespace Viper
 
 			WindowContext();
 			virtual ~WindowContext() = default;
+
+			virtual std::uint64_t WindowHandle() const = 0;
 		};
 	}
 }

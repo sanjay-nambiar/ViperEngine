@@ -216,7 +216,7 @@ xcopy "$(OutDir)$(TargetName).pdb" "$(SolutionDir)bin\Plugins\$(PlatformName)\$(
   <ItemGroup>
     <ClCompile Include="GlfwInputManager.cpp" />
     <ClCompile Include="GlfwWindowContext.cpp" />
-    <ClCompile Include="GlwfwWindowManager.cpp" />
+    <ClCompile Include="GlfwWindowManager.cpp" />
     <ClCompile Include="PluginExport.cpp" />
   </ItemGroup>
   <ItemGroup>

@@ -2,13 +2,13 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="PluginExport.cpp" />
-    <ClCompile Include="GlwfwWindowManager.cpp">
-      <Filter>Plugin</Filter>
-    </ClCompile>
     <ClCompile Include="GlfwInputManager.cpp">
       <Filter>Plugin</Filter>
     </ClCompile>
     <ClCompile Include="GlfwWindowContext.cpp">
+      <Filter>Plugin</Filter>
+    </ClCompile>
+    <ClCompile Include="GlfwWindowManager.cpp">
       <Filter>Plugin</Filter>
     </ClCompile>
   </ItemGroup>

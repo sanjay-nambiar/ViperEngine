@@ -18,6 +18,7 @@ namespace Viper
 
 			void Initialize() override;
 			const WindowContext& CreateGameWindow(std::uint32_t width, std::uint32_t height, const std::string& title, bool fullScreen = false) override;
+			void GetFrameBufferSize(const WindowContext& context, std::uint32_t& width, std::uint32_t& height) override;
 			bool BeginUpdate(const WindowContext& windowHandle) override;
 			void EndUpdate(const WindowContext& windowHandle) override;
 			void DestroyGameWindow(const WindowContext& windowHandle) override;

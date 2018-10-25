@@ -13,6 +13,8 @@ namespace Viper
 
 			bool operator==(const GlfwWindowContext& rhs) const;
 			bool operator!=(const GlfwWindowContext& rhs) const;
+
+			std::uint64_t WindowHandle() const override;
 		};
 	}
 }
