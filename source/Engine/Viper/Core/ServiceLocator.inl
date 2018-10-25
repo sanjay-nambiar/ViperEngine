@@ -1,5 +1,6 @@
 #include <cassert>
 #include <type_traits>
+#include "GameException.h"
 
 namespace Viper
 {

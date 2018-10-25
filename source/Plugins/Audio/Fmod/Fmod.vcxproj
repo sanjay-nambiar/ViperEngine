@@ -22,7 +22,7 @@
     <ProjectGuid>{14E0F32C-0008-4009-BEF1-54C120578187}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>Fmod</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
